@@ -131,41 +131,14 @@ export class SupabaseService {
   }
 
   async createPlan(topicId: string, title: string, initialContent: string): Promise<Plan> {
-    const { data: plan, error: planError } = await this.client
-      .from('plans')
-      .insert({
-        topic_id: topicId,
-        title,
-        status: 'draft'
-      })
-      .select()
-      .single();
+    const { data, error } = await this.client.rpc('create_plan_with_revision', {
+      p_topic_id: topicId,
+      p_title: title,
+      p_initial_content: initialContent
+    });
 
-    if (planError) throw planError;
-
-    const { data: revision, error: revError } = await this.client
-      .from('plan_revisions')
-      .insert({
-        plan_id: plan.id,
-        agent_id: 'chatgpt',
-        op: 'upsert_section',
-        path: 'root',
-        content_md: initialContent,
-        diff: { op: 'init', addedChars: initialContent.length }
-      })
-      .select()
-      .single();
-
-    if (revError) throw revError;
-
-    const { error: updateError } = await this.client
-      .from('plans')
-      .update({ current_revision_id: revision.id })
-      .eq('id', plan.id);
-
-    if (updateError) throw updateError;
-
-    return { ...plan, current_revision_id: revision.id };
+    if (error) throw error;
+    return data as Plan;
   }
 
   async getPlan(topicId: string): Promise<Plan | null> {
