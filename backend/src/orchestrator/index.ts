@@ -3,6 +3,7 @@ import { AGENT_ROLE_MAPPING } from '../../../shared/types/index.js';
 import { AgentRunner, type AgentContext } from '../agents/runner.js';
 import { SupabaseService } from '../services/supabase.js';
 import { PlanEditor } from '../services/planEditor.js';
+import { PhaseValidator } from './phaseValidator.js';
 
 const ACTIVE_TICK_INTERVAL = 90000; // 90 seconds for active debates
 const IDLE_TICK_INTERVAL = 420000; // 7 minutes for idle mode
@@ -107,8 +108,7 @@ export class Orchestrator {
       console.log(`✅ ${agentId} (importance ${message.importance}): ${message.message.title}`);
     }
 
-    await this.supabase.updateTopicState(this.currentTopic.id, 'debate');
-    this.currentTopic.state = 'debate';
+    await this.transitionPhase('debate');
 
     this.isInitializing = false;
     console.log('🎭 All agents have responded. Debate begins!');
@@ -129,8 +129,8 @@ export class Orchestrator {
     this.lastIdleMessageTime = Date.now();
 
     const idleTopic = await this.supabase.createTopic('00000000-0000-0000-0000-000000000000');
-    await this.supabase.updateTopicState(idleTopic.id, 'idle');
     this.currentTopic = idleTopic;
+    await this.transitionPhase('idle');
 
     console.log('😴 Entered idle mode (1 message per 7 minutes)');
   }
@@ -158,8 +158,16 @@ export class Orchestrator {
   private async tick(): Promise<void> {
     if (!this.currentTopic || this.isInitializing || this.isProcessingTick) return;
 
-    // Rate limit idle messages to max 10 per hour
+    // Check for queued proposals when in idle mode
     if (this.currentTopic.state === 'idle') {
+      const nextProposal = await this.supabase.getNextQueuedProposal();
+      if (nextProposal) {
+        console.log('📋 Found queued proposal in idle tick, exiting idle mode...');
+        await this.handleNewProposal(nextProposal.id);
+        return;
+      }
+
+      // Rate limit idle messages to max 10 per hour
       const hoursSinceStart = (Date.now() - this.lastIdleMessageTime) / (1000 * 60 * 60);
       if (this.idleMessageCount >= 10 && hoursSinceStart < 1) {
         return;
@@ -197,7 +205,9 @@ export class Orchestrator {
         // If timeout exceeded by more than 1 hour and still no complete votes, force rejection
         if (timeInfo.elapsedHours > MAX_DEBATE_DURATION_HOURS + 1) {
           console.log('❌ TIMEOUT EXCEEDED BY 1+ HOUR. No consensus reached. Forcing rejection.');
-          await this.supabase.updateProposalStatus(this.currentTopic.proposal_id, 'rejected');
+          if (this.currentTopic.proposal_id) {
+            await this.supabase.updateProposalStatus(this.currentTopic.proposal_id, 'rejected');
+          }
           await this.supabase.endTopic(this.currentTopic.id);
           this.currentTopic = null;
           await this.enterIdleMode();
@@ -266,6 +276,10 @@ export class Orchestrator {
         recentMessages: [],
         isIdle: true
       };
+    }
+
+    if (!this.currentTopic.proposal_id) {
+      throw new Error('Cannot build context for topic without proposal');
     }
 
     const proposal = await this.supabase.getProposal(this.currentTopic.proposal_id);
@@ -432,7 +446,9 @@ export class Orchestrator {
         await this.supabase.markPlanAsAdopted(plan.id);
       }
 
-      await this.supabase.updateProposalStatus(this.currentTopic!.proposal_id, 'adopted');
+      if (this.currentTopic!.proposal_id) {
+        await this.supabase.updateProposalStatus(this.currentTopic!.proposal_id, 'adopted');
+      }
       await this.supabase.endTopic(this.currentTopic!.id);
 
       this.currentTopic = null;
@@ -443,7 +459,9 @@ export class Orchestrator {
       if (this.voteAttemptCount >= MAX_VOTE_ATTEMPTS) {
         console.log(`❌ Vote failed ${MAX_VOTE_ATTEMPTS} times. Rejecting proposal.`);
 
-        await this.supabase.updateProposalStatus(this.currentTopic!.proposal_id, 'rejected');
+        if (this.currentTopic!.proposal_id) {
+          await this.supabase.updateProposalStatus(this.currentTopic!.proposal_id, 'rejected');
+        }
         await this.supabase.endTopic(this.currentTopic!.id);
 
         this.currentTopic = null;
@@ -454,8 +472,7 @@ export class Orchestrator {
         // Clear all votes to allow fresh voting after plan updates
         await this.supabase.clearAgentVotes(this.currentTopic!.id);
 
-        await this.supabase.updateTopicState(this.currentTopic!.id, 'plan_drafting');
-        this.currentTopic!.state = 'plan_drafting';
+        await this.transitionPhase('plan_drafting');
 
         // After some plan updates, automatically transition back to pre_vote
         // This will be handled by agents transitioning the phase
@@ -502,6 +519,32 @@ export class Orchestrator {
       isExpired,
       urgencyLevel
     };
+  }
+
+  private async transitionPhase(newPhase: Phase): Promise<boolean> {
+    if (!this.currentTopic) {
+      console.warn('⚠️  Cannot transition phase: No current topic');
+      return false;
+    }
+
+    const currentPhase = this.currentTopic.state;
+
+    if (currentPhase === newPhase) {
+      console.warn(`⚠️  Already in phase: ${currentPhase}`);
+      return false;
+    }
+
+    const validation = PhaseValidator.validateTransition(currentPhase, newPhase);
+
+    if (!validation.valid) {
+      console.warn(`⚠️  ${validation.error}`);
+      return false;
+    }
+
+    await this.supabase.updateTopicState(this.currentTopic.id, newPhase);
+    this.currentTopic.state = newPhase;
+    console.log(`📍 Phase transition: ${currentPhase} → ${newPhase}`);
+    return true;
   }
 
   async stop(): Promise<void> {

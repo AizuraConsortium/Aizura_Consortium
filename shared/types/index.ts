@@ -97,7 +97,7 @@ export interface Proposal {
 
 export interface Topic {
   id: string;
-  proposal_id: string;
+  proposal_id: string | null;
   state: Phase;
   started_at: string;
   ended_at: string | null;

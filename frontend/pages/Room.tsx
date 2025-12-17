@@ -21,10 +21,12 @@ export default function Room() {
   }, []);
 
   useEffect(() => {
-    if (topicId) {
-      loadMessages();
-      subscribeToMessages();
-    }
+    if (!topicId) return;
+
+    loadMessages();
+    const cleanup = subscribeToMessages();
+
+    return cleanup;
   }, [topicId]);
 
   useEffect(() => {
@@ -77,7 +79,7 @@ export default function Room() {
   };
 
   const subscribeToMessages = () => {
-    if (!topicId) return;
+    if (!topicId) return () => {};
 
     const channel = supabase
       .channel(`messages-${topicId}`)
@@ -159,7 +161,7 @@ export default function Room() {
                       topicInfo.timeInfo.remainingHours < 48 ? 'text-yellow-400' :
                       'text-cyan-400'
                     }`}>
-                      Day {topicInfo.timeInfo.elapsedDays}/5
+                      Day {topicInfo.timeInfo.elapsedDays}/4
                     </p>
                   </div>
                 )}

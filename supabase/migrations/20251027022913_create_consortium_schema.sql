@@ -171,6 +171,23 @@ CREATE TABLE IF NOT EXISTS topics (
   ended_at timestamptz
 );
 
+-- Insert system proposal for idle mode
+INSERT INTO proposals (
+  id,
+  title,
+  summary,
+  status,
+  created_at,
+  updated_at
+) VALUES (
+  '00000000-0000-0000-0000-000000000000',
+  'System: Idle Mode',
+  'This is a system proposal used when the consortium is in idle mode.',
+  'adopted',
+  now(),
+  now()
+) ON CONFLICT (id) DO NOTHING;
+
 CREATE INDEX IF NOT EXISTS idx_topics_state ON topics(state);
 CREATE INDEX IF NOT EXISTS idx_topics_proposal ON topics(proposal_id);
 
