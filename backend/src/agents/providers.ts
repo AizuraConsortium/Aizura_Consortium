@@ -2,6 +2,7 @@ import OpenAI from 'openai';
 import Anthropic from '@anthropic-ai/sdk';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import type { AgentId, AgentMessage, AgentVoteMessage } from '../../../shared/types/index.js';
+import { ErrorLogger } from '../services/errorLogger.js';
 
 export interface LLMProvider {
   generateResponse(systemPrompt: string, userPrompt: string): Promise<string>;
@@ -16,9 +17,11 @@ const MAX_RETRY_DELAY = 60000; // 60 seconds
 async function retryWithBackoff<T>(
   fn: () => Promise<T>,
   agentId: string,
-  operationName: string
+  operationName: string,
+  topicId?: string
 ): Promise<T> {
   let lastError: Error | null = null;
+  const errorLogger = ErrorLogger.getInstance();
 
   for (let attempt = 0; attempt < MAX_RETRIES; attempt++) {
     try {
@@ -49,6 +52,21 @@ async function retryWithBackoff<T>(
           code: error.code,
           type: error.type
         });
+
+        // Log to database on final failure
+        await errorLogger.logAgentError(
+          agentId as AgentId,
+          isRateLimit ? 'rate_limit' : 'api_error',
+          `${operationName} failed: ${error.message}`,
+          {
+            status: error.status,
+            code: error.code,
+            type: error.type,
+            attempts: attempt + 1
+          },
+          topicId
+        );
+
         throw error;
       }
 
@@ -68,6 +86,21 @@ async function retryWithBackoff<T>(
         status: error.status,
         isRateLimit
       });
+
+      // Log warning for retryable errors
+      if (attempt === 0) {
+        await errorLogger.logAgentWarning(
+          agentId as AgentId,
+          isRateLimit ? 'rate_limit' : 'retryable_error',
+          `${operationName} error (retrying): ${error.message}`,
+          {
+            status: error.status,
+            code: error.code,
+            attempt: attempt + 1
+          },
+          topicId
+        );
+      }
 
       await new Promise(resolve => setTimeout(resolve, delay));
     }

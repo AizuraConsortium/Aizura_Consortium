@@ -20,8 +20,23 @@ export class ErrorBoundary extends Component<Props, State> {
     return { hasError: true, error };
   }
 
-  componentDidCatch(error: Error, errorInfo: any) {
+  async componentDidCatch(error: Error, errorInfo: any) {
     console.error('Error caught by boundary:', error, errorInfo);
+
+    try {
+      const { api } = await import('../lib/api');
+      await api.logError(
+        'frontend',
+        'react_error_boundary',
+        error.message,
+        {
+          stack: error.stack,
+          componentStack: errorInfo.componentStack
+        }
+      );
+    } catch (logError) {
+      console.error('Failed to log error:', logError);
+    }
   }
 
   render() {

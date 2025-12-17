@@ -103,6 +103,31 @@ export const api = {
       },
       body: JSON.stringify({ vote })
     });
+  },
+
+  async getErrors(queryString?: string) {
+    const url = queryString ? `${API_URL}/errors?${queryString}` : `${API_URL}/errors`;
+    return fetchWithRetry(url);
+  },
+
+  async logError(source: string, errorType: string, message: string, details?: any) {
+    try {
+      await fetch(`${API_URL}/errors/log`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          source,
+          severity: 'error',
+          errorType,
+          message,
+          details
+        })
+      });
+    } catch (error) {
+      console.error('Failed to log error to backend:', error);
+    }
   }
 };
 

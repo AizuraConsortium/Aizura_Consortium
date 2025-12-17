@@ -1,12 +1,14 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { MessageSquare, Users, TrendingUp, Sparkles } from 'lucide-react';
+import { MessageSquare, Users, TrendingUp, Sparkles, Bug } from 'lucide-react';
 import { api } from '../lib/api';
+import DebugWindow from '../components/DebugWindow';
 
 export default function Home() {
   const navigate = useNavigate();
   const [homeData, setHomeData] = useState<any>(null);
   const [loading, setLoading] = useState(true);
+  const [debugOpen, setDebugOpen] = useState(false);
 
   useEffect(() => {
     loadHomeData();
@@ -47,6 +49,14 @@ export default function Home() {
                   className="text-slate-300 hover:text-white transition-colors"
                 >
                   Governance
+                </button>
+                <button
+                  onClick={() => setDebugOpen(true)}
+                  className="text-slate-400 hover:text-cyan-400 transition-colors flex items-center space-x-1"
+                  title="System Debug Monitor"
+                >
+                  <Bug className="w-4 h-4" />
+                  <span className="text-xs">Debug</span>
                 </button>
               </div>
             </div>
@@ -165,6 +175,8 @@ export default function Home() {
           </div>
         </div>
       </div>
+
+      <DebugWindow isOpen={debugOpen} onClose={() => setDebugOpen(false)} />
     </div>
   );
 }
