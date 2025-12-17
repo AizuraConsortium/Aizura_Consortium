@@ -8,6 +8,8 @@ import type {
   Step,
   AgentVote,
   ArbitrationEntry,
+  ProposalQueue,
+  ErrorLog,
   AgentId,
   AgentRole,
   Phase,
@@ -319,10 +321,10 @@ export class SupabaseService {
     if (error) throw error;
   }
 
-  async getNextQueuedProposal(): Promise<{ id: string } | null> {
+  async getNextQueuedProposal(): Promise<ProposalQueue | null> {
     const { data, error } = await this.client
       .from('proposal_queue')
-      .select('proposal_id')
+      .select('*')
       .eq('status', 'queued')
       .order('priority', { ascending: false })
       .order('created_at', { ascending: true })
@@ -339,7 +341,7 @@ export class SupabaseService {
       .update({ status: 'processing', started_at: new Date().toISOString() })
       .eq('proposal_id', data.proposal_id);
 
-    return { id: data.proposal_id };
+    return data;
   }
 
   async clearAgentVotes(topicId: string): Promise<void> {

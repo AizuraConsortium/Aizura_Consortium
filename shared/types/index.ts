@@ -164,6 +164,31 @@ export interface ArbitrationEntry {
   created_at: string;
 }
 
+export interface ProposalQueue {
+  id: string;
+  proposal_id: string;
+  priority: number;
+  status: 'queued' | 'processing' | 'completed';
+  created_at: string;
+  started_at: string | null;
+  completed_at: string | null;
+}
+
+export type ErrorSource = 'backend' | 'frontend' | 'agent';
+export type ErrorSeverity = 'info' | 'warning' | 'error' | 'critical';
+
+export interface ErrorLog {
+  id: string;
+  source: ErrorSource;
+  severity: ErrorSeverity;
+  agent_id: AgentId | null;
+  error_type: string;
+  message: string;
+  details: any;
+  topic_id: string | null;
+  created_at: string;
+}
+
 export const AGENT_ROLE_MAPPING: Record<AgentId, AgentRole> = {
   claude: 'engineering-arch',
   chatgpt: 'product-strategy',

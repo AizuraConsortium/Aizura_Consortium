@@ -120,7 +120,7 @@ export class Orchestrator {
     const nextProposal = await this.supabase.getNextQueuedProposal();
     if (nextProposal) {
       console.log('📋 Processing next queued proposal...');
-      await this.handleNewProposal(nextProposal.id);
+      await this.handleNewProposal(nextProposal.proposal_id);
       return;
     }
 
@@ -164,7 +164,7 @@ export class Orchestrator {
       const nextProposal = await this.supabase.getNextQueuedProposal();
       if (nextProposal) {
         console.log('📋 Found queued proposal in idle tick, exiting idle mode...');
-        await this.handleNewProposal(nextProposal.id);
+        await this.handleNewProposal(nextProposal.proposal_id);
         return;
       }
 
@@ -393,7 +393,8 @@ export class Orchestrator {
 
     const agentMessage = message as AgentMessage;
 
-    for (const toolCall of agentMessage.tool_calls) {
+    // TypeScript narrowing: we already checked tool_calls exists above
+    for (const toolCall of agentMessage.tool_calls!) {
       if (toolCall.tool === 'plan_editor') {
         await this.applyPlanEdit(agentMessage.agent_id, toolCall.args);
       }

@@ -9,7 +9,7 @@ router.get('/home', async (req, res) => {
   try {
     const topic = await supabase.getCurrentTopic();
 
-    if (!topic) {
+    if (!topic || !topic.proposal_id) {
       return res.json({
         status: 'idle',
         currentTopic: null

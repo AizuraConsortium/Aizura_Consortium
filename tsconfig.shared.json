@@ -6,6 +6,7 @@
     "moduleResolution": "bundler",
     "declaration": true,
     "declarationMap": true,
+    "sourceMap": true,
     "outDir": "./dist/shared",
     "rootDir": "./shared",
     "strict": true,

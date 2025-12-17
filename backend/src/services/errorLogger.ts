@@ -1,8 +1,5 @@
 import { SupabaseService } from './supabase.js';
-import type { AgentId } from '../../../shared/types/index.js';
-
-type ErrorSource = 'backend' | 'frontend' | 'agent';
-type ErrorSeverity = 'info' | 'warning' | 'error' | 'critical';
+import type { AgentId, ErrorSource, ErrorSeverity } from '../../../shared/types/index.js';
 
 export interface LogErrorOptions {
   source: ErrorSource;
