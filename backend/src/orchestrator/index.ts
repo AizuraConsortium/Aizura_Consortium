@@ -132,7 +132,7 @@ export class Orchestrator {
     await this.supabase.updateTopicState(idleTopic.id, 'idle');
     this.currentTopic = idleTopic;
 
-    console.log('😴 Entered idle mode (1 message per minute)');
+    console.log('😴 Entered idle mode (1 message per 7 minutes)');
   }
 
   private startTicker(): void {
@@ -170,12 +170,12 @@ export class Orchestrator {
       }
     }
 
-    // Check for debate timeout (5-day maximum)
+    // Check for debate timeout (4-day maximum)
     if (this.currentTopic.state !== 'idle' && !this.isInitializing) {
       const timeInfo = this.calculateDebateTimeInfo(this.currentTopic.started_at);
 
       if (timeInfo.isExpired) {
-        console.log('⏰ 5-DAY TIMEOUT REACHED! Forcing final vote...');
+        console.log('⏰ 4-DAY TIMEOUT REACHED! Forcing final vote...');
 
         // Force transition to vote phase if not already there
         if (this.currentTopic.state !== 'vote') {
@@ -486,10 +486,10 @@ export class Orchestrator {
     const isExpired = elapsedMs >= MAX_DEBATE_DURATION_MS;
 
     let urgencyLevel: 'none' | 'low' | 'moderate' | 'high' | 'critical' = 'none';
-    if (elapsedHours < 48) urgencyLevel = 'none';
-    else if (elapsedHours < 72) urgencyLevel = 'low';
-    else if (elapsedHours < 96) urgencyLevel = 'moderate';
-    else if (elapsedHours < 120) urgencyLevel = 'high';
+    if (elapsedHours < 24) urgencyLevel = 'none';
+    else if (elapsedHours < 48) urgencyLevel = 'low';
+    else if (elapsedHours < 72) urgencyLevel = 'moderate';
+    else if (elapsedHours < 84) urgencyLevel = 'high';
     else urgencyLevel = 'critical';
 
     return {
