@@ -349,6 +349,28 @@ export class SupabaseService {
     if (error) throw error;
   }
 
+  async getMessagesInCurrentTick(topicId: string, agentIds: AgentId[]): Promise<Message[]> {
+    const { data, error } = await this.client
+      .from('messages')
+      .select('*')
+      .eq('topic_id', topicId)
+      .in('agent_id', agentIds)
+      .order('created_at', { ascending: false })
+      .limit(agentIds.length);
+
+    if (error) throw error;
+    return data || [];
+  }
+
+  async markMessageAsSelected(messageId: string): Promise<void> {
+    const { error } = await this.client
+      .from('messages')
+      .update({ selected: true })
+      .eq('id', messageId);
+
+    if (error) throw error;
+  }
+
   async healthCheck(): Promise<{ healthy: boolean; error?: string }> {
     try {
       const { data, error } = await this.client

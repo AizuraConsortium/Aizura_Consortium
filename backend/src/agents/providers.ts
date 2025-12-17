@@ -91,7 +91,7 @@ export class ClaudeProvider implements LLMProvider {
       async () => {
         const response = await (this.client as any).messages.create({
           model: this.model,
-          max_tokens: 2000,
+          max_tokens: 1500,
           system: systemPrompt,
           messages: [{ role: 'user', content: userPrompt }]
         });
@@ -123,7 +123,7 @@ export class ChatGPTProvider implements LLMProvider {
       async () => {
         const response = await this.client.chat.completions.create({
           model: this.model,
-          max_tokens: 2000,
+          max_tokens: 1500,
           messages: [
             { role: 'system', content: systemPrompt },
             { role: 'user', content: userPrompt }
@@ -154,7 +154,7 @@ export class GrokProvider implements LLMProvider {
       async () => {
         const response = await this.client.chat.completions.create({
           model: 'grok-beta',
-          max_tokens: 2000,
+          max_tokens: 1500,
           messages: [
             { role: 'system', content: systemPrompt },
             { role: 'user', content: userPrompt }
@@ -212,7 +212,7 @@ export class DeepSeekProvider implements LLMProvider {
       async () => {
         const response = await this.client.chat.completions.create({
           model: 'deepseek-chat',
-          max_tokens: 2000,
+          max_tokens: 1500,
           messages: [
             { role: 'system', content: systemPrompt },
             { role: 'user', content: userPrompt }
@@ -245,7 +245,7 @@ export class QwenProvider implements LLMProvider {
       async () => {
         const response = await this.client.chat.completions.create({
           model: this.model,
-          max_tokens: 2000,
+          max_tokens: 1500,
           messages: [
             { role: 'system', content: systemPrompt },
             { role: 'user', content: userPrompt }

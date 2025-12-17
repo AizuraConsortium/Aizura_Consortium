@@ -90,7 +90,7 @@ export class AgentRunner {
       prompt += `⏰ DEBATE TIMELINE:\n`;
       prompt += `- Elapsed: Day ${time.elapsedDays + 1} (${time.elapsedHours} hours)\n`;
       prompt += `- Remaining: ${time.remainingDays} days (${time.remainingHours} hours)\n`;
-      prompt += `- Maximum debate duration: 5 days\n\n`;
+      prompt += `- Maximum debate duration: 4 days\n\n`;
 
       if (time.urgencyLevel === 'low') {
         prompt += `💡 Time pressure: MODERATE. Consider finding common ground on minor disagreements.\n\n`;

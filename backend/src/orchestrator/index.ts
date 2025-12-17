@@ -4,12 +4,12 @@ import { AgentRunner, type AgentContext } from '../agents/runner.js';
 import { SupabaseService } from '../services/supabase.js';
 import { PlanEditor } from '../services/planEditor.js';
 
-const ACTIVE_TICK_INTERVAL = 60000; // 60 seconds for active debates
-const IDLE_TICK_INTERVAL = 300000; // 5 minutes for idle mode
+const ACTIVE_TICK_INTERVAL = 90000; // 90 seconds for active debates
+const IDLE_TICK_INTERVAL = 420000; // 7 minutes for idle mode
 const AGENT_IDS: AgentId[] = ['chatgpt', 'deepseek', 'grok', 'claude', 'gemini', 'qwen'];
 const MAX_VOTE_ATTEMPTS = 3;
-const MAX_DEBATE_DURATION_MS = 5 * 24 * 60 * 60 * 1000; // 5 days in milliseconds
-const MAX_DEBATE_DURATION_HOURS = 120; // 5 days
+const MAX_DEBATE_DURATION_MS = 4 * 24 * 60 * 60 * 1000; // 4 days in milliseconds
+const MAX_DEBATE_DURATION_HOURS = 96; // 4 days
 
 export class Orchestrator {
   private agentRunner: AgentRunner;
@@ -209,25 +209,33 @@ export class Orchestrator {
     this.isProcessingTick = true;
 
     try {
-      const context = await this.buildContext();
+      for (const agentId of AGENT_IDS) {
+        const context = await this.buildContext();
 
-      const messagePromises = AGENT_IDS.map(agentId => {
-        // Add refusal notice for this specific agent if exists
         const agentContext = {
           ...context,
           refusalNotice: this.refusalNotices.get(agentId)
         };
-        return this.agentRunner.generateMessage(agentId, agentContext);
-      });
 
-      const messages = await Promise.all(messagePromises);
-
-      for (let i = 0; i < AGENT_IDS.length; i++) {
-        const agentId = AGENT_IDS[i];
-        const message = messages[i];
+        const message = await this.agentRunner.generateMessage(agentId, agentContext);
 
         if (message) {
           this.pendingMessages.set(agentId, message);
+
+          const role = AGENT_ROLE_MAPPING[agentId];
+          const phase = this.currentTopic!.state;
+
+          await this.supabase.insertMessage(
+            this.currentTopic!.id,
+            agentId,
+            role,
+            phase,
+            message.importance,
+            message,
+            false
+          );
+
+          console.log(`   💬 [${agentId}] (${message.importance}): ${this.getMessageTitle(message)}`);
         }
       }
 
@@ -311,39 +319,27 @@ export class Orchestrator {
 
     const [winnerAgentId, winnerMessage] = candidates[0];
 
-    const role = AGENT_ROLE_MAPPING[winnerAgentId];
-    const phase = this.currentTopic!.state;
-
-    const storedMessage = await this.supabase.insertMessage(
+    const messages = await this.supabase.getMessagesInCurrentTick(
       this.currentTopic!.id,
-      winnerAgentId,
-      role,
-      phase,
-      winnerMessage.importance,
-      winnerMessage,
-      true
+      Array.from(this.pendingMessages.keys())
     );
 
-    await this.supabase.logArbitration(
-      this.currentTopic!.id,
-      storedMessage.id,
-      { importance: winnerMessage.importance, candidateCount: candidates.length }
-    );
+    const winnerDbMessage = messages.find(m => m.agent_id === winnerAgentId);
+
+    if (winnerDbMessage) {
+      await this.supabase.markMessageAsSelected(winnerDbMessage.id);
+
+      await this.supabase.logArbitration(
+        this.currentTopic!.id,
+        winnerDbMessage.id,
+        { importance: winnerMessage.importance, candidateCount: candidates.length }
+      );
+    }
 
     console.log(`🏆 [${winnerAgentId}] (${winnerMessage.importance}): ${this.getMessageTitle(winnerMessage)}`);
 
     for (const [agentId, message] of candidates) {
       if (agentId !== winnerAgentId) {
-        await this.supabase.insertMessage(
-          this.currentTopic!.id,
-          agentId,
-          AGENT_ROLE_MAPPING[agentId],
-          phase,
-          message.importance,
-          message,
-          false
-        );
-
         this.refusalNotices.set(agentId, {
           previousMessage: this.getMessageTitle(message),
           previousImportance: message.importance,
@@ -353,7 +349,6 @@ export class Orchestrator {
 
         console.log(`   ❌ [${agentId}] (${message.importance}) - not selected`);
       } else {
-        // Clear refusal notice for winning agent
         this.refusalNotices.delete(agentId);
       }
     }
