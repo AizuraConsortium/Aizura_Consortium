@@ -1,9 +1,17 @@
-import type { AgentId, AgentMessage, AgentVoteMessage, Phase, Topic } from '../../../shared/types/index.js';
+import type { AgentId, AgentMessage, AgentVoteMessage, Phase, Topic, AgentVote, PlanEditorArgs } from '../../../shared/types/index.js';
 import { AGENT_ROLE_MAPPING } from '../../../shared/types/index.js';
 import { AgentRunner, type AgentContext } from '../agents/runner.js';
 import { SupabaseService } from '../services/supabase.js';
 import { PlanEditor } from '../services/planEditor.js';
 import { PhaseValidator } from './phaseValidator.js';
+
+// Internal type for tracking refusal notices (different from the RefusalNotice message type)
+interface RefusalNoticeEntry {
+  previousMessage: string;
+  previousImportance: number;
+  winningMessage: string;
+  winningImportance: number;
+}
 
 const ACTIVE_TICK_INTERVAL = 90000; // 90 seconds for active debates
 const IDLE_TICK_INTERVAL = 420000; // 7 minutes for idle mode
@@ -19,7 +27,7 @@ export class Orchestrator {
   private tickTimer: NodeJS.Timeout | null = null;
   private currentTopic: Topic | null = null;
   private pendingMessages: Map<AgentId, AgentMessage | AgentVoteMessage> = new Map();
-  private refusalNotices: Map<AgentId, { notice: any; expiresAfterTick: number }> = new Map();
+  private refusalNotices: Map<AgentId, { notice: RefusalNoticeEntry; expiresAfterTick: number }> = new Map();
   private isInitializing: boolean = false;
   private isProcessingTick: boolean = false;
   private currentTickInterval: number = ACTIVE_TICK_INTERVAL;
@@ -401,7 +409,7 @@ export class Orchestrator {
     }
   }
 
-  private async applyPlanEdit(agentId: AgentId, args: any): Promise<void> {
+  private async applyPlanEdit(agentId: AgentId, args: PlanEditorArgs): Promise<void> {
     const plan = await this.supabase.getPlan(this.currentTopic!.id);
     if (!plan) return;
 
@@ -439,7 +447,7 @@ export class Orchestrator {
     }
   }
 
-  private async processVoteResults(votes: any[]): Promise<void> {
+  private async processVoteResults(votes: AgentVote[]): Promise<void> {
     const approvals = votes.filter(v => v.choice === 'approve');
 
     console.log(`\n🎯 Final vote: ${approvals.length}/6 approved (Attempt ${this.voteAttemptCount + 1}/${MAX_VOTE_ATTEMPTS})\n`);
@@ -553,7 +561,7 @@ export class Orchestrator {
     return true;
   }
 
-  private getRefusalNotice(agentId: AgentId): any {
+  private getRefusalNotice(agentId: AgentId): RefusalNoticeEntry | undefined {
     const entry = this.refusalNotices.get(agentId);
     if (!entry) return undefined;
 
