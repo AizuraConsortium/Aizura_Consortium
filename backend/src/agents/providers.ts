@@ -79,16 +79,18 @@ async function retryWithBackoff<T>(
 export class ClaudeProvider implements LLMProvider {
   private client: Anthropic;
   private agentId: string = 'claude';
+  private model: string;
 
-  constructor(apiKey: string) {
+  constructor(apiKey: string, model: string = 'claude-3-5-sonnet-20241022') {
     this.client = new Anthropic({ apiKey });
+    this.model = model;
   }
 
   async generateResponse(systemPrompt: string, userPrompt: string): Promise<string> {
     return retryWithBackoff(
       async () => {
         const response = await (this.client as any).messages.create({
-          model: 'claude-3-5-sonnet-20241022',
+          model: this.model,
           max_tokens: 2000,
           system: systemPrompt,
           messages: [{ role: 'user', content: userPrompt }]
@@ -109,16 +111,18 @@ export class ClaudeProvider implements LLMProvider {
 export class ChatGPTProvider implements LLMProvider {
   private client: OpenAI;
   private agentId: string = 'chatgpt';
+  private model: string;
 
-  constructor(apiKey: string) {
+  constructor(apiKey: string, model: string = 'gpt-4-turbo-preview') {
     this.client = new OpenAI({ apiKey });
+    this.model = model;
   }
 
   async generateResponse(systemPrompt: string, userPrompt: string): Promise<string> {
     return retryWithBackoff(
       async () => {
         const response = await this.client.chat.completions.create({
-          model: 'gpt-4-turbo-preview',
+          model: this.model,
           max_tokens: 2000,
           messages: [
             { role: 'system', content: systemPrompt },
@@ -168,16 +172,18 @@ export class GrokProvider implements LLMProvider {
 export class GeminiProvider implements LLMProvider {
   private client: GoogleGenerativeAI;
   private agentId: string = 'gemini';
+  private model: string;
 
-  constructor(apiKey: string) {
+  constructor(apiKey: string, model: string = 'gemini-pro') {
     this.client = new GoogleGenerativeAI(apiKey);
+    this.model = model;
   }
 
   async generateResponse(systemPrompt: string, userPrompt: string): Promise<string> {
     return retryWithBackoff(
       async () => {
         const model = this.client.getGenerativeModel({
-          model: 'gemini-pro'
+          model: this.model
         } as any);
 
         const prompt = `${systemPrompt}\n\n${userPrompt}`;
@@ -224,19 +230,21 @@ export class DeepSeekProvider implements LLMProvider {
 export class QwenProvider implements LLMProvider {
   private client: OpenAI;
   private agentId: string = 'qwen';
+  private model: string;
 
-  constructor(apiKey: string) {
+  constructor(apiKey: string, model: string = 'qwen-max') {
     this.client = new OpenAI({
       apiKey,
       baseURL: 'https://dashscope.aliyuncs.com/compatible-mode/v1'
     });
+    this.model = model;
   }
 
   async generateResponse(systemPrompt: string, userPrompt: string): Promise<string> {
     return retryWithBackoff(
       async () => {
         const response = await this.client.chat.completions.create({
-          model: 'qwen-max',
+          model: this.model,
           max_tokens: 2000,
           messages: [
             { role: 'system', content: systemPrompt },
@@ -262,10 +270,19 @@ export function createProvider(agentId: AgentId, isIdle: boolean = false): LLMPr
     qwen: process.env.QWEN_API_KEY!
   };
 
-  // During idle mode, ALL agents use DeepSeek for maximum cost savings
+  // During idle mode, use cheap models per agent
   if (isIdle) {
-    console.log(`[${agentId}] Using DeepSeek (cheap model) for idle mode`);
-    return new DeepSeekProvider(apiKeys.deepseek);
+    const cheapProviders = {
+      chatgpt: () => new ChatGPTProvider(apiKeys.chatgpt, 'gpt-3.5-turbo'),
+      deepseek: () => new DeepSeekProvider(apiKeys.deepseek),
+      grok: () => new GrokProvider(apiKeys.grok),
+      claude: () => new ClaudeProvider(apiKeys.claude, 'claude-3-haiku-20240307'),
+      gemini: () => new GeminiProvider(apiKeys.gemini, 'gemini-flash'),
+      qwen: () => new QwenProvider(apiKeys.qwen, 'qwen-turbo')
+    };
+
+    console.log(`[${agentId}] Using cheap model for idle mode`);
+    return cheapProviders[agentId]();
   }
 
   // During active debate, use premium models per agent

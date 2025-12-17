@@ -4,9 +4,9 @@ import { AgentRunner, type AgentContext } from '../agents/runner.js';
 import { SupabaseService } from '../services/supabase.js';
 import { PlanEditor } from '../services/planEditor.js';
 
-const ACTIVE_TICK_INTERVAL = 7000; // 7 seconds for active debates
-const IDLE_TICK_INTERVAL = 60000; // 60 seconds (1 minute) for idle mode
-const AGENT_IDS: AgentId[] = ['claude', 'chatgpt', 'grok', 'gemini', 'deepseek', 'qwen'];
+const ACTIVE_TICK_INTERVAL = 60000; // 60 seconds for active debates
+const IDLE_TICK_INTERVAL = 300000; // 5 minutes for idle mode
+const AGENT_IDS: AgentId[] = ['chatgpt', 'deepseek', 'grok', 'claude', 'gemini', 'qwen'];
 const MAX_VOTE_ATTEMPTS = 3;
 const MAX_DEBATE_DURATION_MS = 5 * 24 * 60 * 60 * 1000; // 5 days in milliseconds
 const MAX_DEBATE_DURATION_HOURS = 120; // 5 days
