@@ -252,7 +252,7 @@ export class QwenProvider implements LLMProvider {
   }
 }
 
-export function createProvider(agentId: AgentId): LLMProvider {
+export function createProvider(agentId: AgentId, isIdle: boolean = false): LLMProvider {
   const apiKeys = {
     claude: process.env.ANTHROPIC_API_KEY!,
     chatgpt: process.env.OPENAI_API_KEY!,
@@ -262,6 +262,13 @@ export function createProvider(agentId: AgentId): LLMProvider {
     qwen: process.env.QWEN_API_KEY!
   };
 
+  // During idle mode, ALL agents use DeepSeek for maximum cost savings
+  if (isIdle) {
+    console.log(`[${agentId}] Using DeepSeek (cheap model) for idle mode`);
+    return new DeepSeekProvider(apiKeys.deepseek);
+  }
+
+  // During active debate, use premium models per agent
   const providers = {
     claude: () => new ClaudeProvider(apiKeys.claude),
     chatgpt: () => new ChatGPTProvider(apiKeys.chatgpt),

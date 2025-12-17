@@ -20,6 +20,21 @@ router.get('/home', async (req, res) => {
     const plan = await supabase.getPlan(topic.id);
     const votes = await supabase.getAgentVotes(topic.id);
 
+    // Calculate time info for active debates
+    let timeInfo = null;
+    if (topic.state !== 'idle') {
+      const elapsedMs = Date.now() - new Date(topic.started_at).getTime();
+      const elapsedHours = elapsedMs / (1000 * 60 * 60);
+      const remainingHours = Math.max(0, 120 - elapsedHours);
+
+      timeInfo = {
+        elapsedHours: Math.floor(elapsedHours),
+        remainingHours: Math.floor(remainingHours),
+        elapsedDays: Math.floor(elapsedHours / 24) + 1,
+        remainingDays: Math.ceil(remainingHours / 24)
+      };
+    }
+
     res.json({
       status: 'active',
       currentTopic: {
@@ -30,7 +45,8 @@ router.get('/home', async (req, res) => {
         },
         state: topic.state,
         voteProgress: `${votes.length}/6`,
-        planId: plan?.id
+        planId: plan?.id,
+        timeInfo
       }
     });
   } catch (error) {

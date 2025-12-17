@@ -22,31 +22,27 @@ export interface AgentContext {
     winningMessage: string;
     winningImportance: number;
   };
+  debateTimeInfo?: {
+    elapsedDays: number;
+    remainingDays: number;
+    elapsedHours: number;
+    remainingHours: number;
+    urgencyLevel: 'none' | 'low' | 'moderate' | 'high' | 'critical';
+    isNearDeadline: boolean;
+  };
 }
 
 export class AgentRunner {
-  private providers: Map<AgentId, LLMProvider> = new Map();
-
   constructor() {
-    const agentIds: AgentId[] = ['claude', 'chatgpt', 'grok', 'gemini', 'deepseek', 'qwen'];
-    for (const agentId of agentIds) {
-      try {
-        this.providers.set(agentId, createProvider(agentId));
-      } catch (error) {
-        console.warn(`Failed to initialize provider for ${agentId}:`, error);
-      }
-    }
+    // Providers will be created dynamically based on phase (idle vs active)
   }
 
   async generateMessage(
     agentId: AgentId,
     context: AgentContext
   ): Promise<AgentMessage | AgentVoteMessage | null> {
-    const provider = this.providers.get(agentId);
-    if (!provider) {
-      console.error(`No provider available for ${agentId}`);
-      return null;
-    }
+    // Create provider dynamically based on phase (cheap for idle, premium for active)
+    const provider = createProvider(agentId, context.isIdle);
 
     const role = AGENT_ROLE_MAPPING[agentId];
     const systemPrompt = this.buildSystemPrompt(role, context.isIdle);
@@ -88,6 +84,24 @@ export class AgentRunner {
     let prompt = `Current Phase: ${context.phase}\n`;
     prompt += `Proposal: ${context.proposalTitle}\n`;
     prompt += `Summary: ${context.proposalSummary}\n\n`;
+
+    if (context.debateTimeInfo) {
+      const time = context.debateTimeInfo;
+      prompt += `⏰ DEBATE TIMELINE:\n`;
+      prompt += `- Elapsed: Day ${time.elapsedDays + 1} (${time.elapsedHours} hours)\n`;
+      prompt += `- Remaining: ${time.remainingDays} days (${time.remainingHours} hours)\n`;
+      prompt += `- Maximum debate duration: 5 days\n\n`;
+
+      if (time.urgencyLevel === 'low') {
+        prompt += `💡 Time pressure: MODERATE. Consider finding common ground on minor disagreements.\n\n`;
+      } else if (time.urgencyLevel === 'moderate') {
+        prompt += `⚠️ Time pressure: HIGH. Focus on essential blockers only. Be flexible on minor issues (e.g., logo colors, wording preferences).\n\n`;
+      } else if (time.urgencyLevel === 'high' || time.urgencyLevel === 'critical') {
+        prompt += `🚨 URGENT: Less than ${time.remainingHours} hours remaining! Block ONLY if fundamental business model is flawed.\n`;
+        prompt += `Be flexible on: branding, minor features, implementation details, timing preferences.\n`;
+        prompt += `Block only on: safety risks, legal issues, impossible economics, unethical practices.\n\n`;
+      }
+    }
 
     if (context.refusalNotice) {
       prompt += `NOTICE: Your previous message (importance ${context.refusalNotice.previousImportance}) was not selected because another message (importance ${context.refusalNotice.winningImportance}) was more important.\n`;
@@ -191,7 +205,9 @@ export class AgentRunner {
     };
 
     const results = new Map<AgentId, AgentMessage>();
-    const promises = Array.from(this.providers.keys()).map(async (agentId) => {
+    const agentIds: AgentId[] = ['claude', 'chatgpt', 'grok', 'gemini', 'deepseek', 'qwen'];
+
+    const promises = agentIds.map(async (agentId) => {
       const message = await this.generateMessage(agentId, context);
       if (message && message.type === 'message') {
         results.set(agentId, message as AgentMessage);

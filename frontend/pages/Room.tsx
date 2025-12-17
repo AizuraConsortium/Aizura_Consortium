@@ -151,6 +151,18 @@ export default function Room() {
                   <p className="text-xs text-slate-400">Votes</p>
                   <p className="text-cyan-400 font-medium">{topicInfo.voteProgress}</p>
                 </div>
+                {topicInfo.timeInfo && (
+                  <div>
+                    <p className="text-xs text-slate-400">Time</p>
+                    <p className={`font-medium ${
+                      topicInfo.timeInfo.remainingHours < 24 ? 'text-red-400' :
+                      topicInfo.timeInfo.remainingHours < 48 ? 'text-yellow-400' :
+                      'text-cyan-400'
+                    }`}>
+                      Day {topicInfo.timeInfo.elapsedDays}/5
+                    </p>
+                  </div>
+                )}
                 {topicInfo.planId && (
                   <button
                     onClick={() => navigate(`/plan/${topicId}`)}

@@ -8,6 +8,8 @@ const ACTIVE_TICK_INTERVAL = 7000; // 7 seconds for active debates
 const IDLE_TICK_INTERVAL = 60000; // 60 seconds (1 minute) for idle mode
 const AGENT_IDS: AgentId[] = ['claude', 'chatgpt', 'grok', 'gemini', 'deepseek', 'qwen'];
 const MAX_VOTE_ATTEMPTS = 3;
+const MAX_DEBATE_DURATION_MS = 5 * 24 * 60 * 60 * 1000; // 5 days in milliseconds
+const MAX_DEBATE_DURATION_HOURS = 120; // 5 days
 
 export class Orchestrator {
   private agentRunner: AgentRunner;
@@ -168,6 +170,42 @@ export class Orchestrator {
       }
     }
 
+    // Check for debate timeout (5-day maximum)
+    if (this.currentTopic.state !== 'idle' && !this.isInitializing) {
+      const timeInfo = this.calculateDebateTimeInfo(this.currentTopic.started_at);
+
+      if (timeInfo.isExpired) {
+        console.log('⏰ 5-DAY TIMEOUT REACHED! Forcing final vote...');
+
+        // Force transition to vote phase if not already there
+        if (this.currentTopic.state !== 'vote') {
+          await this.supabase.updateTopicState(this.currentTopic.id, 'vote');
+          this.currentTopic.state = 'vote';
+          console.log('🗳️  Transitioned to FINAL VOTE due to timeout');
+        }
+
+        // Check if we already have votes
+        const allVotes = await this.supabase.getAgentVotes(this.currentTopic.id);
+
+        // If all 6 votes are in, process them immediately
+        if (allVotes.length === 6) {
+          console.log('📊 All votes collected. Processing final results...');
+          await this.processVoteResults(allVotes);
+          return;
+        }
+
+        // If timeout exceeded by more than 1 hour and still no complete votes, force rejection
+        if (timeInfo.elapsedHours > MAX_DEBATE_DURATION_HOURS + 1) {
+          console.log('❌ TIMEOUT EXCEEDED BY 1+ HOUR. No consensus reached. Forcing rejection.');
+          await this.supabase.updateProposalStatus(this.currentTopic.proposal_id, 'rejected');
+          await this.supabase.endTopic(this.currentTopic.id);
+          this.currentTopic = null;
+          await this.enterIdleMode();
+          return;
+        }
+      }
+    }
+
     this.isProcessingTick = true;
 
     try {
@@ -227,6 +265,7 @@ export class Orchestrator {
     const planContent = await this.supabase.getCurrentPlanContent(this.currentTopic.id);
 
     const planOutline = this.extractOutline(planContent);
+    const timeInfo = this.calculateDebateTimeInfo(this.currentTopic.started_at);
 
     return {
       topicId: this.currentTopic.id,
@@ -240,7 +279,15 @@ export class Orchestrator {
         importance: msg.importance
       })),
       planOutline,
-      isIdle: false
+      isIdle: false,
+      debateTimeInfo: {
+        elapsedDays: timeInfo.elapsedDays,
+        remainingDays: timeInfo.remainingDays,
+        elapsedHours: Math.floor(timeInfo.elapsedHours),
+        remainingHours: Math.floor(timeInfo.remainingHours),
+        urgencyLevel: timeInfo.urgencyLevel,
+        isNearDeadline: timeInfo.remainingHours < 24
+      }
     };
   }
 
@@ -419,6 +466,47 @@ export class Orchestrator {
         // This will be handled by agents transitioning the phase
       }
     }
+  }
+
+  private calculateDebateTimeInfo(startedAt: string): {
+    elapsedMs: number;
+    elapsedHours: number;
+    elapsedDays: number;
+    remainingMs: number;
+    remainingHours: number;
+    remainingDays: number;
+    isExpired: boolean;
+    urgencyLevel: 'none' | 'low' | 'moderate' | 'high' | 'critical';
+  } {
+    const startTime = new Date(startedAt).getTime();
+    const currentTime = Date.now();
+    const elapsedMs = currentTime - startTime;
+    const elapsedHours = elapsedMs / (1000 * 60 * 60);
+    const elapsedDays = Math.floor(elapsedHours / 24);
+
+    const remainingMs = MAX_DEBATE_DURATION_MS - elapsedMs;
+    const remainingHours = Math.max(0, remainingMs / (1000 * 60 * 60));
+    const remainingDays = Math.max(0, Math.ceil(remainingHours / 24));
+
+    const isExpired = elapsedMs >= MAX_DEBATE_DURATION_MS;
+
+    let urgencyLevel: 'none' | 'low' | 'moderate' | 'high' | 'critical' = 'none';
+    if (elapsedHours < 48) urgencyLevel = 'none';
+    else if (elapsedHours < 72) urgencyLevel = 'low';
+    else if (elapsedHours < 96) urgencyLevel = 'moderate';
+    else if (elapsedHours < 120) urgencyLevel = 'high';
+    else urgencyLevel = 'critical';
+
+    return {
+      elapsedMs,
+      elapsedHours,
+      elapsedDays,
+      remainingMs,
+      remainingHours,
+      remainingDays,
+      isExpired,
+      urgencyLevel
+    };
   }
 
   async stop(): Promise<void> {
