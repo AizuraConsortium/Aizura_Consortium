@@ -19,13 +19,14 @@ export class Orchestrator {
   private tickTimer: NodeJS.Timeout | null = null;
   private currentTopic: Topic | null = null;
   private pendingMessages: Map<AgentId, AgentMessage | AgentVoteMessage> = new Map();
-  private refusalNotices: Map<AgentId, any> = new Map();
+  private refusalNotices: Map<AgentId, { notice: any; expiresAfterTick: number }> = new Map();
   private isInitializing: boolean = false;
   private isProcessingTick: boolean = false;
   private currentTickInterval: number = ACTIVE_TICK_INTERVAL;
   private voteAttemptCount: number = 0;
   private idleMessageCount: number = 0;
   private lastIdleMessageTime: number = 0;
+  private tickCount: number = 0;
 
   constructor() {
     this.agentRunner = new AgentRunner();
@@ -217,6 +218,7 @@ export class Orchestrator {
     }
 
     this.isProcessingTick = true;
+    this.tickCount++;
 
     try {
       for (const agentId of AGENT_IDS) {
@@ -224,7 +226,7 @@ export class Orchestrator {
 
         const agentContext = {
           ...context,
-          refusalNotice: this.refusalNotices.get(agentId)
+          refusalNotice: this.getRefusalNotice(agentId)
         };
 
         const message = await this.agentRunner.generateMessage(agentId, agentContext);
@@ -355,10 +357,13 @@ export class Orchestrator {
     for (const [agentId, message] of candidates) {
       if (agentId !== winnerAgentId) {
         this.refusalNotices.set(agentId, {
-          previousMessage: this.getMessageTitle(message),
-          previousImportance: message.importance,
-          winningMessage: this.getMessageTitle(winnerMessage),
-          winningImportance: winnerMessage.importance
+          notice: {
+            previousMessage: this.getMessageTitle(message),
+            previousImportance: message.importance,
+            winningMessage: this.getMessageTitle(winnerMessage),
+            winningImportance: winnerMessage.importance
+          },
+          expiresAfterTick: this.tickCount + 5 // Expire after 5 ticks (~7.5 minutes)
         });
 
         console.log(`   ❌ [${agentId}] (${message.importance}) - not selected`);
@@ -545,6 +550,19 @@ export class Orchestrator {
     this.currentTopic.state = newPhase;
     console.log(`📍 Phase transition: ${currentPhase} → ${newPhase}`);
     return true;
+  }
+
+  private getRefusalNotice(agentId: AgentId): any {
+    const entry = this.refusalNotices.get(agentId);
+    if (!entry) return undefined;
+
+    // Check if expired
+    if (this.tickCount > entry.expiresAfterTick) {
+      this.refusalNotices.delete(agentId);
+      return undefined;
+    }
+
+    return entry.notice;
   }
 
   async stop(): Promise<void> {

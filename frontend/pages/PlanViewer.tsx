@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { ArrowLeft, CheckCircle, Circle, Clock } from 'lucide-react';
 import { marked } from 'marked';
+import DOMPurify from 'dompurify';
 import { api } from '../lib/api';
 
 export default function PlanViewer() {
@@ -94,7 +95,7 @@ export default function PlanViewer() {
               <div
                 className="prose prose-invert prose-cyan max-w-none"
                 dangerouslySetInnerHTML={{
-                  __html: marked(plan.content_md || '')
+                  __html: DOMPurify.sanitize(marked(plan.content_md || '') as string)
                 }}
               />
             </div>

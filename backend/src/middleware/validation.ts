@@ -1,6 +1,33 @@
 import type { Request, Response, NextFunction } from 'express';
 
 // Simple in-memory rate limiter
+// NOTE: This implementation is suitable for single-server deployments only.
+// For production environments with multiple server instances (horizontal scaling),
+// replace this with Redis-backed rate limiting to ensure consistent rate limits
+// across all server instances.
+//
+// Recommended approach for production:
+//   1. Install: npm install express-rate-limit rate-limit-redis ioredis
+//   2. Set up Redis connection (use Redis Cloud, AWS ElastiCache, etc.)
+//   3. Replace this implementation with:
+//      import rateLimit from 'express-rate-limit';
+//      import RedisStore from 'rate-limit-redis';
+//      import { Redis } from 'ioredis';
+//
+//      const redisClient = new Redis(process.env.REDIS_URL);
+//
+//      export const createRateLimit = (maxRequests: number, windowMs: number) =>
+//        rateLimit({
+//          windowMs,
+//          max: maxRequests,
+//          standardHeaders: true,
+//          legacyHeaders: false,
+//          store: new RedisStore({
+//            client: redisClient,
+//            prefix: 'rl:',
+//          }),
+//          message: { error: 'Too many requests, please try again later' }
+//        });
 const rateLimitMap = new Map<string, { count: number; resetTime: number }>();
 
 export function rateLimit(maxRequests: number, windowMs: number) {
