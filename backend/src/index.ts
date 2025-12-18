@@ -2,6 +2,8 @@ import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import apiRoutes from './routes/api.js';
+import systemRoutes from './routes/system.js';
+import errorsRoutes from './routes/errors.js';
 import { Orchestrator } from './orchestrator/index.js';
 
 dotenv.config();
@@ -10,6 +12,7 @@ dotenv.config();
 function validateEnvironment(): void {
   const required = [
     'SUPABASE_URL',
+    'SUPABASE_ANON_KEY',
     'SUPABASE_SERVICE_ROLE_KEY',
     'ANTHROPIC_API_KEY',
     'OPENAI_API_KEY',
@@ -26,6 +29,15 @@ function validateEnvironment(): void {
     missing.forEach(key => console.error(`   - ${key}`));
     console.error('\nPlease check your .env file and ensure all required keys are set.\n');
     process.exit(1);
+  }
+
+  const optional = ['ADMIN_WHITELISTED_IPS'];
+  const missingOptional = optional.filter(key => !process.env[key]);
+
+  if (missingOptional.length > 0) {
+    console.warn('⚠️  Optional environment variables not set:');
+    missingOptional.forEach(key => console.warn(`   - ${key}`));
+    console.warn('   Admin endpoints will require IP whitelist configuration.\n');
   }
 
   console.log('✅ All required environment variables are set');
@@ -57,6 +69,8 @@ app.use(cors({
 app.use(express.json({ limit: '1mb' })); // Limit request body size to 1MB
 
 app.use('/api', apiRoutes);
+app.use('/api/system', systemRoutes);
+app.use('/api/errors', errorsRoutes);
 
 app.post('/webhook/proposal', async (req, res) => {
   try {
