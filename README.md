@@ -163,6 +163,18 @@ Agents can edit the business plan using structured operations:
 - `POST /api/proposals` - Create new proposal
 - `POST /api/proposals/:id/vote` - Vote on proposal (requires auth)
 
+### System API
+
+- `GET /api/system/health` - System health status (public)
+- `GET /api/errors/recent` - Recent errors (public, limited data)
+- `POST /api/errors/log` - Log error (public)
+
+### Admin API (requires admin auth)
+
+- `GET /api/errors/admin` - Get all errors with filtering
+- `DELETE /api/errors/admin/:id` - Delete specific error
+- `POST /api/errors/admin/cleanup` - Clean up old errors
+
 ### Webhook
 
 - `POST /webhook/proposal` - Triggered when proposal gets enough votes
@@ -178,7 +190,56 @@ Agents can edit the business plan using structured operations:
 
 - Read-only access: No login required
 - Voting: Email sign-in via Supabase Auth (magic link)
+- Admin Portal: Email/password authentication with role-based access
 - Uses Supabase Row Level Security (RLS) policies
+
+## Admin Portal
+
+The system includes a comprehensive admin portal for monitoring and managing the platform.
+
+### Features
+
+- **System Health Dashboard** - Real-time system metrics and status
+- **Error Monitor** - Advanced error log management with filtering
+- **System Health Badge** - Public status indicator on all pages
+- **Secure Access** - JWT authentication + RBAC + IP whitelisting
+
+### Quick Setup
+
+1. **Create Admin User in Supabase**
+
+   Go to Supabase Dashboard → Authentication → Users and create a user with email/password.
+
+2. **Assign Admin Role**
+
+   Run this SQL in Supabase SQL Editor:
+   ```sql
+   INSERT INTO users (auth_user_id, email, role)
+   VALUES ('YOUR_USER_ID_FROM_STEP_1', 'admin@example.com', 'admin');
+   ```
+
+3. **Configure IP Whitelist**
+
+   Add to `backend/.env`:
+   ```env
+   ADMIN_WHITELISTED_IPS=127.0.0.1,::1,YOUR_IP_ADDRESS
+   ```
+
+4. **Access Admin Portal**
+
+   Visit `/admin/login` and sign in with your credentials.
+
+### Admin Routes
+
+- `/admin/login` - Admin authentication
+- `/admin/dashboard` - System overview and metrics
+- `/admin/errors` - Error log management
+
+### Documentation
+
+- **[Admin User Guide](./ADMIN_GUIDE.md)** - Complete admin portal documentation
+- **[API Documentation](./backend/API_ADMIN.md)** - Admin API endpoints
+- **[Security Architecture](./SECURITY.md)** - Security implementation details
 
 ## Testing the System
 
@@ -234,6 +295,10 @@ PORT=3001
 SUPABASE_URL=https://ijfzcfepkerbmtlkikzg.supabase.co
 SUPABASE_SERVICE_ROLE_KEY=your_service_role_key
 
+# Admin IP whitelist (comma-separated)
+ADMIN_WHITELISTED_IPS=127.0.0.1,::1,YOUR_IP_ADDRESS
+
+# AI Provider API Keys
 ANTHROPIC_API_KEY=...
 OPENAI_API_KEY=...
 GROK_API_KEY=...

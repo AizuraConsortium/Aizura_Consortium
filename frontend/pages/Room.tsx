@@ -1,10 +1,10 @@
 import { useEffect, useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, FileText, Bug } from 'lucide-react';
+import { ArrowLeft, FileText } from 'lucide-react';
 import { api } from '../lib/api';
 import { supabase } from '../lib/supabase';
 import { AGENT_DISPLAY_NAMES, ROLE_DISPLAY_NAMES, type Message } from '../types';
-import DebugWindow from '../components/DebugWindow';
+import { SystemHealthBadge } from '../components/SystemHealthBadge';
 
 export default function Room() {
   const navigate = useNavigate();
@@ -15,7 +15,6 @@ export default function Room() {
   const [topicInfo, setTopicInfo] = useState<any>(null);
   const [totalMessages, setTotalMessages] = useState(0);
   const [hasMore, setHasMore] = useState(false);
-  const [debugOpen, setDebugOpen] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -142,14 +141,6 @@ export default function Room() {
               >
                 <ArrowLeft className="w-5 h-5" />
                 <span>Back to Home</span>
-              </button>
-              <button
-                onClick={() => setDebugOpen(true)}
-                className="text-slate-400 hover:text-cyan-400 transition-colors flex items-center space-x-1"
-                title="System Debug Monitor"
-              >
-                <Bug className="w-4 h-4" />
-                <span className="text-xs">Debug</span>
               </button>
             </div>
 
@@ -296,7 +287,7 @@ export default function Room() {
         </div>
       </div>
 
-      <DebugWindow isOpen={debugOpen} onClose={() => setDebugOpen(false)} />
+      <SystemHealthBadge />
     </div>
   );
 }
