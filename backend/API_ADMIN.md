@@ -304,11 +304,106 @@ or
 
 ---
 
+### GET /system/rate-limits
+
+Get rate limit violation statistics (admin only).
+
+**Authentication:** Required (Admin role)
+
+**Query Parameters:**
+- `hours` (optional, default: 24) - Number of hours to look back
+
+**Response:**
+```json
+{
+  "violations": [
+    {
+      "endpoint": "POST:/api/proposals",
+      "totalViolations": 45,
+      "uniqueIdentifiers": 12,
+      "avgTokensRequested": 1.2
+    }
+  ],
+  "timestamp": "2025-12-18T12:00:00.000Z"
+}
+```
+
+**Status Codes:**
+- `200 OK` - Successfully retrieved stats
+- `401 Unauthorized` - Missing or invalid authentication token
+- `403 Forbidden` - User does not have admin role or IP not whitelisted
+- `500 Internal Server Error` - Server error
+
+---
+
+### GET /system/rate-limits/:identifier
+
+Get rate limit status for a specific IP or user (admin only).
+
+**Authentication:** Required (Admin role)
+
+**URL Parameters:**
+- `identifier` - IP address or user ID to check
+
+**Example Request:**
+```
+GET /system/rate-limits/192.168.1.100
+```
+
+**Response:**
+```json
+{
+  "identifier": "192.168.1.100",
+  "limits": [
+    {
+      "endpoint": "GET:/api/home",
+      "tokens": 45,
+      "last_refill": "2025-12-18T11:59:30.000Z"
+    },
+    {
+      "endpoint": "POST:/api/proposals",
+      "tokens": 8,
+      "last_refill": "2025-12-18T11:58:00.000Z"
+    }
+  ],
+  "timestamp": "2025-12-18T12:00:00.000Z"
+}
+```
+
+**Status Codes:**
+- `200 OK` - Successfully retrieved rate limit status
+- `401 Unauthorized` - Missing or invalid authentication token
+- `403 Forbidden` - User does not have admin role or IP not whitelisted
+- `500 Internal Server Error` - Server error
+
+---
+
 ## Rate Limiting
 
-No rate limiting is currently implemented, but it's recommended to:
-- Implement rate limiting on public endpoints (e.g., 100 requests/minute per IP)
-- Use more generous limits for authenticated admin users
+All endpoints are protected by PostgreSQL-based rate limiting using a token bucket algorithm. Rate limits are enforced per endpoint and identifier (IP address).
+
+### Rate Limit Configuration
+
+See the main API documentation for a complete list of rate limits by endpoint. Admin endpoints have moderate rate limits:
+- `GET /system/rate-limits`: 30 requests per minute
+- `GET /system/rate-limits/:identifier`: 30 requests per minute
+- `GET /errors/admin`: 60 requests per minute
+- `DELETE /errors/admin/:id`: 30 requests per minute
+- `DELETE /errors/admin/cleanup`: 10 requests per minute
+
+### Rate Limit Headers
+
+All responses include standard rate limit headers:
+- `X-RateLimit-Limit`: Maximum requests allowed
+- `X-RateLimit-Remaining`: Requests remaining
+- `X-RateLimit-Reset`: Unix timestamp when limit resets
+
+### Monitoring Rate Limits
+
+Admins can monitor rate limit violations using:
+1. `GET /system/rate-limits` - View violation statistics
+2. `GET /system/rate-limits/:identifier` - Check specific IP/user status
+3. Error logs - Rate limit violations are logged to the `error_logs` table with `error_type: 'rate_limit_exceeded'`
 
 ---
 

@@ -5,6 +5,7 @@ import apiRoutes from './routes/api.js';
 import systemRoutes from './routes/system.js';
 import errorsRoutes from './routes/errors.js';
 import { Orchestrator } from './orchestrator/index.js';
+import { createRateLimit } from './middleware/validation.js';
 
 dotenv.config();
 
@@ -72,7 +73,7 @@ app.use('/api', apiRoutes);
 app.use('/api/system', systemRoutes);
 app.use('/api/errors', errorsRoutes);
 
-app.post('/webhook/proposal', async (req, res) => {
+app.post('/webhook/proposal', createRateLimit('POST:/webhook/proposal'), async (req, res) => {
   try {
     const { proposal_id } = req.body;
 
@@ -114,7 +115,7 @@ app.post('/webhook/proposal', async (req, res) => {
   }
 });
 
-app.get('/health', async (req, res) => {
+app.get('/health', createRateLimit('GET:/health'), async (req, res) => {
   try {
     const { SupabaseService } = await import('./services/supabase.js');
     const supabase = SupabaseService.getInstance();

@@ -4,12 +4,13 @@ import { requireAuth } from '../middleware/auth.js';
 import { requireRole } from '../middleware/rbac.js';
 import { requireWhitelistedIP } from '../middleware/ipWhitelist.js';
 import { ErrorLogger } from '../services/errorLogger.js';
+import { createRateLimit } from '../middleware/validation.js';
 
 const router = express.Router();
 const supabase = SupabaseService.getInstance();
 const errorLogger = ErrorLogger.getInstance();
 
-router.get('/recent', async (req, res) => {
+router.get('/recent', createRateLimit('GET:/api/errors/recent'), async (req, res) => {
   try {
     const twentyFourHoursAgo = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString();
 
@@ -37,7 +38,7 @@ router.get('/recent', async (req, res) => {
   }
 });
 
-router.post('/log', async (req, res) => {
+router.post('/log', createRateLimit('POST:/api/errors/log'), async (req, res) => {
   try {
     const { source, severity, agentId, errorType, message, details, topicId } = req.body;
 
@@ -76,7 +77,7 @@ router.post('/log', async (req, res) => {
   }
 });
 
-router.get('/admin', requireAuth, requireRole('admin'), requireWhitelistedIP, async (req, res) => {
+router.get('/admin', createRateLimit('GET:/api/errors/admin'), requireAuth, requireRole('admin'), requireWhitelistedIP, async (req, res) => {
   try {
     const {
       source,
@@ -137,7 +138,7 @@ router.get('/admin', requireAuth, requireRole('admin'), requireWhitelistedIP, as
   }
 });
 
-router.delete('/admin/:id', requireAuth, requireRole('admin'), requireWhitelistedIP, async (req, res) => {
+router.delete('/admin/:id', createRateLimit('DELETE:/api/errors/admin/:id'), requireAuth, requireRole('admin'), requireWhitelistedIP, async (req, res) => {
   try {
     const { id } = req.params;
 
@@ -165,7 +166,7 @@ router.delete('/admin/:id', requireAuth, requireRole('admin'), requireWhiteliste
   }
 });
 
-router.delete('/admin/cleanup', requireAuth, requireRole('admin'), requireWhitelistedIP, async (req, res) => {
+router.delete('/admin/cleanup', createRateLimit('DELETE:/api/errors/admin/cleanup'), requireAuth, requireRole('admin'), requireWhitelistedIP, async (req, res) => {
   try {
     const { olderThan, severity, source } = req.query;
 

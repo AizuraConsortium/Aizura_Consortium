@@ -119,6 +119,8 @@ When query parameter validation fails, the API returns a `400 Bad Request` respo
 
 Get current consortium status and active topic information.
 
+**Rate Limiting**: 60 requests per minute
+
 **Query Parameters**: None
 
 **Response (200 OK)**:
@@ -157,6 +159,8 @@ Get current consortium status and active topic information.
 ### GET /api/room/:topicId/messages
 
 Get paginated messages for a specific topic.
+
+**Rate Limiting**: 30 requests per minute
 
 **Path Parameters**:
 - `topicId` (string, required): The topic ID
@@ -200,6 +204,8 @@ Get paginated messages for a specific topic.
 
 Get the current plan and steps for a topic.
 
+**Rate Limiting**: 30 requests per minute
+
 **Path Parameters**:
 - `topicId` (string, required): The topic ID
 
@@ -237,6 +243,8 @@ Get the current plan and steps for a topic.
 
 Get list of proposals (excluding rejected ones).
 
+**Rate Limiting**: 60 requests per minute
+
 **Query Parameters**: None
 
 **Response (200 OK)**:
@@ -266,7 +274,7 @@ Create a new proposal.
 
 **Authentication**: Optional (if authenticated, proposal is linked to user)
 
-**Rate Limiting**: 10 requests per 60 seconds
+**Rate Limiting**: 10 requests per minute
 
 **Request Body**:
 
@@ -308,7 +316,7 @@ Vote on a proposal.
 
 **Authentication**: Required
 
-**Rate Limiting**: 20 requests per 60 seconds
+**Rate Limiting**: 20 requests per minute
 
 **Path Parameters**:
 - `proposalId` (string, required): The proposal ID
@@ -355,11 +363,63 @@ All user input is validated and sanitized:
 
 ### Rate Limiting
 
-Rate limiting is applied to prevent abuse:
-- POST /api/proposals: 10 requests per 60 seconds
-- POST /api/proposals/:proposalId/vote: 20 requests per 60 seconds
+All API endpoints are protected by PostgreSQL-based rate limiting using a token bucket algorithm. This implementation is suitable for multi-server deployments and Kubernetes horizontal scaling.
 
-Note: Current implementation uses in-memory rate limiting suitable for single-server deployments. For production multi-server deployments, Redis-backed rate limiting is recommended.
+#### Rate Limits by Endpoint
+
+| Endpoint | Method | Limit | Window |
+|----------|--------|-------|--------|
+| `/api/home` | GET | 60 requests | 1 minute |
+| `/api/room/:topicId/messages` | GET | 30 requests | 1 minute |
+| `/api/plan/:topicId` | GET | 30 requests | 1 minute |
+| `/api/proposals` | GET | 60 requests | 1 minute |
+| `/api/proposals` | POST | 10 requests | 1 minute |
+| `/api/proposals/:proposalId/vote` | POST | 20 requests | 1 minute |
+| `/api/system/health` | GET | 120 requests | 1 minute |
+| `/health` | GET | 120 requests | 1 minute |
+| `/api/errors/recent` | GET | 30 requests | 1 minute |
+| `/api/errors/log` | POST | 100 requests | 1 minute |
+| `/api/errors/admin` | GET | 60 requests | 1 minute |
+| `/api/errors/admin/:id` | DELETE | 30 requests | 1 minute |
+| `/api/errors/admin/cleanup` | DELETE | 10 requests | 1 minute |
+| `/webhook/proposal` | POST | 100 requests | 1 minute |
+
+#### Rate Limit Headers
+
+All responses include standard rate limit headers:
+
+- `X-RateLimit-Limit`: Maximum requests allowed in the time window
+- `X-RateLimit-Remaining`: Requests remaining in current window
+- `X-RateLimit-Reset`: Unix timestamp when the rate limit resets
+
+Example:
+```
+X-RateLimit-Limit: 60
+X-RateLimit-Remaining: 45
+X-RateLimit-Reset: 1705320000
+```
+
+#### Rate Limit Exceeded Response
+
+When rate limit is exceeded, the API returns `429 Too Many Requests`:
+
+```json
+{
+  "error": "Too many requests, please try again later",
+  "retryAfter": 30
+}
+```
+
+Headers included:
+- `Retry-After`: Seconds to wait before retrying
+
+#### Implementation Details
+
+- **Algorithm**: Token bucket with automatic refill
+- **Storage**: PostgreSQL (Supabase) for multi-server compatibility
+- **Identification**: By IP address (supports X-Forwarded-For header)
+- **Violations**: Logged to database for security monitoring
+- **Failover**: Fails open (allows requests) if database is unavailable
 
 ### Attack Detection
 

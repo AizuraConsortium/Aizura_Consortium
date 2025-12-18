@@ -1,11 +1,11 @@
 import express from 'express';
 import { SupabaseService } from '../services/supabase.js';
-import { rateLimit, validateProposal, validateVote, validatePagination } from '../middleware/validation.js';
+import { createRateLimit, validateProposal, validateVote, validatePagination } from '../middleware/validation.js';
 
 const router = express.Router();
 const supabase = SupabaseService.getInstance();
 
-router.get('/home', async (req, res) => {
+router.get('/home', createRateLimit('GET:/api/home'), async (req, res) => {
   try {
     const topic = await supabase.getCurrentTopic();
 
@@ -55,7 +55,7 @@ router.get('/home', async (req, res) => {
   }
 });
 
-router.get('/room/:topicId/messages', validatePagination(), async (req, res) => {
+router.get('/room/:topicId/messages', createRateLimit('GET:/api/room/:topicId/messages'), validatePagination(), async (req, res) => {
   try {
     const { topicId } = req.params;
     const limit = parseInt(req.query.limit as string);
@@ -92,7 +92,7 @@ router.get('/room/:topicId/messages', validatePagination(), async (req, res) => 
   }
 });
 
-router.get('/plan/:topicId', async (req, res) => {
+router.get('/plan/:topicId', createRateLimit('GET:/api/plan/:topicId'), async (req, res) => {
   try {
     const { topicId } = req.params;
 
@@ -124,7 +124,7 @@ router.get('/plan/:topicId', async (req, res) => {
   }
 });
 
-router.get('/proposals', async (req, res) => {
+router.get('/proposals', createRateLimit('GET:/api/proposals'), async (req, res) => {
   try {
     const { data, error } = await supabase
       .getClient()
@@ -143,7 +143,7 @@ router.get('/proposals', async (req, res) => {
   }
 });
 
-router.post('/proposals', rateLimit(10, 60000), validateProposal, async (req, res) => {
+router.post('/proposals', createRateLimit('POST:/api/proposals'), validateProposal, async (req, res) => {
   try {
     const { title, summary } = req.body;
 
@@ -178,7 +178,7 @@ router.post('/proposals', rateLimit(10, 60000), validateProposal, async (req, re
   }
 });
 
-router.post('/proposals/:proposalId/vote', rateLimit(20, 60000), validateVote, async (req, res) => {
+router.post('/proposals/:proposalId/vote', createRateLimit('POST:/api/proposals/:proposalId/vote'), validateVote, async (req, res) => {
   try {
     const { proposalId } = req.params;
     const { vote } = req.body;

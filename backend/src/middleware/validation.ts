@@ -1,68 +1,82 @@
 import type { Request, Response, NextFunction } from 'express';
+import { RateLimiterService } from '../services/rateLimiter.js';
+import { getRateLimitForEndpoint, normalizeEndpoint } from '../config/rateLimits.js';
 
-// Simple in-memory rate limiter
-// NOTE: This implementation is suitable for single-server deployments only.
-// For production environments with multiple server instances (horizontal scaling),
-// replace this with Redis-backed rate limiting to ensure consistent rate limits
-// across all server instances.
-//
-// Recommended approach for production:
-//   1. Install: npm install express-rate-limit rate-limit-redis ioredis
-//   2. Set up Redis connection (use Redis Cloud, AWS ElastiCache, etc.)
-//   3. Replace this implementation with:
-//      import rateLimit from 'express-rate-limit';
-//      import RedisStore from 'rate-limit-redis';
-//      import { Redis } from 'ioredis';
-//
-//      const redisClient = new Redis(process.env.REDIS_URL);
-//
-//      export const createRateLimit = (maxRequests: number, windowMs: number) =>
-//        rateLimit({
-//          windowMs,
-//          max: maxRequests,
-//          standardHeaders: true,
-//          legacyHeaders: false,
-//          store: new RedisStore({
-//            client: redisClient,
-//            prefix: 'rl:',
-//          }),
-//          message: { error: 'Too many requests, please try again later' }
-//        });
-const rateLimitMap = new Map<string, { count: number; resetTime: number }>();
+const rateLimiter = RateLimiterService.getInstance();
 
-export function rateLimit(maxRequests: number, windowMs: number) {
-  return (req: Request, res: Response, next: NextFunction) => {
-    const key = req.ip || 'unknown';
-    const now = Date.now();
+function getIdentifier(req: Request): string {
+  const forwarded = req.headers['x-forwarded-for'];
+  if (typeof forwarded === 'string') {
+    return forwarded.split(',')[0].trim();
+  }
+  return req.ip || req.socket.remoteAddress || 'unknown';
+}
 
-    let limitData = rateLimitMap.get(key);
+function addRateLimitHeaders(
+  res: Response,
+  limit: number,
+  remaining: number,
+  resetAt: Date
+): void {
+  res.setHeader('X-RateLimit-Limit', limit.toString());
+  res.setHeader('X-RateLimit-Remaining', Math.max(0, remaining).toString());
+  res.setHeader('X-RateLimit-Reset', Math.floor(resetAt.getTime() / 1000).toString());
+}
 
-    if (!limitData || now > limitData.resetTime) {
-      limitData = { count: 0, resetTime: now + windowMs };
-      rateLimitMap.set(key, limitData);
+export function rateLimitPostgreSQL(
+  maxRequests: number,
+  windowMinutes: number,
+  endpointName: string
+) {
+  return async (req: Request, res: Response, next: NextFunction) => {
+    const identifier = getIdentifier(req);
+
+    try {
+      const result = await rateLimiter.checkLimit(
+        identifier,
+        endpointName,
+        maxRequests,
+        windowMinutes
+      );
+
+      addRateLimitHeaders(res, result.limit, result.remaining, result.resetAt);
+
+      if (!result.allowed) {
+        const retryAfter = Math.ceil((result.resetAt.getTime() - Date.now()) / 1000);
+        res.setHeader('Retry-After', retryAfter.toString());
+
+        await rateLimiter.logViolation({
+          identifier,
+          endpoint: endpointName,
+          tokensRequested: 1,
+          userAgent: req.headers['user-agent'],
+          ipAddress: identifier
+        });
+
+        return res.status(429).json({
+          error: 'Too many requests, please try again later',
+          retryAfter
+        });
+      }
+
+      next();
+    } catch (error) {
+      console.error('Rate limit middleware error:', error);
+      next();
     }
-
-    limitData.count++;
-
-    if (limitData.count > maxRequests) {
-      return res.status(429).json({
-        error: 'Too many requests, please try again later'
-      });
-    }
-
-    next();
   };
 }
 
-// Clean up old rate limit entries every 5 minutes
-setInterval(() => {
-  const now = Date.now();
-  for (const [key, data] of rateLimitMap.entries()) {
-    if (now > data.resetTime) {
-      rateLimitMap.delete(key);
-    }
-  }
-}, 5 * 60 * 1000);
+export function createRateLimit(endpoint: string) {
+  const config = getRateLimitForEndpoint(endpoint);
+  return rateLimitPostgreSQL(config.maxRequests, config.windowMinutes, endpoint);
+}
+
+export function rateLimit(maxRequests: number, windowMs: number) {
+  const windowMinutes = windowMs / 60000;
+  const endpointName = 'legacy';
+  return rateLimitPostgreSQL(maxRequests, windowMinutes, endpointName);
+}
 
 // Validation helpers
 export function validateProposal(req: Request, res: Response, next: NextFunction) {

@@ -1,10 +1,16 @@
 import express from 'express';
 import { SupabaseService } from '../services/supabase.js';
+import { createRateLimit } from '../middleware/validation.js';
+import { RateLimiterService } from '../services/rateLimiter.js';
+import { requireAuth } from '../middleware/auth.js';
+import { requireRole } from '../middleware/rbac.js';
+import { requireWhitelistedIP } from '../middleware/ipWhitelist.js';
 
 const router = express.Router();
 const supabase = SupabaseService.getInstance();
+const rateLimiter = RateLimiterService.getInstance();
 
-router.get('/health', async (req, res) => {
+router.get('/health', createRateLimit('GET:/api/system/health'), async (req, res) => {
   try {
     const twentyFourHoursAgo = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString();
 
@@ -77,6 +83,35 @@ router.get('/health', async (req, res) => {
     });
   } catch (error) {
     console.error('System health check error:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+router.get('/rate-limits', createRateLimit('GET:/api/system/rate-limits'), requireAuth, requireRole('admin'), requireWhitelistedIP, async (req, res) => {
+  try {
+    const stats = await rateLimiter.getViolationStats(24);
+    res.json({
+      violations: stats,
+      timestamp: new Date().toISOString()
+    });
+  } catch (error) {
+    console.error('Error fetching rate limit stats:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+router.get('/rate-limits/:identifier', createRateLimit('GET:/api/system/rate-limits/:identifier'), requireAuth, requireRole('admin'), requireWhitelistedIP, async (req, res) => {
+  try {
+    const { identifier } = req.params;
+    const limits = await rateLimiter.getCurrentLimits(identifier);
+
+    res.json({
+      identifier,
+      limits,
+      timestamp: new Date().toISOString()
+    });
+  } catch (error) {
+    console.error('Error fetching rate limits for identifier:', error);
     res.status(500).json({ error: 'Internal server error' });
   }
 });
