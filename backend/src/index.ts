@@ -68,14 +68,35 @@ app.post('/webhook/proposal', async (req, res) => {
 
     console.log(`📨 Webhook received for proposal: ${proposal_id}`);
 
-    if (orchestrator) {
-      await orchestrator.handleNewProposal(proposal_id);
+    if (!orchestrator) {
+      console.error('⚠️  Orchestrator not initialized');
+      return res.status(503).json({ error: 'Service not ready' });
     }
 
-    res.json({ success: true });
+    try {
+      await orchestrator.handleNewProposal(proposal_id);
+      res.json({
+        success: true,
+        message: 'Proposal received and queued for processing'
+      });
+    } catch (error) {
+      console.error(`❌ Error handling proposal ${proposal_id}:`, error);
+
+      if (error instanceof Error) {
+        return res.status(500).json({
+          error: 'Failed to process proposal',
+          details: error.message
+        });
+      }
+
+      throw error;
+    }
   } catch (error) {
-    console.error('Webhook error:', error);
-    res.status(500).json({ error: 'Internal server error' });
+    console.error('💥 Webhook fatal error:', error);
+    res.status(500).json({
+      error: 'Internal server error',
+      message: 'An unexpected error occurred'
+    });
   }
 });
 

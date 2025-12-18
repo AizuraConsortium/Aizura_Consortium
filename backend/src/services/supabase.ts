@@ -14,8 +14,31 @@ import type {
   AgentRole,
   Phase,
   AgentMessage,
-  AgentVoteMessage
+  AgentVoteMessage,
+  QueueOperationResult
 } from '../../../shared/types/index.js';
+
+interface PostgresError extends Error {
+  code?: string;
+  details?: string;
+  hint?: string;
+}
+
+function isPostgresError(error: unknown): error is PostgresError {
+  return error instanceof Error && 'code' in error;
+}
+
+function isDuplicateKeyError(error: unknown, constraintName?: string): boolean {
+  if (!isPostgresError(error)) return false;
+
+  if (error.code !== '23505') return false;
+
+  if (constraintName && error.message) {
+    return error.message.includes(constraintName);
+  }
+
+  return true;
+}
 
 export class SupabaseService {
   private static instance: SupabaseService | null = null;
@@ -282,7 +305,7 @@ export class SupabaseService {
     if (error) throw error;
   }
 
-  async addToProposalQueue(proposalId: string, priority: number = 0): Promise<void> {
+  async addToProposalQueue(proposalId: string, priority: number = 0): Promise<QueueOperationResult> {
     const { error } = await this.client
       .from('proposal_queue')
       .insert({
@@ -291,7 +314,23 @@ export class SupabaseService {
         status: 'queued'
       });
 
-    if (error) throw error;
+    if (error) {
+      if (isDuplicateKeyError(error, 'proposal_queue_proposal_id_key')) {
+        return {
+          success: true,
+          wasAlreadyQueued: true,
+          message: `Proposal ${proposalId} is already queued`
+        };
+      }
+
+      throw error;
+    }
+
+    return {
+      success: true,
+      wasAlreadyQueued: false,
+      message: `Proposal ${proposalId} added to queue successfully`
+    };
   }
 
   async getNextQueuedProposal(): Promise<ProposalQueue | null> {

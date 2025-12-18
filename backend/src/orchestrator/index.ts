@@ -62,7 +62,14 @@ export class Orchestrator {
 
     if (this.currentTopic && !this.currentTopic.ended_at) {
       console.log('⚠️ Already processing a topic. Adding to queue.');
-      await this.supabase.addToProposalQueue(proposalId);
+      const queueResult = await this.supabase.addToProposalQueue(proposalId);
+
+      if (queueResult.wasAlreadyQueued) {
+        console.log(`ℹ️  Proposal ${proposalId} was already in queue (duplicate webhook call)`);
+      } else {
+        console.log(`✅ Proposal ${proposalId} added to queue`);
+      }
+
       return;
     }
 

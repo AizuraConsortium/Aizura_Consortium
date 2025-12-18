@@ -215,3 +215,9 @@ export const ROLE_DISPLAY_NAMES: Record<AgentRole, string> = {
   'finance-tokenomics': 'Finance & Tokenomics Lead',
   'risk-compliance': 'Risk, Compliance & Trust Lead'
 };
+
+export interface QueueOperationResult {
+  success: boolean;
+  wasAlreadyQueued: boolean;
+  message: string;
+}
