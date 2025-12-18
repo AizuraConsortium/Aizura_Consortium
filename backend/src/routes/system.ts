@@ -45,6 +45,20 @@ router.get('/health', async (req, res) => {
       systemHealth = 'healthy';
     }
 
+    const { data: recentErrors } = await supabase
+      .getClient()
+      .from('error_logs')
+      .select('severity, message, created_at')
+      .gte('created_at', twentyFourHoursAgo)
+      .order('created_at', { ascending: false })
+      .limit(10);
+
+    const recentErrorsList = recentErrors?.map(err => ({
+      severity: err.severity,
+      message: err.message,
+      timestamp: err.created_at
+    })) || [];
+
     const dbHealth = await supabase.healthCheck();
 
     const uptimePercent = dbHealth.healthy ? 99.9 : 0;
@@ -54,7 +68,8 @@ router.get('/health', async (req, res) => {
       uptime: uptimePercent,
       errors: {
         last24h: totalErrors,
-        bySeverity: errorCounts
+        bySeverity: errorCounts,
+        recent: recentErrorsList
       },
       database: {
         connected: dbHealth.healthy

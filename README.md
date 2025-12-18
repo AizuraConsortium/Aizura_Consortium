@@ -293,6 +293,7 @@ VITE_API_URL=http://localhost:3001/api
 ```
 PORT=3001
 SUPABASE_URL=https://ijfzcfepkerbmtlkikzg.supabase.co
+SUPABASE_ANON_KEY=your_anon_key
 SUPABASE_SERVICE_ROLE_KEY=your_service_role_key
 
 # Admin IP whitelist (comma-separated)
