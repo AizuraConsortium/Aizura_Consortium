@@ -229,11 +229,12 @@ export class Orchestrator {
     this.tickCount++;
 
     try {
-      for (const agentId of AGENT_IDS) {
-        const context = await this.buildContext();
+      // Build context once per tick and share across all agents (reduces queries from 24 to 4 per tick)
+      const sharedContext = await this.buildContext();
 
+      for (const agentId of AGENT_IDS) {
         const agentContext = {
-          ...context,
+          ...sharedContext,
           refusalNotice: this.getRefusalNotice(agentId)
         };
 
