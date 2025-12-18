@@ -1,0 +1,415 @@
+# Aizura Consortium API Documentation
+
+## Overview
+
+This document describes the Aizura Consortium REST API, including endpoint specifications, query parameter validation rules, and error response formats.
+
+## Base URL
+
+```
+http://localhost:3001/api
+```
+
+## Authentication
+
+Most endpoints support optional authentication via Bearer tokens:
+
+```
+Authorization: Bearer <token>
+```
+
+## Query Parameter Validation
+
+All query parameters are validated according to strict rules to ensure security and stability.
+
+### Pagination Parameters
+
+Endpoints that support pagination accept the following query parameters:
+
+| Parameter | Type    | Required | Default | Min | Max       | Description                    |
+|-----------|---------|----------|---------|-----|-----------|--------------------------------|
+| `limit`   | integer | No       | 50      | 1   | 100       | Number of items per page       |
+| `offset`  | integer | No       | 0       | 0   | 1,000,000 | Number of items to skip        |
+
+#### Validation Rules
+
+- **Must be integers**: Decimal values (e.g., `50.5`) are rejected
+- **Must be finite**: `Infinity`, `-Infinity`, and `NaN` are rejected
+- **Standard notation only**: Hexadecimal (`0x10`), octal (`0o10`), and binary (`0b10`) notation are rejected
+- **Within bounds**: Values must be within the specified min/max range
+- **Non-negative**: Negative values are rejected
+
+#### Valid Examples
+
+```
+GET /api/room/123/messages?limit=25&offset=50
+GET /api/room/123/messages?limit=100
+GET /api/room/123/messages (uses defaults)
+```
+
+#### Invalid Examples
+
+```
+GET /api/room/123/messages?limit=-10          // Negative value
+GET /api/room/123/messages?limit=999999       // Exceeds maximum
+GET /api/room/123/messages?offset=-999999     // Negative value
+GET /api/room/123/messages?limit=Infinity     // Non-finite
+GET /api/room/123/messages?limit=NaN          // Not a number
+GET /api/room/123/messages?limit=0x100        // Hexadecimal notation
+GET /api/room/123/messages?limit=50.5         // Decimal value
+```
+
+## Error Responses
+
+### Validation Errors
+
+When query parameter validation fails, the API returns a `400 Bad Request` response with the following structure:
+
+```json
+{
+  "error": "Invalid pagination parameter",
+  "code": "VALIDATION_ERROR",
+  "details": {
+    "param": "limit",
+    "provided": "-10",
+    "expected": "An integer >= 1",
+    "constraints": {
+      "min": 1,
+      "max": 100,
+      "default": 50
+    }
+  },
+  "timestamp": "2024-01-15T10:30:00.000Z"
+}
+```
+
+#### Error Response Fields
+
+| Field                  | Type   | Description                                      |
+|------------------------|--------|--------------------------------------------------|
+| `error`                | string | Human-readable error message                     |
+| `code`                 | string | Error code (always `VALIDATION_ERROR`)           |
+| `details.param`        | string | Name of the invalid parameter                    |
+| `details.provided`     | string | Value that was provided (or `null` if missing)   |
+| `details.expected`     | string | Description of expected value format             |
+| `details.constraints`  | object | Validation constraints (min, max, default, etc.) |
+| `timestamp`            | string | ISO 8601 timestamp of the error                  |
+
+### Other Errors
+
+#### 500 Internal Server Error
+
+```json
+{
+  "error": "Internal server error"
+}
+```
+
+#### 429 Too Many Requests
+
+```json
+{
+  "error": "Too many requests, please try again later"
+}
+```
+
+## Endpoints
+
+### GET /api/home
+
+Get current consortium status and active topic information.
+
+**Query Parameters**: None
+
+**Response (200 OK)**:
+
+```json
+{
+  "status": "active",
+  "currentTopic": {
+    "id": "topic-123",
+    "proposal": {
+      "title": "Proposal Title",
+      "summary": "Proposal summary"
+    },
+    "state": "debate",
+    "voteProgress": "3/6",
+    "planId": "plan-456",
+    "timeInfo": {
+      "elapsedHours": 24,
+      "remainingHours": 96,
+      "elapsedDays": 2,
+      "remainingDays": 4
+    }
+  }
+}
+```
+
+**Response (200 OK - Idle State)**:
+
+```json
+{
+  "status": "idle",
+  "currentTopic": null
+}
+```
+
+### GET /api/room/:topicId/messages
+
+Get paginated messages for a specific topic.
+
+**Path Parameters**:
+- `topicId` (string, required): The topic ID
+
+**Query Parameters**:
+- `limit` (integer, optional): Number of messages per page (default: 50, max: 100)
+- `offset` (integer, optional): Number of messages to skip (default: 0)
+
+**Response (200 OK)**:
+
+```json
+{
+  "messages": [
+    {
+      "id": "msg-1",
+      "topic_id": "topic-123",
+      "agent_id": "agent-1",
+      "agent_role": "analyst",
+      "phase": "debate",
+      "importance": 8,
+      "body": {
+        "type": "debate",
+        "message": "Agent message content"
+      },
+      "selected": true,
+      "created_at": "2024-01-15T10:00:00.000Z"
+    }
+  ],
+  "total": 150,
+  "offset": 0,
+  "limit": 50,
+  "hasMore": true
+}
+```
+
+**Error Responses**:
+- `400 Bad Request`: Invalid query parameters (see Validation Errors)
+- `500 Internal Server Error`: Server error
+
+### GET /api/plan/:topicId
+
+Get the current plan and steps for a topic.
+
+**Path Parameters**:
+- `topicId` (string, required): The topic ID
+
+**Query Parameters**: None
+
+**Response (200 OK)**:
+
+```json
+{
+  "plan": {
+    "id": "plan-123",
+    "topic_id": "topic-123",
+    "title": "Plan Title",
+    "content_md": "# Plan Content\n\nMarkdown content...",
+    "created_at": "2024-01-15T10:00:00.000Z"
+  },
+  "steps": [
+    {
+      "id": "step-1",
+      "plan_id": "plan-123",
+      "step_number": 1,
+      "description": "Step description",
+      "status": "pending",
+      "created_at": "2024-01-15T10:00:00.000Z"
+    }
+  ]
+}
+```
+
+**Error Responses**:
+- `404 Not Found`: Plan not found
+- `500 Internal Server Error`: Server error
+
+### GET /api/proposals
+
+Get list of proposals (excluding rejected ones).
+
+**Query Parameters**: None
+
+**Response (200 OK)**:
+
+```json
+{
+  "proposals": [
+    {
+      "id": "proposal-123",
+      "title": "Proposal Title",
+      "summary": "Proposal summary",
+      "status": "queued",
+      "submitted_by": "user-id",
+      "voting_ends_at": "2024-01-22T10:00:00.000Z",
+      "created_at": "2024-01-15T10:00:00.000Z"
+    }
+  ]
+}
+```
+
+**Error Responses**:
+- `500 Internal Server Error`: Server error
+
+### POST /api/proposals
+
+Create a new proposal.
+
+**Authentication**: Optional (if authenticated, proposal is linked to user)
+
+**Rate Limiting**: 10 requests per 60 seconds
+
+**Request Body**:
+
+```json
+{
+  "title": "Proposal Title",
+  "summary": "Detailed proposal summary"
+}
+```
+
+**Validation Rules**:
+- `title`: Required, string, 3-200 characters
+- `summary`: Required, string, 10-5000 characters
+
+**Response (200 OK)**:
+
+```json
+{
+  "proposal": {
+    "id": "proposal-123",
+    "title": "Proposal Title",
+    "summary": "Detailed proposal summary",
+    "status": "queued",
+    "submitted_by": "user-id",
+    "voting_ends_at": "2024-01-22T10:00:00.000Z",
+    "created_at": "2024-01-15T10:00:00.000Z"
+  }
+}
+```
+
+**Error Responses**:
+- `400 Bad Request`: Invalid request body
+- `429 Too Many Requests`: Rate limit exceeded
+- `500 Internal Server Error`: Server error
+
+### POST /api/proposals/:proposalId/vote
+
+Vote on a proposal.
+
+**Authentication**: Required
+
+**Rate Limiting**: 20 requests per 60 seconds
+
+**Path Parameters**:
+- `proposalId` (string, required): The proposal ID
+
+**Request Body**:
+
+```json
+{
+  "vote": "for"
+}
+```
+
+**Validation Rules**:
+- `vote`: Required, must be either `"for"` or `"against"`
+
+**Response (200 OK)**:
+
+```json
+{
+  "vote": {
+    "id": "vote-123",
+    "proposal_id": "proposal-123",
+    "user_id": "user-123",
+    "vote": "for",
+    "created_at": "2024-01-15T10:00:00.000Z"
+  }
+}
+```
+
+**Error Responses**:
+- `400 Bad Request`: Invalid request body
+- `401 Unauthorized`: Authentication required or invalid token
+- `429 Too Many Requests`: Rate limit exceeded
+- `500 Internal Server Error`: Server error
+
+## Security
+
+### Input Validation
+
+All user input is validated and sanitized:
+- Query parameters are validated against strict type and range constraints
+- Request bodies are validated against schemas
+- HTML script tags and iframes are stripped from text inputs
+
+### Rate Limiting
+
+Rate limiting is applied to prevent abuse:
+- POST /api/proposals: 10 requests per 60 seconds
+- POST /api/proposals/:proposalId/vote: 20 requests per 60 seconds
+
+Note: Current implementation uses in-memory rate limiting suitable for single-server deployments. For production multi-server deployments, Redis-backed rate limiting is recommended.
+
+### Attack Detection
+
+The API monitors for suspicious validation failure patterns:
+- Multiple validation failures from the same IP are logged
+- Threshold: 10 failures within 60 seconds triggers a security alert
+- Common attack patterns (SQL injection, type confusion) are detected and logged
+
+### CORS
+
+CORS is configured to allow requests from:
+- `http://localhost:5173` (development frontend)
+- `http://localhost:3000` (alternative development port)
+- `http://localhost:4173` (preview mode)
+- Custom origins specified in `ALLOWED_ORIGINS` environment variable
+
+## Best Practices
+
+### Pagination
+
+1. Always specify reasonable `limit` values to avoid large response sizes
+2. Use `offset` for sequential pagination
+3. Check the `hasMore` field to determine if additional pages exist
+4. Consider caching responses when appropriate
+
+### Error Handling
+
+1. Check response status codes before processing response bodies
+2. Parse validation error details to provide user-friendly error messages
+3. Log unexpected errors for debugging
+4. Implement retry logic with exponential backoff for rate limit errors
+
+### Performance
+
+1. Use pagination to limit response sizes
+2. Implement client-side caching for frequently accessed data
+3. Minimize unnecessary API calls
+4. Consider WebSocket connections for real-time updates (if available)
+
+## Changelog
+
+### 2024-01-15 - Query Parameter Validation
+
+- Added comprehensive query parameter validation
+- Implemented strict type checking for pagination parameters
+- Added detailed validation error responses
+- Implemented security monitoring for validation failures
+- Enhanced protection against memory exhaustion attacks
+- Added protection against type confusion attacks
+
+## Support
+
+For issues or questions, please refer to the main project documentation or open an issue in the repository.

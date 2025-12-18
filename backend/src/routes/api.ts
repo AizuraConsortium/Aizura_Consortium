@@ -1,6 +1,6 @@
 import express from 'express';
 import { SupabaseService } from '../services/supabase.js';
-import { rateLimit, validateProposal, validateVote } from '../middleware/validation.js';
+import { rateLimit, validateProposal, validateVote, validatePagination } from '../middleware/validation.js';
 
 const router = express.Router();
 const supabase = SupabaseService.getInstance();
@@ -55,11 +55,11 @@ router.get('/home', async (req, res) => {
   }
 });
 
-router.get('/room/:topicId/messages', async (req, res) => {
+router.get('/room/:topicId/messages', validatePagination(), async (req, res) => {
   try {
     const { topicId } = req.params;
-    const limit = Math.min(parseInt(req.query.limit as string) || 50, 100);
-    const offset = parseInt(req.query.offset as string) || 0;
+    const limit = parseInt(req.query.limit as string);
+    const offset = parseInt(req.query.offset as string);
 
     // Get total count
     const { count } = await supabase.getClient()

@@ -118,3 +118,12 @@ function sanitizeInput(input: string): string {
     .replace(/<iframe\b[^<]*(?:(?!<\/iframe>)<[^<]*)*<\/iframe>/gi, '')
     .trim();
 }
+
+export { validatePagination, createQueryValidator } from './queryValidation.js';
+export {
+  validatePaginationParams,
+  validateIntegerParam,
+  validateEnumParam,
+  QueryValidationError
+} from '../utils/queryValidation.js';
+export { logValidationFailure, getValidationStats } from '../utils/validationLogger.js';
