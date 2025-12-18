@@ -1,23 +1,48 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { ErrorBoundary } from './components/ErrorBoundary';
 import { AuthProvider } from './contexts/AuthContext';
+import { AdminAuthProvider } from './contexts/AdminAuthContext';
+import { AdminProtectedRoute } from './components/AdminProtectedRoute';
 import Home from './pages/Home';
 import Room from './pages/Room';
 import PlanViewer from './pages/PlanViewer';
 import Governance from './pages/Governance';
+import { AdminLogin } from './pages/admin/AdminLogin';
+import { AdminDashboard } from './pages/admin/AdminDashboard';
+import { ErrorMonitor } from './pages/admin/ErrorMonitor';
 
 export default function App() {
   return (
     <ErrorBoundary>
       <AuthProvider>
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/room" element={<Room />} />
-            <Route path="/plan/:topicId" element={<PlanViewer />} />
-            <Route path="/governance" element={<Governance />} />
-          </Routes>
-        </BrowserRouter>
+        <AdminAuthProvider>
+          <BrowserRouter>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/room" element={<Room />} />
+              <Route path="/plan/:topicId" element={<PlanViewer />} />
+              <Route path="/governance" element={<Governance />} />
+
+              <Route path="/admin/login" element={<AdminLogin />} />
+              <Route
+                path="/admin/dashboard"
+                element={
+                  <AdminProtectedRoute>
+                    <AdminDashboard />
+                  </AdminProtectedRoute>
+                }
+              />
+              <Route
+                path="/admin/errors"
+                element={
+                  <AdminProtectedRoute>
+                    <ErrorMonitor />
+                  </AdminProtectedRoute>
+                }
+              />
+            </Routes>
+          </BrowserRouter>
+        </AdminAuthProvider>
       </AuthProvider>
     </ErrorBoundary>
   );
