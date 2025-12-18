@@ -1,5 +1,6 @@
 import type { PlanEditorArgs, AgentId } from '../../../shared/types/index.js';
 import { BUSINESS_PLAN_TEMPLATE } from '../../../shared/types/prompts.js';
+import { ErrorLogger } from './errorLogger.js';
 
 export interface PlanEditorResult {
   revisionId: string;
@@ -32,7 +33,7 @@ export class PlanEditor {
         ({ newPlan, removedChars } = this.deleteSection(currentPlan, args));
         break;
       case 'move':
-        ({ newPlan } = this.move(currentPlan, args));
+        ({ newPlan } = this.move(currentPlan, args, agentId));
         break;
     }
 
@@ -141,9 +142,37 @@ export class PlanEditor {
     };
   }
 
-  private move(plan: string, args: PlanEditorArgs): { newPlan: string } {
+  private move(plan: string, args: PlanEditorArgs, agentId: AgentId): { newPlan: string } {
     if (!args.target_path) {
       console.warn('Move operation requires target_path');
+      return { newPlan: plan };
+    }
+
+    // Prevent moving section to the same path (no-op)
+    if (args.path === args.target_path) {
+      console.warn('Cannot move section to the same path');
+      ErrorLogger.getInstance().logError({
+        source: 'backend',
+        severity: 'warning',
+        agentId,
+        errorType: 'invalid_plan_move',
+        message: 'Attempted to move section to the same path',
+        details: { path: args.path, target_path: args.target_path, reason: 'same_path' }
+      }).catch((err: unknown) => console.error('Failed to log error:', err));
+      return { newPlan: plan };
+    }
+
+    // Prevent moving section into itself or its descendants (cycle detection)
+    if (args.target_path.startsWith(args.path + '/')) {
+      console.warn('Cannot move section into itself or its descendants');
+      ErrorLogger.getInstance().logError({
+        source: 'backend',
+        severity: 'warning',
+        agentId,
+        errorType: 'invalid_plan_move',
+        message: 'Attempted to move section into itself or its descendants',
+        details: { path: args.path, target_path: args.target_path, reason: 'circular_dependency' }
+      }).catch((err: unknown) => console.error('Failed to log error:', err));
       return { newPlan: plan };
     }
 
