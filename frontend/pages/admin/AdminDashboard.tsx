@@ -250,17 +250,21 @@ export function AdminDashboard() {
             </p>
           </Link>
 
-          <div className="bg-white rounded-lg border border-gray-200 p-6 opacity-60">
+          <Link
+            to="/admin/rate-limits"
+            className="bg-white rounded-lg border border-gray-200 p-6 hover:border-blue-300 hover:shadow-md transition group"
+          >
             <div className="flex items-start justify-between mb-4">
-              <div className="bg-gray-100 p-3 rounded-lg">
-                <Clock className="h-6 w-6 text-gray-600" />
+              <div className="bg-green-100 p-3 rounded-lg group-hover:bg-green-200 transition">
+                <Activity className="h-6 w-6 text-green-600" />
               </div>
+              <TrendingUp className="h-5 w-5 text-gray-400 group-hover:text-green-600 transition" />
             </div>
-            <h3 className="text-lg font-semibold text-gray-900 mb-2">System Logs</h3>
+            <h3 className="text-lg font-semibold text-gray-900 mb-2">Rate Limit Monitor</h3>
             <p className="text-gray-600 text-sm">
-              Coming soon: View detailed system logs and activity history.
+              Monitor API rate limits in real-time. Track usage, blocked requests, and system health.
             </p>
-          </div>
+          </Link>
         </div>
       </div>
     </div>

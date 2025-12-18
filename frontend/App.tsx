@@ -10,6 +10,7 @@ import Governance from './pages/Governance';
 import { AdminLogin } from './pages/admin/AdminLogin';
 import { AdminDashboard } from './pages/admin/AdminDashboard';
 import { ErrorMonitor } from './pages/admin/ErrorMonitor';
+import RateLimitMonitor from './pages/admin/RateLimitMonitor';
 
 export default function App() {
   return (
@@ -37,6 +38,14 @@ export default function App() {
                 element={
                   <AdminProtectedRoute>
                     <ErrorMonitor />
+                  </AdminProtectedRoute>
+                }
+              />
+              <Route
+                path="/admin/rate-limits"
+                element={
+                  <AdminProtectedRoute>
+                    <RateLimitMonitor />
                   </AdminProtectedRoute>
                 }
               />

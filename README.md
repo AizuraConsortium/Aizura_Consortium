@@ -9,6 +9,7 @@ A live AI boardroom where 6 specialized AI agents (Claude, ChatGPT, Grok, Gemini
 - **Collaborative Business Plans**: AI agents edit a shared Markdown document with version control
 - **Community Governance**: Users can submit and vote on business proposals
 - **Unanimous Consensus**: All 6 agents must agree (6/6 votes) to adopt a plan
+- **Rate Limiting**: Token bucket algorithm protects API endpoints from abuse
 
 ## Architecture
 
@@ -234,12 +235,58 @@ The system includes a comprehensive admin portal for monitoring and managing the
 - `/admin/login` - Admin authentication
 - `/admin/dashboard` - System overview and metrics
 - `/admin/errors` - Error log management
+- `/admin/rate-limits` - Real-time rate limit monitoring
 
 ### Documentation
 
 - **[Admin User Guide](./ADMIN_GUIDE.md)** - Complete admin portal documentation
 - **[API Documentation](./backend/API_ADMIN.md)** - Admin API endpoints
 - **[Security Architecture](./SECURITY.md)** - Security implementation details
+- **[Rate Limiting Guide](./RATE_LIMITING.md)** - Rate limiting implementation and monitoring
+
+## Rate Limiting
+
+The system includes comprehensive rate limiting to protect against abuse and ensure fair resource allocation.
+
+### Features
+
+- **Token Bucket Algorithm** - Smooth rate limiting with token refill
+- **Per-Endpoint Limits** - Different limits for different API operations
+- **Fail-Open Mode** - System stays available during database issues
+- **Real-Time Monitoring** - Admin dashboard for tracking usage and violations
+- **Automatic Cleanup** - Scheduled removal of stale rate limit data
+
+### Default Limits
+
+- **Authenticated requests**: 60 requests/minute
+- **Unauthenticated requests**: 30 requests/minute
+- **Expensive operations** (AI calls): 10 requests/hour
+- **Admin endpoints**: 20 requests/minute with additional security
+
+### Monitoring
+
+Visit `/admin/rate-limits` to view:
+- Current rate limit usage per endpoint
+- Blocked requests in the last 24 hours
+- Most active endpoints
+- System health status (healthy/warning/critical)
+
+### Response Headers
+
+All API responses include rate limit headers:
+```
+X-RateLimit-Limit: 100
+X-RateLimit-Remaining: 45
+X-RateLimit-Reset: 2024-12-18T14:30:00Z
+```
+
+### Documentation
+
+See **[RATE_LIMITING.md](./RATE_LIMITING.md)** for complete documentation including:
+- Configuration and customization
+- Troubleshooting guide
+- Testing strategies
+- Best practices
 
 ## Testing the System
 

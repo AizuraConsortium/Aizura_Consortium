@@ -245,4 +245,78 @@ export class RateLimiterService {
     this.failOpen = failOpen;
     console.info(`Rate limiter fail-${failOpen ? 'open' : 'closed'} mode enabled`);
   }
+
+  async getDashboardStats(): Promise<any> {
+    try {
+      const { data: limits, error: limitsError } = await this.supabase
+        .getClient()
+        .from('rate_limits')
+        .select('*')
+        .order('last_refill', { ascending: false });
+
+      if (limitsError) {
+        console.error('Failed to get rate limits:', limitsError);
+      }
+
+      const { data: violations, error: violationsError } = await this.supabase
+        .getClient()
+        .from('rate_limit_violations')
+        .select('*')
+        .gte('created_at', new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString());
+
+      if (violationsError) {
+        console.error('Failed to get violations:', violationsError);
+      }
+
+      const activeLimits = (limits || []).map((limit: any) => {
+        const usagePercentage = (limit.tokens / limit.max_tokens) * 100;
+        const resetAt = new Date(limit.last_refill.getTime() + 60 * 60 * 1000);
+
+        return {
+          endpoint: limit.endpoint,
+          current_count: limit.tokens,
+          limit: limit.max_tokens,
+          window_seconds: 3600,
+          blocked_requests: 0,
+          reset_at: resetAt.toISOString(),
+          usage_percentage: usagePercentage
+        };
+      });
+
+      const totalBlockedToday = violations?.length || 0;
+
+      const endpointCounts: Record<string, number> = {};
+      violations?.forEach((v: any) => {
+        endpointCounts[v.endpoint] = (endpointCounts[v.endpoint] || 0) + 1;
+      });
+
+      const mostActiveEndpoint = Object.entries(endpointCounts)
+        .sort(([, a], [, b]) => b - a)[0]?.[0] || 'N/A';
+
+      const maxUsage = Math.max(...activeLimits.map(l => l.usage_percentage), 0);
+      let systemHealth: 'healthy' | 'warning' | 'critical';
+      if (maxUsage >= 90) {
+        systemHealth = 'critical';
+      } else if (maxUsage >= 70) {
+        systemHealth = 'warning';
+      } else {
+        systemHealth = 'healthy';
+      }
+
+      return {
+        active_limits: activeLimits,
+        total_blocked_today: totalBlockedToday,
+        most_active_endpoint: mostActiveEndpoint,
+        system_health: systemHealth
+      };
+    } catch (error) {
+      console.error('Exception getting dashboard stats:', error);
+      return {
+        active_limits: [],
+        total_blocked_today: 0,
+        most_active_endpoint: 'N/A',
+        system_health: 'healthy'
+      };
+    }
+  }
 }

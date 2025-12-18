@@ -116,4 +116,14 @@ router.get('/rate-limits/:identifier', createRateLimit('GET:/api/system/rate-lim
   }
 });
 
+router.get('/admin/rate-limits', createRateLimit('GET:/api/system/admin/rate-limits'), requireAuth, requireRole('admin'), requireWhitelistedIP, async (req, res) => {
+  try {
+    const stats = await rateLimiter.getDashboardStats();
+    res.json(stats);
+  } catch (error) {
+    console.error('Error fetching rate limit dashboard stats:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
 export default router;
