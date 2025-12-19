@@ -63,7 +63,7 @@ export interface ToolCall {
 export interface PlanEditorArgs {
   op: PlanOperation;
   path: string;
-  target_path?: string; // Used for move operations
+  target_path?: string;
   after?: string;
   content_md?: string;
   metadata?: {
@@ -177,18 +177,6 @@ export interface ProposalQueue {
 export type ErrorSource = 'backend' | 'frontend' | 'agent';
 export type ErrorSeverity = 'info' | 'warning' | 'error' | 'critical';
 
-export interface ErrorLog {
-  id: string;
-  source: ErrorSource;
-  severity: ErrorSeverity;
-  agent_id: AgentId | null;
-  error_type: string;
-  message: string;
-  details: any;
-  topic_id: string | null;
-  created_at: string;
-}
-
 export const AGENT_ROLE_MAPPING: Record<AgentId, AgentRole> = {
   claude: 'engineering-arch',
   chatgpt: 'product-strategy',
@@ -221,3 +209,6 @@ export interface QueueOperationResult {
   wasAlreadyQueued: boolean;
   message: string;
 }
+
+export * from './api';
+export * from './forms';
