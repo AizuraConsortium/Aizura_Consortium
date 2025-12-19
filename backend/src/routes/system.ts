@@ -1,5 +1,5 @@
 import express from 'express';
-import { SupabaseService } from '../services/supabase.js';
+import { SupabaseService } from '../services/supabase/index.js';
 import { createRateLimit } from '../middleware/validation.js';
 import { RateLimiterService } from '../services/rateLimiter.js';
 import { requireAuth } from '../middleware/auth.js';

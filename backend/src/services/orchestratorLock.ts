@@ -1,4 +1,4 @@
-import { SupabaseService } from './supabase.js';
+import { SupabaseService } from './supabase/index.js';
 import { EventEmitter } from 'events';
 
 export class OrchestratorLockService extends EventEmitter {

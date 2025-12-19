@@ -1,5 +1,5 @@
 import express from 'express';
-import { SupabaseService } from '../services/supabase.js';
+import { SupabaseService } from '../services/supabase/index.js';
 import { createRateLimit, validateProposal, validateVote, validatePagination } from '../middleware/validation.js';
 
 const router = express.Router();

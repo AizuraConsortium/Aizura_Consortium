@@ -1,5 +1,5 @@
 import express from 'express';
-import { SupabaseService } from '../services/supabase.js';
+import { SupabaseService } from '../services/supabase/index.js';
 import { requireAuth } from '../middleware/auth.js';
 import { requireRole } from '../middleware/rbac.js';
 import { requireWhitelistedIP } from '../middleware/ipWhitelist.js';

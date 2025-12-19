@@ -1,4 +1,4 @@
-import { SupabaseService } from './supabase.js';
+import { SupabaseService } from './supabase/index.js';
 import type { AgentId, ErrorSource, ErrorSeverity } from '../../../shared/types/index.js';
 
 export interface LogErrorOptions {

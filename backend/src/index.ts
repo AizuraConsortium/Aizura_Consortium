@@ -162,7 +162,7 @@ app.post('/webhook/proposal', createRateLimit('POST:/webhook/proposal'), async (
 
 app.get('/health', createRateLimit('GET:/health'), async (req, res) => {
   try {
-    const { SupabaseService } = await import('./services/supabase.js');
+    const { SupabaseService } = await import('./services/supabase/index.js');
     const supabase = SupabaseService.getInstance();
     const dbHealth = await supabase.healthCheck();
 

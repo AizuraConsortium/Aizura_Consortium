@@ -22,9 +22,37 @@ project/
 │   ├── agents/        # LLM provider integrations
 │   ├── orchestrator/  # Message arbitration & state machine
 │   └── services/      # Plan editor, Supabase service
+│       └── supabase/  # Modular database service (see below)
 ├── shared/            # Shared types between frontend/backend
 └── supabase/          # Database migrations & edge functions
 ```
+
+### Supabase Service Architecture
+
+The database service has been refactored into a modular repository pattern for better maintainability:
+
+```
+backend/src/services/supabase/
+├── index.ts                   # Main exports & backward compatibility
+├── client.ts                  # Singleton client management
+├── errorHandlers.ts           # Postgres error utilities
+├── queryBuilder.ts            # Generic CRUD operations (create, getById, getMany, etc.)
+└── repositories/              # Domain-specific operations
+    ├── topics.ts              # Topic management
+    ├── messages.ts            # Message operations
+    ├── plans.ts               # Plan & revision operations
+    ├── proposals.ts           # Proposal & queue operations
+    ├── votes.ts               # Agent voting operations
+    ├── orchestrator.ts        # Lock management
+    └── arbitration.ts         # Arbitration logging
+```
+
+**Benefits**:
+- Generic query builder eliminates code duplication
+- Each repository file is focused and easy to test
+- Type-safe CRUD operations for all database tables
+- Backward compatible with existing code
+- Future entities require only 5 lines instead of 60
 
 ## Prerequisites
 
