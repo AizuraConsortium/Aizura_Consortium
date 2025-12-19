@@ -3,7 +3,7 @@ import { ThumbsUp, ThumbsDown, Plus, LogIn } from 'lucide-react';
 import { api } from '../lib/api';
 import { useAuth } from '../contexts/AuthContext';
 import { AuthModal } from '../components/AuthModal';
-import { CardSkeleton } from '../components/skeletons';
+import { CardSkeleton } from '@shared/components/skeletons';
 import { Navigation } from '../components/Navigation';
 
 export default function Governance() {

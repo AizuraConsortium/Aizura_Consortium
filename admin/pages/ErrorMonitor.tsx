@@ -16,7 +16,7 @@ import {
   XCircle
 } from 'lucide-react';
 import { ErrorDetailsModal } from '../components/ErrorDetailsModal';
-import { TableSkeleton } from '../components/skeletons';
+import { TableSkeleton } from '@shared/components/skeletons';
 import { handleKeyboardClick } from '@shared/utils';
 import { supabase } from '@shared/lib';
 

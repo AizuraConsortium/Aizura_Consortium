@@ -5,7 +5,7 @@ import { api } from '../lib/api';
 import { supabase } from '@shared/lib';
 import { AGENT_DISPLAY_NAMES, ROLE_DISPLAY_NAMES, type Message } from '../types';
 import { SystemHealthBadge } from '../../shared/components/SystemHealthBadge';
-import { MessageSkeleton } from '../components/skeletons';
+import { MessageSkeleton } from '@shared/components/skeletons';
 import { Navigation } from '../components/Navigation';
 
 export default function Room() {
