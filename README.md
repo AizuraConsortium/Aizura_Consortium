@@ -239,10 +239,8 @@ The system includes a comprehensive admin portal for monitoring and managing the
 
 ### Documentation
 
-- **[Admin User Guide](./ADMIN_GUIDE.md)** - Complete admin portal documentation
-- **[API Documentation](./backend/API_ADMIN.md)** - Admin API endpoints
-- **[Security Architecture](./SECURITY.md)** - Security implementation details
-- **[Rate Limiting Guide](./RATE_LIMITING.md)** - Rate limiting implementation and monitoring
+- **[Admin Portal Guide](./ADMIN_PORTAL.md)** - Complete admin portal user guide and API reference
+- **[Operations Handbook](./OPERATIONS_HANDBOOK.md)** - Daily operations, security, rate limiting, and disaster recovery
 
 ## Rate Limiting
 
@@ -282,11 +280,11 @@ X-RateLimit-Reset: 2024-12-18T14:30:00Z
 
 ### Documentation
 
-See **[RATE_LIMITING.md](./RATE_LIMITING.md)** for complete documentation including:
-- Configuration and customization
-- Troubleshooting guide
-- Testing strategies
-- Best practices
+See **[Operations Handbook](./OPERATIONS_HANDBOOK.md)** for complete documentation including:
+- Rate limiting configuration and monitoring
+- Daily operations and troubleshooting
+- Security architecture
+- Disaster recovery procedures
 
 ## Data Retention Policy
 

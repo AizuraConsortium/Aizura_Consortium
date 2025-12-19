@@ -2,6 +2,18 @@
 
 This directory contains all tests for the Aizura Consortium project.
 
+## Table of Contents
+
+1. [Structure](#structure)
+2. [Configuration](#configuration)
+3. [Running Tests](#running-tests)
+4. [Test Categories](#test-categories)
+5. [Writing Tests](#writing-tests)
+6. [Test Data](#test-data)
+7. [CI/CD Integration](#cicd-integration)
+
+---
+
 ## Structure
 
 ```
@@ -19,6 +31,87 @@ tests/
 └── setup/               # Test setup and configuration
 ```
 
+---
+
+## Configuration
+
+### Required Dependencies
+
+Add these dev dependencies to your `package.json`:
+
+```json
+{
+  "devDependencies": {
+    "@jest/globals": "^29.7.0",
+    "@types/jest": "^29.5.0",
+    "jest": "^29.7.0",
+    "ts-jest": "^29.1.0"
+  }
+}
+```
+
+### Installation
+
+Run the following command to install test dependencies:
+
+```bash
+npm install --save-dev @jest/globals @types/jest jest ts-jest
+```
+
+### Jest Configuration
+
+Create a `jest.config.js` file in the project root:
+
+```javascript
+export default {
+  preset: 'ts-jest/presets/default-esm',
+  testEnvironment: 'node',
+  extensionsToTreatAsEsm: ['.ts'],
+  moduleNameMapper: {
+    '^(\\.{1,2}/.*)\\.js$': '$1',
+  },
+  transform: {
+    '^.+\\.tsx?$': [
+      'ts-jest',
+      {
+        useESM: true,
+      },
+    ],
+  },
+  testMatch: [
+    '**/tests/**/*.test.ts'
+  ],
+  collectCoverageFrom: [
+    'backend/src/**/*.ts',
+    'shared/**/*.ts',
+    '!**/*.d.ts',
+    '!**/node_modules/**'
+  ],
+  coverageDirectory: 'coverage',
+  coverageReporters: ['text', 'lcov', 'html'],
+  setupFilesAfterEnv: ['<rootDir>/tests/setup/testConfig.ts']
+};
+```
+
+### Package.json Scripts
+
+Add the following scripts to your `package.json`:
+
+```json
+{
+  "scripts": {
+    "test": "jest",
+    "test:unit": "jest tests/unit",
+    "test:integration": "jest tests/integration",
+    "test:coverage": "jest --coverage",
+    "test:watch": "jest --watch",
+    "test:verbose": "jest --verbose"
+  }
+}
+```
+
+---
+
 ## Running Tests
 
 ```bash
@@ -34,9 +127,14 @@ npm run test:integration
 # Run with coverage
 npm run test:coverage
 
-# Run in watch mode
+# Run in watch mode (for development)
 npm run test:watch
+
+# Run with verbose output
+npm run test:verbose
 ```
+
+---
 
 ## Test Categories
 
@@ -51,6 +149,8 @@ npm run test:watch
 - May use test database or mock services
 - Test real API endpoints and workflows
 - Slower but more comprehensive
+
+---
 
 ## Writing Tests
 
@@ -69,6 +169,8 @@ npm run test:watch
 6. Test both success and error paths
 7. Test edge cases and boundary conditions
 
+---
+
 ## Test Data
 
 Test fixtures are located in `tests/fixtures/data/` and include:
@@ -76,3 +178,28 @@ Test fixtures are located in `tests/fixtures/data/` and include:
 - Mock agent messages
 - Test database states
 - Common test scenarios
+
+---
+
+## CI/CD Integration
+
+Add to your CI/CD pipeline:
+
+```yaml
+- name: Run Tests
+  run: npm test
+
+- name: Generate Coverage Report
+  run: npm run test:coverage
+
+- name: Upload Coverage
+  uses: codecov/codecov-action@v3
+  with:
+    files: ./coverage/lcov.info
+```
+
+---
+
+**Document Version:** 1.0
+**Last Updated:** 2025-12-19
+**Owner:** Development Team
