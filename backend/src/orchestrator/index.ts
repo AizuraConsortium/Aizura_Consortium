@@ -4,6 +4,7 @@ import { AgentRunner, type AgentContext } from '../agents/runner.js';
 import { SupabaseService } from '../services/supabase.js';
 import { PlanEditor } from '../services/planEditor.js';
 import { PhaseValidator } from './phaseValidator.js';
+import { OrchestratorLockService } from '../services/orchestratorLock.js';
 
 // Internal type for tracking refusal notices (different from the RefusalNotice message type)
 interface RefusalNoticeEntry {
@@ -24,6 +25,7 @@ export class Orchestrator {
   private agentRunner: AgentRunner;
   private supabase: SupabaseService;
   private planEditor: PlanEditor;
+  private lockService: OrchestratorLockService;
   private tickTimer: NodeJS.Timeout | null = null;
   private currentTopic: Topic | null = null;
   private pendingMessages: Map<AgentId, AgentMessage | AgentVoteMessage> = new Map();
@@ -35,15 +37,37 @@ export class Orchestrator {
   private idleMessageCount: number = 0;
   private lastIdleMessageTime: number = 0;
   private tickCount: number = 0;
+  private isLeader: boolean = false;
+  private standbyCheckTimer: NodeJS.Timeout | null = null;
 
   constructor() {
     this.agentRunner = new AgentRunner();
     this.supabase = SupabaseService.getInstance();
     this.planEditor = new PlanEditor();
+    this.lockService = new OrchestratorLockService(this.supabase);
+
+    // Handle lock loss
+    this.lockService.on('lock-lost', () => {
+      console.error('❌ Lost orchestrator leadership!');
+      this.handleLockLoss();
+    });
   }
 
   async start(): Promise<void> {
     console.log('🚀 Orchestrator starting...');
+
+    // Try to acquire leadership lock
+    const acquired = await this.lockService.acquireLock();
+
+    if (!acquired) {
+      console.log('⏸️  Another instance is running the orchestrator. Standing by...');
+      this.startStandbyMode();
+      return;
+    }
+
+    // We are the leader!
+    this.isLeader = true;
+    console.log('👑 This instance is the LEADER. Starting orchestrator...');
 
     this.currentTopic = await this.supabase.getCurrentTopic();
 
@@ -582,6 +606,73 @@ export class Orchestrator {
     return entry.notice;
   }
 
+  private startStandbyMode(): void {
+    console.log('🔄 Entering standby mode. Will check for leadership every 60 seconds...');
+
+    // Check periodically if we can become leader
+    this.standbyCheckTimer = setInterval(async () => {
+      const acquired = await this.lockService.acquireLock();
+
+      if (acquired && !this.isLeader) {
+        console.log('🎉 Lock available! Promoting to leader...');
+        this.isLeader = true;
+
+        // Clear standby timer
+        if (this.standbyCheckTimer) {
+          clearInterval(this.standbyCheckTimer);
+          this.standbyCheckTimer = null;
+        }
+
+        // Bootstrap as leader
+        this.currentTopic = await this.supabase.getCurrentTopic();
+
+        if (!this.currentTopic) {
+          console.log('📭 No active topic. Entering idle mode.');
+          await this.enterIdleMode();
+        } else {
+          console.log(`📝 Resuming topic: ${this.currentTopic.id} (state: ${this.currentTopic.state})`);
+        }
+
+        this.startTicker();
+      }
+    }, 60000); // Check every 60 seconds
+  }
+
+  private async handleLockLoss(): Promise<void> {
+    console.error('💔 Lost orchestrator lock. Shutting down orchestrator...');
+
+    this.isLeader = false;
+
+    // Stop the ticker
+    if (this.tickTimer) {
+      clearInterval(this.tickTimer);
+      this.tickTimer = null;
+    }
+
+    // Clear state
+    this.currentTopic = null;
+    this.pendingMessages.clear();
+    this.refusalNotices.clear();
+
+    // Enter standby mode to try to regain leadership
+    console.log('🔄 Entering standby mode after lock loss...');
+    this.startStandbyMode();
+  }
+
+  getLeadershipStatus(): {
+    isLeader: boolean;
+    instanceId: string;
+  } {
+    return {
+      isLeader: this.isLeader,
+      instanceId: this.lockService.getInstanceId()
+    };
+  }
+
+  async getLockStatus() {
+    return await this.lockService.getLockStatus();
+  }
+
   async stop(): Promise<void> {
     console.log('🛑 Stopping orchestrator...');
 
@@ -592,9 +683,22 @@ export class Orchestrator {
       waitCount++;
     }
 
+    // Clear standby timer if running
+    if (this.standbyCheckTimer) {
+      clearInterval(this.standbyCheckTimer);
+      this.standbyCheckTimer = null;
+    }
+
+    // Clear ticker if running
     if (this.tickTimer) {
       clearInterval(this.tickTimer);
       this.tickTimer = null;
+    }
+
+    // Release the lock if we hold it
+    if (this.isLeader) {
+      await this.lockService.releaseLock();
+      this.isLeader = false;
     }
 
     console.log('🛑 Orchestrator stopped cleanly');

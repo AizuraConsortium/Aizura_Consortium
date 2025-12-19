@@ -335,25 +335,10 @@ export class SupabaseService {
 
   async getNextQueuedProposal(): Promise<ProposalQueue | null> {
     const { data, error } = await this.client
-      .from('proposal_queue')
-      .select('*')
-      .eq('status', 'queued')
-      .order('priority', { ascending: false })
-      .order('created_at', { ascending: true })
-      .limit(1)
-      .maybeSingle();
+      .rpc('get_and_lock_next_proposal');
 
     if (error) throw error;
-
-    if (!data) return null;
-
-    // Mark as processing
-    await this.client
-      .from('proposal_queue')
-      .update({ status: 'processing', started_at: new Date().toISOString() })
-      .eq('proposal_id', data.proposal_id);
-
-    return data;
+    return data || null;
   }
 
   async clearAgentVotes(topicId: string): Promise<void> {
@@ -400,6 +385,65 @@ export class SupabaseService {
     } catch (error: any) {
       return { healthy: false, error: error.message };
     }
+  }
+
+  async tryAcquireOrchestratorLock(instanceId: string, ttlSeconds: number = 120): Promise<boolean> {
+    const { data, error } = await this.client
+      .rpc('try_acquire_orchestrator_lock', {
+        p_instance_id: instanceId,
+        p_ttl_seconds: ttlSeconds
+      });
+
+    if (error) throw error;
+    return data || false;
+  }
+
+  async refreshOrchestratorLock(instanceId: string, ttlSeconds: number = 120): Promise<boolean> {
+    const { data, error } = await this.client
+      .rpc('refresh_orchestrator_lock', {
+        p_instance_id: instanceId,
+        p_ttl_seconds: ttlSeconds
+      });
+
+    if (error) throw error;
+    return data || false;
+  }
+
+  async releaseOrchestratorLock(instanceId: string): Promise<boolean> {
+    const { data, error } = await this.client
+      .rpc('release_orchestrator_lock', {
+        p_instance_id: instanceId
+      });
+
+    if (error) throw error;
+    return data || false;
+  }
+
+  async getOrchestratorLockStatus(): Promise<{
+    isLocked: boolean;
+    instanceId: string | null;
+    acquiredAt?: string;
+    lastHeartbeat?: string;
+    expiresAt?: string;
+    ageSeconds?: number;
+    heartbeatAgeSeconds?: number;
+    expiresInSeconds?: number;
+  }> {
+    const { data, error } = await this.client
+      .rpc('get_orchestrator_lock_status');
+
+    if (error) throw error;
+
+    return {
+      isLocked: data?.is_locked || false,
+      instanceId: data?.instance_id || null,
+      acquiredAt: data?.acquired_at,
+      lastHeartbeat: data?.last_heartbeat,
+      expiresAt: data?.expires_at,
+      ageSeconds: data?.age_seconds,
+      heartbeatAgeSeconds: data?.heartbeat_age_seconds,
+      expiresInSeconds: data?.expires_in_seconds
+    };
   }
 
   getClient(): SupabaseClient {

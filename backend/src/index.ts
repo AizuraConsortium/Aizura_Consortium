@@ -164,6 +164,37 @@ app.get('/health', createRateLimit('GET:/health'), async (req, res) => {
   }
 });
 
+app.get('/health/orchestrator', createRateLimit('GET:/health/orchestrator'), async (req, res) => {
+  try {
+    if (!orchestrator) {
+      return res.json({
+        status: 'not_initialized',
+        isLeader: false,
+        instanceId: null,
+        lockStatus: null,
+        timestamp: new Date().toISOString()
+      });
+    }
+
+    const leadershipStatus = orchestrator.getLeadershipStatus();
+    const lockStatus = await orchestrator.getLockStatus();
+
+    res.json({
+      status: 'ok',
+      isLeader: leadershipStatus.isLeader,
+      instanceId: leadershipStatus.instanceId,
+      lockStatus: lockStatus,
+      timestamp: new Date().toISOString()
+    });
+  } catch (error: any) {
+    res.status(500).json({
+      status: 'error',
+      error: error.message,
+      timestamp: new Date().toISOString()
+    });
+  }
+});
+
 let orchestrator: Orchestrator | null = null;
 
 app.listen(PORT, async () => {
