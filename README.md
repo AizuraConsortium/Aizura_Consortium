@@ -209,7 +209,14 @@ npm install
 
 ### 2. Configure Environment Variables
 
-The project now uses **separate `.env` files** for each application:
+The project uses a **single root-level `.env` file** for all three frontend applications (admin, client, website) and a separate `backend/.env` file for the backend server.
+
+**Root `.env` (used by all frontends via Vite)**:
+```env
+VITE_API_URL=http://localhost:3001
+VITE_SUPABASE_URL=https://ajjdjzbmmvimpyfvvwci.supabase.co
+VITE_SUPABASE_ANON_KEY=your_anon_key
+```
 
 **Backend** (`backend/.env`):
 ```env
@@ -229,28 +236,12 @@ ALLOWED_ORIGINS=http://localhost:5173,http://localhost:5174,http://localhost:517
 ADMIN_WHITELISTED_IPS=127.0.0.1,::1
 ```
 
-**Admin Dashboard** (`admin/.env`):
-```env
-VITE_API_URL=http://localhost:3001
-VITE_SUPABASE_URL=https://ajjdjzbmmvimpyfvvwci.supabase.co
-VITE_SUPABASE_ANON_KEY=your_anon_key
-```
-
-**Client Portal** (`client/.env`):
-```env
-VITE_API_URL=http://localhost:3001
-VITE_SUPABASE_URL=https://ajjdjzbmmvimpyfvvwci.supabase.co
-VITE_SUPABASE_ANON_KEY=your_anon_key
-```
-
-**Public Website** (`website/.env`):
-```env
-VITE_API_URL=http://localhost:3001
-VITE_SUPABASE_URL=https://ajjdjzbmmvimpyfvvwci.supabase.co
-VITE_SUPABASE_ANON_KEY=your_anon_key
-```
-
-**Note:** `.env` files already exist with the correct Supabase credentials. You only need to add the AI API keys to `backend/.env`.
+**Architecture Notes:**
+- Vite automatically reads from the root `.env` file - no configuration needed
+- All three frontend apps (admin, client, website) share the same environment variables
+- Backend has its own `.env` file with additional server-side secrets (API keys, service role key)
+- The root `.env` file already exists with correct Supabase credentials
+- You only need to add the 6 AI API keys to `backend/.env`
 
 ### 3. Database Setup
 

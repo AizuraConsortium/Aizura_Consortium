@@ -16,8 +16,17 @@ npm install
 
 ---
 
-## Step 2: Configure Backend Environment
+## Step 2: Configure Environment Variables
 
+The project uses two `.env` files:
+
+### Root `.env` (Frontend - Already Configured)
+This file is used by all three frontend apps (admin, client, website) via Vite.
+
+**Location:** Project root (`.env`)
+**Status:** Already exists with correct values - no action needed
+
+### Backend `.env` (Needs Your API Keys)
 Create `backend/.env` with your API keys:
 
 ```env
@@ -26,7 +35,7 @@ SUPABASE_URL=https://ajjdjzbmmvimpyfvvwci.supabase.co
 SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFqamRqemJtbXZpbXB5ZnZ2d2NpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjU5MTE4NjYsImV4cCI6MjA4MTQ4Nzg2Nn0.Fbp2aKUdQOftztYg2xnC6Lk-6vwJKmRsjRJZ0Bco2rE
 SUPABASE_SERVICE_ROLE_KEY=your_service_role_key_here
 
-# Required: Add your AI API keys
+# Required: Add your 6 AI API keys here
 ANTHROPIC_API_KEY=sk-ant-...
 OPENAI_API_KEY=sk-...
 GROK_API_KEY=xai-...
@@ -38,8 +47,6 @@ QWEN_API_KEY=sk-...
 ALLOWED_ORIGINS=http://localhost:5173,http://localhost:5174,http://localhost:5175
 ADMIN_WHITELISTED_IPS=127.0.0.1,::1
 ```
-
-**Note:** Frontend `.env` files already exist with Supabase credentials.
 
 ---
 
@@ -190,14 +197,18 @@ npm run build
 
 ```
 project/
+├── .env                Root .env (used by all frontends)
 ├── admin/              Admin Dashboard (5173)
 ├── client/             Client Portal (5174)
 ├── website/            Public Website (5175)
 ├── backend/            API Server (3001)
+│   └── .env           Backend-specific config
 └── shared/             Shared types
 ```
 
-Each app has its own `.env` file with configuration.
+**Environment Files:**
+- Root `.env`: Used by all three frontend apps via Vite (already configured)
+- `backend/.env`: Backend-only configuration (you must add AI API keys)
 
 ---
 
