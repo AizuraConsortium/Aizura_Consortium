@@ -283,6 +283,41 @@ curl -I -H "Origin: https://evil.com" https://aizura.yourdomain.com/api/proposal
 - [ ] Submit a test proposal
 - [ ] Verify API endpoints work
 
+### 9. Performance Profiling (Recommended)
+
+Profile the application to establish performance baseline:
+
+**Using React DevTools:**
+```bash
+# 1. Open production site in Chrome/Edge
+# 2. Open DevTools (F12) → Profiler tab
+# 3. Record interactions:
+#    - Load Room page with 100+ messages
+#    - Navigate to Governance with multiple proposals
+#    - View a plan with large content
+# 4. Review flame graph for slow components (>50ms)
+```
+
+**Performance Checklist:**
+- [ ] Room page loads in <2s
+- [ ] Message list renders in <100ms
+- [ ] Governance page loads in <2s
+- [ ] No components taking >50ms to render
+- [ ] No console errors or warnings
+
+**Documentation:**
+- [ ] Record performance metrics in PERFORMANCE_BASELINE.md
+- [ ] Compare against thresholds
+- [ ] Document any concerns for future optimization
+
+**When to Optimize:**
+- Component render time exceeds 50ms
+- User reports lag or stuttering
+- Message count exceeds 2,000
+- Proposal count exceeds 100
+
+See `PERFORMANCE_PROFILING_GUIDE.md` for detailed instructions.
+
 ---
 
 ## Monitoring and Observability

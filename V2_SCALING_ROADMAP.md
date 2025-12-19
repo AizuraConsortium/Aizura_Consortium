@@ -6,6 +6,38 @@ Features and optimizations that aren't needed today but may become valuable as t
 
 ## Frontend Performance
 
+### React.memo Optimization
+**Status:** Not needed - profiling required first (Issue #25)
+**Last Reviewed:** 2025-12-19
+**Trigger:** Component render times exceed 50ms OR user reports lag
+**Solution:** Extract and memoize slow components (MessageCard, ProposalCard)
+**Effort:** 2-4 hours (after profiling)
+**Trade-offs:** Adds complexity, may not provide measurable benefit at current scale
+
+**Decision Rationale:**
+- Current component tree is small (8 pages, 7 main components)
+- No performance issues reported
+- React is fast by default for this scale
+- Premature optimization adds unnecessary complexity
+
+**Action Plan:**
+1. Use PERFORMANCE_PROFILING_GUIDE.md to profile application
+2. Measure baseline render times (see PERFORMANCE_BASELINE.md)
+3. Only implement React.memo if profiling shows:
+   - Component render time >50ms
+   - Unnecessary re-renders (>3x with same props)
+   - Measurable user experience issues
+4. Document findings and optimization results
+
+**Potential Candidates (if profiling confirms need):**
+- Room.tsx message list (328 lines, high re-render frequency)
+- Governance.tsx proposal cards (298 lines, medium complexity)
+- PlanViewer.tsx markdown rendering (inline dangerouslySetInnerHTML)
+
+**Expected Outcome:**
+- Performance likely acceptable without optimization
+- Revisit when message count exceeds 2,000 or user complaints arise
+
 ### Virtual Scrolling for Messages
 **Status:** Not needed (Issue #26 closed)
 **Trigger:** Debates consistently exceed 2,000 messages
@@ -95,3 +127,13 @@ Features and optimizations that aren't needed today but may become valuable as t
 - Implement only when triggering conditions are met
 - Monitor first, optimize second
 - Keep solutions simple and maintainable
+
+### Performance Optimization Process
+1. **Profile first** using PERFORMANCE_PROFILING_GUIDE.md
+2. **Measure baseline** using PERFORMANCE_BASELINE.md thresholds
+3. **Identify bottlenecks** with concrete metrics
+4. **Implement targeted fixes** only for proven issues
+5. **Measure improvement** to verify benefit
+6. **Document results** for future reference
+
+**Never optimize without profiling data showing a real problem.**
