@@ -204,12 +204,12 @@ Each app has its own `.env` file with configuration.
 ## Next Steps
 
 1. **Explore the Codebase**
-   - See [REFACTORING_COMPLETE.md](./REFACTORING_COMPLETE.md) for architecture details
-   - Read [README.md](./README.md) for full documentation
+   - See [README.md](./README.md) for full documentation
+   - Read [FRONTEND_ARCHITECTURE.md](./FRONTEND_ARCHITECTURE.md) for frontend details
 
 2. **Customize**
    - Modify agent prompts in `shared/types/prompts.ts`
-   - Adjust rate limits in `backend/src/config/rateLimits.ts`
+   - Adjust rate limits in `backend/shared/config/rateLimits.ts`
    - Customize UI in each frontend's `pages/` folder
 
 3. **Deploy**
@@ -221,8 +221,9 @@ Each app has its own `.env` file with configuration.
 
 ## Getting Help
 
-- **Architecture**: See [REFACTORING_COMPLETE.md](./REFACTORING_COMPLETE.md)
-- **API Docs**: See [PHASE_2_STATUS.md](./PHASE_2_STATUS.md)
+- **Main Documentation**: See [README.md](./README.md)
+- **Frontend Architecture**: See [FRONTEND_ARCHITECTURE.md](./FRONTEND_ARCHITECTURE.md)
+- **API Reference**: See [backend/API.md](./backend/API.md)
 - **Operations**: See [OPERATIONS_HANDBOOK.md](./OPERATIONS_HANDBOOK.md)
 - **Deployment**: See [DEPLOYMENT_CHECKLIST.md](./DEPLOYMENT_CHECKLIST.md)
 

@@ -113,6 +113,100 @@ When query parameter validation fails, the API returns a `400 Bad Request` respo
 }
 ```
 
+## Backend Architecture
+
+### Service → Controller → Routes Pattern
+
+The backend follows a clean 3-layer architecture:
+
+```
+HTTP Request
+    ↓
+routes/*.ts (route definition)
+    ↓
+controllers/*.ts (request handling)
+    ↓
+services/*.ts (business logic)
+    ↓
+repositories/*.ts (database queries)
+    ↓
+Supabase Database
+```
+
+**Responsibilities:**
+- **Routes**: Define HTTP endpoints and apply middleware
+- **Controllers**: Handle HTTP requests/responses, validation
+- **Services**: Business logic and orchestration
+- **Repositories**: Database queries and data access
+
+### Multi-Tenant Structure
+
+All endpoints are organized by tenant:
+
+```
+backend/src/
+├── modules/
+│   ├── admin/           # Admin-only endpoints (/api/admin/*)
+│   │   ├── routes/
+│   │   ├── controllers/
+│   │   └── services/
+│   ├── client/          # Client-specific endpoints (/api/client/*)
+│   │   ├── routes/
+│   │   ├── controllers/
+│   │   └── services/
+│   └── website/         # Public endpoints (/api/website/*)
+│       ├── routes/
+│       ├── controllers/
+│       └── services/
+└── shared/              # Shared services
+    ├── orchestrator/
+    ├── middleware/
+    └── services/
+```
+
+### Complete Endpoint Map
+
+#### Admin Endpoints (`/api/admin/*`)
+**Access**: Requires authentication + admin role
+
+- `GET /api/admin/errors/recent?hours=24` - Recent error logs
+- `GET /api/admin/errors/admin?source=...&severity=...` - All errors with filters
+- `DELETE /api/admin/errors/:id` - Delete specific error log
+- `POST /api/admin/errors/cleanup` - Cleanup old error logs
+- `GET /api/admin/system/health` - System health metrics
+- `GET /api/admin/system/rate-limits?hours=24` - Rate limit statistics
+- `POST /api/admin/system/rate-limits/clear` - Clear rate limit violations
+
+**Location**: `backend/src/modules/admin/`
+
+#### Client Endpoints (`/api/client/*`)
+**Access**: Requires authentication
+
+- `GET /api/client/proposals?userId=...` - User's proposals
+- `GET /api/client/proposals/:id?userId=...` - Get specific proposal
+
+**Location**: `backend/src/modules/client/`
+
+#### Website Endpoints (`/api/website/*`)
+**Access**: Public (some require optional authentication)
+
+**Topics:**
+- `GET /api/website/topics/current` - Get current active topic
+- `GET /api/website/topics/:topicId` - Get specific topic
+
+**Messages:**
+- `GET /api/website/messages/topic/:topicId?limit=50&offset=0` - Topic messages
+- `GET /api/website/messages/:messageId` - Get specific message
+
+**Proposals:**
+- `GET /api/website/proposals?status=...` - All proposals
+- `GET /api/website/proposals/:id` - Get specific proposal
+- `POST /api/website/proposals` - Create new proposal
+- `POST /api/website/proposals/:id/vote` - Vote on proposal (requires auth)
+- `GET /api/website/proposals/:id/vote?userId=...` - Get user's vote
+
+**Location**: `backend/src/modules/website/`
+
 ## Endpoints
 
 ### GET /api/home
