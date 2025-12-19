@@ -11,5 +11,5 @@
       "@shared/*": ["../shared/*"]
     }
   },
-  "include": ["**/*", "../shared/**/*"]
+  "include": ["**/*", "../shared/**/*", "../vite-env.d.ts"]
 }
