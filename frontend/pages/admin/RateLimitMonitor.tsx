@@ -1,5 +1,9 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { AlertCircle, Activity, Shield, Clock, TrendingUp } from 'lucide-react';
+import { useDataFetch } from '../../hooks/useDataFetch';
+import { usePolling } from '../../hooks/usePolling';
+import { api } from '../../lib/api';
+import { useAdminAuth } from '../../contexts/AdminAuthContext';
 
 interface RateLimitStats {
   endpoint: string;
@@ -19,48 +23,19 @@ interface RateLimitData {
 }
 
 export default function RateLimitMonitor() {
-  const [data, setData] = useState<RateLimitData | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const { session } = useAdminAuth();
   const [autoRefresh, setAutoRefresh] = useState(true);
 
-  const fetchRateLimitData = async () => {
-    try {
-      const token = localStorage.getItem('adminToken');
-      const response = await fetch('/api/admin/rate-limits', {
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json'
-        }
-      });
+  const { data, loading, error, refetch } = useDataFetch<RateLimitData>(
+    async () => api.get('/admin/rate-limits', session?.access_token),
+    [session?.access_token]
+  );
 
-      if (!response.ok) {
-        throw new Error('Failed to fetch rate limit data');
-      }
-
-      const result = await response.json();
-      setData(result);
-      setError(null);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'Unknown error');
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    fetchRateLimitData();
-  }, []);
-
-  useEffect(() => {
-    if (!autoRefresh) return;
-
-    const interval = setInterval(() => {
-      fetchRateLimitData();
-    }, 5000);
-
-    return () => clearInterval(interval);
-  }, [autoRefresh]);
+  usePolling(
+    refetch,
+    5000,
+    { enabled: autoRefresh }
+  );
 
   const getHealthColor = (health: string) => {
     switch (health) {
@@ -99,7 +74,7 @@ export default function RateLimitMonitor() {
           <AlertCircle className="w-12 h-12 text-red-600 mx-auto mb-4" />
           <p className="text-red-800 text-center">{error}</p>
           <button
-            onClick={fetchRateLimitData}
+            onClick={refetch}
             className="mt-4 w-full bg-red-600 text-white py-2 rounded hover:bg-red-700"
           >
             Retry
@@ -130,7 +105,7 @@ export default function RateLimitMonitor() {
               <span className="text-sm text-gray-700">Auto-refresh (5s)</span>
             </label>
             <button
-              onClick={fetchRateLimitData}
+              onClick={refetch}
               className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
             >
               Refresh Now

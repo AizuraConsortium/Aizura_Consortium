@@ -1,4 +1,5 @@
 import { createClient, SupabaseClient } from '@supabase/supabase-js';
+import { handleSupabaseQueryRequired } from '../utils/supabaseErrorHandler.js';
 import type {
   Proposal,
   Topic,

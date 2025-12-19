@@ -68,53 +68,68 @@ async function fetchWithRetry(url: string, options?: RequestInit, retries = 2): 
   throw lastError;
 }
 
+function createHeaders(token?: string): HeadersInit {
+  const headers: Record<string, string> = {
+    'Content-Type': 'application/json'
+  };
+
+  if (token) {
+    headers['Authorization'] = `Bearer ${token}`;
+  }
+
+  return headers;
+}
+
 export const api = {
+  async get<T = any>(endpoint: string, token?: string): Promise<T> {
+    return fetchWithRetry(`${API_URL}${endpoint}`, {
+      method: 'GET',
+      headers: createHeaders(token)
+    });
+  },
+
+  async post<T = any>(endpoint: string, body?: any, token?: string): Promise<T> {
+    return fetchWithRetry(`${API_URL}${endpoint}`, {
+      method: 'POST',
+      headers: createHeaders(token),
+      body: body ? JSON.stringify(body) : undefined
+    });
+  },
+
+  async delete<T = any>(endpoint: string, token?: string): Promise<T> {
+    return fetchWithRetry(`${API_URL}${endpoint}`, {
+      method: 'DELETE',
+      headers: createHeaders(token)
+    });
+  },
+
   async getHome() {
-    return fetchWithRetry(`${API_URL}/home`);
+    return this.get('/home');
   },
 
   async getMessages(topicId: string, limit: number = 50, offset: number = 0) {
-    return fetchWithRetry(`${API_URL}/room/${topicId}/messages?limit=${limit}&offset=${offset}`);
+    return this.get(`/room/${topicId}/messages?limit=${limit}&offset=${offset}`);
   },
 
   async getPlan(topicId: string) {
-    return fetchWithRetry(`${API_URL}/plan/${topicId}`);
+    return this.get(`/plan/${topicId}`);
   },
 
   async getProposals() {
-    return fetchWithRetry(`${API_URL}/proposals`);
+    return this.get('/proposals');
   },
 
   async createProposal(title: string, summary: string, token?: string) {
-    const headers: Record<string, string> = {
-      'Content-Type': 'application/json'
-    };
-
-    if (token) {
-      headers['Authorization'] = `Bearer ${token}`;
-    }
-
-    return fetchWithRetry(`${API_URL}/proposals`, {
-      method: 'POST',
-      headers,
-      body: JSON.stringify({ title, summary })
-    });
+    return this.post('/proposals', { title, summary }, token);
   },
 
   async voteOnProposal(proposalId: string, vote: 'for' | 'against', token: string) {
-    return fetchWithRetry(`${API_URL}/proposals/${proposalId}/vote`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`
-      },
-      body: JSON.stringify({ vote })
-    });
+    return this.post(`/proposals/${proposalId}/vote`, { vote }, token);
   },
 
   async getErrors(queryString?: string) {
-    const url = queryString ? `${API_URL}/errors?${queryString}` : `${API_URL}/errors`;
-    return fetchWithRetry(url);
+    const endpoint = queryString ? `/errors?${queryString}` : '/errors';
+    return this.get(endpoint);
   },
 
   async logError(source: string, errorType: string, message: string, details?: any) {
