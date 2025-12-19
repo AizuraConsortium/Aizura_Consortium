@@ -1,0 +1,7 @@
+{
+  "name": "@aizura/client",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Client portal for Aizura Consortium"
+}
