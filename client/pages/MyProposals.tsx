@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { LoadingSpinner } from '@shared/components';
 
 interface Proposal {
   id: string;
@@ -54,11 +55,7 @@ export default function MyProposals() {
   };
 
   if (loading) {
-    return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="text-gray-500">Loading proposals...</div>
-      </div>
-    );
+    return <LoadingSpinner fullScreen text="Loading proposals..." />;
   }
 
   return (

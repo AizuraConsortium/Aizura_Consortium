@@ -1,4 +1,5 @@
 export { ErrorBoundary } from './ErrorBoundary';
+export { ErrorAlert } from './ErrorAlert';
 export { LoadingSpinner } from './LoadingSpinner';
 export { SystemHealthBadge } from './SystemHealthBadge';
 export { ToastProvider, useToast } from './ToastProvider';

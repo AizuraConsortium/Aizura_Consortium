@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAdminAuth } from '../contexts/AdminAuthContext';
-import { Shield, Loader2, AlertCircle } from 'lucide-react';
+import { Shield, Loader2 } from 'lucide-react';
+import { ErrorAlert } from '@shared/components';
 
 export function AdminLogin() {
   const [email, setEmail] = useState('');
@@ -58,10 +59,7 @@ export function AdminLogin() {
           <p className="text-center text-gray-600 mb-8">Sign in to access the admin dashboard</p>
 
           {error && (
-            <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg flex items-start">
-              <AlertCircle className="h-5 w-5 text-red-600 mr-2 flex-shrink-0 mt-0.5" />
-              <p className="text-sm text-red-800">{error}</p>
-            </div>
+            <ErrorAlert message={error} className="mb-6" />
           )}
 
           <form onSubmit={handleSubmit} className="space-y-6">

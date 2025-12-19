@@ -2,13 +2,13 @@ import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAdminAuth } from '../contexts/AdminAuthContext';
 import { api } from '../lib/api';
+import { ErrorAlert } from '@shared/components';
 import {
   Shield,
   LogOut,
   AlertTriangle,
   Activity,
   TrendingUp,
-  AlertCircle,
   CheckCircle,
   XCircle,
   Info
@@ -117,12 +117,7 @@ export function AdminDashboard() {
           <p className="text-gray-600">Monitor system health and error logs</p>
         </div>
 
-        {error && (
-          <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg flex items-start">
-            <AlertCircle className="h-5 w-5 text-red-600 mr-2 flex-shrink-0 mt-0.5" />
-            <p className="text-sm text-red-800">{error}</p>
-          </div>
-        )}
+        {error && <ErrorAlert message={error} className="mb-6" />}
 
         {isLoading ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">

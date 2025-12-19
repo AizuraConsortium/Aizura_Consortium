@@ -1,6 +1,7 @@
 import { useState } from 'react';
-import { AlertCircle, Activity, Shield, Clock, TrendingUp } from 'lucide-react';
+import { Shield, Clock, TrendingUp } from 'lucide-react';
 import { useDataFetch, usePolling } from '@shared/hooks';
+import { ErrorAlert, LoadingSpinner } from '@shared/components';
 import { api } from '../lib/api';
 import { useAdminAuth } from '../contexts/AdminAuthContext';
 
@@ -56,31 +57,11 @@ export default function RateLimitMonitor() {
   };
 
   if (loading) {
-    return (
-      <div className="flex items-center justify-center min-h-screen">
-        <div className="text-center">
-          <Activity className="w-12 h-12 animate-spin mx-auto mb-4 text-blue-600" />
-          <p className="text-gray-600">Loading rate limit data...</p>
-        </div>
-      </div>
-    );
+    return <LoadingSpinner fullScreen size="lg" text="Loading rate limit data..." />;
   }
 
   if (error) {
-    return (
-      <div className="flex items-center justify-center min-h-screen">
-        <div className="bg-red-50 border border-red-200 rounded-lg p-6 max-w-md">
-          <AlertCircle className="w-12 h-12 text-red-600 mx-auto mb-4" />
-          <p className="text-red-800 text-center">{error}</p>
-          <button
-            onClick={refetch}
-            className="mt-4 w-full bg-red-600 text-white py-2 rounded hover:bg-red-700"
-          >
-            Retry
-          </button>
-        </div>
-      </div>
-    );
+    return <ErrorAlert message={error} variant="full" onRetry={refetch} />;
   }
 
   if (!data) return null;
