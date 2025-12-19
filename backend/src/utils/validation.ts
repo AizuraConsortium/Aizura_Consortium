@@ -1,5 +1,6 @@
 import { z } from 'zod';
-import type { PaginationParams, ValidationErrorDetail } from '../../../shared/types/validation.js';
+import type { Request, Response, NextFunction } from 'express';
+import type { PaginationParams, ValidationErrorDetail, ValidationErrorResponse } from '../../../shared/types/validation.js';
 import { PAGINATION_CONSTRAINTS } from '../../../shared/types/validation.js';
 import { sanitizeQueryParam } from './sanitization.js';
 
@@ -290,4 +291,201 @@ export function sanitizeQueryParams<T extends Record<string, any>>(
   }
 
   return sanitized;
+}
+
+interface ValidationFailureLog {
+  timestamp: string;
+  ip: string;
+  path: string;
+  method: string;
+  userAgent?: string;
+  error: ValidationErrorDetail;
+}
+
+interface SuspiciousPattern {
+  ip: string;
+  failureCount: number;
+  firstFailure: number;
+  lastFailure: number;
+  patterns: string[];
+}
+
+const validationFailures: ValidationFailureLog[] = [];
+const suspiciousIPs = new Map<string, SuspiciousPattern>();
+
+const MAX_LOG_SIZE = 1000;
+const SUSPICIOUS_THRESHOLD = 10;
+const SUSPICIOUS_WINDOW_MS = 60 * 1000;
+
+export function logValidationFailure(
+  req: Request,
+  error: ValidationErrorDetail
+): void {
+  const ip = req.ip || 'unknown';
+  const timestamp = new Date().toISOString();
+
+  const log: ValidationFailureLog = {
+    timestamp,
+    ip,
+    path: req.path,
+    method: req.method,
+    userAgent: req.get('user-agent'),
+    error
+  };
+
+  validationFailures.push(log);
+
+  if (validationFailures.length > MAX_LOG_SIZE) {
+    validationFailures.shift();
+  }
+
+  trackSuspiciousActivity(ip, error);
+
+  console.warn('[VALIDATION FAILURE]', {
+    ip,
+    path: req.path,
+    param: error.param,
+    provided: error.provided,
+    timestamp
+  });
+}
+
+function trackSuspiciousActivity(
+  ip: string,
+  error: ValidationErrorDetail
+): void {
+  const now = Date.now();
+  let pattern = suspiciousIPs.get(ip);
+
+  if (!pattern) {
+    pattern = {
+      ip,
+      failureCount: 0,
+      firstFailure: now,
+      lastFailure: now,
+      patterns: []
+    };
+    suspiciousIPs.set(ip, pattern);
+  }
+
+  if (now - pattern.firstFailure > SUSPICIOUS_WINDOW_MS) {
+    pattern.failureCount = 0;
+    pattern.firstFailure = now;
+    pattern.patterns = [];
+  }
+
+  pattern.failureCount++;
+  pattern.lastFailure = now;
+  pattern.patterns.push(`${error.param}:${error.provided}`);
+
+  if (pattern.failureCount >= SUSPICIOUS_THRESHOLD) {
+    console.error('[SUSPICIOUS ACTIVITY DETECTED]', {
+      ip,
+      failureCount: pattern.failureCount,
+      windowMs: now - pattern.firstFailure,
+      patterns: pattern.patterns.slice(-5),
+      message: 'Multiple validation failures detected - possible attack attempt'
+    });
+
+    pattern.failureCount = 0;
+    pattern.firstFailure = now;
+    pattern.patterns = [];
+  }
+}
+
+export function getValidationStats(): {
+  totalFailures: number;
+  recentFailures: ValidationFailureLog[];
+  suspiciousIPs: Array<{
+    ip: string;
+    failureCount: number;
+    patterns: string[];
+  }>;
+} {
+  const suspicious = Array.from(suspiciousIPs.values())
+    .filter(p => p.failureCount > 0)
+    .map(p => ({
+      ip: p.ip,
+      failureCount: p.failureCount,
+      patterns: p.patterns
+    }));
+
+  return {
+    totalFailures: validationFailures.length,
+    recentFailures: validationFailures.slice(-20),
+    suspiciousIPs: suspicious
+  };
+}
+
+export function clearValidationLogs(): void {
+  validationFailures.length = 0;
+  suspiciousIPs.clear();
+}
+
+setInterval(() => {
+  const now = Date.now();
+  for (const [ip, pattern] of suspiciousIPs.entries()) {
+    if (now - pattern.lastFailure > SUSPICIOUS_WINDOW_MS * 2) {
+      suspiciousIPs.delete(ip);
+    }
+  }
+}, SUSPICIOUS_WINDOW_MS);
+
+export function validatePagination() {
+  return (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const validated = validatePaginationParams(req.query);
+
+      req.query.limit = String(validated.limit);
+      req.query.offset = String(validated.offset);
+
+      next();
+    } catch (error) {
+      if (error instanceof QueryValidationError) {
+        logValidationFailure(req, error.details);
+
+        const response: ValidationErrorResponse = {
+          error: error.message,
+          code: 'VALIDATION_ERROR',
+          details: error.details,
+          timestamp: new Date().toISOString()
+        };
+
+        return res.status(400).json(response);
+      }
+
+      console.error('Unexpected validation error:', error);
+      return res.status(500).json({ error: 'Internal server error' });
+    }
+  };
+}
+
+export function createQueryValidator<T extends Record<string, any>>(
+  validator: (query: any) => T
+) {
+  return (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const validated = validator(req.query);
+
+      req.query = validated as any;
+
+      next();
+    } catch (error) {
+      if (error instanceof QueryValidationError) {
+        logValidationFailure(req, error.details);
+
+        const response: ValidationErrorResponse = {
+          error: error.message,
+          code: 'VALIDATION_ERROR',
+          details: error.details,
+          timestamp: new Date().toISOString()
+        };
+
+        return res.status(400).json(response);
+      }
+
+      console.error('Unexpected validation error:', error);
+      return res.status(500).json({ error: 'Internal server error' });
+    }
+  };
 }

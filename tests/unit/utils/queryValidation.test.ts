@@ -5,7 +5,7 @@ import {
   validateEnumParam,
   QueryValidationError,
   sanitizeQueryParams
-} from '../../../backend/src/utils/queryValidation.js';
+} from '../../../backend/src/utils/validation.js';
 import { PAGINATION_CONSTRAINTS } from '../../../shared/types/validation.js';
 
 describe('validatePaginationParams', () => {

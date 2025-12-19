@@ -4,7 +4,7 @@ import { CheckCircle, Circle, Clock } from 'lucide-react';
 import { marked } from 'marked';
 import DOMPurify from 'dompurify';
 import { api } from '../lib/api';
-import { PlanSkeleton } from '../components/skeletons/PlanSkeleton';
+import { PlanSkeleton } from '../components/skeletons';
 import { Navigation } from '../components/Navigation';
 
 export default function PlanViewer() {

@@ -131,11 +131,13 @@ export function validateVote(req: Request, res: Response, next: NextFunction) {
   next();
 }
 
-export { validatePagination, createQueryValidator } from './queryValidation.js';
 export {
+  validatePagination,
+  createQueryValidator,
   validatePaginationParams,
   validateIntegerParam,
   validateEnumParam,
-  QueryValidationError
-} from '../utils/queryValidation.js';
-export { logValidationFailure, getValidationStats } from '../utils/validationLogger.js';
+  QueryValidationError,
+  logValidationFailure,
+  getValidationStats
+} from '../utils/validation.js';
