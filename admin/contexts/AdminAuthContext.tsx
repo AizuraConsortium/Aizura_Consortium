@@ -1,6 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { supabase } from '@shared/lib';
-import { api } from '../lib/api';
+import { supabase, apiClient } from '@shared/lib';
 import { useSupabaseAuth } from '@shared/hooks';
 import { User } from '@supabase/supabase-js';
 
@@ -28,7 +27,7 @@ export function AdminAuthProvider({ children }: { children: React.ReactNode }) {
         return false;
       }
 
-      await api.get('/errors/admin?limit=1', session.access_token);
+      await apiClient.get('/errors/admin?limit=1', session.access_token);
       setIsAdmin(true);
       return true;
     } catch (error: any) {

@@ -1,7 +1,6 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { ErrorBoundary } from '../shared/components/ErrorBoundary';
+import { ErrorBoundary, SkipNavigation } from '@shared/components';
 import { AuthProvider } from './contexts/AuthContext';
-import { SkipNavigation } from './components/SkipNavigation';
 import Home from './pages/Home';
 import Room from './pages/Room';
 import PlanViewer from './pages/PlanViewer';

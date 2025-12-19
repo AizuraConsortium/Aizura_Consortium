@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useAdminAuth } from '../contexts/AdminAuthContext';
-import { api } from '../lib/api';
+import { apiClient } from '@shared/lib';
 import {
   Shield,
   LogOut,
@@ -80,7 +80,7 @@ export function ErrorMonitor() {
       if (filters.startDate) queryParams.append('startDate', new Date(filters.startDate).toISOString());
       if (filters.endDate) queryParams.append('endDate', new Date(filters.endDate).toISOString());
 
-      const data = await api.get(`/errors/admin?${queryParams}`, session.access_token);
+      const data = await apiClient.get(`/errors/admin?${queryParams}`, session.access_token);
       setErrors(data.errors || []);
       setPagination(prev => ({ ...prev, total: data.total || 0 }));
       setError('');
@@ -104,7 +104,7 @@ export function ErrorMonitor() {
         return;
       }
 
-      await api.delete(`/errors/admin/${id}`, session.access_token);
+      await apiClient.delete(`/errors/admin/${id}`, session.access_token);
 
       fetchErrors();
     } catch (err: any) {
