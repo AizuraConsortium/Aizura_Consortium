@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAdminAuth } from '../../contexts/AdminAuthContext';
+import { useAdminAuth } from '../contexts/AdminAuthContext';
 import { Shield, Loader2, AlertCircle } from 'lucide-react';
 
 export function AdminLogin() {
@@ -14,7 +14,7 @@ export function AdminLogin() {
 
   useEffect(() => {
     if (user && isAdmin) {
-      navigate('/admin/dashboard', { replace: true });
+      navigate('/', { replace: true });
     }
   }, [user, isAdmin, navigate]);
 
@@ -35,7 +35,7 @@ export function AdminLogin() {
       if (!result.success) {
         setError(result.error || 'Login failed');
       } else {
-        navigate('/admin/dashboard', { replace: true });
+        navigate('/', { replace: true });
       }
     } catch (err: any) {
       setError(err.message || 'An unexpected error occurred');

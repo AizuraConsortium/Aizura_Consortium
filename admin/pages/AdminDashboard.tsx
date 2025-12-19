@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useAdminAuth } from '../../contexts/AdminAuthContext';
+import { useAdminAuth } from '../contexts/AdminAuthContext';
 import {
   Shield,
   LogOut,

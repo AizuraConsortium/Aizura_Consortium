@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { AlertCircle, Activity, Shield, Clock, TrendingUp } from 'lucide-react';
-import { useDataFetch } from '../../hooks/useDataFetch';
-import { usePolling } from '../../hooks/usePolling';
-import { api } from '../../lib/api';
-import { useAdminAuth } from '../../contexts/AdminAuthContext';
+import { useDataFetch } from '../hooks/useDataFetch';
+import { usePolling } from '../hooks/usePolling';
+import { api } from '../lib/api';
+import { useAdminAuth } from '../contexts/AdminAuthContext';
 
 interface RateLimitStats {
   endpoint: string;

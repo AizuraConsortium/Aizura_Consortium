@@ -73,13 +73,10 @@ export function AdminAuthProvider({ children }: { children: React.ReactNode }) {
         return { success: false, error: 'Login failed' };
       }
 
-      setUser(data.user);
-
       const isUserAdmin = await checkAdminRole();
 
       if (!isUserAdmin) {
         await supabase.auth.signOut();
-        setUser(null);
         setIsAdmin(false);
         return { success: false, error: 'Access denied. Admin privileges required.' };
       }

@@ -1,14 +1,47 @@
-function App() {
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { ErrorBoundary } from './components/ErrorBoundary';
+import { AdminAuthProvider } from './contexts/AdminAuthContext';
+import { AdminProtectedRoute } from './components/AdminProtectedRoute';
+import { AdminLogin } from './pages/AdminLogin';
+import { AdminDashboard } from './pages/AdminDashboard';
+import { ErrorMonitor } from './pages/ErrorMonitor';
+import RateLimitMonitor from './pages/RateLimitMonitor';
+
+export default function App() {
   return (
-    <div className="min-h-screen bg-gray-50">
-      <h1 className="text-4xl font-bold text-center py-8">
-        Aizura Admin Portal
-      </h1>
-      <p className="text-center text-gray-600">
-        Admin portal placeholder
-      </p>
-    </div>
+    <ErrorBoundary>
+      <AdminAuthProvider>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/login" element={<AdminLogin />} />
+            <Route
+              path="/"
+              element={
+                <AdminProtectedRoute>
+                  <AdminDashboard />
+                </AdminProtectedRoute>
+              }
+            />
+            <Route
+              path="/errors"
+              element={
+                <AdminProtectedRoute>
+                  <ErrorMonitor />
+                </AdminProtectedRoute>
+              }
+            />
+            <Route
+              path="/rate-limits"
+              element={
+                <AdminProtectedRoute>
+                  <RateLimitMonitor />
+                </AdminProtectedRoute>
+              }
+            />
+            <Route path="*" element={<Navigate to="/" replace />} />
+          </Routes>
+        </BrowserRouter>
+      </AdminAuthProvider>
+    </ErrorBoundary>
   );
 }
-
-export default App;

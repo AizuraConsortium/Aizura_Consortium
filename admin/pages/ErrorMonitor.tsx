@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { useAdminAuth } from '../../contexts/AdminAuthContext';
+import { useAdminAuth } from '../contexts/AdminAuthContext';
 import {
   Shield,
   LogOut,
@@ -15,9 +15,9 @@ import {
   AlertCircle,
   XCircle
 } from 'lucide-react';
-import { ErrorDetailsModal } from '../../components/admin/ErrorDetailsModal';
-import { TableSkeleton } from '../../components/skeletons';
-import { handleKeyboardClick } from '../../utils/accessibility';
+import { ErrorDetailsModal } from '../components/ErrorDetailsModal';
+import { TableSkeleton } from '../components/skeletons';
+import { handleKeyboardClick } from '../utils/accessibility';
 
 interface ErrorLog {
   id: string;
@@ -60,7 +60,7 @@ export function ErrorMonitor() {
   const fetchErrors = async () => {
     try {
       setIsLoading(true);
-      const { data: { session } } = await (await import('../../lib/supabase')).supabase.auth.getSession();
+      const { data: { session } } = await (await import('../lib/supabase')).supabase.auth.getSession();
 
       if (!session) {
         setError('Not authenticated');
@@ -106,7 +106,7 @@ export function ErrorMonitor() {
     }
 
     try {
-      const { data: { session } } = await (await import('../../lib/supabase')).supabase.auth.getSession();
+      const { data: { session } } = await (await import('../lib/supabase')).supabase.auth.getSession();
 
       if (!session) {
         setError('Not authenticated');
