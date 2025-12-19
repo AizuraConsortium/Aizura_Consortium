@@ -50,9 +50,9 @@ export default function PlanViewer() {
       <div className="min-h-screen bg-slate-900 text-white">
         <Navigation variant="internal" />
 
-        <div className="max-w-5xl mx-auto px-6 py-8">
+        <main id="main-content" className="max-w-5xl mx-auto px-4 sm:px-6 py-8">
           <PlanSkeleton />
-        </div>
+        </main>
       </div>
     );
   }
@@ -69,8 +69,8 @@ export default function PlanViewer() {
     <div className="min-h-screen bg-slate-900 text-white">
       <Navigation variant="internal" />
 
-      <div className="max-w-5xl mx-auto px-6 py-8">
-        <div className="flex items-center justify-between mb-6">
+      <main id="main-content" className="max-w-5xl mx-auto px-4 sm:px-6 py-8">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-6 gap-4">
           <div>
             <h1 className="text-3xl font-bold mb-2">{plan.title}</h1>
             <span className={`px-3 py-1 rounded-full text-sm font-medium ${
@@ -126,7 +126,7 @@ export default function PlanViewer() {
             </div>
           )}
         </div>
-      </div>
+      </main>
     </div>
   );
 }

@@ -196,7 +196,7 @@ export default function Room() {
         </div>
       )}
 
-      <div className="max-w-5xl mx-auto px-6 py-8">
+      <main id="main-content" className="max-w-5xl mx-auto px-4 sm:px-6 py-8">
         {topicInfo && topicInfo.proposal && (
           <div className="bg-slate-800 border border-slate-700 rounded-xl p-6 mb-6">
             <h2 className="text-2xl font-bold mb-2">{topicInfo.proposal.title}</h2>
@@ -299,7 +299,7 @@ export default function Room() {
             <div ref={messagesEndRef} />
           </div>
         </div>
-      </div>
+      </main>
 
       <SystemHealthBadge />
     </div>

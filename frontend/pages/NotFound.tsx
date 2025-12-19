@@ -13,8 +13,8 @@ export default function NotFound() {
       <div className="relative">
         <Navigation variant="internal" />
 
-        <div className="max-w-4xl mx-auto px-6 py-20">
-          <div className="bg-slate-800/50 backdrop-blur-sm border border-slate-700/50 rounded-2xl p-12 text-center">
+        <main id="main-content" className="max-w-4xl mx-auto px-4 sm:px-6 py-12 sm:py-20">
+          <div className="bg-slate-800/50 backdrop-blur-sm border border-slate-700/50 rounded-2xl p-6 sm:p-12 text-center">
             <div className="mb-8 flex justify-center">
               <XCircle className="w-24 h-24 text-cyan-400" strokeWidth={1.5} />
             </div>
@@ -25,7 +25,7 @@ export default function NotFound() {
               The page you're looking for doesn't exist. It may have been moved or deleted.
             </p>
 
-            <div className="grid md:grid-cols-3 gap-4 max-w-2xl mx-auto">
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 max-w-2xl mx-auto">
               <button
                 onClick={() => navigate('/')}
                 className="flex items-center justify-center space-x-3 bg-cyan-500 hover:bg-cyan-600 text-white font-medium py-4 px-6 rounded-lg transition-colors"
@@ -54,7 +54,7 @@ export default function NotFound() {
               </button>
             </div>
           </div>
-        </div>
+        </main>
       </div>
 
       <SystemHealthBadge />

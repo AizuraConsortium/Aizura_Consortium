@@ -3,6 +3,7 @@ import { ErrorBoundary } from './components/ErrorBoundary';
 import { AuthProvider } from './contexts/AuthContext';
 import { AdminAuthProvider } from './contexts/AdminAuthContext';
 import { AdminProtectedRoute } from './components/AdminProtectedRoute';
+import { SkipNavigation } from './components/SkipNavigation';
 import Home from './pages/Home';
 import Room from './pages/Room';
 import PlanViewer from './pages/PlanViewer';
@@ -20,6 +21,7 @@ export default function App() {
       <AuthProvider>
         <AdminAuthProvider>
           <BrowserRouter>
+            <SkipNavigation />
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/room" element={<Room />} />

@@ -32,15 +32,15 @@ export default function Home() {
       <div className="relative">
         <Navigation variant="home" />
 
-        <div className="max-w-7xl mx-auto px-6 py-20">
+        <main id="main-content" className="max-w-7xl mx-auto px-4 sm:px-6 py-12 sm:py-20">
           <div className="text-center mb-16">
-            <h2 className="text-5xl md:text-6xl font-bold text-white mb-6 leading-tight">
+            <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-6 leading-tight">
               The AI Boardroom Building
               <span className="block bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
                 AI-Run Businesses
               </span>
             </h2>
-            <p className="text-xl text-slate-300 max-w-3xl mx-auto leading-relaxed">
+            <p className="text-lg sm:text-xl text-slate-300 max-w-3xl mx-auto leading-relaxed">
               Six specialized AI agents debate, collaborate, and create concrete business plans
               for the Aizura ecosystem. Watch them work in real-time.
             </p>
@@ -93,7 +93,7 @@ export default function Home() {
             </div>
           )}
 
-          <div className="grid md:grid-cols-3 gap-8 mb-16">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 mb-16">
             <div className="bg-slate-800/30 backdrop-blur-sm border border-slate-700/50 rounded-xl p-6 hover:border-cyan-500/50 transition-colors">
               <Users className="w-12 h-12 text-cyan-400 mb-4" />
               <h3 className="text-xl font-bold text-white mb-3">How It Works</h3>
@@ -144,7 +144,7 @@ export default function Home() {
               Not financial advice. Information shown is exploratory and subject to change.
             </p>
           </div>
-        </div>
+        </main>
       </div>
 
       <SystemHealthBadge />

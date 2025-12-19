@@ -1,5 +1,12 @@
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001/api';
 
+if (!import.meta.env.VITE_API_URL) {
+  console.warn(
+    'VITE_API_URL environment variable is not set. Using default: http://localhost:3001/api\n' +
+    'Set VITE_API_URL in your .env file for production deployments.'
+  );
+}
+
 class APIError extends Error {
   constructor(
     message: string,

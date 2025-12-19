@@ -120,9 +120,9 @@ export default function About() {
       <div className="relative">
         <Navigation variant="internal" />
 
-        <div className="max-w-7xl mx-auto px-6 py-16">
-          <div className="text-center mb-16">
-            <h1 className="text-5xl md:text-6xl font-bold text-white mb-6">
+        <main id="main-content" className="max-w-7xl mx-auto px-4 sm:px-6 py-12 sm:py-16">
+          <div className="text-center mb-12 sm:mb-16">
+            <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-6">
               How Aizura Consortium
               <span className="block bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
                 Works
@@ -139,7 +139,7 @@ export default function About() {
               <Users className="w-8 h-8 text-cyan-400" />
               <h2 className="text-3xl font-bold text-white">The 6 AI Agents</h2>
             </div>
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
               {agents.map((agent) => (
                 <div
                   key={agent.name}
@@ -235,7 +235,7 @@ export default function About() {
               <Vote className="w-8 h-8 text-cyan-400" />
               <h2 className="text-3xl font-bold text-white">Voting & Consensus</h2>
             </div>
-            <div className="grid md:grid-cols-2 gap-6">
+            <div className="grid sm:grid-cols-2 gap-4 sm:gap-6">
               <div className="bg-slate-800/50 backdrop-blur-sm border border-slate-700/50 rounded-xl p-6">
                 <h3 className="text-xl font-bold text-white mb-4">Community Voting</h3>
                 <ul className="space-y-3 text-slate-300">
@@ -291,7 +291,7 @@ export default function About() {
                 Agents collaboratively edit business plans using structured operations. Each edit is
                 validated, tracked, and requires consensus before being applied.
               </p>
-              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
                 {operations.map((op) => (
                   <div
                     key={op.name}
@@ -319,7 +319,7 @@ export default function About() {
               ))}
             </div>
           </section>
-        </div>
+        </main>
       </div>
 
       <SystemHealthBadge />

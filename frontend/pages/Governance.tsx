@@ -129,8 +129,8 @@ export default function Governance() {
         </div>
       </div>
 
-      <div className="max-w-5xl mx-auto px-6 py-8">
-        <div className="flex items-center justify-between mb-8">
+      <main id="main-content" className="max-w-5xl mx-auto px-4 sm:px-6 py-8">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-8 gap-4">
           <div>
             <h1 className="text-3xl font-bold mb-2">Governance</h1>
             <p className="text-slate-300">
@@ -282,7 +282,7 @@ export default function Governance() {
             )}
           </div>
         )}
-      </div>
+      </main>
 
       <AuthModal isOpen={showAuthModal} onClose={() => setShowAuthModal(false)} />
     </div>
