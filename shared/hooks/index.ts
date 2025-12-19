@@ -5,3 +5,5 @@ export { usePagination } from './usePagination';
 export { useSupabaseAuth } from './useSupabaseAuth';
 export { useDataFetch } from './useDataFetch';
 export { usePolling } from './usePolling';
+export { useEscapeKey } from './useEscapeKey';
+export { useFocusTrap } from './useFocusTrap';

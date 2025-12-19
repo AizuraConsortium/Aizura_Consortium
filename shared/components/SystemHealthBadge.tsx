@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Activity, AlertTriangle, XCircle, CheckCircle } from 'lucide-react';
+import { apiClient } from '@shared/lib';
 
 interface SystemHealth {
   status: 'healthy' | 'degraded' | 'unhealthy';
@@ -27,14 +28,7 @@ export function SystemHealthBadge() {
 
   const fetchHealth = async () => {
     try {
-      const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:3001/api';
-      const response = await fetch(`${apiUrl}/system/health`);
-
-      if (!response.ok) {
-        throw new Error('Failed to fetch health');
-      }
-
-      const data = await response.json();
+      const data = await apiClient.get('/admin/system/health');
       setHealth(data);
       setError('');
     } catch (err: any) {

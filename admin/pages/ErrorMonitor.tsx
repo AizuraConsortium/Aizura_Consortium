@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useAdminAuth } from '../contexts/AdminAuthContext';
+import { api } from '../lib/api';
 import {
   Shield,
   LogOut,
@@ -68,7 +69,6 @@ export function ErrorMonitor() {
         return;
       }
 
-      const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:3001/api';
       const queryParams = new URLSearchParams({
         limit: pagination.limit.toString(),
         offset: pagination.offset.toString()
@@ -80,17 +80,7 @@ export function ErrorMonitor() {
       if (filters.startDate) queryParams.append('startDate', new Date(filters.startDate).toISOString());
       if (filters.endDate) queryParams.append('endDate', new Date(filters.endDate).toISOString());
 
-      const response = await fetch(`${apiUrl}/errors/admin?${queryParams}`, {
-        headers: {
-          'Authorization': `Bearer ${session.access_token}`
-        }
-      });
-
-      if (!response.ok) {
-        throw new Error('Failed to fetch errors');
-      }
-
-      const data = await response.json();
+      const data = await api.get(`/errors/admin?${queryParams}`, session.access_token);
       setErrors(data.errors || []);
       setPagination(prev => ({ ...prev, total: data.total || 0 }));
       setError('');
@@ -114,17 +104,7 @@ export function ErrorMonitor() {
         return;
       }
 
-      const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:3001/api';
-      const response = await fetch(`${apiUrl}/errors/admin/${id}`, {
-        method: 'DELETE',
-        headers: {
-          'Authorization': `Bearer ${session.access_token}`
-        }
-      });
-
-      if (!response.ok) {
-        throw new Error('Failed to delete error');
-      }
+      await api.delete(`/errors/admin/${id}`, session.access_token);
 
       fetchErrors();
     } catch (err: any) {

@@ -1,4 +1,5 @@
 import { Component, ReactNode } from 'react';
+import { logError } from '@shared/lib';
 
 interface Props {
   children: ReactNode;
@@ -32,28 +33,16 @@ export class ErrorBoundary extends Component<Props, State> {
     }
 
     if (this.props.enableLogging) {
-      try {
-        const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:3001/api';
-        await fetch(`${apiUrl}/errors/log`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            source: 'frontend',
-            severity: 'error',
-            error_type: 'react_error_boundary',
-            message: error.message,
-            details: {
-              stack: error.stack,
-              componentStack: errorInfo.componentStack,
-            },
-            appName: this.props.appName
-          })
-        });
-      } catch (logError) {
-        console.error('Failed to log error:', logError);
-      }
+      await logError(
+        'frontend',
+        'react_error_boundary',
+        error.message,
+        {
+          stack: error.stack,
+          componentStack: errorInfo.componentStack,
+          appName: this.props.appName
+        }
+      );
     }
   }
 

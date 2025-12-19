@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAdminAuth } from '../contexts/AdminAuthContext';
+import { api } from '../lib/api';
 import {
   Shield,
   LogOut,
@@ -31,7 +32,7 @@ interface SystemHealth {
 }
 
 export function AdminDashboard() {
-  const { user, signOut } = useAdminAuth();
+  const { user, session, signOut } = useAdminAuth();
   const navigate = useNavigate();
   const [systemHealth, setSystemHealth] = useState<SystemHealth | null>(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -45,14 +46,7 @@ export function AdminDashboard() {
 
   const fetchSystemHealth = async () => {
     try {
-      const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:3001/api';
-      const response = await fetch(`${apiUrl}/system/health`);
-
-      if (!response.ok) {
-        throw new Error('Failed to fetch system health');
-      }
-
-      const data = await response.json();
+      const data = await api.get('/admin/system/health', session?.access_token);
       setSystemHealth(data);
       setError('');
     } catch (err: any) {

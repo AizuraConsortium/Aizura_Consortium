@@ -1,8 +1,7 @@
 import { useState } from 'react';
 import { X, Mail, Loader2 } from 'lucide-react';
 import { supabase } from '@shared/lib';
-import { useFocusTrap } from '../hooks/useFocusTrap';
-import { useEscapeKey } from '../hooks/useEscapeKey';
+import { useFocusTrap, useEscapeKey } from '@shared/hooks';
 
 interface AuthModalProps {
   isOpen: boolean;
