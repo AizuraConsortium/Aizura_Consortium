@@ -5,5 +5,6 @@ export { ToastProvider, useToast } from './ToastProvider';
 export { ToastComponent } from './Toast';
 export type { Toast, ToastType } from './Toast';
 export { DevBanner } from './DevBanner';
+export { ProtectedRoute } from './ProtectedRoute';
 export * from './ui';
 export * from './skeletons';

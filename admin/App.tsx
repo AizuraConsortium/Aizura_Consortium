@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { ErrorBoundary } from '../shared/components/ErrorBoundary';
 import { AdminAuthProvider } from './contexts/AdminAuthContext';
-import { AdminProtectedRoute } from './components/AdminProtectedRoute';
+import { ProtectedRoute } from '@shared/components';
 import { AdminLogin } from './pages/AdminLogin';
 import { AdminDashboard } from './pages/AdminDashboard';
 import { ErrorMonitor } from './pages/ErrorMonitor';
@@ -17,25 +17,25 @@ export default function App() {
             <Route
               path="/"
               element={
-                <AdminProtectedRoute>
+                <ProtectedRoute authContextType="admin" requireAdmin redirectTo="/login">
                   <AdminDashboard />
-                </AdminProtectedRoute>
+                </ProtectedRoute>
               }
             />
             <Route
               path="/errors"
               element={
-                <AdminProtectedRoute>
+                <ProtectedRoute authContextType="admin" requireAdmin redirectTo="/login">
                   <ErrorMonitor />
-                </AdminProtectedRoute>
+                </ProtectedRoute>
               }
             />
             <Route
               path="/rate-limits"
               element={
-                <AdminProtectedRoute>
+                <ProtectedRoute authContextType="admin" requireAdmin redirectTo="/login">
                   <RateLimitMonitor />
-                </AdminProtectedRoute>
+                </ProtectedRoute>
               }
             />
             <Route path="*" element={<Navigate to="/" replace />} />

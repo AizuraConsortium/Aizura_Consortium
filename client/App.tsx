@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { ErrorBoundary } from '../shared/components/ErrorBoundary';
 import { AuthProvider } from './contexts/AuthContext';
-import { ProtectedRoute } from './components/ProtectedRoute';
+import { ProtectedRoute } from '@shared/components';
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 import MyProposals from './pages/MyProposals';
@@ -16,7 +16,7 @@ export default function App() {
             <Route
               path="/"
               element={
-                <ProtectedRoute>
+                <ProtectedRoute authContextType="client" redirectTo="/login">
                   <Dashboard />
                 </ProtectedRoute>
               }
@@ -24,7 +24,7 @@ export default function App() {
             <Route
               path="/proposals"
               element={
-                <ProtectedRoute>
+                <ProtectedRoute authContextType="client" redirectTo="/login">
                   <MyProposals />
                 </ProtectedRoute>
               }
