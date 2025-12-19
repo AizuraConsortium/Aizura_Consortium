@@ -1,4 +1,5 @@
 import { ReactNode } from 'react';
+import { cn, themeClasses } from '@shared/styles';
 
 interface CardProps {
   children: ReactNode;
@@ -11,11 +12,11 @@ export function Card({ children, className = '', padding = 'md' }: CardProps) {
     none: '',
     sm: 'p-4',
     md: 'p-6',
-    lg: 'p-8'
+    lg: 'p-8',
   };
 
   return (
-    <div className={`bg-white rounded-lg border border-gray-200 shadow-sm ${paddingClasses[padding]} ${className}`}>
+    <div className={cn(themeClasses.card.default, paddingClasses[padding], className)}>
       {children}
     </div>
   );
