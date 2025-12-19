@@ -2,7 +2,7 @@ import { useEffect, useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FileText } from 'lucide-react';
 import { api } from '../lib/api';
-import { supabase } from '../lib/supabase';
+import { supabase } from '@shared/lib';
 import { AGENT_DISPLAY_NAMES, ROLE_DISPLAY_NAMES, type Message } from '../types';
 import { SystemHealthBadge } from '../../shared/components/SystemHealthBadge';
 import { MessageSkeleton } from '../components/skeletons';

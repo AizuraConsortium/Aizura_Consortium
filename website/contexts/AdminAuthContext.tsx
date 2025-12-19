@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { supabase } from '../lib/supabase';
+import { supabase } from '@shared/lib';
 import { api } from '../lib/api';
-import { useSupabaseAuth } from '../hooks/useSupabaseAuth';
+import { useSupabaseAuth } from '@shared/hooks';
 import { User } from '@supabase/supabase-js';
 
 interface AdminAuthContextType {

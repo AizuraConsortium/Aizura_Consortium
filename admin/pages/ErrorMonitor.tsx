@@ -17,7 +17,8 @@ import {
 } from 'lucide-react';
 import { ErrorDetailsModal } from '../components/ErrorDetailsModal';
 import { TableSkeleton } from '../components/skeletons';
-import { handleKeyboardClick } from '../utils/accessibility';
+import { handleKeyboardClick } from '@shared/utils';
+import { supabase } from '@shared/lib';
 
 interface ErrorLog {
   id: string;
@@ -60,7 +61,7 @@ export function ErrorMonitor() {
   const fetchErrors = async () => {
     try {
       setIsLoading(true);
-      const { data: { session } } = await (await import('../lib/supabase')).supabase.auth.getSession();
+      const { data: { session } } = await supabase.auth.getSession();
 
       if (!session) {
         setError('Not authenticated');
@@ -106,7 +107,7 @@ export function ErrorMonitor() {
     }
 
     try {
-      const { data: { session } } = await (await import('../lib/supabase')).supabase.auth.getSession();
+      const { data: { session } } = await supabase.auth.getSession();
 
       if (!session) {
         setError('Not authenticated');

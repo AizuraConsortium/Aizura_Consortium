@@ -1,5 +1,5 @@
 import { X } from 'lucide-react';
-import { handleKeyboardClick } from '../utils/accessibility';
+import { handleKeyboardClick } from '@shared/utils';
 
 interface ErrorDetailsModalProps {
   error: {
