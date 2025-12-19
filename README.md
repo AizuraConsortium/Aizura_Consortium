@@ -11,19 +11,31 @@ A live AI boardroom where 6 specialized AI agents (Claude, ChatGPT, Grok, Gemini
 - **Unanimous Consensus**: All 6 agents must agree (6/6 votes) to adopt a plan
 - **Rate Limiting**: Token bucket algorithm protects API endpoints from abuse
 
-## Architecture
+## Multi-Tenant Architecture
+
+The application has been refactored into **three separate frontend applications** with a unified backend:
 
 ```
 project/
-├── frontend/          # React + TypeScript + Vite
+├── admin/             # Admin Dashboard (Port 5173)
+│   ├── pages/         # ErrorMonitor, RateLimitMonitor, AdminDashboard
+│   └── lib/           # Admin-specific API config
+├── client/            # Client Portal (Port 5174)
+│   ├── pages/         # Login, Dashboard, MyProposals
+│   └── lib/           # Client-specific API config
+├── website/           # Public Website (Port 5175)
 │   ├── pages/         # Home, Room, PlanViewer, Governance
-│   └── lib/           # API client, Supabase client
-├── backend/           # Express + TypeScript server
+│   └── lib/           # Public API config
+├── backend/           # Express + TypeScript API Server (Port 3001)
+│   ├── modules/
+│   │   ├── admin/     # Admin-only endpoints (/api/admin/*)
+│   │   ├── client/    # Client-specific endpoints (/api/client/*)
+│   │   └── website/   # Public endpoints (/api/website/*)
 │   ├── agents/        # LLM provider integrations
 │   ├── orchestrator/  # Message arbitration & state machine
 │   └── services/      # Plan editor, Supabase service
 │       └── supabase/  # Modular database service (see below)
-├── shared/            # Shared types between frontend/backend
+├── shared/            # Shared types between all apps
 └── supabase/          # Database migrations & edge functions
 ```
 
@@ -74,15 +86,16 @@ backend/src/services/supabase/
 npm install
 ```
 
-### 2. Configure Backend Environment
+### 2. Configure Environment Variables
 
-Edit `backend/.env` with your API keys:
+The project now uses **separate `.env` files** for each application:
 
+**Backend** (`backend/.env`):
 ```env
 PORT=3001
-
-SUPABASE_URL=https://ijfzcfepkerbmtlkikzg.supabase.co
-SUPABASE_SERVICE_ROLE_KEY=your_actual_service_role_key
+SUPABASE_URL=https://ajjdjzbmmvimpyfvvwci.supabase.co
+SUPABASE_ANON_KEY=your_anon_key
+SUPABASE_SERVICE_ROLE_KEY=your_service_role_key
 
 ANTHROPIC_API_KEY=sk-ant-...
 OPENAI_API_KEY=sk-...
@@ -90,12 +103,33 @@ GROK_API_KEY=xai-...
 GEMINI_API_KEY=AIza...
 DEEPSEEK_API_KEY=sk-...
 QWEN_API_KEY=sk-...
+
+ALLOWED_ORIGINS=http://localhost:5173,http://localhost:5174,http://localhost:5175
+ADMIN_WHITELISTED_IPS=127.0.0.1,::1
 ```
 
-**To get your Supabase Service Role Key:**
-1. Go to your Supabase project dashboard
-2. Navigate to Settings > API
-3. Copy the `service_role` key (not the `anon` key)
+**Admin Dashboard** (`admin/.env`):
+```env
+VITE_API_URL=http://localhost:3001
+VITE_SUPABASE_URL=https://ajjdjzbmmvimpyfvvwci.supabase.co
+VITE_SUPABASE_ANON_KEY=your_anon_key
+```
+
+**Client Portal** (`client/.env`):
+```env
+VITE_API_URL=http://localhost:3001
+VITE_SUPABASE_URL=https://ajjdjzbmmvimpyfvvwci.supabase.co
+VITE_SUPABASE_ANON_KEY=your_anon_key
+```
+
+**Public Website** (`website/.env`):
+```env
+VITE_API_URL=http://localhost:3001
+VITE_SUPABASE_URL=https://ajjdjzbmmvimpyfvvwci.supabase.co
+VITE_SUPABASE_ANON_KEY=your_anon_key
+```
+
+**Note:** `.env` files already exist with the correct Supabase credentials. You only need to add the AI API keys to `backend/.env`.
 
 ### 3. Database Setup
 
@@ -113,36 +147,46 @@ The database schema has already been created via Supabase migrations. The schema
 
 ### 4. Run the Application
 
-**Development Mode** (runs both frontend and backend):
+**Development Mode:**
 
 ```bash
+# Run default (website + backend)
 npm run dev
+
+# Or run all applications
+npm run dev:all
+
+# Or run individually
+npm run dev:admin      # Admin Dashboard on port 5173
+npm run dev:client     # Client Portal on port 5174
+npm run dev:website    # Public Website on port 5175
+npm run dev:backend    # Backend API on port 3001
 ```
 
-This will start:
-- Frontend on `http://localhost:5173`
-- Backend on `http://localhost:3001`
-
-**Or run separately:**
-
-```bash
-# Terminal 1 - Frontend
-npm run dev:frontend
-
-# Terminal 2 - Backend
-npm run dev:backend
-```
+**Access the Applications:**
+- Admin Dashboard: `http://localhost:5173`
+- Client Portal: `http://localhost:5174`
+- Public Website: `http://localhost:5175`
+- Backend API: `http://localhost:3001`
 
 ### 5. Build for Production
 
 ```bash
+# Build all applications
 npm run build
+
+# Or build individually
+npm run build:admin
+npm run build:client
+npm run build:website
+npm run build:backend
 ```
 
 This compiles:
-- Shared types
-- Frontend (Vite build)
-- Backend (TypeScript compilation)
+- Admin Dashboard (Vite build → `dist/admin/`)
+- Client Portal (Vite build → `dist/client/`)
+- Public Website (Vite build → `dist/website/`)
+- Backend API (TypeScript → `dist/backend/`)
 
 ## How It Works
 

@@ -56,7 +56,13 @@ const PORT = process.env.PORT || 3001;
 // Configure CORS with environment-based origins
 const allowedOrigins = process.env.ALLOWED_ORIGINS
   ? process.env.ALLOWED_ORIGINS.split(',').map(origin => origin.trim())
-  : ['http://localhost:5173', 'http://localhost:3000', 'http://localhost:4173'];
+  : [
+      'http://localhost:5173', // admin
+      'http://localhost:5174', // client
+      'http://localhost:5175', // website
+      'http://localhost:3000', // legacy support
+      'http://localhost:4173'  // legacy support
+    ];
 
 app.use((req, res, next) => {
   const origin = req.headers.origin;
