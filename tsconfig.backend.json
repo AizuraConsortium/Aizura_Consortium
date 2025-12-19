@@ -12,5 +12,13 @@
     "resolveJsonModule": true,
     "types": ["node"]
   },
-  "include": ["backend/**/*", "shared/**/*"]
+  "include": ["backend/**/*", "shared/types/**/*", "shared/utils/**/*"],
+  "exclude": [
+    "node_modules",
+    "dist",
+    "shared/components",
+    "shared/hooks",
+    "**/*.test.ts",
+    "**/*.test.tsx"
+  ]
 }
