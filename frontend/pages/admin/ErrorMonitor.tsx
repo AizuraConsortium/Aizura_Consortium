@@ -16,6 +16,8 @@ import {
   XCircle
 } from 'lucide-react';
 import { ErrorDetailsModal } from '../../components/admin/ErrorDetailsModal';
+import { TableSkeleton } from '../../components/skeletons/TableSkeleton';
+import { handleKeyboardClick } from '../../utils/accessibility';
 
 interface ErrorLog {
   id: string;
@@ -329,10 +331,7 @@ export function ErrorMonitor() {
 
         <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
           {isLoading ? (
-            <div className="p-8 text-center">
-              <RefreshCw className="h-8 w-8 animate-spin text-blue-600 mx-auto mb-4" />
-              <p className="text-gray-600">Loading errors...</p>
-            </div>
+            <TableSkeleton rows={10} />
           ) : errors.length === 0 ? (
             <div className="p-8 text-center">
               <AlertTriangle className="h-12 w-12 text-gray-400 mx-auto mb-4" />
@@ -371,8 +370,12 @@ export function ErrorMonitor() {
                     {errors.map((err) => (
                       <tr
                         key={err.id}
-                        className="hover:bg-gray-50 cursor-pointer"
+                        className="hover:bg-gray-50 cursor-pointer focus-within:bg-gray-100"
                         onClick={() => setSelectedError(err)}
+                        onKeyDown={(e) => handleKeyboardClick(e, () => setSelectedError(err))}
+                        tabIndex={0}
+                        role="button"
+                        aria-label={`View details for ${err.error_type} error`}
                       >
                         <td className="px-6 py-4 whitespace-nowrap">
                           <span className={`inline-flex items-center space-x-1 px-2.5 py-1 rounded-full text-xs font-medium ${getSeverityColor(err.severity)}`}>
@@ -403,9 +406,10 @@ export function ErrorMonitor() {
                               e.stopPropagation();
                               handleDeleteError(err.id);
                             }}
+                            aria-label={`Delete ${err.error_type} error`}
                             className="text-red-600 hover:text-red-700 transition"
                           >
-                            <Trash2 className="h-4 w-4" />
+                            <Trash2 className="h-4 w-4" aria-hidden="true" />
                           </button>
                         </td>
                       </tr>

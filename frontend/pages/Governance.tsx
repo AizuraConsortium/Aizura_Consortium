@@ -4,6 +4,7 @@ import { ArrowLeft, ThumbsUp, ThumbsDown, Plus, LogIn } from 'lucide-react';
 import { api } from '../lib/api';
 import { useAuth } from '../contexts/AuthContext';
 import { AuthModal } from '../components/AuthModal';
+import { CardSkeleton } from '../components/skeletons/CardSkeleton';
 
 export default function Governance() {
   const navigate = useNavigate();
@@ -103,9 +104,10 @@ export default function Governance() {
           <div className="flex items-center justify-between">
             <button
               onClick={() => navigate('/')}
+              aria-label="Back to Home"
               className="flex items-center space-x-2 text-slate-300 hover:text-white transition-colors"
             >
-              <ArrowLeft className="w-5 h-5" />
+              <ArrowLeft className="w-5 h-5" aria-hidden="true" />
               <span>Back to Home</span>
             </button>
 
@@ -123,9 +125,10 @@ export default function Governance() {
               ) : (
                 <button
                   onClick={handleSignIn}
+                  aria-label="Sign in to vote on proposals"
                   className="flex items-center space-x-2 bg-cyan-500 hover:bg-cyan-600 px-4 py-2 rounded-lg transition-colors"
                 >
-                  <LogIn className="w-4 h-4" />
+                  <LogIn className="w-4 h-4" aria-hidden="true" />
                   <span>Sign In to Vote</span>
                 </button>
               )}
@@ -145,15 +148,17 @@ export default function Governance() {
 
           <button
             onClick={() => setShowCreateForm(!showCreateForm)}
+            aria-label="Create new proposal"
+            aria-expanded={showCreateForm}
             className="flex items-center space-x-2 bg-cyan-500 hover:bg-cyan-600 px-6 py-3 rounded-lg font-medium transition-colors"
           >
-            <Plus className="w-5 h-5" />
+            <Plus className="w-5 h-5" aria-hidden="true" />
             <span>New Proposal</span>
           </button>
         </div>
 
         {error && (
-          <div className="bg-red-500/10 border border-red-500/50 rounded-xl p-4 mb-6 text-red-400">
+          <div className="bg-red-500/10 border border-red-500/50 rounded-xl p-4 mb-6 text-red-400" role="alert" aria-live="assertive">
             {error}
           </div>
         )}
@@ -163,10 +168,11 @@ export default function Governance() {
             <h3 className="text-xl font-bold mb-4">Create New Proposal</h3>
             <form onSubmit={handleCreateProposal} className="space-y-4">
               <div>
-                <label className="block text-sm font-medium mb-2">
+                <label htmlFor="proposal-title" className="block text-sm font-medium mb-2">
                   Title ({newProposal.title.length}/200)
                 </label>
                 <input
+                  id="proposal-title"
                   type="text"
                   value={newProposal.title}
                   onChange={(e) => setNewProposal({ ...newProposal, title: e.target.value })}
@@ -174,20 +180,23 @@ export default function Governance() {
                   placeholder="AI-Powered Travel Booking Platform"
                   maxLength={200}
                   required
+                  aria-label="Proposal title"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium mb-2">
+                <label htmlFor="proposal-summary" className="block text-sm font-medium mb-2">
                   Summary ({newProposal.summary.length}/5000)
                 </label>
                 <textarea
+                  id="proposal-summary"
                   value={newProposal.summary}
                   onChange={(e) => setNewProposal({ ...newProposal, summary: e.target.value })}
                   className="w-full bg-slate-900 border border-slate-600 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-cyan-500 h-32"
                   placeholder="Describe your business idea in detail..."
                   maxLength={5000}
                   required
+                  aria-label="Proposal summary"
                 />
               </div>
 
@@ -212,7 +221,9 @@ export default function Governance() {
         )}
 
         {loading ? (
-          <div className="text-center text-slate-400 py-12">Loading proposals...</div>
+          <div className="space-y-4">
+            <CardSkeleton count={3} />
+          </div>
         ) : (
           <div className="space-y-4">
             {proposals.map((proposal) => (
@@ -252,16 +263,18 @@ export default function Governance() {
                     <div className="flex items-center space-x-2">
                       <button
                         onClick={() => handleVote(proposal.id, 'for')}
+                        aria-label={`Vote for ${proposal.title}`}
                         className="flex items-center space-x-2 bg-green-500/20 hover:bg-green-500/30 text-green-400 px-4 py-2 rounded-lg transition-colors"
                       >
-                        <ThumbsUp className="w-4 h-4" />
+                        <ThumbsUp className="w-4 h-4" aria-hidden="true" />
                         <span>For</span>
                       </button>
                       <button
                         onClick={() => handleVote(proposal.id, 'against')}
+                        aria-label={`Vote against ${proposal.title}`}
                         className="flex items-center space-x-2 bg-red-500/20 hover:bg-red-500/30 text-red-400 px-4 py-2 rounded-lg transition-colors"
                       >
-                        <ThumbsDown className="w-4 h-4" />
+                        <ThumbsDown className="w-4 h-4" aria-hidden="true" />
                         <span>Against</span>
                       </button>
                     </div>

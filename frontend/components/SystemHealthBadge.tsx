@@ -96,17 +96,23 @@ export function SystemHealthBadge() {
       <div className="relative">
         <button
           onClick={() => setIsExpanded(!isExpanded)}
+          aria-label={`System status: ${config.label}. Click to view details`}
+          aria-expanded={isExpanded}
           className={`flex items-center space-x-2 px-4 py-2 rounded-lg border shadow-lg transition-all ${config.color} hover:shadow-xl`}
         >
           <div className="relative">
-            <Icon className="h-4 w-4" />
-            <span className={`absolute -top-1 -right-1 h-2 w-2 rounded-full ${config.dotColor} animate-pulse`}></span>
+            <Icon className="h-4 w-4" aria-hidden="true" />
+            <span className={`absolute -top-1 -right-1 h-2 w-2 rounded-full ${config.dotColor} animate-pulse`} aria-hidden="true"></span>
           </div>
           <span className="text-sm font-medium">{config.label}</span>
         </button>
 
         {isExpanded && health && (
-          <div className="absolute bottom-full right-0 mb-2 w-80 bg-white rounded-lg shadow-2xl border border-gray-200 overflow-hidden">
+          <div
+            className="absolute bottom-full right-0 mb-2 w-80 bg-white rounded-lg shadow-2xl border border-gray-200 overflow-hidden"
+            role="dialog"
+            aria-label="System status details"
+          >
             <div className="bg-gray-50 border-b border-gray-200 px-4 py-3">
               <h3 className="text-sm font-semibold text-gray-900">System Status</h3>
             </div>
@@ -159,6 +165,7 @@ export function SystemHealthBadge() {
             <div className="bg-gray-50 border-t border-gray-200 px-4 py-2">
               <button
                 onClick={() => setIsExpanded(false)}
+                aria-label="Close system status details"
                 className="text-xs text-gray-600 hover:text-gray-900 transition"
               >
                 Close

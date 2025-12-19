@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { X, Mail, Loader2 } from 'lucide-react';
 import { supabase } from '../lib/supabase';
+import { useFocusTrap } from '../hooks/useFocusTrap';
+import { useEscapeKey } from '../hooks/useEscapeKey';
 
 interface AuthModalProps {
   isOpen: boolean;
@@ -12,6 +14,9 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState(false);
+
+  const modalRef = useFocusTrap(isOpen);
+  useEscapeKey(handleClose, isOpen);
 
   if (!isOpen) return null;
 
@@ -65,23 +70,32 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm">
-      <div className="bg-slate-800 rounded-xl border border-slate-700 shadow-2xl max-w-md w-full">
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="auth-modal-title"
+      onClick={(e) => {
+        if (e.target === e.currentTarget) handleClose();
+      }}
+    >
+      <div ref={modalRef} className="bg-slate-800 rounded-xl border border-slate-700 shadow-2xl max-w-md w-full">
         <div className="flex items-center justify-between p-6 border-b border-slate-700">
-          <h2 className="text-xl font-bold text-white">Sign In</h2>
+          <h2 id="auth-modal-title" className="text-xl font-bold text-white">Sign In</h2>
           <button
             onClick={handleClose}
+            aria-label="Close sign in modal"
             className="text-slate-400 hover:text-white transition-colors"
           >
-            <X className="w-5 h-5" />
+            <X className="w-5 h-5" aria-hidden="true" />
           </button>
         </div>
 
         <div className="p-6">
           {success ? (
-            <div className="text-center py-8">
+            <div className="text-center py-8" role="status" aria-live="polite">
               <div className="inline-flex items-center justify-center w-16 h-16 bg-green-500/20 rounded-full mb-4">
-                <Mail className="w-8 h-8 text-green-400" />
+                <Mail className="w-8 h-8 text-green-400" aria-hidden="true" />
               </div>
               <h3 className="text-lg font-semibold text-white mb-2">
                 Check your email!
@@ -99,19 +113,22 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
           ) : (
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-slate-300 mb-2">
+                <label htmlFor="email-input" className="block text-sm font-medium text-slate-300 mb-2">
                   Email Address
                 </label>
                 <input
+                  id="email-input"
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="you@example.com"
                   disabled={loading}
+                  aria-invalid={error ? 'true' : 'false'}
+                  aria-describedby={error ? 'email-error' : undefined}
                   className="w-full bg-slate-900 border border-slate-600 rounded-lg px-4 py-3 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-cyan-500 disabled:opacity-50"
                 />
                 {error && (
-                  <p className="mt-2 text-sm text-red-400">{error}</p>
+                  <p id="email-error" className="mt-2 text-sm text-red-400" role="alert">{error}</p>
                 )}
               </div>
 

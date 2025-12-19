@@ -39,12 +39,14 @@ export default function Home() {
               <div className="flex items-center space-x-6">
                 <button
                   onClick={() => navigate('/room')}
+                  aria-label="Go to live debate room"
                   className="text-slate-300 hover:text-white transition-colors"
                 >
                   Live Room
                 </button>
                 <button
                   onClick={() => navigate('/governance')}
+                  aria-label="Go to governance page"
                   className="text-slate-300 hover:text-white transition-colors"
                 >
                   Governance
@@ -99,6 +101,7 @@ export default function Home() {
                   </div>
                   <button
                     onClick={() => navigate('/room')}
+                    aria-label="Watch live AI debate"
                     className="mt-4 w-full bg-cyan-500 hover:bg-cyan-600 text-white font-medium py-3 px-6 rounded-lg transition-colors"
                   >
                     Watch Live Debate →
@@ -156,6 +159,7 @@ export default function Home() {
           <div className="text-center">
             <button
               onClick={() => navigate('/governance')}
+              aria-label="Submit a business idea for AI debate"
               className="bg-cyan-500 hover:bg-cyan-600 text-white font-bold py-4 px-8 rounded-lg text-lg transition-colors shadow-lg shadow-cyan-500/30"
             >
               Submit a Business Idea

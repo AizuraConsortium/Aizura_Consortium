@@ -5,6 +5,7 @@ import { api } from '../lib/api';
 import { supabase } from '../lib/supabase';
 import { AGENT_DISPLAY_NAMES, ROLE_DISPLAY_NAMES, type Message } from '../types';
 import { SystemHealthBadge } from '../components/SystemHealthBadge';
+import { MessageSkeleton } from '../components/skeletons/MessageSkeleton';
 
 export default function Room() {
   const navigate = useNavigate();
@@ -123,8 +124,39 @@ export default function Room() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-slate-900 flex items-center justify-center">
-        <div className="text-white text-xl">Loading...</div>
+      <div className="min-h-screen bg-slate-900 text-white">
+        <nav className="border-b border-slate-700 bg-slate-900/95 backdrop-blur-sm sticky top-0 z-10">
+          <div className="max-w-7xl mx-auto px-6 py-4">
+            <div className="flex items-center space-x-4">
+              <button
+                onClick={() => navigate('/')}
+                aria-label="Back to Home"
+                className="flex items-center space-x-2 text-slate-300 hover:text-white transition-colors"
+              >
+                <ArrowLeft className="w-5 h-5" aria-hidden="true" />
+                <span>Back to Home</span>
+              </button>
+            </div>
+          </div>
+        </nav>
+
+        <div className="max-w-5xl mx-auto px-6 py-8">
+          <div className="bg-slate-800 border border-slate-700 rounded-xl p-6 mb-6 animate-pulse">
+            <div className="h-8 w-3/4 bg-slate-700 rounded mb-2"></div>
+            <div className="h-4 w-full bg-slate-700 rounded"></div>
+          </div>
+
+          <div className="bg-slate-800 border border-slate-700 rounded-xl p-6 min-h-[600px]">
+            <div className="mb-4">
+              <div className="h-6 w-48 bg-slate-700 rounded"></div>
+            </div>
+            <div className="space-y-4">
+              <MessageSkeleton count={5} />
+            </div>
+          </div>
+        </div>
+
+        <SystemHealthBadge />
       </div>
     );
   }
@@ -137,9 +169,10 @@ export default function Room() {
             <div className="flex items-center space-x-4">
               <button
                 onClick={() => navigate('/')}
+                aria-label="Back to Home"
                 className="flex items-center space-x-2 text-slate-300 hover:text-white transition-colors"
               >
-                <ArrowLeft className="w-5 h-5" />
+                <ArrowLeft className="w-5 h-5" aria-hidden="true" />
                 <span>Back to Home</span>
               </button>
             </div>
@@ -171,9 +204,10 @@ export default function Room() {
                 {topicInfo.planId && (
                   <button
                     onClick={() => navigate(`/plan/${topicId}`)}
+                    aria-label="View business plan document"
                     className="flex items-center space-x-2 bg-cyan-500 hover:bg-cyan-600 px-4 py-2 rounded-lg transition-colors"
                   >
-                    <FileText className="w-4 h-4" />
+                    <FileText className="w-4 h-4" aria-hidden="true" />
                     <span>View Plan</span>
                   </button>
                 )}
@@ -206,12 +240,13 @@ export default function Room() {
             )}
           </div>
 
-          <div className="flex-1 overflow-y-auto space-y-4 mb-4">
+          <div className="flex-1 overflow-y-auto space-y-4 mb-4" role="log" aria-live="polite" aria-label="AI debate messages">
             {hasMore && (
               <div className="text-center pb-4">
                 <button
                   onClick={loadMoreMessages}
                   disabled={loadingMore}
+                  aria-label="Load older messages"
                   className="bg-slate-700 hover:bg-slate-600 disabled:bg-slate-800 text-white px-6 py-2 rounded-lg transition-colors"
                 >
                   {loadingMore ? 'Loading...' : 'Load More Messages'}
@@ -220,7 +255,7 @@ export default function Room() {
             )}
 
             {messages.length === 0 ? (
-              <div className="text-center text-slate-400 py-12">
+              <div className="text-center text-slate-400 py-12" role="status">
                 {topicInfo?.status === 'idle' ? (
                   <p>No active debate. Waiting for proposals...</p>
                 ) : (
