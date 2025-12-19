@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { ProposalController } from '../controllers/proposalController.js';
-import { requireAuth } from '../../../middleware/auth.js';
+import { requireAuth } from '../../shared/middleware/auth.js';
 
 const router = Router();
 const proposalController = new ProposalController();

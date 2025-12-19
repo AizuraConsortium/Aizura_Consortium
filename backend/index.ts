@@ -1,15 +1,15 @@
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
-import { Orchestrator } from './modules/shared/orchestrator/index.js';
-import { createRateLimit } from './middleware/validation.js';
+import { Orchestrator } from './shared/orchestrator/index.js';
+import { createRateLimit } from './shared/middleware/validation.js';
 
-import adminErrorRoutes from './modules/admin/routes/errorRoutes.js';
-import adminSystemRoutes from './modules/admin/routes/systemRoutes.js';
-import websiteTopicRoutes from './modules/website/routes/topicRoutes.js';
-import websiteMessageRoutes from './modules/website/routes/messageRoutes.js';
-import websiteProposalRoutes from './modules/website/routes/proposalRoutes.js';
-import clientProposalRoutes from './modules/client/routes/proposalRoutes.js';
+import adminErrorRoutes from './admin/routes/errorRoutes.js';
+import adminSystemRoutes from './admin/routes/systemRoutes.js';
+import websiteTopicRoutes from './website/routes/topicRoutes.js';
+import websiteMessageRoutes from './website/routes/messageRoutes.js';
+import websiteProposalRoutes from './website/routes/proposalRoutes.js';
+import clientProposalRoutes from './client/routes/proposalRoutes.js';
 
 dotenv.config();
 
@@ -175,7 +175,7 @@ app.post('/webhook/proposal', createRateLimit('POST:/webhook/proposal'), async (
 
 app.get('/health', createRateLimit('GET:/health'), async (req, res) => {
   try {
-    const { SupabaseService } = await import('./services/supabase/index.js');
+    const { SupabaseService } = await import('./shared/services/supabase/index.js');
     const supabase = SupabaseService.getInstance();
     const dbHealth = await supabase.healthCheck();
 

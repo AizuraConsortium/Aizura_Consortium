@@ -1,5 +1,5 @@
-import { supabase } from '../../../services/supabase/client.js';
-import type { Database } from '../../../types/database.types.js';
+import { supabase } from '../../shared/services/supabase/client.js';
+import type { Database } from '../../shared/types/database.types.js';
 
 type ErrorLog = Database['public']['Tables']['error_logs']['Row'];
 type ErrorLogInsert = Database['public']['Tables']['error_logs']['Insert'];

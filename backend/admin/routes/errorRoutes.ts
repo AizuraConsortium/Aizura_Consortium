@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import { ErrorController } from '../controllers/errorController.js';
-import { requireAuth } from '../../../middleware/auth.js';
-import { requireRole } from '../../../middleware/rbac.js';
+import { requireAuth } from '../../shared/middleware/auth.js';
+import { requireRole } from '../../shared/middleware/rbac.js';
 
 const router = Router();
 const errorController = new ErrorController();
