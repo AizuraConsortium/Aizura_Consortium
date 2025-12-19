@@ -16,7 +16,34 @@ env:
   IMAGE_NAME_FRONTEND: ${{ github.repository }}-frontend
 
 jobs:
+  # Security and Quality Checks (Issues #4, #39)
+  test-and-audit:
+    name: Security Audit, Lint, and Type Check
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Security Audit (Issue #4)
+        run: npm audit --audit-level=moderate
+
+      - name: Lint (Issue #39)
+        run: npm run lint
+
+      - name: Type Check (Issue #39)
+        run: npm run typecheck
+
   build-backend:
+    needs: test-and-audit
     name: Build Backend Docker Image
     runs-on: ubuntu-latest
     permissions:
@@ -62,6 +89,7 @@ jobs:
           platforms: linux/amd64
 
   build-frontend:
+    needs: test-and-audit
     name: Build Frontend Docker Image
     runs-on: ubuntu-latest
     permissions:

@@ -2,7 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import apiRoutes from './routes/api.js';
-import systemRoutes from './routes/system.js';
+import systemRoutes, { setOrchestratorInstance } from './routes/system.js';
 import errorsRoutes from './routes/errors.js';
 import { Orchestrator } from './orchestrator/index.js';
 import { createRateLimit } from './middleware/validation.js';
@@ -227,6 +227,7 @@ app.listen(PORT, async () => {
   console.log(`🏥 Health check: http://localhost:${PORT}/health\n`);
 
   orchestrator = new Orchestrator();
+  setOrchestratorInstance(orchestrator); // Issue #41: Make orchestrator available to health check
   await orchestrator.start();
 });
 

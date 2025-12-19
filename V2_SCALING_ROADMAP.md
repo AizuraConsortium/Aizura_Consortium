@@ -93,6 +93,99 @@ Features and optimizations that aren't needed today but may become valuable as t
 
 ## Monitoring & Analytics
 
+### Metrics and Instrumentation (Issue #43)
+**Status:** V2 Feature - Not needed at current scale
+**Last Reviewed:** 2025-12-19
+**Trigger:** Production deployment with >100 daily active users
+**Effort:** 8-16 hours
+
+**Current State:**
+- Basic health monitoring exists (`/health`, `/api/system/health`)
+- Error logging to Supabase database
+- Admin dashboard for errors and rate limits
+- No metrics collection or instrumentation
+
+**Recommended Solution:**
+Implement comprehensive metrics and instrumentation using industry-standard tools:
+
+#### Metrics Collection
+- **Prometheus** for metrics export
+  - Request rate, duration, error rate (RED metrics)
+  - Database query performance
+  - Orchestrator tick duration
+  - Agent response times
+  - Memory and CPU usage
+
+#### Visualization
+- **Grafana** dashboards
+  - System health overview
+  - API performance metrics
+  - Business metrics (proposals/day, debate duration, completion rate)
+  - Error rate trends
+  - Resource utilization
+
+#### Distributed Tracing
+- **OpenTelemetry** for request tracing
+  - Trace requests across services
+  - Identify slow database queries
+  - Debug performance issues
+  - Monitor agent interactions
+
+#### Application Performance Monitoring (APM)
+- **Options:** DataDog, New Relic, or open-source alternatives
+  - Real user monitoring (RUM)
+  - Transaction tracing
+  - Anomaly detection
+  - Alerting on SLO violations
+
+#### Custom Business Metrics
+- Proposals submitted per day/week
+- Average debate duration
+- Agent participation rates
+- Vote consensus time
+- Plan completion rates
+- User engagement metrics
+
+**Implementation Phases:**
+
+1. **Phase 1: Basic Metrics** (4 hours)
+   - Add Prometheus client library
+   - Export basic HTTP metrics
+   - Create health check metrics
+   - Set up Grafana with basic dashboard
+
+2. **Phase 2: Business Metrics** (4 hours)
+   - Track proposal lifecycle metrics
+   - Monitor debate progress
+   - Agent performance metrics
+   - Database performance metrics
+
+3. **Phase 3: Tracing** (4-6 hours)
+   - Integrate OpenTelemetry
+   - Trace API requests
+   - Trace database queries
+   - Trace agent interactions
+
+4. **Phase 4: Alerting** (2-4 hours)
+   - Configure alert rules
+   - Set up notification channels
+   - Define SLOs and SLIs
+   - Create runbooks for alerts
+
+**Why Not Now:**
+- Current scale is small (<10 concurrent users expected)
+- Manual monitoring via logs and admin dashboard is sufficient
+- Adds operational complexity
+- Requires infrastructure setup (Prometheus, Grafana)
+- Development effort better spent on core features
+
+**When to Implement:**
+- Production deployment to real users
+- Multiple backend instances running
+- Need for performance optimization
+- Compliance or SLA requirements
+- Team size grows (more people need visibility)
+
 ### Performance Metrics Dashboard
 **Features:**
 - Message volume trends

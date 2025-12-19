@@ -5,10 +5,18 @@ import { RateLimiterService } from '../services/rateLimiter.js';
 import { requireAuth } from '../middleware/auth.js';
 import { requireRole } from '../middleware/rbac.js';
 import { requireWhitelistedIP } from '../middleware/ipWhitelist.js';
+import type { Orchestrator } from '../orchestrator/index.js';
 
 const router = express.Router();
 const supabase = SupabaseService.getInstance();
 const rateLimiter = RateLimiterService.getInstance();
+
+// Orchestrator instance (set by main server)
+let orchestratorInstance: Orchestrator | null = null;
+
+export function setOrchestratorInstance(orchestrator: Orchestrator | null): void {
+  orchestratorInstance = orchestrator;
+}
 
 router.get('/health', createRateLimit('GET:/api/system/health'), async (req, res) => {
   try {
@@ -67,6 +75,21 @@ router.get('/health', createRateLimit('GET:/api/system/health'), async (req, res
 
     const dbHealth = await supabase.healthCheck();
 
+    // Issue #41: Check orchestrator health
+    let orchestratorHealth: 'running' | 'standby' | 'not_initialized' = 'not_initialized';
+    let orchestratorLeader = false;
+
+    if (orchestratorInstance) {
+      const leadershipStatus = orchestratorInstance.getLeadershipStatus();
+      orchestratorLeader = leadershipStatus.isLeader;
+      orchestratorHealth = orchestratorLeader ? 'running' : 'standby';
+    }
+
+    // Degrade system health if orchestrator is not running and we're not in standby
+    if (orchestratorHealth === 'not_initialized') {
+      systemHealth = systemHealth === 'healthy' ? 'degraded' : systemHealth;
+    }
+
     const uptimePercent = dbHealth.healthy ? 99.9 : 0;
 
     res.json({
@@ -79,6 +102,10 @@ router.get('/health', createRateLimit('GET:/api/system/health'), async (req, res
       },
       database: {
         connected: dbHealth.healthy
+      },
+      orchestrator: {
+        status: orchestratorHealth,
+        isLeader: orchestratorLeader
       }
     });
   } catch (error) {
