@@ -1,7 +1,0 @@
-{
-  "name": "@aizura/admin",
-  "version": "0.0.0",
-  "private": true,
-  "type": "module",
-  "description": "Admin portal for Aizura Consortium"
-}

@@ -7,6 +7,7 @@ import {
   Shield,
   LogOut,
   AlertTriangle,
+  AlertCircle,
   Activity,
   TrendingUp,
   CheckCircle,

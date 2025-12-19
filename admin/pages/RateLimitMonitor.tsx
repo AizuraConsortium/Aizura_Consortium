@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Shield, Clock, TrendingUp } from 'lucide-react';
+import { Shield, Clock, TrendingUp, AlertCircle } from 'lucide-react';
 import { useDataFetch, usePolling } from '@shared/hooks';
 import { ErrorAlert, LoadingSpinner } from '@shared/components';
 import { api } from '../lib/api';
