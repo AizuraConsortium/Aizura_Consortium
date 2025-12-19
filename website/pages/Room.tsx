@@ -4,7 +4,7 @@ import { ArrowLeft, FileText } from 'lucide-react';
 import { api } from '../lib/api';
 import { supabase } from '../lib/supabase';
 import { AGENT_DISPLAY_NAMES, ROLE_DISPLAY_NAMES, type Message } from '../types';
-import { SystemHealthBadge } from '../components/SystemHealthBadge';
+import { SystemHealthBadge } from '../../shared/components/SystemHealthBadge';
 import { MessageSkeleton } from '../components/skeletons';
 import { Navigation } from '../components/Navigation';
 

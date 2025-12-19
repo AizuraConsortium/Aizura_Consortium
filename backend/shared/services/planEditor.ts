@@ -1,5 +1,5 @@
 import type { PlanEditorArgs, AgentId } from '../../../shared/types/index.js';
-import { BUSINESS_PLAN_TEMPLATE } from '../../../shared/types/prompts.js';
+import { BUSINESS_PLAN_TEMPLATE } from '../types/prompts.js';
 import { ErrorLogger } from './errorLogger.js';
 
 export interface PlanEditorResult {

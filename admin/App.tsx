@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import { ErrorBoundary } from './components/ErrorBoundary';
+import { ErrorBoundary } from '../shared/components/ErrorBoundary';
 import { AdminAuthProvider } from './contexts/AdminAuthContext';
 import { AdminProtectedRoute } from './components/AdminProtectedRoute';
 import { AdminLogin } from './pages/AdminLogin';
@@ -9,7 +9,7 @@ import RateLimitMonitor from './pages/RateLimitMonitor';
 
 export default function App() {
   return (
-    <ErrorBoundary>
+    <ErrorBoundary theme="light" appName="Admin Portal" enableLogging>
       <AdminAuthProvider>
         <BrowserRouter>
           <Routes>

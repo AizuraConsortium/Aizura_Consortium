@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import { ErrorBoundary } from './components/ErrorBoundary';
+import { ErrorBoundary } from '../shared/components/ErrorBoundary';
 import { AuthProvider } from './contexts/AuthContext';
 import { ProtectedRoute } from './components/ProtectedRoute';
 import Login from './pages/Login';
@@ -8,7 +8,7 @@ import MyProposals from './pages/MyProposals';
 
 export default function App() {
   return (
-    <ErrorBoundary>
+    <ErrorBoundary theme="light" appName="Client Portal">
       <AuthProvider>
         <BrowserRouter>
           <Routes>

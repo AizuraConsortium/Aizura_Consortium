@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { ErrorBoundary } from './components/ErrorBoundary';
+import { ErrorBoundary } from '../shared/components/ErrorBoundary';
 import { AuthProvider } from './contexts/AuthContext';
 import { SkipNavigation } from './components/SkipNavigation';
 import Home from './pages/Home';
@@ -11,7 +11,7 @@ import NotFound from './pages/NotFound';
 
 export default function App() {
   return (
-    <ErrorBoundary>
+    <ErrorBoundary theme="dark" appName="Website" enableLogging>
       <AuthProvider>
         <BrowserRouter>
           <SkipNavigation />
