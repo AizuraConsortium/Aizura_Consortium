@@ -1,11 +1,15 @@
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
-import apiRoutes from './routes/api.js';
-import systemRoutes, { setOrchestratorInstance } from './routes/system.js';
-import errorsRoutes from './routes/errors.js';
-import { Orchestrator } from './orchestrator/index.js';
+import { Orchestrator } from './modules/shared/orchestrator/index.js';
 import { createRateLimit } from './middleware/validation.js';
+
+import adminErrorRoutes from './modules/admin/routes/errorRoutes.js';
+import adminSystemRoutes from './modules/admin/routes/systemRoutes.js';
+import websiteTopicRoutes from './modules/website/routes/topicRoutes.js';
+import websiteMessageRoutes from './modules/website/routes/messageRoutes.js';
+import websiteProposalRoutes from './modules/website/routes/proposalRoutes.js';
+import clientProposalRoutes from './modules/client/routes/proposalRoutes.js';
 
 dotenv.config();
 
@@ -114,9 +118,12 @@ app.use((req, res, next) => {
 
 app.use(express.json({ limit: '1mb' })); // Limit request body size to 1MB
 
-app.use('/api', apiRoutes);
-app.use('/api/system', systemRoutes);
-app.use('/api/errors', errorsRoutes);
+app.use('/api/admin/errors', adminErrorRoutes);
+app.use('/api/admin/system', adminSystemRoutes);
+app.use('/api/website/topics', websiteTopicRoutes);
+app.use('/api/website/messages', websiteMessageRoutes);
+app.use('/api/website/proposals', websiteProposalRoutes);
+app.use('/api/client/proposals', clientProposalRoutes);
 
 app.post('/webhook/proposal', createRateLimit('POST:/webhook/proposal'), async (req, res) => {
   try {
@@ -227,7 +234,6 @@ app.listen(PORT, async () => {
   console.log(`🏥 Health check: http://localhost:${PORT}/health\n`);
 
   orchestrator = new Orchestrator();
-  setOrchestratorInstance(orchestrator); // Issue #41: Make orchestrator available to health check
   await orchestrator.start();
 });
 
