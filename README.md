@@ -106,6 +106,23 @@ backend/src/services/supabase/
 - Backward compatible with existing code
 - Future entities require only 5 lines instead of 60
 
+**Security Architecture - Multiple Supabase Clients**:
+
+The backend uses **two different Supabase clients** for security best practices:
+
+1. **Service Role Client** (`backend/shared/services/supabase/client.ts`)
+   - Uses `SUPABASE_SERVICE_ROLE_KEY` (bypasses Row Level Security)
+   - Used by: Admin endpoints, Client endpoints, Orchestrator, AI agents
+   - Purpose: Write operations, privileged reads, system operations
+
+2. **Anon Key Client** (`backend/website/config/supabaseWebsiteClient.ts`)
+   - Uses `SUPABASE_ANON_KEY` (respects Row Level Security)
+   - Used by: Website public endpoints only
+   - Purpose: Read-only public data access
+   - Security: Can only access data allowed by RLS policies
+
+This separation ensures that public website endpoints cannot bypass security policies, even if there's a backend vulnerability. The orchestrator and admin functions require privileged access and correctly use the service role key.
+
 ### Shared Library Architecture
 
 To eliminate code duplication across frontend applications, common functionality has been consolidated into a shared library:

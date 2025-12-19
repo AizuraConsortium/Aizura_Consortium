@@ -1,4 +1,4 @@
-import { supabase } from '../../shared/services/supabase/client.js';
+import { websiteSupabase } from '../config/supabaseWebsiteClient.js';
 import type { Database } from '../../../shared/types/database.types.js';
 
 type Topic = Database['public']['Tables']['topics']['Row'];
@@ -12,7 +12,7 @@ export interface TopicWithDetails extends Topic {
 
 export class TopicService {
   async getCurrentTopic(): Promise<TopicWithDetails | null> {
-    const { data: topic, error: topicError } = await supabase
+    const { data: topic, error: topicError } = await websiteSupabase
       .from('topics')
       .select('*')
       .is('ended_at', null)
@@ -22,13 +22,13 @@ export class TopicService {
       return null;
     }
 
-    const { data: proposal } = await supabase
+    const { data: proposal } = await websiteSupabase
       .from('proposals')
       .select('*')
       .eq('id', topic.proposal_id)
       .single();
 
-    const { data: plan } = await supabase
+    const { data: plan } = await websiteSupabase
       .from('plans')
       .select('*')
       .eq('topic_id', topic.id)
@@ -42,7 +42,7 @@ export class TopicService {
   }
 
   async getTopicById(topicId: string): Promise<TopicWithDetails | null> {
-    const { data: topic, error: topicError } = await supabase
+    const { data: topic, error: topicError } = await websiteSupabase
       .from('topics')
       .select('*')
       .eq('id', topicId)
@@ -52,13 +52,13 @@ export class TopicService {
       return null;
     }
 
-    const { data: proposal } = await supabase
+    const { data: proposal } = await websiteSupabase
       .from('proposals')
       .select('*')
       .eq('id', topic.proposal_id)
       .maybeSingle();
 
-    const { data: plan } = await supabase
+    const { data: plan } = await websiteSupabase
       .from('plans')
       .select('*')
       .eq('topic_id', topic.id)

@@ -1,4 +1,4 @@
-import { supabase } from '../../shared/services/supabase/client.js';
+import { websiteSupabase } from '../config/supabaseWebsiteClient.js';
 import type { Database } from '../../../shared/types/database.types.js';
 
 type Message = Database['public']['Tables']['messages']['Row'];
@@ -22,7 +22,7 @@ export class MessageService {
     const limit = pagination.limit || 50;
     const offset = pagination.offset || 0;
 
-    const { data, error, count } = await supabase
+    const { data, error, count } = await websiteSupabase
       .from('messages')
       .select('*', { count: 'exact' })
       .eq('topic_id', topicId)
@@ -40,7 +40,7 @@ export class MessageService {
   }
 
   async getMessageById(messageId: string): Promise<Message | null> {
-    const { data, error } = await supabase
+    const { data, error } = await websiteSupabase
       .from('messages')
       .select('*')
       .eq('id', messageId)
