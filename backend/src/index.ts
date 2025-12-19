@@ -54,14 +54,30 @@ const allowedOrigins = process.env.ALLOWED_ORIGINS
   ? process.env.ALLOWED_ORIGINS.split(',').map(origin => origin.trim())
   : ['http://localhost:5173', 'http://localhost:3000', 'http://localhost:4173'];
 
+app.use((req, res, next) => {
+  const origin = req.headers.origin;
+
+  // Log requests without Origin header in production
+  if (!origin && process.env.NODE_ENV === 'production') {
+    const userAgent = req.get('user-agent')?.substring(0, 50) || 'none';
+    console.warn(
+      `⚠️  No-origin request: ${req.method} ${req.path} ` +
+      `from ${req.ip || 'unknown'} UA: ${userAgent}`
+    );
+  }
+
+  next();
+});
+
 app.use(cors({
   origin: (origin, callback) => {
-    // Allow requests with no origin (mobile apps, Postman, etc.)
+    // Allow requests with no origin (mobile apps, Postman, webhooks, etc.)
     if (!origin) return callback(null, true);
 
     if (allowedOrigins.includes(origin)) {
       callback(null, true);
     } else {
+      console.warn(`⚠️  Blocked origin: ${origin}`);
       callback(new Error('Not allowed by CORS'));
     }
   },
@@ -69,6 +85,14 @@ app.use(cors({
 }));
 
 app.use((req, res, next) => {
+  // HSTS header (production only) - prevents SSL stripping attacks
+  if (process.env.NODE_ENV === 'production') {
+    res.setHeader(
+      'Strict-Transport-Security',
+      'max-age=31536000; includeSubDomains'
+    );
+  }
+
   res.setHeader(
     'Content-Security-Policy',
     "default-src 'self'; " +

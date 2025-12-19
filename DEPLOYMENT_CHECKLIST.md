@@ -227,7 +227,55 @@ kubectl logs -n aizura-consortium deployment/aizura-backend --tail=50
 kubectl logs -n aizura-consortium deployment/aizura-frontend --tail=50
 ```
 
-### 7. Test Full Application Flow
+### 7. Verify Security Headers
+
+**Check HSTS Header:**
+```bash
+curl -I https://aizura.yourdomain.com/health | grep -i strict-transport
+```
+
+Expected output:
+```
+Strict-Transport-Security: max-age=31536000; includeSubDomains
+```
+
+**Check All Security Headers:**
+```bash
+curl -I https://aizura.yourdomain.com/health
+```
+
+Expected headers:
+```
+Strict-Transport-Security: max-age=31536000; includeSubDomains
+Content-Security-Policy: default-src 'self'; ...
+X-Content-Type-Options: nosniff
+X-Frame-Options: DENY
+X-XSS-Protection: 1; mode=block
+Referrer-Policy: strict-origin-when-cross-origin
+```
+
+**Test SSL Configuration:**
+
+Option A - Using online tool:
+- Visit: https://www.ssllabs.com/ssltest/analyze.html?d=aizura.yourdomain.com
+- Expected rating: A or A+
+
+Option B - Using curl:
+```bash
+# Verify TLS 1.2+ is used
+curl -I --tlsv1.2 https://aizura.yourdomain.com/health
+```
+
+**Verify CORS Configuration:**
+```bash
+# Test with allowed origin (should work)
+curl -I -H "Origin: https://aizura.yourdomain.com" https://aizura.yourdomain.com/api/proposals
+
+# Test with invalid origin (should be blocked)
+curl -I -H "Origin: https://evil.com" https://aizura.yourdomain.com/api/proposals
+```
+
+### 8. Test Full Application Flow
 - [ ] Open https://aizura.yourdomain.com in browser
 - [ ] Verify home page loads
 - [ ] Check browser console for errors

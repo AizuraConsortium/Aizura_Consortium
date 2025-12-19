@@ -203,23 +203,143 @@ ADMIN_WHITELISTED_IPS=127.0.0.1,::1,YOUR_OFFICE_IP,YOUR_HOME_IP
 - Can break with dynamic IPs
 - Should be combined with other controls
 
+### CORS Configuration
+
+**Purpose:**
+Control which origins can access the API from browsers and provide visibility into access patterns.
+
+**Implementation:**
+**Location:** `backend/src/index.ts`
+
+```typescript
+const allowedOrigins = process.env.ALLOWED_ORIGINS
+  ? process.env.ALLOWED_ORIGINS.split(',').map(origin => origin.trim())
+  : ['http://localhost:5173', 'http://localhost:3000', 'http://localhost:4173'];
+
+// Log requests without Origin header in production
+app.use((req, res, next) => {
+  const origin = req.headers.origin;
+
+  if (!origin && process.env.NODE_ENV === 'production') {
+    const userAgent = req.get('user-agent')?.substring(0, 50) || 'none';
+    console.warn(
+      `⚠️  No-origin request: ${req.method} ${req.path} ` +
+      `from ${req.ip || 'unknown'} UA: ${userAgent}`
+    );
+  }
+
+  next();
+});
+
+app.use(cors({
+  origin: (origin, callback) => {
+    // Allow requests with no origin (mobile apps, Postman, webhooks, etc.)
+    if (!origin) return callback(null, true);
+
+    if (allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      console.warn(`⚠️  Blocked origin: ${origin}`);
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true
+}));
+```
+
+**Configuration:**
+```bash
+# .env file
+ALLOWED_ORIGINS=https://aizura.yourdomain.com,https://app.aizura.com
+```
+
+**No-Origin Requests:**
+
+The system allows requests without an `Origin` header, which include:
+- Server-to-server API calls
+- Webhook requests (e.g., from Supabase)
+- Command-line tools (curl, wget)
+- Native mobile apps
+- Desktop applications
+- Health check monitoring
+
+**Security Rationale:**
+
+While allowing no-origin requests bypasses browser CORS protection, this is acceptable because:
+
+1. **CORS is browser protection only** - It doesn't prevent server-to-server attacks
+2. **Multiple security layers active:**
+   - JWT authentication required for sensitive endpoints
+   - PostgreSQL-based rate limiting on all endpoints
+   - IP whitelisting on admin endpoints
+   - Comprehensive input validation
+   - Database row-level security (RLS)
+3. **Legitimate use cases:**
+   - Supabase webhooks don't send Origin headers
+   - Multi-backend orchestrator health checks
+   - Mobile apps and native clients
+4. **Monitoring enabled:**
+   - All no-origin requests logged in production
+   - Blocked origins logged for investigation
+   - Audit trail for compliance
+
+**Best Practices:**
+1. Set production domains in `ALLOWED_ORIGINS`
+2. Monitor no-origin request logs for anomalies
+3. Investigate unexpected origin blocks
+4. Keep allowed origins list minimal
+5. Regular audit of access patterns
+
 ### HTTPS/TLS
 
 **Production Requirements:**
-- ALL traffic must use HTTPS
-- TLS 1.2 or higher
-- Valid SSL certificates
-- HTTP Strict Transport Security (HSTS) headers
+- ✅ ALL traffic must use HTTPS (enforced by nginx-ingress)
+- ✅ TLS 1.2 or higher (nginx configuration)
+- ✅ Valid SSL certificates (cert-manager + Let's Encrypt)
+- ✅ HTTP Strict Transport Security (HSTS) headers (backend application)
 
-**Recommended Headers:**
+**Implementation:**
+
+The system implements HTTPS enforcement at multiple layers:
+
+1. **Infrastructure Layer (Kubernetes):**
+   - nginx-ingress controller terminates TLS
+   - Automatic SSL redirect via `nginx.ingress.kubernetes.io/ssl-redirect: "true"`
+   - cert-manager handles certificate automation with Let's Encrypt
+
+2. **Application Layer (Backend):**
+   ```javascript
+   // HSTS header (production only) - prevents SSL stripping attacks
+   if (process.env.NODE_ENV === 'production') {
+     res.setHeader(
+       'Strict-Transport-Security',
+       'max-age=31536000; includeSubDomains'
+     );
+   }
+   ```
+
+**HSTS Configuration:**
+- `max-age=31536000` - Browser enforces HTTPS for 1 year
+- `includeSubDomains` - Applies to all subdomains
+- Production-only - HSTS only sent over HTTPS connections
+
+**Security Benefits:**
+- Prevents SSL stripping attacks
+- Eliminates HTTP redirect phase (browser enforces HTTPS)
+- Protects against man-in-the-middle attacks
+- No certificate bypass allowed in browsers
+
+**All Security Headers:**
 ```javascript
-app.use((req, res, next) => {
-  res.setHeader('Strict-Transport-Security', 'max-age=31536000; includeSubDomains');
-  res.setHeader('X-Content-Type-Options', 'nosniff');
-  res.setHeader('X-Frame-Options', 'DENY');
-  res.setHeader('X-XSS-Protection', '1; mode=block');
-  next();
-});
+// Production: HSTS enabled
+Strict-Transport-Security: max-age=31536000; includeSubDomains
+
+// Always enabled:
+Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; ...
+X-Content-Type-Options: nosniff
+X-Frame-Options: DENY
+X-XSS-Protection: 1; mode=block
+Referrer-Policy: strict-origin-when-cross-origin
 ```
 
 ---
