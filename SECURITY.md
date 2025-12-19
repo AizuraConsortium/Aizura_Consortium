@@ -379,15 +379,180 @@ const query = `SELECT * FROM error_logs WHERE severity = '${userInput}'`;
 
 ### XSS Prevention
 
-**Frontend:**
-- React auto-escapes by default
-- DOMPurify for user-generated content
-- Content Security Policy headers
+The system implements comprehensive XSS protection at multiple layers using industry-standard tools and techniques.
 
-**Backend:**
-- Sanitize all outputs
-- Escape HTML in error messages
-- Validate content types
+#### Multi-Layer Defense Strategy
+
+1. **Input Sanitization (Server-Side)**
+2. **Content Security Policy Headers**
+3. **Output Encoding (Client-Side)**
+4. **Security Headers**
+
+#### Server-Side Sanitization
+
+**Location:** `backend/src/utils/sanitization.ts`
+
+The backend uses **DOMPurify** with **jsdom** for server-side HTML sanitization. This provides robust protection against:
+- Script injection attacks
+- Event handler injection (onclick, onerror, etc.)
+- Javascript protocol attacks (javascript:)
+- Mutation XSS (mXSS)
+- DOM clobbering
+- Polyglot XSS payloads
+
+**Core Functions:**
+
+1. **sanitizeHtml()** - Sanitizes HTML while preserving safe tags
+   ```typescript
+   import { sanitizeHtml } from './utils/sanitization';
+
+   const clean = sanitizeHtml(userInput, {
+     allowedTags: ['p', 'strong', 'em'],
+     maxLength: 5000
+   });
+   ```
+
+2. **sanitizeText()** - Strips all HTML tags completely
+   ```typescript
+   import { sanitizeText } from './utils/sanitization';
+
+   const clean = sanitizeText(userInput, 200);
+   ```
+
+3. **sanitizeObject()** - Recursively sanitizes object properties
+   ```typescript
+   import { sanitizeObject } from './utils/sanitization';
+
+   const clean = sanitizeObject(requestBody, { maxLength: 5000 });
+   ```
+
+4. **sanitizeQueryParam()** - Sanitizes URL query parameters
+   ```typescript
+   import { sanitizeQueryParam } from './utils/sanitization';
+
+   const clean = sanitizeQueryParam(req.query.search);
+   ```
+
+**Applied At:**
+- ✅ Proposal submission (title, summary) - `backend/src/middleware/validation.ts:112-119`
+- ✅ Error logging (message, details) - `backend/src/routes/errors.ts:64-81`
+- ✅ Query parameters (all endpoints) - `backend/src/utils/queryValidation.ts:276-293`
+- ✅ User inputs (all string fields)
+
+**Length Limits:**
+- Proposal title: 200 characters
+- Proposal summary: 5000 characters
+- Error messages: 2000 characters
+- Query parameters: 1000 characters
+- Default max: 10000 characters
+
+#### Content Security Policy (CSP)
+
+**Location:** `backend/src/index.ts:71-89`
+
+Comprehensive CSP headers protect against XSS by controlling resource loading:
+
+```javascript
+Content-Security-Policy:
+  default-src 'self';
+  script-src 'self' 'unsafe-inline' 'unsafe-eval';
+  style-src 'self' 'unsafe-inline';
+  img-src 'self' data: https:;
+  font-src 'self' data:;
+  connect-src 'self' https://*.supabase.co wss://*.supabase.co;
+  frame-ancestors 'none';
+  base-uri 'self';
+  form-action 'self';
+```
+
+**Additional Security Headers:**
+- `X-Content-Type-Options: nosniff` - Prevents MIME sniffing
+- `X-Frame-Options: DENY` - Prevents clickjacking
+- `X-XSS-Protection: 1; mode=block` - Enables browser XSS filter
+- `Referrer-Policy: strict-origin-when-cross-origin` - Controls referrer info
+
+#### Frontend Protection
+
+**React Auto-Escaping:**
+- React automatically escapes JSX expressions
+- User content rendered via `{variable}` is safe by default
+- Dangerous HTML requires explicit `dangerouslySetInnerHTML` (avoided)
+
+**DOMPurify (Client-Side):**
+- Used for rendering markdown/rich content
+- Configured with strict allowlist
+- Sanitizes before rendering to DOM
+
+#### Testing
+
+**Unit Tests:** `tests/unit/utils/sanitization.test.ts`
+- Script tag removal
+- Event handler removal
+- JavaScript protocol removal
+- Length validation
+- Nested object sanitization
+- Array sanitization
+- Real-world attack scenarios
+
+**Integration Tests:** `tests/integration/security/xss.test.ts`
+- End-to-end XSS protection
+- OWASP Top 10 XSS vectors
+- Mutation XSS attempts
+- DOM clobbering prevention
+- Polyglot XSS payloads
+- CSP header verification
+
+#### Attack Vectors Mitigated
+
+✅ **Stored XSS** - Malicious scripts in database
+✅ **Reflected XSS** - Scripts in URL parameters
+✅ **DOM-based XSS** - Client-side script injection
+✅ **Mutation XSS** - Browser DOM mutation attacks
+✅ **Polyglot XSS** - Multi-context payloads
+✅ **Event Handler Injection** - onclick, onerror, onload
+✅ **JavaScript Protocol** - javascript: URLs
+✅ **Data URIs** - data:text/html attacks
+✅ **SVG-based XSS** - SVG onload attacks
+✅ **CSS-based XSS** - style attribute attacks
+
+#### Security Best Practices
+
+**When Adding New Inputs:**
+
+1. ✅ Use `sanitizeText()` for plain text fields
+2. ✅ Use `sanitizeHtml()` for rich text (with allowlist)
+3. ✅ Use `sanitizeObject()` for complex payloads
+4. ✅ Use `sanitizeQueryParam()` for URL parameters
+5. ✅ Set appropriate maxLength limits
+6. ✅ Add integration tests for new endpoints
+7. ✅ Document allowed tags (if any)
+
+**Example - New Endpoint:**
+```typescript
+router.post('/api/comments', async (req, res) => {
+  try {
+    let { content, authorName } = req.body;
+
+    // Sanitize all user inputs
+    content = sanitizeText(content, 2000);
+    authorName = sanitizeText(authorName, 100);
+
+    // Process sanitized data...
+  } catch (error) {
+    return res.status(400).json({
+      error: error.message
+    });
+  }
+});
+```
+
+**Never:**
+- ❌ Trust user input without sanitization
+- ❌ Use `eval()` or `new Function()` with user data
+- ❌ Render HTML without DOMPurify
+- ❌ Disable CSP in production
+- ❌ Use `dangerouslySetInnerHTML` in React
+- ❌ Concatenate user input into SQL queries
 
 ### Data Sanitization
 
@@ -599,4 +764,4 @@ This security document should be reviewed and updated:
 - When new threats are identified
 - After security incidents
 
-Last Updated: 2025-12-18
+Last Updated: 2025-12-19

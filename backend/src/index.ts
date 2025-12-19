@@ -67,6 +67,27 @@ app.use(cors({
   },
   credentials: true
 }));
+
+app.use((req, res, next) => {
+  res.setHeader(
+    'Content-Security-Policy',
+    "default-src 'self'; " +
+    "script-src 'self' 'unsafe-inline' 'unsafe-eval'; " +
+    "style-src 'self' 'unsafe-inline'; " +
+    "img-src 'self' data: https:; " +
+    "font-src 'self' data:; " +
+    "connect-src 'self' https://*.supabase.co wss://*.supabase.co; " +
+    "frame-ancestors 'none'; " +
+    "base-uri 'self'; " +
+    "form-action 'self'"
+  );
+  res.setHeader('X-Content-Type-Options', 'nosniff');
+  res.setHeader('X-Frame-Options', 'DENY');
+  res.setHeader('X-XSS-Protection', '1; mode=block');
+  res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
+  next();
+});
+
 app.use(express.json({ limit: '1mb' })); // Limit request body size to 1MB
 
 app.use('/api', apiRoutes);

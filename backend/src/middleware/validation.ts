@@ -1,6 +1,7 @@
 import type { Request, Response, NextFunction } from 'express';
 import { RateLimiterService } from '../services/rateLimiter.js';
 import { getRateLimitForEndpoint, normalizeEndpoint } from '../config/rateLimits.js';
+import { sanitizeText } from '../utils/sanitization.js';
 
 const rateLimiter = RateLimiterService.getInstance();
 
@@ -108,9 +109,14 @@ export function validateProposal(req: Request, res: Response, next: NextFunction
     return res.status(400).json({ error: 'Summary must be at least 10 characters' });
   }
 
-  // Basic sanitization - strip any script tags
-  req.body.title = sanitizeInput(title);
-  req.body.summary = sanitizeInput(summary);
+  try {
+    req.body.title = sanitizeText(title, 200);
+    req.body.summary = sanitizeText(summary, 5000);
+  } catch (error) {
+    return res.status(400).json({
+      error: error instanceof Error ? error.message : 'Invalid input'
+    });
+  }
 
   next();
 }
@@ -123,14 +129,6 @@ export function validateVote(req: Request, res: Response, next: NextFunction) {
   }
 
   next();
-}
-
-// Basic sanitization function
-function sanitizeInput(input: string): string {
-  return input
-    .replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '')
-    .replace(/<iframe\b[^<]*(?:(?!<\/iframe>)<[^<]*)*<\/iframe>/gi, '')
-    .trim();
 }
 
 export { validatePagination, createQueryValidator } from './queryValidation.js';

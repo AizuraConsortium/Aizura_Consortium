@@ -5,6 +5,7 @@ import { requireRole } from '../middleware/rbac.js';
 import { requireWhitelistedIP } from '../middleware/ipWhitelist.js';
 import { ErrorLogger } from '../services/errorLogger.js';
 import { createRateLimit } from '../middleware/validation.js';
+import { sanitizeText, sanitizeObject } from '../utils/sanitization.js';
 
 const router = express.Router();
 const supabase = SupabaseService.getInstance();
@@ -40,7 +41,7 @@ router.get('/recent', createRateLimit('GET:/api/errors/recent'), async (req, res
 
 router.post('/log', createRateLimit('POST:/api/errors/log'), async (req, res) => {
   try {
-    const { source, severity, agentId, errorType, message, details, topicId } = req.body;
+    let { source, severity, agentId, errorType, message, details, topicId } = req.body;
 
     if (!source || !errorType || !message) {
       return res.status(400).json({
@@ -57,6 +58,25 @@ router.post('/log', createRateLimit('POST:/api/errors/log'), async (req, res) =>
     if (severity && !['info', 'warning', 'error', 'critical'].includes(severity)) {
       return res.status(400).json({
         error: 'Invalid severity. Must be: info, warning, error, or critical'
+      });
+    }
+
+    try {
+      source = sanitizeText(source, 100);
+      errorType = sanitizeText(errorType, 200);
+      message = sanitizeText(message, 2000);
+      if (agentId) {
+        agentId = sanitizeText(agentId, 100);
+      }
+      if (topicId) {
+        topicId = sanitizeText(topicId, 100);
+      }
+      if (details && typeof details === 'object') {
+        details = sanitizeObject(details, { maxLength: 5000 });
+      }
+    } catch (sanitizeError) {
+      return res.status(400).json({
+        error: sanitizeError instanceof Error ? sanitizeError.message : 'Invalid input'
       });
     }
 

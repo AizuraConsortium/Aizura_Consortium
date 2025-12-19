@@ -1,6 +1,7 @@
 import { z } from 'zod';
 import type { PaginationParams, ValidationErrorDetail } from '../../../shared/types/validation.js';
 import { PAGINATION_CONSTRAINTS } from '../../../shared/types/validation.js';
+import { sanitizeQueryParam } from './sanitization.js';
 
 export class QueryValidationError extends Error {
   constructor(
@@ -280,7 +281,11 @@ export function sanitizeQueryParams<T extends Record<string, any>>(
 
   for (const param of allowedParams) {
     if (query[param] !== undefined) {
-      sanitized[param] = query[param];
+      try {
+        sanitized[param] = sanitizeQueryParam(query[param]) as any;
+      } catch (error) {
+        sanitized[param] = query[param];
+      }
     }
   }
 
