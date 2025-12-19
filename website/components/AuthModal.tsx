@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { X, Mail, Loader2 } from 'lucide-react';
 import { supabase } from '@shared/lib';
 import { useFocusTrap, useEscapeKey } from '@shared/hooks';
+import { Input } from '@shared/components/ui';
 
 interface AuthModalProps {
   isOpen: boolean;
@@ -111,25 +112,17 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
             </div>
           ) : (
             <form onSubmit={handleSubmit} className="space-y-4">
-              <div>
-                <label htmlFor="email-input" className="block text-sm font-medium text-slate-300 mb-2">
-                  Email Address
-                </label>
-                <input
-                  id="email-input"
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="you@example.com"
-                  disabled={loading}
-                  aria-invalid={error ? 'true' : 'false'}
-                  aria-describedby={error ? 'email-error' : undefined}
-                  className="w-full bg-slate-900 border border-slate-600 rounded-lg px-4 py-3 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-cyan-500 disabled:opacity-50"
-                />
-                {error && (
-                  <p id="email-error" className="mt-2 text-sm text-red-400" role="alert">{error}</p>
-                )}
-              </div>
+              <Input
+                id="email-input"
+                type="email"
+                label="Email Address"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="you@example.com"
+                disabled={loading}
+                error={error}
+                className="bg-slate-900 border-slate-600 text-white placeholder-slate-500 focus:ring-cyan-500"
+              />
 
               <div className="pt-2">
                 <button

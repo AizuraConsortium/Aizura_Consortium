@@ -5,6 +5,7 @@ import { useAuth } from '../contexts/AuthContext';
 import { AuthModal } from '../components/AuthModal';
 import { CardSkeleton } from '@shared/components/skeletons';
 import { Navigation } from '../components/Navigation';
+import { FormField } from '@shared/components/ui';
 
 export default function Governance() {
   const { user, session, signOut } = useAuth();
@@ -157,38 +158,42 @@ export default function Governance() {
           <div className="bg-slate-800 border border-slate-700 rounded-xl p-6 mb-6">
             <h3 className="text-xl font-bold mb-4">Create New Proposal</h3>
             <form onSubmit={handleCreateProposal} className="space-y-4">
-              <div>
-                <label htmlFor="proposal-title" className="block text-sm font-medium mb-2">
-                  Title ({newProposal.title.length}/200)
-                </label>
+              <FormField
+                label="Title"
+                htmlFor="proposal-title"
+                required
+                characterCount={{ current: newProposal.title.length, max: 200 }}
+              >
                 <input
                   id="proposal-title"
                   type="text"
                   value={newProposal.title}
                   onChange={(e) => setNewProposal({ ...newProposal, title: e.target.value })}
-                  className="w-full bg-slate-900 border border-slate-600 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-cyan-500"
+                  className="w-full bg-slate-900 border border-slate-600 rounded-lg px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-cyan-500"
                   placeholder="AI-Powered Travel Booking Platform"
                   maxLength={200}
                   required
                   aria-label="Proposal title"
                 />
-              </div>
+              </FormField>
 
-              <div>
-                <label htmlFor="proposal-summary" className="block text-sm font-medium mb-2">
-                  Summary ({newProposal.summary.length}/5000)
-                </label>
+              <FormField
+                label="Summary"
+                htmlFor="proposal-summary"
+                required
+                characterCount={{ current: newProposal.summary.length, max: 5000 }}
+              >
                 <textarea
                   id="proposal-summary"
                   value={newProposal.summary}
                   onChange={(e) => setNewProposal({ ...newProposal, summary: e.target.value })}
-                  className="w-full bg-slate-900 border border-slate-600 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-cyan-500 h-32"
+                  className="w-full bg-slate-900 border border-slate-600 rounded-lg px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-cyan-500 h-32"
                   placeholder="Describe your business idea in detail..."
                   maxLength={5000}
                   required
                   aria-label="Proposal summary"
                 />
-              </div>
+              </FormField>
 
               <div className="flex items-center space-x-4">
                 <button
