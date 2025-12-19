@@ -2,6 +2,46 @@
 
 A live AI boardroom where 6 specialized AI agents (Claude, ChatGPT, Grok, Gemini, DeepSeek, and Qwen) debate and collaboratively create business plans for the Aizura ecosystem.
 
+## Documentation Guide
+
+Find detailed documentation for different aspects of the system:
+
+### Getting Started
+- **[Quick Start Guide](./QUICK_START.md)** - Get up and running in 5 minutes
+- **This README** - Project overview and architecture
+
+### Development
+- **[Frontend Architecture](./FRONTEND_ARCHITECTURE.md)** - Frontend structure, shared library, state management
+- **[Developer Guide](./DEVELOPER_GUIDE.md)** - Components, hooks, styling, accessibility, testing
+- **[Backend API](./backend/API.md)** - API endpoints, validation, security
+
+### Operations & Deployment
+- **[Operations Guide](./OPERATIONS.md)** - Daily operations, monitoring, troubleshooting, security, deployment, admin portal
+- **[V2 Scaling Roadmap](./V2_SCALING_ROADMAP.md)** - Future optimizations and when to implement them
+
+### Quick Links by Role
+
+**New Developers:**
+1. [Quick Start Guide](./QUICK_START.md) - Setup instructions
+2. [Frontend Architecture](./FRONTEND_ARCHITECTURE.md) - Understand the codebase structure
+3. [Developer Guide](./DEVELOPER_GUIDE.md) - Learn about components, hooks, and best practices
+
+**Frontend Developers:**
+1. [Frontend Architecture](./FRONTEND_ARCHITECTURE.md) - Shared library architecture
+2. [Developer Guide](./DEVELOPER_GUIDE.md) - Component library and accessibility guidelines
+
+**Backend Developers:**
+1. [Backend API](./backend/API.md) - API endpoints and validation
+2. [Operations Guide](./OPERATIONS.md) - Security architecture and rate limiting
+
+**Operations/DevOps:**
+1. [Operations Guide](./OPERATIONS.md) - Daily operations, monitoring, deployment
+2. [Quick Start Guide](./QUICK_START.md) - Local setup for troubleshooting
+
+**Product/Management:**
+1. This README - Project overview
+2. [V2 Scaling Roadmap](./V2_SCALING_ROADMAP.md) - Future features and optimizations
+
 ## Features
 
 - **Live AI Debate Room**: Watch 6 AI agents discuss business proposals in real-time
@@ -560,6 +600,62 @@ QWEN_API_KEY=...
 - **Real-time**: Supabase Realtime (WebSocket)
 - **AI Providers**: Anthropic, OpenAI, xAI, Google, DeepSeek, Alibaba
 - **Markdown**: marked (for rendering plans)
+
+## Testing
+
+The project includes comprehensive testing for both unit and integration tests.
+
+### Quick Start
+
+```bash
+# Run all tests
+npm test
+
+# Run with coverage
+npm run test:coverage
+
+# Run in watch mode
+npm run test:watch
+```
+
+### Test Structure
+
+```
+tests/
+├── unit/               # Unit tests for services, orchestrator, utils
+├── integration/        # API endpoint and webhook tests
+├── fixtures/           # Test data and mocks
+└── setup/              # Test configuration
+```
+
+### Coverage Goals
+
+- **Overall**: >80% coverage
+- **Critical paths**: >90% coverage
+- **Utilities**: >95% coverage
+
+For detailed testing documentation, see [Developer Guide - Testing](./DEVELOPER_GUIDE.md#part-5-testing).
+
+## V2 Scaling Roadmap
+
+The system is designed to scale efficiently. Performance optimizations are not needed at current scale but are documented for future implementation.
+
+### What's NOT Needed Yet
+
+- **React.memo optimization** - Profile first, optimize only if component render times >50ms
+- **Virtual scrolling** - Current pagination handles 50-2,000 messages efficiently
+- **Metrics instrumentation** - Basic health monitoring sufficient for <100 daily active users
+- **Message archiving** - Implement when database exceeds 100,000 messages
+
+### When to Optimize
+
+The [V2 Scaling Roadmap](./V2_SCALING_ROADMAP.md) documents:
+- **Specific triggers** - When to implement each optimization
+- **Profiling procedures** - How to measure performance
+- **Implementation plans** - Step-by-step guides
+- **Trade-offs** - Complexity vs benefit analysis
+
+**Key Principle**: Never optimize without profiling data showing a real problem.
 
 ## License
 
