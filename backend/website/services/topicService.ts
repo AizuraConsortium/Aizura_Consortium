@@ -1,5 +1,5 @@
 import { supabase } from '../../shared/services/supabase/client.js';
-import type { Database } from '../../shared/types/database.types.js';
+import type { Database } from '../../../shared/types/database.types.js';
 
 type Topic = Database['public']['Tables']['topics']['Row'];
 type Proposal = Database['public']['Tables']['proposals']['Row'];

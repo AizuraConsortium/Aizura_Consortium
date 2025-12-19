@@ -1,5 +1,5 @@
 import { supabase } from '../../shared/services/supabase/client.js';
-import type { Database } from '../../shared/types/database.types.js';
+import type { Database } from '../../../shared/types/database.types.js';
 
 type RateLimitViolation = Database['public']['Tables']['rate_limit_violations']['Row'];
 

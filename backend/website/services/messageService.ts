@@ -1,5 +1,5 @@
 import { supabase } from '../../shared/services/supabase/client.js';
-import type { Database } from '../../shared/types/database.types.js';
+import type { Database } from '../../../shared/types/database.types.js';
 
 type Message = Database['public']['Tables']['messages']['Row'];
 
