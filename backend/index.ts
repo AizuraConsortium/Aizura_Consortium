@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 import { Orchestrator } from './shared/orchestrator/index.js';
 import { createRateLimit } from './shared/middleware/validation.js';
 
+import sharedErrorRoutes from './shared/routes/errorRoutes.js';
 import adminErrorRoutes from './admin/routes/errorRoutes.js';
 import adminSystemRoutes from './admin/routes/systemRoutes.js';
 import websiteTopicRoutes from './website/routes/topicRoutes.js';
@@ -124,8 +125,14 @@ app.use((req, res, next) => {
 
 app.use(express.json({ limit: '1mb' })); // Limit request body size to 1MB
 
+// Shared routes (public, rate-limited)
+app.use('/api/errors', sharedErrorRoutes);
+
+// Admin routes (auth required)
 app.use('/api/admin/errors', adminErrorRoutes);
 app.use('/api/admin/system', adminSystemRoutes);
+
+// Application routes
 app.use('/api/website/topics', websiteTopicRoutes);
 app.use('/api/website/messages', websiteMessageRoutes);
 app.use('/api/website/proposals', websiteProposalRoutes);

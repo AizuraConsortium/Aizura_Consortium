@@ -31,6 +31,23 @@ export const severitySchema = z.enum(['info', 'warning', 'error', 'critical']);
 
 export const sourceSchema = z.enum(['frontend', 'backend', 'agent']);
 
+export const agentIdSchema = z.enum(['claude', 'chatgpt', 'grok', 'gemini', 'deepseek', 'qwen']).nullable().optional();
+
+export const errorLogSchema = z.object({
+  source: sourceSchema,
+  severity: severitySchema,
+  error_type: z.string()
+    .min(1, 'error_type is required')
+    .max(100, 'error_type must be at most 100 characters'),
+  message: z.string()
+    .min(1, 'message is required')
+    .max(1000, 'message must be at most 1000 characters'),
+  details: z.record(z.any()).optional(),
+  agent_id: agentIdSchema,
+  topic_id: z.string().uuid().optional(),
+  appName: z.string().max(50).optional(),
+});
+
 export function createQueryValidator<T extends z.ZodType>(schema: T) {
   return (req: Request, res: Response, next: NextFunction) => {
     try {

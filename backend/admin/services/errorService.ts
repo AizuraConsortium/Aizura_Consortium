@@ -19,6 +19,37 @@ export interface PaginatedErrors {
 }
 
 export class ErrorService {
+  async logError(errorData: {
+    source: 'frontend' | 'backend' | 'agent';
+    severity: 'info' | 'warning' | 'error' | 'critical';
+    error_type: string;
+    message: string;
+    details?: Record<string, any>;
+    agent_id?: 'claude' | 'chatgpt' | 'grok' | 'gemini' | 'deepseek' | 'qwen' | null;
+    topic_id?: string;
+  }): Promise<ErrorLog> {
+    const insertData: ErrorLogInsert = {
+      source: errorData.source,
+      severity: errorData.severity,
+      error_type: errorData.error_type,
+      message: errorData.message,
+      details: errorData.details || null,
+      agent_id: errorData.agent_id || null,
+      topic_id: errorData.topic_id || null,
+    };
+
+    const { data, error } = await supabase
+      .from('error_logs')
+      .insert(insertData)
+      .select()
+      .single();
+
+    if (error) throw error;
+    if (!data) throw new Error('Failed to insert error log');
+
+    return data;
+  }
+
   async getRecentErrors(hours: number = 24): Promise<ErrorLog[]> {
     const { data, error } = await supabase
       .from('error_logs')

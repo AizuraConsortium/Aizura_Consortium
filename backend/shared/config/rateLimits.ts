@@ -53,7 +53,7 @@ export const RATE_LIMIT_CONFIG: Record<string, RateLimitConfig> = {
   'POST:/api/errors/log': {
     maxRequests: 100,
     windowMinutes: 1,
-    description: 'Error logging, spikes are normal during issues'
+    description: 'Frontend error logging from all apps (admin, client, website), spikes are normal during issues'
   },
   'GET:/api/errors/admin': {
     maxRequests: 60,
