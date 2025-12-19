@@ -288,6 +288,52 @@ See **[RATE_LIMITING.md](./RATE_LIMITING.md)** for complete documentation includ
 - Testing strategies
 - Best practices
 
+## Data Retention Policy
+
+As a decentralized system, Aizura Consortium maintains different retention policies for different data types to balance transparency, auditability, and system performance.
+
+### Permanent Storage (Kept Forever)
+
+The following critical data is retained indefinitely for auditability and historical record:
+
+- **Proposals** - All adopted proposals and community votes
+- **Business Plans** - All adopted plans and their full revision history
+- **Implementation Steps** - Complete task checklists and progress tracking
+- **Agent Votes** - All AI agent voting decisions and reasoning
+- **Topics & Arbitration Logs** - Complete debate history and conflict resolution
+
+### Automatic Cleanup (Time-Limited)
+
+To prevent database bloat and optimize performance, the following operational data is automatically cleaned up:
+
+| Data Type | Retention Period | Cleanup Frequency | Rationale |
+|-----------|------------------|-------------------|-----------|
+| AI Messages | 180 days (6 months) | Every 6 hours | High-volume debate data; recent context preserved |
+| Error Logs | 365 days (1 year) | Every 6 hours | Annual trend analysis and compliance requirements |
+| Rate Limit Data | 24 hours | Every 6 hours | Token bucket state; only current window needed |
+| Rate Limit Violations | 7 days | Every 6 hours | Recent security monitoring; patterns identified quickly |
+
+**Note**: The automated cleanup job runs every 6 hours via PostgreSQL's `pg_cron` extension. Cleanup execution can be monitored through the admin dashboard or by querying `cron.job_run_details`.
+
+### Why These Policies?
+
+**Permanent Data**: Proposals, plans, and votes form the "constitutional record" of the consortium. Full transparency and auditability require indefinite retention of these governance decisions.
+
+**Time-Limited Data**: AI messages and error logs are high-volume operational data. While valuable for recent analysis, older records provide diminishing returns. The retention periods balance:
+- **180 days for messages**: Sufficient context for ongoing debates while significantly reducing storage costs
+- **365 days for errors**: Full year enables seasonal pattern detection and meets typical compliance requirements
+- **24 hours for rate limits**: Token buckets only need current state; historical data unnecessary
+- **7 days for violations**: Recent patterns sufficient for security response
+
+### Manual Data Management
+
+Administrators can manage data through the Admin Portal:
+- **Error Logs**: Manual cleanup endpoint available at `/api/errors/admin/cleanup`
+- **Exports**: All data can be exported via Supabase dashboard for archival
+- **Monitoring**: Cleanup job status visible in cron job monitoring
+
+For production deployments, implement additional backup strategies as documented in the deployment guide.
+
 ## Testing the System
 
 ### 1. Create a Test Proposal
