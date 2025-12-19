@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { ThumbsUp, ThumbsDown, Plus, LogIn } from 'lucide-react';
 import { api } from '../lib/api';
 import { useAuth } from '../contexts/AuthContext';
@@ -8,7 +7,6 @@ import { CardSkeleton } from '../components/skeletons';
 import { Navigation } from '../components/Navigation';
 
 export default function Governance() {
-  const navigate = useNavigate();
   const { user, session, signOut } = useAuth();
   const [proposals, setProposals] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);

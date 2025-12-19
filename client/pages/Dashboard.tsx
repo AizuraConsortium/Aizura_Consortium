@@ -1,12 +1,19 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import type { Database } from '../types/database.types';
 
-type Proposal = Database['public']['Tables']['proposals']['Row'];
+interface Proposal {
+  id: string;
+  title: string;
+  summary: string;
+  status: string;
+  votes_for: number;
+  votes_against: number;
+  created_at: string;
+  updated_at: string;
+}
 
 export default function Dashboard() {
   const [proposals, setProposals] = useState<Proposal[]>([]);
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     fetchProposals();
@@ -30,8 +37,6 @@ export default function Dashboard() {
       setProposals(data.proposals || []);
     } catch (error) {
       console.error('Error fetching proposals:', error);
-    } finally {
-      setLoading(false);
     }
   };
 

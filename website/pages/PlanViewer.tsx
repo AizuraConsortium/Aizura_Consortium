@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { CheckCircle, Circle, Clock } from 'lucide-react';
 import { marked } from 'marked';
 import DOMPurify from 'dompurify';
@@ -9,7 +9,6 @@ import { Navigation } from '../components/Navigation';
 
 export default function PlanViewer() {
   const { topicId } = useParams();
-  const navigate = useNavigate();
   const [plan, setPlan] = useState<any>(null);
   const [steps, setSteps] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);

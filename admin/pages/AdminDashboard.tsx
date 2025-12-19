@@ -6,7 +6,6 @@ import {
   LogOut,
   AlertTriangle,
   Activity,
-  Clock,
   TrendingUp,
   AlertCircle,
   CheckCircle,

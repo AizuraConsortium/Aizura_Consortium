@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import type { Topic, Message, AgentId, VoteChoice } from '../../shared/types';
+import type { Topic, AgentId, VoteChoice } from '../../shared/types';
 
 interface MessageFilter {
   agentId?: AgentId;

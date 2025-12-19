@@ -1,8 +1,16 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import type { Database } from '../types/database.types';
 
-type Proposal = Database['public']['Tables']['proposals']['Row'];
+interface Proposal {
+  id: string;
+  title: string;
+  summary: string;
+  status: string;
+  votes_for: number;
+  votes_against: number;
+  created_at: string;
+  updated_at: string;
+}
 
 export default function MyProposals() {
   const [proposals, setProposals] = useState<Proposal[]>([]);

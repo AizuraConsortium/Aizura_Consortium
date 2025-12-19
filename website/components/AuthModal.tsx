@@ -15,6 +15,14 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
   const [error, setError] = useState('');
   const [success, setSuccess] = useState(false);
 
+  const handleClose = () => {
+    setEmail('');
+    setError('');
+    setSuccess(false);
+    setLoading(false);
+    onClose();
+  };
+
   const modalRef = useFocusTrap(isOpen);
   useEscapeKey(handleClose, isOpen);
 
@@ -59,14 +67,6 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
     } finally {
       setLoading(false);
     }
-  };
-
-  const handleClose = () => {
-    setEmail('');
-    setError('');
-    setSuccess(false);
-    setLoading(false);
-    onClose();
   };
 
   return (

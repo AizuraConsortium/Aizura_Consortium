@@ -1,6 +1,5 @@
-import type { Database } from '../types/database.types';
-
-type User = Database['public']['Tables']['users']['Row'];
+import React from 'react';
+import { User } from '@supabase/supabase-js';
 
 interface AuthState {
   user: User | null;
@@ -39,7 +38,9 @@ export const authStore = {
 
   subscribe: (listener: () => void) => {
     listeners.add(listener);
-    return () => listeners.delete(listener);
+    return () => {
+      listeners.delete(listener);
+    };
   },
 };
 
@@ -47,12 +48,11 @@ export const useAuthStore = () => {
   const [state, setState] = React.useState(authStore.getState());
 
   React.useEffect(() => {
-    return authStore.subscribe(() => {
+    const unsubscribe = authStore.subscribe(() => {
       setState(authStore.getState());
     });
+    return unsubscribe;
   }, []);
 
   return state;
 };
-
-import React from 'react';

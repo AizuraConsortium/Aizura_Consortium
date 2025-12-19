@@ -66,6 +66,87 @@ backend/src/services/supabase/
 - Backward compatible with existing code
 - Future entities require only 5 lines instead of 60
 
+### Shared Library Architecture
+
+To eliminate code duplication across frontend applications, common functionality has been consolidated into a shared library:
+
+```
+shared/
+├── lib/                      # Core utilities
+│   ├── supabase.ts          # Singleton Supabase client (shared across all apps)
+│   ├── apiClient.ts         # Base HTTP client with error handling & retry logic
+│   └── createApiClient.ts   # Factory for app-specific API extensions
+├── hooks/                    # Reusable React hooks
+│   ├── useSupabaseAuth.ts   # Supabase authentication hook
+│   ├── useDataFetch.ts      # Generic data fetching with loading states
+│   ├── usePolling.ts        # Polling utility for real-time updates
+│   ├── useDebounce.ts       # Debounce input values
+│   ├── usePagination.ts     # Pagination state management
+│   └── useLocalStorage.ts   # LocalStorage with React state sync
+├── contexts/                 # Shared React contexts
+│   └── BaseAuthContext.tsx  # Base authentication context pattern
+├── components/               # Reusable UI components
+│   ├── ErrorBoundary.tsx    # Error boundary wrapper
+│   ├── LoadingSpinner.tsx   # Loading state component
+│   ├── Toast.tsx            # Toast notification component
+│   ├── SystemHealthBadge.tsx # System health indicator
+│   ├── skeletons/           # Loading skeleton components
+│   └── ui/                  # Base UI components (Button, Card, Input)
+├── types/                    # Shared TypeScript types
+│   ├── database.types.ts    # Supabase generated types
+│   ├── api.ts               # API request/response types
+│   ├── forms.ts             # Form validation types
+│   └── validation.ts        # Validation schemas
+└── utils/                    # Utility functions
+    ├── formatters.ts        # Date, number, text formatters
+    ├── validators.ts        # Input validation functions
+    ├── errorHandling.ts     # Error utilities
+    ├── accessibility.ts     # Accessibility helpers (keyboard navigation, ARIA)
+    └── debug.ts             # Debug logging utilities
+```
+
+**Architecture Principles**:
+
+1. **Single Source of Truth**: One Supabase client instance shared across all apps
+2. **App-Specific Extensions**: Each app extends the base API client with custom methods
+3. **Composition over Duplication**: Shared hooks and contexts reduce boilerplate
+4. **Type Safety**: Shared TypeScript types ensure consistency across the stack
+5. **Clean Imports**: Barrel exports (`shared/lib/index.ts`) provide intuitive imports
+
+**Example Usage**:
+
+```typescript
+// Import shared Supabase client
+import { supabase } from '@shared/lib/supabase';
+
+// Import shared hooks
+import { useDataFetch, usePolling } from '@shared/hooks';
+
+// Import shared utilities
+import { formatDate, validateEmail } from '@shared/utils';
+
+// Extend base API client for app-specific needs
+import { createApiClient } from '@shared/lib/createApiClient';
+const api = createApiClient({
+  baseURL: import.meta.env.VITE_API_URL,
+  customMethod: async () => { /* app-specific logic */ }
+});
+```
+
+**What Should Be Shared vs App-Specific**:
+
+| Shared | App-Specific |
+|--------|-------------|
+| Supabase client | API endpoint URLs (`apiConfig.ts`) |
+| Base HTTP client | Route definitions |
+| Auth hooks & contexts | Page components |
+| Data fetching utilities | Business logic |
+| UI components | App-specific state management |
+| Type definitions | Component layouts |
+| Formatters & validators | Environment variables |
+
+This architecture enables rapid development while maintaining consistency across all frontend applications.
+
 ## Prerequisites
 
 - Node.js 18+ and npm

@@ -6,6 +6,7 @@ import { User } from '@supabase/supabase-js';
 
 interface AdminAuthContextType {
   user: User | null;
+  session: any;
   isAdmin: boolean;
   isLoading: boolean;
   signIn: (email: string, password: string) => Promise<{ success: boolean; error?: string }>;
@@ -97,7 +98,7 @@ export function AdminAuthProvider({ children }: { children: React.ReactNode }) {
   };
 
   return (
-    <AdminAuthContext.Provider value={{ user, isAdmin, isLoading, signIn, signOut, checkAdminRole }}>
+    <AdminAuthContext.Provider value={{ user, session, isAdmin, isLoading, signIn, signOut, checkAdminRole }}>
       {children}
     </AdminAuthContext.Provider>
   );

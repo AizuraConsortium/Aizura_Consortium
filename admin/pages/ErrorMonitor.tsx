@@ -454,10 +454,6 @@ export function ErrorMonitor() {
         <ErrorDetailsModal
           error={selectedError}
           onClose={() => setSelectedError(null)}
-          onDelete={(id) => {
-            handleDeleteError(id);
-            setSelectedError(null);
-          }}
         />
       )}
     </div>
