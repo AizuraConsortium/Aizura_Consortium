@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { MessageSquare, Users, TrendingUp, Sparkles } from 'lucide-react';
+import { MessageSquare, Users, TrendingUp } from 'lucide-react';
 import { api } from '../lib/api';
 import { SystemHealthBadge } from '../components/SystemHealthBadge';
+import { Navigation } from '../components/Navigation';
 
 export default function Home() {
   const navigate = useNavigate();
@@ -29,32 +30,7 @@ export default function Home() {
       <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZGVmcz48cGF0dGVybiBpZD0iZ3JpZCIgd2lkdGg9IjQwIiBoZWlnaHQ9IjQwIiBwYXR0ZXJuVW5pdHM9InVzZXJTcGFjZU9uVXNlIj48cGF0aCBkPSJNIDQwIDAgTCAwIDAgMCA0MCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSJyZ2JhKDI1NSwgMjU1LCAyNTUsIDAuMDMpIiBzdHJva2Utd2lkdGg9IjEiLz48L3BhdHRlcm4+PC9kZWZzPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JpZCkiLz48L3N2Zz4=')] opacity-40"></div>
 
       <div className="relative">
-        <nav className="border-b border-slate-700/50 bg-slate-900/50 backdrop-blur-sm">
-          <div className="max-w-7xl mx-auto px-6 py-4">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center space-x-3">
-                <Sparkles className="w-8 h-8 text-cyan-400" />
-                <h1 className="text-2xl font-bold text-white">Aizura Consortium</h1>
-              </div>
-              <div className="flex items-center space-x-6">
-                <button
-                  onClick={() => navigate('/room')}
-                  aria-label="Go to live debate room"
-                  className="text-slate-300 hover:text-white transition-colors"
-                >
-                  Live Room
-                </button>
-                <button
-                  onClick={() => navigate('/governance')}
-                  aria-label="Go to governance page"
-                  className="text-slate-300 hover:text-white transition-colors"
-                >
-                  Governance
-                </button>
-              </div>
-            </div>
-          </div>
-        </nav>
+        <Navigation variant="home" />
 
         <div className="max-w-7xl mx-auto px-6 py-20">
           <div className="text-center mb-16">

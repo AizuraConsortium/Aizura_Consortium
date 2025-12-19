@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { ArrowLeft, CheckCircle, Circle, Clock } from 'lucide-react';
+import { CheckCircle, Circle, Clock } from 'lucide-react';
 import { marked } from 'marked';
 import DOMPurify from 'dompurify';
 import { api } from '../lib/api';
 import { PlanSkeleton } from '../components/skeletons/PlanSkeleton';
+import { Navigation } from '../components/Navigation';
 
 export default function PlanViewer() {
   const { topicId } = useParams();
@@ -47,18 +48,7 @@ export default function PlanViewer() {
   if (loading) {
     return (
       <div className="min-h-screen bg-slate-900 text-white">
-        <nav className="border-b border-slate-700 bg-slate-900/95 backdrop-blur-sm sticky top-0 z-10">
-          <div className="max-w-7xl mx-auto px-6 py-4">
-            <button
-              onClick={() => navigate('/room')}
-              aria-label="Back to Room"
-              className="flex items-center space-x-2 text-slate-300 hover:text-white transition-colors"
-            >
-              <ArrowLeft className="w-5 h-5" aria-hidden="true" />
-              <span>Back to Room</span>
-            </button>
-          </div>
-        </nav>
+        <Navigation variant="internal" />
 
         <div className="max-w-5xl mx-auto px-6 py-8">
           <PlanSkeleton />
@@ -77,18 +67,7 @@ export default function PlanViewer() {
 
   return (
     <div className="min-h-screen bg-slate-900 text-white">
-      <nav className="border-b border-slate-700 bg-slate-900/95 backdrop-blur-sm sticky top-0 z-10">
-        <div className="max-w-7xl mx-auto px-6 py-4">
-          <button
-            onClick={() => navigate('/room')}
-            aria-label="Back to Room"
-            className="flex items-center space-x-2 text-slate-300 hover:text-white transition-colors"
-          >
-            <ArrowLeft className="w-5 h-5" aria-hidden="true" />
-            <span>Back to Room</span>
-          </button>
-        </div>
-      </nav>
+      <Navigation variant="internal" />
 
       <div className="max-w-5xl mx-auto px-6 py-8">
         <div className="flex items-center justify-between mb-6">

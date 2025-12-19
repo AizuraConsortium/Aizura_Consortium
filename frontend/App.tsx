@@ -7,6 +7,8 @@ import Home from './pages/Home';
 import Room from './pages/Room';
 import PlanViewer from './pages/PlanViewer';
 import Governance from './pages/Governance';
+import About from './pages/About';
+import NotFound from './pages/NotFound';
 import { AdminLogin } from './pages/admin/AdminLogin';
 import { AdminDashboard } from './pages/admin/AdminDashboard';
 import { ErrorMonitor } from './pages/admin/ErrorMonitor';
@@ -23,6 +25,7 @@ export default function App() {
               <Route path="/room" element={<Room />} />
               <Route path="/plan/:topicId" element={<PlanViewer />} />
               <Route path="/governance" element={<Governance />} />
+              <Route path="/about" element={<About />} />
 
               <Route path="/admin/login" element={<AdminLogin />} />
               <Route
@@ -49,6 +52,8 @@ export default function App() {
                   </AdminProtectedRoute>
                 }
               />
+
+              <Route path="*" element={<NotFound />} />
             </Routes>
           </BrowserRouter>
         </AdminAuthProvider>

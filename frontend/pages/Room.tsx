@@ -6,6 +6,7 @@ import { supabase } from '../lib/supabase';
 import { AGENT_DISPLAY_NAMES, ROLE_DISPLAY_NAMES, type Message } from '../types';
 import { SystemHealthBadge } from '../components/SystemHealthBadge';
 import { MessageSkeleton } from '../components/skeletons/MessageSkeleton';
+import { Navigation } from '../components/Navigation';
 
 export default function Room() {
   const navigate = useNavigate();
@@ -125,20 +126,7 @@ export default function Room() {
   if (loading) {
     return (
       <div className="min-h-screen bg-slate-900 text-white">
-        <nav className="border-b border-slate-700 bg-slate-900/95 backdrop-blur-sm sticky top-0 z-10">
-          <div className="max-w-7xl mx-auto px-6 py-4">
-            <div className="flex items-center space-x-4">
-              <button
-                onClick={() => navigate('/')}
-                aria-label="Back to Home"
-                className="flex items-center space-x-2 text-slate-300 hover:text-white transition-colors"
-              >
-                <ArrowLeft className="w-5 h-5" aria-hidden="true" />
-                <span>Back to Home</span>
-              </button>
-            </div>
-          </div>
-        </nav>
+        <Navigation variant="internal" />
 
         <div className="max-w-5xl mx-auto px-6 py-8">
           <div className="bg-slate-800 border border-slate-700 rounded-xl p-6 mb-6 animate-pulse">
@@ -163,21 +151,12 @@ export default function Room() {
 
   return (
     <div className="min-h-screen bg-slate-900 text-white">
-      <nav className="border-b border-slate-700 bg-slate-900/95 backdrop-blur-sm sticky top-0 z-10">
-        <div className="max-w-7xl mx-auto px-6 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-4">
-              <button
-                onClick={() => navigate('/')}
-                aria-label="Back to Home"
-                className="flex items-center space-x-2 text-slate-300 hover:text-white transition-colors"
-              >
-                <ArrowLeft className="w-5 h-5" aria-hidden="true" />
-                <span>Back to Home</span>
-              </button>
-            </div>
+      <Navigation variant="internal" />
 
-            {topicInfo && topicInfo.proposal && (
+      {topicInfo && topicInfo.proposal && (
+        <div className="border-b border-slate-700 bg-slate-800/50 backdrop-blur-sm">
+          <div className="max-w-7xl mx-auto px-6 py-3">
+            <div className="flex items-center justify-between">
               <div className="flex items-center space-x-6">
                 <div>
                   <p className="text-xs text-slate-400">Phase</p>
@@ -212,10 +191,10 @@ export default function Room() {
                   </button>
                 )}
               </div>
-            )}
+            </div>
           </div>
         </div>
-      </nav>
+      )}
 
       <div className="max-w-5xl mx-auto px-6 py-8">
         {topicInfo && topicInfo.proposal && (

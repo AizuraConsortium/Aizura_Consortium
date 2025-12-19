@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, ThumbsUp, ThumbsDown, Plus, LogIn } from 'lucide-react';
+import { ThumbsUp, ThumbsDown, Plus, LogIn } from 'lucide-react';
 import { api } from '../lib/api';
 import { useAuth } from '../contexts/AuthContext';
 import { AuthModal } from '../components/AuthModal';
 import { CardSkeleton } from '../components/skeletons/CardSkeleton';
+import { Navigation } from '../components/Navigation';
 
 export default function Governance() {
   const navigate = useNavigate();
@@ -99,43 +100,34 @@ export default function Governance() {
 
   return (
     <div className="min-h-screen bg-slate-900 text-white">
-      <nav className="border-b border-slate-700 bg-slate-900/95 backdrop-blur-sm sticky top-0 z-10">
-        <div className="max-w-7xl mx-auto px-6 py-4">
-          <div className="flex items-center justify-between">
-            <button
-              onClick={() => navigate('/')}
-              aria-label="Back to Home"
-              className="flex items-center space-x-2 text-slate-300 hover:text-white transition-colors"
-            >
-              <ArrowLeft className="w-5 h-5" aria-hidden="true" />
-              <span>Back to Home</span>
-            </button>
+      <Navigation variant="internal" />
 
-            <div>
-              {user ? (
-                <div className="flex items-center space-x-4">
-                  <span className="text-sm text-slate-400">{user.email}</span>
-                  <button
-                    onClick={signOut}
-                    className="text-slate-300 hover:text-white transition-colors"
-                  >
-                    Sign Out
-                  </button>
-                </div>
-              ) : (
+      <div className="border-b border-slate-700 bg-slate-800/50 backdrop-blur-sm">
+        <div className="max-w-7xl mx-auto px-6 py-3">
+          <div className="flex items-center justify-end">
+            {user ? (
+              <div className="flex items-center space-x-4">
+                <span className="text-sm text-slate-400">{user.email}</span>
                 <button
-                  onClick={handleSignIn}
-                  aria-label="Sign in to vote on proposals"
-                  className="flex items-center space-x-2 bg-cyan-500 hover:bg-cyan-600 px-4 py-2 rounded-lg transition-colors"
+                  onClick={signOut}
+                  className="text-slate-300 hover:text-white transition-colors"
                 >
-                  <LogIn className="w-4 h-4" aria-hidden="true" />
-                  <span>Sign In to Vote</span>
+                  Sign Out
                 </button>
-              )}
-            </div>
+              </div>
+            ) : (
+              <button
+                onClick={handleSignIn}
+                aria-label="Sign in to vote on proposals"
+                className="flex items-center space-x-2 bg-cyan-500 hover:bg-cyan-600 px-4 py-2 rounded-lg transition-colors"
+              >
+                <LogIn className="w-4 h-4" aria-hidden="true" />
+                <span>Sign In to Vote</span>
+              </button>
+            )}
           </div>
         </div>
-      </nav>
+      </div>
 
       <div className="max-w-5xl mx-auto px-6 py-8">
         <div className="flex items-center justify-between mb-8">
