@@ -5,6 +5,7 @@ import { ProtectedRoute } from '@shared/components';
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 import MyProposals from './pages/MyProposals';
+import Governance from './pages/Governance';
 
 export default function App() {
   return (
@@ -26,6 +27,14 @@ export default function App() {
               element={
                 <ProtectedRoute authContextType="client" redirectTo="/login">
                   <MyProposals />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/governance"
+              element={
+                <ProtectedRoute authContextType="client" redirectTo="/login">
+                  <Governance />
                 </ProtectedRoute>
               }
             />

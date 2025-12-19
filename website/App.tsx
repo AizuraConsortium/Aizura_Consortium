@@ -1,6 +1,5 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { ErrorBoundary, SkipNavigation } from '@shared/components';
-import { AuthProvider } from './contexts/AuthContext';
 import Home from './pages/Home';
 import Room from './pages/Room';
 import PlanViewer from './pages/PlanViewer';
@@ -11,19 +10,17 @@ import NotFound from './pages/NotFound';
 export default function App() {
   return (
     <ErrorBoundary theme="dark" appName="Website" enableLogging>
-      <AuthProvider>
-        <BrowserRouter>
-          <SkipNavigation />
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/room" element={<Room />} />
-            <Route path="/plan/:topicId" element={<PlanViewer />} />
-            <Route path="/governance" element={<Governance />} />
-            <Route path="/about" element={<About />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </BrowserRouter>
-      </AuthProvider>
+      <BrowserRouter>
+        <SkipNavigation />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/room" element={<Room />} />
+          <Route path="/plan/:topicId" element={<PlanViewer />} />
+          <Route path="/governance" element={<Governance />} />
+          <Route path="/about" element={<About />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </BrowserRouter>
     </ErrorBoundary>
   );
 }

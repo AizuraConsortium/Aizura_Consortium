@@ -2,14 +2,13 @@ import { Navigate } from 'react-router-dom';
 import { Loader2 } from 'lucide-react';
 import { useAdminAuth as useAdminAuthAdmin } from '../../admin/contexts/AdminAuthContext';
 import { useAuth as useAuthClient } from '../../client/contexts/AuthContext';
-import { useAuth as useAuthWebsite } from '../../website/contexts/AuthContext';
 
 interface ProtectedRouteProps {
   children: React.ReactNode;
   requireAdmin?: boolean;
   redirectTo?: string;
   loadingMessage?: string;
-  authContextType: 'admin' | 'client' | 'website';
+  authContextType: 'admin' | 'client';
 }
 
 export function ProtectedRoute({
@@ -35,11 +34,6 @@ export function ProtectedRoute({
     user = auth.user;
     isLoading = auth.isLoading;
     defaultRedirect = '/login';
-  } else if (authContextType === 'website') {
-    const auth = useAuthWebsite();
-    user = auth.user;
-    isLoading = auth.loading;
-    defaultRedirect = '/';
   }
 
   const redirect = redirectTo || defaultRedirect;

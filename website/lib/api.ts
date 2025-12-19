@@ -19,14 +19,6 @@ export const api = {
     return this.get('/proposals');
   },
 
-  async createProposal(title: string, summary: string, token?: string) {
-    return this.post('/proposals', { title, summary }, token);
-  },
-
-  async voteOnProposal(proposalId: string, vote: 'for' | 'against', token: string) {
-    return this.post(`/proposals/${proposalId}/vote`, { vote }, token);
-  },
-
   async getErrors(queryString?: string) {
     const endpoint = queryString ? `/errors?${queryString}` : '/errors';
     return this.get(endpoint);
