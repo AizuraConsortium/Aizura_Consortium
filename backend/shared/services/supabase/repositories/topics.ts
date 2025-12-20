@@ -1,4 +1,4 @@
-import { create, updateById, query } from '../queryBuilder.js';
+import { create, updateById, query, getById } from '../queryBuilder.js';
 import type { Topic, Phase } from '../../../../../shared/types/index.js';
 
 export async function createTopic(proposalId: string): Promise<Topic> {
@@ -6,6 +6,14 @@ export async function createTopic(proposalId: string): Promise<Topic> {
     proposal_id: proposalId,
     state: 'intake'
   });
+}
+
+export async function getTopic(topicId: string): Promise<Topic | null> {
+  try {
+    return await getById<Topic>('topics', topicId);
+  } catch (error) {
+    return null;
+  }
 }
 
 export async function updateTopicState(

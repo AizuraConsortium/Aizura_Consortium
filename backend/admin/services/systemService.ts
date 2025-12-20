@@ -1,4 +1,7 @@
-import { supabase } from '../../shared/services/supabase/client.js';
+import {
+  getRateLimitViolations,
+  clearRateLimitViolations,
+} from '../../shared/services/supabase/repositories/system.js';
 import type { Database } from '../../../shared/types/database.types.js';
 
 type RateLimitViolation = Database['public']['Tables']['rate_limit_violations']['Row'];
@@ -19,25 +22,10 @@ export class SystemService {
   }
 
   async getRateLimitStats(hours: number = 24): Promise<RateLimitViolation[]> {
-    const { data, error } = await supabase
-      .from('rate_limit_violations')
-      .select('*')
-      .gte('timestamp', new Date(Date.now() - hours * 60 * 60 * 1000).toISOString())
-      .order('timestamp', { ascending: false })
-      .limit(100);
-
-    if (error) throw error;
-    return data || [];
+    return getRateLimitViolations(hours);
   }
 
   async clearRateLimitViolations(): Promise<number> {
-    const { data, error } = await supabase
-      .from('rate_limit_violations')
-      .delete()
-      .lt('timestamp', new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString())
-      .select('id');
-
-    if (error) throw error;
-    return data?.length || 0;
+    return clearRateLimitViolations();
   }
 }

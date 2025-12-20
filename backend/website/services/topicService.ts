@@ -1,4 +1,6 @@
-import { websiteSupabase } from '../config/supabaseWebsiteClient.js';
+import { getCurrentTopic, getTopic } from '../../shared/services/supabase/repositories/topics.js';
+import { getProposalById } from '../../shared/services/supabase/repositories/proposals.js';
+import { getPlan } from '../../shared/services/supabase/repositories/plans.js';
 import type { Database } from '../../../shared/types/database.types.js';
 
 type Topic = Database['public']['Tables']['topics']['Row'];
@@ -12,27 +14,14 @@ export interface TopicWithDetails extends Topic {
 
 export class TopicService {
   async getCurrentTopic(): Promise<TopicWithDetails | null> {
-    const { data: topic, error: topicError } = await websiteSupabase
-      .from('topics')
-      .select('*')
-      .is('ended_at', null)
-      .single();
+    const topic = await getCurrentTopic();
 
-    if (topicError || !topic) {
+    if (!topic) {
       return null;
     }
 
-    const { data: proposal } = await websiteSupabase
-      .from('proposals')
-      .select('*')
-      .eq('id', topic.proposal_id)
-      .single();
-
-    const { data: plan } = await websiteSupabase
-      .from('plans')
-      .select('*')
-      .eq('topic_id', topic.id)
-      .maybeSingle();
+    const proposal = await getProposalById(topic.proposal_id);
+    const plan = await getPlan(topic.id);
 
     return {
       ...topic,
@@ -42,27 +31,14 @@ export class TopicService {
   }
 
   async getTopicById(topicId: string): Promise<TopicWithDetails | null> {
-    const { data: topic, error: topicError } = await websiteSupabase
-      .from('topics')
-      .select('*')
-      .eq('id', topicId)
-      .single();
+    const topic = await getTopic(topicId);
 
-    if (topicError || !topic) {
+    if (!topic) {
       return null;
     }
 
-    const { data: proposal } = await websiteSupabase
-      .from('proposals')
-      .select('*')
-      .eq('id', topic.proposal_id)
-      .maybeSingle();
-
-    const { data: plan } = await websiteSupabase
-      .from('plans')
-      .select('*')
-      .eq('topic_id', topic.id)
-      .maybeSingle();
+    const proposal = await getProposalById(topic.proposal_id);
+    const plan = await getPlan(topic.id);
 
     return {
       ...topic,
