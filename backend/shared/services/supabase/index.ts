@@ -56,6 +56,7 @@ export class SupabaseService {
 
   addAgentVote = VoteRepo.addAgentVote;
   getAgentVotes = VoteRepo.getAgentVotes;
+  getAgentVoteConditions = VoteRepo.getAgentVoteConditions;
   clearAgentVotes = VoteRepo.clearAgentVotes;
 
   tryAcquireOrchestratorLock = OrchestratorRepo.tryAcquireOrchestratorLock;

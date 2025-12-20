@@ -318,7 +318,6 @@ export interface Database {
           agent_id: 'claude' | 'chatgpt' | 'grok' | 'gemini' | 'deepseek' | 'qwen'
           choice: 'approve' | 'reject' | 'abstain'
           rationale_md: string | null
-          conditions: Json
           created_at: string
         }
         Insert: {
@@ -327,7 +326,6 @@ export interface Database {
           agent_id: 'claude' | 'chatgpt' | 'grok' | 'gemini' | 'deepseek' | 'qwen'
           choice: 'approve' | 'reject' | 'abstain'
           rationale_md?: string | null
-          conditions?: Json
           created_at?: string
         }
         Update: {
@@ -336,7 +334,29 @@ export interface Database {
           agent_id?: 'claude' | 'chatgpt' | 'grok' | 'gemini' | 'deepseek' | 'qwen'
           choice?: 'approve' | 'reject' | 'abstain'
           rationale_md?: string | null
-          conditions?: Json
+          created_at?: string
+        }
+      }
+      agent_vote_conditions: {
+        Row: {
+          id: string
+          agent_vote_id: string
+          condition_text: string
+          order_index: number
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          agent_vote_id: string
+          condition_text: string
+          order_index: number
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          agent_vote_id?: string
+          condition_text?: string
+          order_index?: number
           created_at?: string
         }
       }
