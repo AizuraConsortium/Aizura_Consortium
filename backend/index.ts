@@ -138,6 +138,40 @@ app.use('/api/website/messages', websiteMessageRoutes);
 app.use('/api/website/proposals', websiteProposalRoutes);
 app.use('/api/client/proposals', clientProposalRoutes);
 
+// Global error handling middleware
+app.use((err: any, req: express.Request, res: express.Response, next: express.NextFunction) => {
+  console.error('💥 Unhandled error:', err);
+
+  // Log error details in development
+  if (process.env.NODE_ENV === 'development') {
+    console.error('Error stack:', err.stack);
+    console.error('Request:', {
+      method: req.method,
+      path: req.path,
+      body: req.body,
+      query: req.query
+    });
+  }
+
+  // Determine status code
+  const statusCode = err.statusCode || err.status || 500;
+
+  // Send appropriate error response
+  if (process.env.NODE_ENV === 'production') {
+    // In production, send minimal error details
+    res.status(statusCode).json({
+      error: statusCode === 500 ? 'Internal server error' : err.message || 'An error occurred'
+    });
+  } else {
+    // In development, send full error details
+    res.status(statusCode).json({
+      error: err.message || 'An error occurred',
+      stack: err.stack,
+      details: err
+    });
+  }
+});
+
 app.post('/webhook/proposal', createRateLimit('POST:/webhook/proposal'), async (req, res) => {
   try {
     const { proposal_id } = req.body;

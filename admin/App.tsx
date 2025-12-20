@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import { ErrorBoundary } from '../shared/components/ErrorBoundary';
+import { ErrorBoundary, ToastProvider } from '@shared/components';
 import { AdminAuthProvider } from './contexts/AdminAuthContext';
 import { ProtectedRoute } from '@shared/components';
 import { AdminLogin } from './pages/AdminLogin';
@@ -10,38 +10,40 @@ import RateLimitMonitor from './pages/RateLimitMonitor';
 export default function App() {
   return (
     <ErrorBoundary theme="light" appName="Admin Portal" enableLogging>
-      <AdminAuthProvider>
-        <BrowserRouter>
-          <Routes>
-            <Route path="/login" element={<AdminLogin />} />
-            <Route
-              path="/"
-              element={
-                <ProtectedRoute authContextType="admin" requireAdmin redirectTo="/login">
-                  <AdminDashboard />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/errors"
-              element={
-                <ProtectedRoute authContextType="admin" requireAdmin redirectTo="/login">
-                  <ErrorMonitor />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/rate-limits"
-              element={
-                <ProtectedRoute authContextType="admin" requireAdmin redirectTo="/login">
-                  <RateLimitMonitor />
-                </ProtectedRoute>
-              }
-            />
-            <Route path="*" element={<Navigate to="/" replace />} />
-          </Routes>
-        </BrowserRouter>
-      </AdminAuthProvider>
+      <ToastProvider>
+        <AdminAuthProvider>
+          <BrowserRouter>
+            <Routes>
+              <Route path="/login" element={<AdminLogin />} />
+              <Route
+                path="/"
+                element={
+                  <ProtectedRoute authContextType="admin" requireAdmin redirectTo="/login">
+                    <AdminDashboard />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/errors"
+                element={
+                  <ProtectedRoute authContextType="admin" requireAdmin redirectTo="/login">
+                    <ErrorMonitor />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/rate-limits"
+                element={
+                  <ProtectedRoute authContextType="admin" requireAdmin redirectTo="/login">
+                    <RateLimitMonitor />
+                  </ProtectedRoute>
+                }
+              />
+              <Route path="*" element={<Navigate to="/" replace />} />
+            </Routes>
+          </BrowserRouter>
+        </AdminAuthProvider>
+      </ToastProvider>
     </ErrorBoundary>
   );
 }
