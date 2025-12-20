@@ -120,10 +120,25 @@ export const RATE_LIMIT_CONFIG: Record<string, RateLimitConfig> = {
     windowMinutes: 1,
     description: 'Authenticated client endpoint for proposals list'
   },
+  'POST:/api/client/proposals': {
+    maxRequests: 10,
+    windowMinutes: 1,
+    description: 'Authenticated client endpoint for creating proposals (prevent spam)'
+  },
   'GET:/api/client/proposals/:id': {
     maxRequests: 100,
     windowMinutes: 1,
     description: 'Authenticated client endpoint for proposal details'
+  },
+  'POST:/api/client/proposals/:id/vote': {
+    maxRequests: 20,
+    windowMinutes: 1,
+    description: 'Authenticated client endpoint for voting on proposals (prevent vote manipulation)'
+  },
+  'GET:/api/client/proposals/:id/vote': {
+    maxRequests: 60,
+    windowMinutes: 1,
+    description: 'Authenticated client endpoint for retrieving user vote'
   },
   'GET:/api/admin/errors/recent': {
     maxRequests: 120,

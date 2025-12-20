@@ -8,16 +8,6 @@ export class ProposalController {
     this.proposalService = new ProposalService();
   }
 
-  async getAllProposals(req: Request, res: Response) {
-    try {
-      const proposals = await this.proposalService.getAllProposals();
-      res.json({ proposals, count: proposals.length });
-    } catch (error) {
-      console.error('Error fetching all proposals:', error);
-      res.status(500).json({ error: 'Failed to fetch proposals' });
-    }
-  }
-
   async getClientProposals(req: Request, res: Response) {
     try {
       const userId = req.user?.id;
