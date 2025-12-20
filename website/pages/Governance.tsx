@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
-import { ThumbsUp, ThumbsDown, ExternalLink } from 'lucide-react';
+import { ExternalLink } from 'lucide-react';
 import { api } from '../lib/api';
 import { CardSkeleton } from '@shared/components/skeletons';
+import { ProposalStatusBadge, ProposalVoteDisplay } from '@shared/components/governance';
 import { Navigation } from '../components/Navigation';
 
 export default function Governance() {
@@ -22,19 +23,6 @@ export default function Governance() {
       setError('Failed to load proposals');
     } finally {
       setLoading(false);
-    }
-  };
-
-  const getStatusColor = (status: string) => {
-    switch (status) {
-      case 'adopted':
-        return 'bg-green-500/20 text-green-400 border-green-500/30';
-      case 'in_debate':
-        return 'bg-blue-500/20 text-blue-400 border-blue-500/30';
-      case 'rejected':
-        return 'bg-red-500/20 text-red-400 border-red-500/30';
-      default:
-        return 'bg-yellow-500/20 text-yellow-400 border-yellow-500/30';
     }
   };
 
@@ -94,26 +82,15 @@ export default function Governance() {
                     <p className="text-slate-300">{proposal.summary}</p>
                   </div>
 
-                  <span className={`px-3 py-1 rounded-full text-sm font-medium border ${getStatusColor(proposal.status)} ml-4 flex-shrink-0`}>
-                    {proposal.status.replace('_', ' ')}
-                  </span>
+                  <ProposalStatusBadge status={proposal.status} variant="dark" />
                 </div>
 
-                <div className="flex items-center space-x-6">
-                  <div className="flex items-center space-x-2">
-                    <ThumbsUp className="w-5 h-5 text-green-500" />
-                    <span className="font-medium">{proposal.votes_for || 0}</span>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <ThumbsDown className="w-5 h-5 text-red-500" />
-                    <span className="font-medium">{proposal.votes_against || 0}</span>
-                  </div>
-                  {proposal.voting_ends_at && (
-                    <span className="text-sm text-slate-400">
-                      Ends: {new Date(proposal.voting_ends_at).toLocaleDateString()}
-                    </span>
-                  )}
-                </div>
+                <ProposalVoteDisplay
+                  votesFor={proposal.votes_for}
+                  votesAgainst={proposal.votes_against}
+                  votingEndsAt={proposal.voting_ends_at}
+                  variant="dark"
+                />
               </div>
             ))}
 

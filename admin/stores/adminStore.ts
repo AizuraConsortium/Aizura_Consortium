@@ -1,6 +1,5 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import type { User } from '../../shared/types';
 
 interface ErrorFilter {
   severity?: string;
@@ -32,24 +31,11 @@ interface SystemHealthState {
   updateHealth: (status: 'healthy' | 'degraded' | 'unhealthy' | 'unknown') => void;
 }
 
-interface AuthState {
-  user: User | null;
-  isAuthenticated: boolean;
-  isLoading: boolean;
-  setUser: (user: User | null) => void;
-  setLoading: (loading: boolean) => void;
-  login: (user: User) => void;
-  logout: () => void;
-}
-
-interface AdminStore extends AuthState, ErrorMonitoringState, RateLimitState, SystemHealthState {}
+interface AdminStore extends ErrorMonitoringState, RateLimitState, SystemHealthState {}
 
 export const useAdminStore = create<AdminStore>()(
   persist(
     (set) => ({
-      user: null,
-      isAuthenticated: false,
-      isLoading: true,
       selectedErrors: [],
       filters: {},
       currentPage: 1,
@@ -58,29 +44,6 @@ export const useAdminStore = create<AdminStore>()(
       timeRange: '24h',
       lastCheck: null,
       status: 'unknown',
-
-      setUser: (user) =>
-        set({
-          user,
-          isAuthenticated: !!user,
-          isLoading: false,
-        }),
-
-      setLoading: (loading) => set({ isLoading: loading }),
-
-      login: (user) =>
-        set({
-          user,
-          isAuthenticated: true,
-          isLoading: false,
-        }),
-
-      logout: () =>
-        set({
-          user: null,
-          isAuthenticated: false,
-          isLoading: false,
-        }),
 
       setSelectedErrors: (ids) => set({ selectedErrors: ids }),
 
@@ -111,8 +74,6 @@ export const useAdminStore = create<AdminStore>()(
     {
       name: 'admin-storage',
       partialize: (state) => ({
-        user: state.user,
-        isAuthenticated: state.isAuthenticated,
         timeRange: state.timeRange,
       }),
     }

@@ -10,3 +10,4 @@ export { ProtectedRoute } from './ProtectedRoute';
 export { SkipNavigation } from './SkipNavigation';
 export * from './ui';
 export * from './skeletons';
+export * from './governance';

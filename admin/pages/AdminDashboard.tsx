@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAdminAuth } from '../contexts/AdminAuthContext';
-import { apiClient } from '@shared/lib';
+import { api } from '../lib/api';
 import { ErrorAlert } from '@shared/components';
 import {
   Shield,
@@ -47,7 +47,8 @@ export function AdminDashboard() {
 
   const fetchSystemHealth = async () => {
     try {
-      const data = await apiClient.get('/admin/system/health', session?.access_token);
+      if (!session?.access_token) return;
+      const data = await api.getSystemHealth(session.access_token);
       setSystemHealth(data);
       setError('');
     } catch (err: any) {

@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Shield, Clock, TrendingUp, AlertCircle } from 'lucide-react';
 import { useDataFetch, usePolling } from '@shared/hooks';
 import { ErrorAlert, LoadingSpinner } from '@shared/components';
-import { apiClient } from '@shared/lib';
+import { api } from '../lib/api';
 import { useAdminAuth } from '../contexts/AdminAuthContext';
 
 interface RateLimitStats {
@@ -27,7 +27,7 @@ export default function RateLimitMonitor() {
   const [autoRefresh, setAutoRefresh] = useState(true);
 
   const { data, loading, error, refetch } = useDataFetch<RateLimitData>(
-    async () => apiClient.get('/admin/rate-limits', session?.access_token),
+    async () => api.getRateLimits(undefined, session?.access_token),
     [session?.access_token]
   );
 
