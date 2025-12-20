@@ -5,16 +5,17 @@ import { api } from '../lib/api';
 import { AGENT_DISPLAY_NAMES, ROLE_DISPLAY_NAMES } from '@shared/types';
 import { SystemHealthBadge } from '../../shared/components/SystemHealthBadge';
 import { MessageSkeleton } from '@shared/components/skeletons';
-import { Navigation } from '../components/Navigation';
+import { Navigation } from '../components/layout/Navigation';
 import { useWebsiteStore } from '../stores/websiteStore';
 import { useRealtimeStore } from '../stores/realtimeStore';
+import type { TopicInfo } from '@shared/types/api';
 
 export default function Room() {
   const navigate = useNavigate();
   const [topicId, setTopicId] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [loadingMore, setLoadingMore] = useState(false);
-  const [topicInfo, setTopicInfo] = useState<any>(null);
+  const [topicInfo, setTopicInfo] = useState<TopicInfo | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const messages = useWebsiteStore((state) => state.messages);

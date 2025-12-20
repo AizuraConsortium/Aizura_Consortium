@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { ChevronDown, ChevronUp, Users, Scale, FileText, Vote, Edit3, Zap } from 'lucide-react';
-import { Navigation } from '../components/Navigation';
+import { Navigation } from '../components/layout/Navigation';
 import { SystemHealthBadge } from '../../shared/components/SystemHealthBadge';
 
 const agents = [

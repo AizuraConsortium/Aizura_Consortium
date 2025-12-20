@@ -5,12 +5,12 @@ import { marked } from 'marked';
 import DOMPurify from 'dompurify';
 import { api } from '../lib/api';
 import { PlanSkeleton } from '@shared/components/skeletons';
-import { Navigation } from '../components/Navigation';
+import { Navigation } from '../components/layout/Navigation';
+import type { PlanData } from '@shared/types/api';
 
 export default function PlanViewer() {
   const { topicId } = useParams();
-  const [plan, setPlan] = useState<any>(null);
-  const [steps, setSteps] = useState<any[]>([]);
+  const [planData, setPlanData] = useState<PlanData | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -22,25 +22,11 @@ export default function PlanViewer() {
   const loadPlan = async () => {
     try {
       const data = await api.getPlan(topicId!);
-      setPlan(data.plan);
-      setSteps(data.steps);
+      setPlanData(data);
     } catch (error) {
       console.error('Failed to load plan:', error);
     } finally {
       setLoading(false);
-    }
-  };
-
-  const getStatusIcon = (status: string) => {
-    switch (status) {
-      case 'done':
-        return <CheckCircle className="w-5 h-5 text-green-500" />;
-      case 'in_progress':
-        return <Clock className="w-5 h-5 text-yellow-500" />;
-      case 'blocked':
-        return <Circle className="w-5 h-5 text-red-500" />;
-      default:
-        return <Circle className="w-5 h-5 text-slate-500" />;
     }
   };
 
@@ -56,13 +42,15 @@ export default function PlanViewer() {
     );
   }
 
-  if (!plan) {
+  if (!planData || !planData.plan) {
     return (
       <div className="min-h-screen bg-slate-900 flex items-center justify-center">
         <div className="text-white text-xl">Plan not found</div>
       </div>
     );
   }
+
+  const { plan, topic, steps } = planData;
 
   return (
     <div className="min-h-screen bg-slate-900 text-white">
@@ -71,15 +59,13 @@ export default function PlanViewer() {
       <main id="main-content" className="max-w-5xl mx-auto px-4 sm:px-6 py-8">
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-6 gap-4">
           <div>
-            <h1 className="text-3xl font-bold mb-2">{plan.title}</h1>
+            <h1 className="text-3xl font-bold mb-2">{topic?.title || 'Business Plan'}</h1>
             <span className={`px-3 py-1 rounded-full text-sm font-medium ${
-              plan.status === 'adopted'
-                ? 'bg-green-500/20 text-green-400 border border-green-500/30'
-                : plan.status === 'final'
+              topic?.state === 'final'
                 ? 'bg-blue-500/20 text-blue-400 border border-blue-500/30'
                 : 'bg-yellow-500/20 text-yellow-400 border border-yellow-500/30'
             }`}>
-              {plan.status.charAt(0).toUpperCase() + plan.status.slice(1)}
+              {topic?.state ? topic.state.charAt(0).toUpperCase() + topic.state.slice(1) : 'Draft'}
             </span>
           </div>
         </div>
@@ -99,22 +85,25 @@ export default function PlanViewer() {
           {steps.length > 0 && (
             <div className="lg:col-span-1">
               <div className="bg-slate-800 border border-slate-700 rounded-xl p-6 sticky top-24">
-                <h3 className="text-xl font-bold mb-4">Implementation Steps</h3>
+                <h3 className="text-xl font-bold mb-4">Plan Structure</h3>
                 <div className="space-y-3">
-                  {steps.map((step) => (
+                  {steps.map((step, index) => (
                     <div
-                      key={step.id}
+                      key={index}
                       className="flex items-start space-x-3 p-3 bg-slate-900/50 rounded-lg"
                     >
-                      {getStatusIcon(step.status)}
+                      <div className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold ${
+                        step.level === 1 ? 'bg-cyan-500/20 text-cyan-400' :
+                        step.level === 2 ? 'bg-blue-500/20 text-blue-400' :
+                        'bg-slate-500/20 text-slate-400'
+                      }`}>
+                        {step.level}
+                      </div>
                       <div className="flex-1 min-w-0">
                         <p className="text-sm font-medium">{step.title}</p>
-                        <p className="text-xs text-slate-400 mt-1">
-                          {step.owner_agent_role.replace('-', ' ')}
-                        </p>
-                        {step.eta_days && (
-                          <p className="text-xs text-slate-500 mt-1">
-                            ETA: {step.eta_days} days
+                        {step.content && (
+                          <p className="text-xs text-slate-400 mt-1 line-clamp-2">
+                            {step.content}
                           </p>
                         )}
                       </div>

@@ -3,10 +3,11 @@ import { ExternalLink } from 'lucide-react';
 import { api } from '../lib/api';
 import { CardSkeleton } from '@shared/components/skeletons';
 import { ProposalStatusBadge, ProposalVoteDisplay } from '@shared/components/governance';
-import { Navigation } from '../components/Navigation';
+import { Navigation } from '../components/layout/Navigation';
+import type { Proposal } from '@shared/types';
 
 export default function Governance() {
-  const [proposals, setProposals] = useState<any[]>([]);
+  const [proposals, setProposals] = useState<Proposal[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 

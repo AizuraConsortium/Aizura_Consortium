@@ -170,3 +170,76 @@ export interface RealtimeConnected {
   };
   timestamp: string;
 }
+
+export interface TimeInfo {
+  startTime: string;
+  elapsedDays: number;
+  remainingHours: number;
+}
+
+export interface HomeData {
+  id: string | null;
+  status: 'active' | 'idle';
+  title?: string;
+  description?: string;
+  state?: string;
+  voteProgress?: string;
+  timeInfo?: TimeInfo;
+  plan?: {
+    id: string;
+    content_md: string;
+  } | null;
+  proposal?: {
+    id: string;
+    title: string;
+    description: string;
+    status: string;
+    created_at: string;
+  } | null;
+}
+
+export interface TopicInfo {
+  id?: string;
+  status: 'active' | 'idle';
+  title?: string;
+  description?: string;
+  state?: string;
+  voteProgress?: string;
+  timeInfo?: TimeInfo;
+  plan?: {
+    id: string;
+    content_md: string;
+  } | null;
+  proposal?: {
+    id: string;
+    title: string;
+    description: string;
+    status: string;
+    created_at: string;
+  } | null;
+}
+
+export interface Plan {
+  id: string;
+  topic_id: string;
+  content_md: string;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface PlanStep {
+  title: string;
+  content: string;
+  level: number;
+}
+
+export interface PlanData {
+  plan: Plan | null;
+  topic: {
+    id: string;
+    title: string;
+    description: string;
+    state: string;
+  } | null;
+  steps: PlanStep[];
+}

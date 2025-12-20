@@ -3,11 +3,12 @@ import { useNavigate } from 'react-router-dom';
 import { MessageSquare, Users, TrendingUp } from 'lucide-react';
 import { api } from '../lib/api';
 import { SystemHealthBadge } from '../../shared/components/SystemHealthBadge';
-import { Navigation } from '../components/Navigation';
+import { Navigation } from '../components/layout/Navigation';
+import type { HomeData } from '@shared/types/api';
 
 export default function Home() {
   const navigate = useNavigate();
-  const [homeData, setHomeData] = useState<any>(null);
+  const [homeData, setHomeData] = useState<HomeData | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -59,20 +60,20 @@ export default function Home() {
                 </span>
               </div>
 
-              {homeData.status === 'active' && homeData.currentTopic && (
+              {homeData.status === 'active' && homeData.proposal && (
                 <div className="space-y-3">
                   <div>
                     <p className="text-slate-400 text-sm mb-1">Current Proposal</p>
-                    <p className="text-white text-lg font-medium">{homeData.currentTopic.proposal.title}</p>
+                    <p className="text-white text-lg font-medium">{homeData.proposal.title}</p>
                   </div>
                   <div className="flex items-center space-x-6">
                     <div>
                       <p className="text-slate-400 text-sm mb-1">Phase</p>
-                      <p className="text-cyan-400 font-medium">{homeData.currentTopic.state.replace('_', ' ')}</p>
+                      <p className="text-cyan-400 font-medium">{homeData.state?.replace('_', ' ') || 'Active'}</p>
                     </div>
                     <div>
                       <p className="text-slate-400 text-sm mb-1">Vote Progress</p>
-                      <p className="text-cyan-400 font-medium">{homeData.currentTopic.voteProgress}</p>
+                      <p className="text-cyan-400 font-medium">{homeData.voteProgress || '0/6'}</p>
                     </div>
                   </div>
                   <button
