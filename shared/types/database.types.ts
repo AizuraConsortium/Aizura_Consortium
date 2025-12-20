@@ -109,7 +109,13 @@ export interface Database {
           agent_role: 'product-strategy' | 'engineering-arch' | 'gtm-marketing' | 'ops-automation' | 'finance-tokenomics' | 'risk-compliance'
           phase: string
           importance: number
-          body: Json
+          message_type: 'message' | 'vote'
+          message_title: string | null
+          message_body_md: string | null
+          message_citations: string[] | null
+          vote_choice: string | null
+          vote_rationale_md: string | null
+          vote_conditions: string[] | null
           selected: boolean
           created_at: string
         }
@@ -120,7 +126,13 @@ export interface Database {
           agent_role: 'product-strategy' | 'engineering-arch' | 'gtm-marketing' | 'ops-automation' | 'finance-tokenomics' | 'risk-compliance'
           phase: string
           importance: number
-          body: Json
+          message_type: 'message' | 'vote'
+          message_title?: string | null
+          message_body_md?: string | null
+          message_citations?: string[] | null
+          vote_choice?: string | null
+          vote_rationale_md?: string | null
+          vote_conditions?: string[] | null
           selected?: boolean
           created_at?: string
         }
@@ -131,8 +143,78 @@ export interface Database {
           agent_role?: 'product-strategy' | 'engineering-arch' | 'gtm-marketing' | 'ops-automation' | 'finance-tokenomics' | 'risk-compliance'
           phase?: string
           importance?: number
-          body?: Json
+          message_type?: 'message' | 'vote'
+          message_title?: string | null
+          message_body_md?: string | null
+          message_citations?: string[] | null
+          vote_choice?: string | null
+          vote_rationale_md?: string | null
+          vote_conditions?: string[] | null
           selected?: boolean
+          created_at?: string
+        }
+      }
+      message_tool_calls: {
+        Row: {
+          id: string
+          message_id: string
+          tool: string
+          op: string
+          path: string
+          target_path: string | null
+          after_section: string | null
+          content_md: string | null
+          attribution_agent_id: string | null
+          tags: string[] | null
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          message_id: string
+          tool?: string
+          op: string
+          path: string
+          target_path?: string | null
+          after_section?: string | null
+          content_md?: string | null
+          attribution_agent_id?: string | null
+          tags?: string[] | null
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          message_id?: string
+          tool?: string
+          op?: string
+          path?: string
+          target_path?: string | null
+          after_section?: string | null
+          content_md?: string | null
+          attribution_agent_id?: string | null
+          tags?: string[] | null
+          created_at?: string
+        }
+      }
+      message_proposed_actions: {
+        Row: {
+          id: string
+          message_id: string
+          kind: string
+          data: Json
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          message_id: string
+          kind: string
+          data?: Json
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          message_id?: string
+          kind?: string
+          data?: Json
           created_at?: string
         }
       }

@@ -77,6 +77,10 @@ export type Topic = Database['public']['Tables']['topics']['Row'];
 
 export type Message = Database['public']['Tables']['messages']['Row'];
 
+export type MessageToolCall = Database['public']['Tables']['message_tool_calls']['Row'];
+
+export type MessageProposedAction = Database['public']['Tables']['message_proposed_actions']['Row'];
+
 export type Plan = Database['public']['Tables']['plans']['Row'];
 
 export type PlanRevision = Database['public']['Tables']['plan_revisions']['Row'];

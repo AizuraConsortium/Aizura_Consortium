@@ -339,7 +339,7 @@ export class Orchestrator {
       recentMessages: recentMessages.reverse().map(msg => ({
         agent_id: msg.agent_id,
         agent_role: msg.agent_role,
-        message: (msg.body as any).message?.title || (msg.body as any).vote?.choice || '',
+        message: msg.message_type === 'message' ? (msg.message_title || '') : (msg.vote_choice || ''),
         importance: msg.importance
       })),
       planOutline,
