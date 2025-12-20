@@ -84,6 +84,81 @@ export const RATE_LIMIT_CONFIG: Record<string, RateLimitConfig> = {
     maxRequests: 30,
     windowMinutes: 1,
     description: 'Admin rate limit details for specific identifier'
+  },
+  'GET:/api/website/topics/current': {
+    maxRequests: 60,
+    windowMinutes: 1,
+    description: 'Public website endpoint for current topic'
+  },
+  'GET:/api/website/topics/:topicId': {
+    maxRequests: 60,
+    windowMinutes: 1,
+    description: 'Public website endpoint for topic details'
+  },
+  'GET:/api/website/messages/topic/:topicId': {
+    maxRequests: 60,
+    windowMinutes: 1,
+    description: 'Public website endpoint for topic messages'
+  },
+  'GET:/api/website/messages/:messageId': {
+    maxRequests: 60,
+    windowMinutes: 1,
+    description: 'Public website endpoint for message details'
+  },
+  'GET:/api/website/proposals': {
+    maxRequests: 60,
+    windowMinutes: 1,
+    description: 'Public website endpoint for proposals list'
+  },
+  'GET:/api/website/proposals/:id': {
+    maxRequests: 60,
+    windowMinutes: 1,
+    description: 'Public website endpoint for proposal details'
+  },
+  'GET:/api/client/proposals': {
+    maxRequests: 100,
+    windowMinutes: 1,
+    description: 'Authenticated client endpoint for proposals list'
+  },
+  'GET:/api/client/proposals/:id': {
+    maxRequests: 100,
+    windowMinutes: 1,
+    description: 'Authenticated client endpoint for proposal details'
+  },
+  'GET:/api/admin/errors/recent': {
+    maxRequests: 120,
+    windowMinutes: 1,
+    description: 'Admin endpoint for recent errors'
+  },
+  'GET:/api/admin/errors/admin': {
+    maxRequests: 120,
+    windowMinutes: 1,
+    description: 'Admin endpoint for admin error viewing'
+  },
+  'DELETE:/api/admin/errors/:id': {
+    maxRequests: 60,
+    windowMinutes: 1,
+    description: 'Admin endpoint for deleting specific error'
+  },
+  'POST:/api/admin/errors/cleanup': {
+    maxRequests: 10,
+    windowMinutes: 1,
+    description: 'Admin endpoint for bulk error cleanup (heavy operation)'
+  },
+  'GET:/api/admin/system/health': {
+    maxRequests: 120,
+    windowMinutes: 1,
+    description: 'Admin endpoint for system health check'
+  },
+  'GET:/api/admin/system/rate-limits': {
+    maxRequests: 120,
+    windowMinutes: 1,
+    description: 'Admin endpoint for rate limit monitoring'
+  },
+  'POST:/api/admin/system/rate-limits/clear': {
+    maxRequests: 30,
+    windowMinutes: 1,
+    description: 'Admin endpoint for clearing rate limit violations'
   }
 };
 
