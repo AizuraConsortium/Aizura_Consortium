@@ -1,23 +1,9 @@
 import { X } from 'lucide-react';
 import { handleKeyboardClick } from '@shared/utils';
+import type { ErrorLog } from '@shared/types';
 
 interface ErrorDetailsModalProps {
-  error: {
-    id: string;
-    source: 'frontend' | 'backend' | 'agent';
-    severity: 'info' | 'warning' | 'error' | 'critical';
-    error_type: string;
-    message: string;
-    stack_trace?: string | null;
-    request_path?: string | null;
-    request_method?: string | null;
-    user_id?: string | null;
-    endpoint?: string | null;
-    query_time_ms?: number | null;
-    additional_context?: string | null;
-    details_metadata_json?: any;
-    created_at: string;
-  };
+  error: ErrorLog;
   onClose: () => void;
 }
 

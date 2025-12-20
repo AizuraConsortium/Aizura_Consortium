@@ -243,9 +243,6 @@ export default function Room() {
               </div>
             ) : (
               messages.map((msg) => {
-                const body = msg.body as any;
-                const messageContent = body.message || body.vote;
-
                 return (
                   <div key={msg.id} className="bg-slate-900/50 rounded-lg p-4 border border-slate-700/50">
                     <div className="flex items-start space-x-3">
@@ -264,26 +261,26 @@ export default function Room() {
                           </span>
                         </div>
 
-                        {body.type === 'message' && (
+                        {msg.message_type === 'message' && (
                           <>
-                            <p className="font-medium text-cyan-300 mb-2">{messageContent.title}</p>
-                            <p className="text-slate-300 whitespace-pre-wrap">{messageContent.body_md}</p>
+                            <p className="font-medium text-cyan-300 mb-2">{msg.message_title}</p>
+                            <p className="text-slate-300 whitespace-pre-wrap">{msg.message_body_md}</p>
                           </>
                         )}
 
-                        {body.type === 'vote' && (
+                        {msg.message_type === 'vote' && (
                           <>
                             <div className="flex items-center space-x-2 mb-2">
                               <span className="text-lg">🗳️</span>
                               <span className={`font-bold ${
-                                messageContent.choice === 'approve' ? 'text-green-400' :
-                                messageContent.choice === 'reject' ? 'text-red-400' :
+                                msg.vote_choice === 'approve' ? 'text-green-400' :
+                                msg.vote_choice === 'reject' ? 'text-red-400' :
                                 'text-yellow-400'
                               }`}>
-                                {messageContent.choice.toUpperCase()}
+                                {msg.vote_choice?.toUpperCase() || 'N/A'}
                               </span>
                             </div>
-                            <p className="text-slate-300 whitespace-pre-wrap">{messageContent.rationale_md}</p>
+                            <p className="text-slate-300 whitespace-pre-wrap">{msg.vote_rationale_md}</p>
                           </>
                         )}
 

@@ -20,25 +20,7 @@ import { ErrorDetailsModal } from '../components/ErrorDetailsModal';
 import { TableSkeleton } from '@shared/components/skeletons';
 import { handleKeyboardClick } from '@shared/utils';
 import { supabase } from '@shared/lib';
-
-interface ErrorLog {
-  id: string;
-  source: 'frontend' | 'backend' | 'agent';
-  severity: 'info' | 'warning' | 'error' | 'critical';
-  agent_id: string | null;
-  error_type: string;
-  message: string;
-  stack_trace: string | null;
-  request_path: string | null;
-  request_method: string | null;
-  user_id: string | null;
-  endpoint: string | null;
-  query_time_ms: number | null;
-  additional_context: string | null;
-  details_metadata_json: any;
-  topic_id: string | null;
-  created_at: string;
-}
+import type { ErrorLog } from '@shared/types';
 
 export function ErrorMonitor() {
   const { user, signOut } = useAdminAuth();

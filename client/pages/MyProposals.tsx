@@ -1,17 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { LoadingSpinner } from '@shared/components';
-
-interface Proposal {
-  id: string;
-  title: string;
-  summary: string;
-  status: string;
-  votes_for: number;
-  votes_against: number;
-  created_at: string;
-  updated_at: string;
-}
+import type { Proposal } from '@shared/types';
 
 export default function MyProposals() {
   const [proposals, setProposals] = useState<Proposal[]>([]);

@@ -1,16 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-
-interface Proposal {
-  id: string;
-  title: string;
-  summary: string;
-  status: string;
-  votes_for: number;
-  votes_against: number;
-  created_at: string;
-  updated_at: string;
-}
+import type { Proposal } from '@shared/types';
 
 export default function Dashboard() {
   const [proposals, setProposals] = useState<Proposal[]>([]);
