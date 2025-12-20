@@ -73,7 +73,11 @@ export class RateLimiterService {
           severity: 'warning',
           errorType: 'rate_limit_slow_query',
           message: `Rate limit check took ${queryTime}ms`,
-          details: { endpoint, identifier, queryTime }
+          details: {
+            endpoint,
+            queryTimeMs: queryTime,
+            metadata: { identifier }
+          }
         });
       }
 
@@ -84,7 +88,10 @@ export class RateLimiterService {
           severity: 'error',
           errorType: 'rate_limit_check_failed',
           message: error.message,
-          details: { endpoint, identifier, error }
+          details: {
+            endpoint,
+            metadata: { identifier, error }
+          }
         });
 
         if (this.failOpen) {
@@ -124,7 +131,10 @@ export class RateLimiterService {
         severity: 'critical',
         errorType: 'rate_limit_exception',
         message: error instanceof Error ? error.message : 'Unknown error',
-        details: { endpoint, identifier, error }
+        details: {
+          endpoint,
+          metadata: { identifier, error }
+        }
       });
 
       if (this.failOpen) {
@@ -169,9 +179,11 @@ export class RateLimiterService {
         errorType: 'rate_limit_exceeded',
         message: `Rate limit exceeded for ${violation.endpoint}`,
         details: {
-          identifier: violation.identifier,
           endpoint: violation.endpoint,
-          tokensRequested: violation.tokensRequested
+          metadata: {
+            identifier: violation.identifier,
+            tokensRequested: violation.tokensRequested
+          }
         }
       });
     } catch (error) {

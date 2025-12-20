@@ -59,10 +59,12 @@ async function retryWithBackoff<T>(
           isRateLimit ? 'rate_limit' : 'api_error',
           `${operationName} failed: ${error.message}`,
           {
-            status: error.status,
-            code: error.code,
-            type: error.type,
-            attempts: attempt + 1
+            metadata: {
+              status: error.status,
+              code: error.code,
+              type: error.type,
+              attempts: attempt + 1
+            }
           },
           topicId
         );
@@ -94,9 +96,11 @@ async function retryWithBackoff<T>(
           isRateLimit ? 'rate_limit' : 'retryable_error',
           `${operationName} error (retrying): ${error.message}`,
           {
-            status: error.status,
-            code: error.code,
-            attempt: attempt + 1
+            metadata: {
+              status: error.status,
+              code: error.code,
+              attempt: attempt + 1
+            }
           },
           topicId
         );

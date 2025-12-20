@@ -400,7 +400,14 @@ export interface Database {
           agent_id: 'claude' | 'chatgpt' | 'grok' | 'gemini' | 'deepseek' | 'qwen' | null
           error_type: string
           message: string
-          details: Json
+          stack_trace: string | null
+          request_path: string | null
+          request_method: string | null
+          user_id: string | null
+          endpoint: string | null
+          query_time_ms: number | null
+          additional_context: string | null
+          details_metadata_json: Json | null
           topic_id: string | null
           created_at: string
         }
@@ -411,7 +418,14 @@ export interface Database {
           agent_id?: 'claude' | 'chatgpt' | 'grok' | 'gemini' | 'deepseek' | 'qwen' | null
           error_type: string
           message: string
-          details?: Json
+          stack_trace?: string | null
+          request_path?: string | null
+          request_method?: string | null
+          user_id?: string | null
+          endpoint?: string | null
+          query_time_ms?: number | null
+          additional_context?: string | null
+          details_metadata_json?: Json | null
           topic_id?: string | null
           created_at?: string
         }
@@ -422,7 +436,14 @@ export interface Database {
           agent_id?: 'claude' | 'chatgpt' | 'grok' | 'gemini' | 'deepseek' | 'qwen' | null
           error_type?: string
           message?: string
-          details?: Json
+          stack_trace?: string | null
+          request_path?: string | null
+          request_method?: string | null
+          user_id?: string | null
+          endpoint?: string | null
+          query_time_ms?: number | null
+          additional_context?: string | null
+          details_metadata_json?: Json | null
           topic_id?: string | null
           created_at?: string
         }

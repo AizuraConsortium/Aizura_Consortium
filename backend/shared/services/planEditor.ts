@@ -149,7 +149,7 @@ export class PlanEditor {
         agentId,
         errorType: 'invalid_plan_move',
         message: 'Attempted to move section to the same path',
-        details: { path: args.path, target_path: args.target_path, reason: 'same_path' }
+        details: { metadata: { path: args.path, target_path: args.target_path, reason: 'same_path' } }
       }).catch((err: unknown) => console.error('Failed to log error:', err));
       return { newPlan: plan };
     }
@@ -163,7 +163,7 @@ export class PlanEditor {
         agentId,
         errorType: 'invalid_plan_move',
         message: 'Attempted to move section into itself or its descendants',
-        details: { path: args.path, target_path: args.target_path, reason: 'circular_dependency' }
+        details: { metadata: { path: args.path, target_path: args.target_path, reason: 'circular_dependency' } }
       }).catch((err: unknown) => console.error('Failed to log error:', err));
       return { newPlan: plan };
     }

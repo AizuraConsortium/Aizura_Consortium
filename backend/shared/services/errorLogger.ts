@@ -1,13 +1,24 @@
 import { SupabaseService } from './supabase/index.js';
 import type { AgentId, ErrorSource, ErrorSeverity } from '../../../shared/types/index.js';
 
+export interface ErrorDetails {
+  stackTrace?: string;
+  requestPath?: string;
+  requestMethod?: string;
+  userId?: string;
+  endpoint?: string;
+  queryTimeMs?: number;
+  additionalContext?: string;
+  metadata?: Record<string, any>;
+}
+
 export interface LogErrorOptions {
   source: ErrorSource;
   severity?: ErrorSeverity;
   agentId?: AgentId;
   errorType: string;
   message: string;
-  details?: any;
+  details?: ErrorDetails;
   topicId?: string;
 }
 
@@ -110,7 +121,13 @@ export class ErrorLogger {
     try {
       // Sanitize message and details before storing
       const sanitizedMessage = this.sanitize(options.message);
-      const sanitizedDetails = this.sanitizeObject(options.details || {});
+      const details = options.details || {};
+
+      // Sanitize individual detail fields
+      const sanitizedStackTrace = details.stackTrace ? this.sanitize(details.stackTrace) : null;
+      const sanitizedRequestPath = details.requestPath ? this.sanitize(details.requestPath) : null;
+      const sanitizedAdditionalContext = details.additionalContext ? this.sanitize(details.additionalContext) : null;
+      const sanitizedMetadata = details.metadata ? this.sanitizeObject(details.metadata) : null;
 
       await this.supabase.getClient()
         .from('error_logs')
@@ -120,7 +137,14 @@ export class ErrorLogger {
           agent_id: options.agentId || null,
           error_type: options.errorType,
           message: sanitizedMessage,
-          details: sanitizedDetails,
+          stack_trace: sanitizedStackTrace,
+          request_path: sanitizedRequestPath,
+          request_method: details.requestMethod?.toUpperCase() || null,
+          user_id: details.userId || null,
+          endpoint: details.endpoint || null,
+          query_time_ms: details.queryTimeMs || null,
+          additional_context: sanitizedAdditionalContext,
+          details_metadata_json: sanitizedMetadata,
           topic_id: options.topicId || null
         });
     } catch (error) {
@@ -133,7 +157,7 @@ export class ErrorLogger {
     agentId: AgentId,
     errorType: string,
     message: string,
-    details?: any,
+    details?: ErrorDetails,
     topicId?: string
   ): Promise<void> {
     await this.logError({
@@ -151,7 +175,7 @@ export class ErrorLogger {
     agentId: AgentId,
     errorType: string,
     message: string,
-    details?: any,
+    details?: ErrorDetails,
     topicId?: string
   ): Promise<void> {
     await this.logError({
@@ -168,7 +192,7 @@ export class ErrorLogger {
   async logBackendError(
     errorType: string,
     message: string,
-    details?: any
+    details?: ErrorDetails
   ): Promise<void> {
     await this.logError({
       source: 'backend',

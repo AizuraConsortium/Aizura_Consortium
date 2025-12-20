@@ -33,7 +33,7 @@ export class ErrorService {
       severity: errorData.severity,
       error_type: errorData.error_type,
       message: errorData.message,
-      details: errorData.details || null,
+      details_metadata_json: errorData.details || null,
       agent_id: errorData.agent_id || null,
       topic_id: errorData.topic_id || null,
     };
