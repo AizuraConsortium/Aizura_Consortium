@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
+import { api } from '../lib/api';
 import type { User } from '../../shared/types';
 
 interface ProposalDraft {
@@ -24,12 +25,18 @@ interface AuthState {
 }
 
 interface ProposalState {
+  proposals: any[];
+  isLoadingProposals: boolean;
+  proposalError: string | null;
   filters: ProposalFilter;
   currentPage: number;
   pageSize: number;
   setFilters: (filters: ProposalFilter) => void;
   setCurrentPage: (page: number) => void;
   resetFilters: () => void;
+  fetchProposals: (token?: string) => Promise<void>;
+  createProposal: (title: string, summary: string, token?: string) => Promise<void>;
+  voteOnProposal: (proposalId: string, vote: 'for' | 'against', token?: string) => Promise<void>;
 }
 
 interface DraftState {
@@ -43,10 +50,13 @@ interface ClientStore extends AuthState, ProposalState, DraftState {}
 
 export const useClientStore = create<ClientStore>()(
   persist(
-    (set) => ({
+    (set, get) => ({
       user: null,
       isAuthenticated: false,
       isLoading: true,
+      proposals: [],
+      isLoadingProposals: false,
+      proposalError: null,
       filters: {},
       currentPage: 1,
       pageSize: 10,
@@ -100,6 +110,41 @@ export const useClientStore = create<ClientStore>()(
             ? { ...state.draft, ...updates, lastSaved: new Date() }
             : null,
         })),
+
+      fetchProposals: async (token) => {
+        set({ isLoadingProposals: true, proposalError: null });
+        try {
+          const data = await api.getProposals(token);
+          set({ proposals: data.proposals || [], isLoadingProposals: false });
+        } catch (error: any) {
+          set({
+            proposalError: error.message || 'Failed to fetch proposals',
+            isLoadingProposals: false,
+          });
+        }
+      },
+
+      createProposal: async (title, summary, token) => {
+        set({ proposalError: null });
+        try {
+          await api.createProposal(title, summary, token);
+          await get().fetchProposals(token);
+        } catch (error: any) {
+          set({ proposalError: error.message || 'Failed to create proposal' });
+          throw error;
+        }
+      },
+
+      voteOnProposal: async (proposalId, vote, token) => {
+        set({ proposalError: null });
+        try {
+          await api.voteOnProposal(proposalId, vote, token);
+          await get().fetchProposals(token);
+        } catch (error: any) {
+          set({ proposalError: error.message || 'Failed to vote on proposal' });
+          throw error;
+        }
+      },
     }),
     {
       name: 'client-storage',

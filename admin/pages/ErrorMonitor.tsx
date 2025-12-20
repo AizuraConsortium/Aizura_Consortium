@@ -6,19 +6,15 @@ import {
   Shield,
   LogOut,
   AlertTriangle,
-  ChevronLeft,
-  ChevronRight,
   RefreshCw,
-  Trash2,
   Filter,
-  X,
-  Info,
-  AlertCircle,
-  XCircle
+  AlertCircle
 } from 'lucide-react';
 import { ErrorDetailsModal } from '../components/ErrorDetailsModal';
+import { FilterPanel } from '../components/FilterPanel';
+import { PaginationControls } from '../components/PaginationControls';
+import { ErrorTable } from '../components/ErrorTable';
 import { TableSkeleton } from '@shared/components/skeletons';
-import { handleKeyboardClick } from '@shared/utils';
 import { supabase } from '@shared/lib';
 import type { ErrorLog } from '@shared/types';
 
@@ -98,36 +94,6 @@ export function ErrorMonitor() {
       fetchErrors();
     } catch (err: any) {
       setError(err.message);
-    }
-  };
-
-  const getSeverityColor = (severity: string) => {
-    switch (severity) {
-      case 'info':
-        return 'bg-blue-100 text-blue-800';
-      case 'warning':
-        return 'bg-yellow-100 text-yellow-800';
-      case 'error':
-        return 'bg-orange-100 text-orange-800';
-      case 'critical':
-        return 'bg-red-100 text-red-800';
-      default:
-        return 'bg-gray-100 text-gray-800';
-    }
-  };
-
-  const getSeverityIcon = (severity: string) => {
-    switch (severity) {
-      case 'info':
-        return <Info className="h-4 w-4" />;
-      case 'warning':
-        return <AlertTriangle className="h-4 w-4" />;
-      case 'error':
-        return <AlertCircle className="h-4 w-4" />;
-      case 'critical':
-        return <XCircle className="h-4 w-4" />;
-      default:
-        return <Info className="h-4 w-4" />;
     }
   };
 
@@ -214,82 +180,12 @@ export function ErrorMonitor() {
         </div>
 
         {showFilters && (
-          <div className="bg-white rounded-lg border border-gray-200 p-6 mb-6">
-            <div className="flex items-center justify-between mb-4">
-              <h3 className="text-lg font-semibold text-gray-900">Filter Errors</h3>
-              {hasActiveFilters && (
-                <button
-                  onClick={clearFilters}
-                  className="text-sm text-blue-600 hover:text-blue-700 flex items-center space-x-1"
-                >
-                  <X className="h-4 w-4" />
-                  <span>Clear all</span>
-                </button>
-              )}
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Source</label>
-                <select
-                  value={filters.source}
-                  onChange={(e) => setFilters({ ...filters, source: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                >
-                  <option value="">All sources</option>
-                  <option value="frontend">Frontend</option>
-                  <option value="backend">Backend</option>
-                  <option value="agent">Agent</option>
-                </select>
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Severity</label>
-                <select
-                  value={filters.severity}
-                  onChange={(e) => setFilters({ ...filters, severity: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                >
-                  <option value="">All severities</option>
-                  <option value="info">Info</option>
-                  <option value="warning">Warning</option>
-                  <option value="error">Error</option>
-                  <option value="critical">Critical</option>
-                </select>
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Agent ID</label>
-                <input
-                  type="text"
-                  value={filters.agentId}
-                  onChange={(e) => setFilters({ ...filters, agentId: e.target.value })}
-                  placeholder="e.g., claude"
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Start Date</label>
-                <input
-                  type="date"
-                  value={filters.startDate}
-                  onChange={(e) => setFilters({ ...filters, startDate: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">End Date</label>
-                <input
-                  type="date"
-                  value={filters.endDate}
-                  onChange={(e) => setFilters({ ...filters, endDate: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                />
-              </div>
-            </div>
-          </div>
+          <FilterPanel
+            filters={filters}
+            onFilterChange={setFilters}
+            onClear={clearFilters}
+            hasActiveFilters={hasActiveFilters}
+          />
         )}
 
         {error && (
@@ -309,112 +205,15 @@ export function ErrorMonitor() {
             </div>
           ) : (
             <>
-              <div className="overflow-x-auto">
-                <table className="w-full">
-                  <thead className="bg-gray-50 border-b border-gray-200">
-                    <tr>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                        Severity
-                      </th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                        Source
-                      </th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                        Type
-                      </th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                        Message
-                      </th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                        Agent
-                      </th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                        Time
-                      </th>
-                      <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
-                        Actions
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody className="bg-white divide-y divide-gray-200">
-                    {errors.map((err) => (
-                      <tr
-                        key={err.id}
-                        className="hover:bg-gray-50 cursor-pointer focus-within:bg-gray-100"
-                        onClick={() => setSelectedError(err)}
-                        onKeyDown={(e) => handleKeyboardClick(e, () => setSelectedError(err))}
-                        tabIndex={0}
-                        role="button"
-                        aria-label={`View details for ${err.error_type} error`}
-                      >
-                        <td className="px-6 py-4 whitespace-nowrap">
-                          <span className={`inline-flex items-center space-x-1 px-2.5 py-1 rounded-full text-xs font-medium ${getSeverityColor(err.severity)}`}>
-                            {getSeverityIcon(err.severity)}
-                            <span className="capitalize">{err.severity}</span>
-                          </span>
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap">
-                          <span className="text-sm text-gray-900 capitalize">{err.source}</span>
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap">
-                          <span className="text-sm text-gray-900">{err.error_type}</span>
-                        </td>
-                        <td className="px-6 py-4">
-                          <span className="text-sm text-gray-900 line-clamp-2">{err.message}</span>
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap">
-                          <span className="text-sm text-gray-500">{err.agent_id || '-'}</span>
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap">
-                          <span className="text-sm text-gray-500">
-                            {new Date(err.created_at).toLocaleString()}
-                          </span>
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-right">
-                          <button
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              handleDeleteError(err.id);
-                            }}
-                            aria-label={`Delete ${err.error_type} error`}
-                            className="text-red-600 hover:text-red-700 transition"
-                          >
-                            <Trash2 className="h-4 w-4" aria-hidden="true" />
-                          </button>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-
-              <div className="px-6 py-4 border-t border-gray-200 flex items-center justify-between">
-                <div className="text-sm text-gray-600">
-                  Showing {pagination.offset + 1}-{Math.min(pagination.offset + pagination.limit, pagination.total)} of {pagination.total}
-                </div>
-
-                <div className="flex items-center space-x-2">
-                  <button
-                    onClick={() => setPagination(prev => ({ ...prev, offset: Math.max(0, prev.offset - prev.limit) }))}
-                    disabled={pagination.offset === 0}
-                    className="px-3 py-1 border border-gray-300 rounded-lg hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition"
-                  >
-                    <ChevronLeft className="h-4 w-4" />
-                  </button>
-
-                  <span className="text-sm text-gray-600">
-                    Page {Math.floor(pagination.offset / pagination.limit) + 1} of {Math.ceil(pagination.total / pagination.limit)}
-                  </span>
-
-                  <button
-                    onClick={() => setPagination(prev => ({ ...prev, offset: prev.offset + prev.limit }))}
-                    disabled={pagination.offset + pagination.limit >= pagination.total}
-                    className="px-3 py-1 border border-gray-300 rounded-lg hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition"
-                  >
-                    <ChevronRight className="h-4 w-4" />
-                  </button>
-                </div>
-              </div>
+              <ErrorTable
+                errors={errors}
+                onErrorClick={setSelectedError}
+                onDelete={handleDeleteError}
+              />
+              <PaginationControls
+                pagination={pagination}
+                onPageChange={(offset) => setPagination(prev => ({ ...prev, offset }))}
+              />
             </>
           )}
         </div>
