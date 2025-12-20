@@ -1,31 +1,27 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useAuth } from '../contexts/AuthContext';
+import { api } from '../lib/api';
 import { LoadingSpinner } from '@shared/components';
 import type { Proposal } from '@shared/types';
 
 export default function MyProposals() {
+  const { session } = useAuth();
   const [proposals, setProposals] = useState<Proposal[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     fetchProposals();
-  }, []);
+  }, [session]);
 
   const fetchProposals = async () => {
     try {
-      const user = JSON.parse(localStorage.getItem('client_user') || '{}');
-      const response = await fetch(
-        `${import.meta.env.VITE_API_URL}/api/client/proposals?userId=${user.id}`,
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem('client_token')}`,
-          },
-        }
-      );
+      if (!session?.access_token) {
+        setLoading(false);
+        return;
+      }
 
-      if (!response.ok) throw new Error('Failed to fetch proposals');
-
-      const data = await response.json();
+      const data = await api.getMyProposals(session.access_token);
       setProposals(data.proposals || []);
     } catch (error) {
       console.error('Error fetching proposals:', error);

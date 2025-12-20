@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import type { Topic, AgentId, VoteChoice } from '../../shared/types';
+import type { Topic, AgentId } from '../../shared/types';
 
 interface MessageFilter {
   agentId?: AgentId;
@@ -27,13 +27,6 @@ interface MessageState {
   resetFilters: () => void;
 }
 
-interface VotingState {
-  userVotes: Record<string, VoteChoice>;
-  votingHistory: Array<{ topicId: string; vote: VoteChoice; timestamp: Date }>;
-  castVote: (topicId: string, vote: VoteChoice) => void;
-  clearVotes: () => void;
-}
-
 interface UIState {
   sidebarOpen: boolean;
   debugMode: boolean;
@@ -42,7 +35,7 @@ interface UIState {
   setDebugMode: (enabled: boolean) => void;
 }
 
-interface WebsiteStore extends TopicState, MessageState, VotingState, UIState {}
+interface WebsiteStore extends TopicState, MessageState, UIState {}
 
 export const useWebsiteStore = create<WebsiteStore>()(
   persist(
@@ -53,8 +46,6 @@ export const useWebsiteStore = create<WebsiteStore>()(
       messageFilters: {},
       currentPage: 1,
       pageSize: 20,
-      userVotes: {},
-      votingHistory: [],
       sidebarOpen: true,
       debugMode: false,
 
@@ -83,21 +74,6 @@ export const useWebsiteStore = create<WebsiteStore>()(
           currentPage: 1,
         }),
 
-      castVote: (topicId, vote) =>
-        set((state) => ({
-          userVotes: { ...state.userVotes, [topicId]: vote },
-          votingHistory: [
-            ...state.votingHistory,
-            { topicId, vote, timestamp: new Date() },
-          ],
-        })),
-
-      clearVotes: () =>
-        set({
-          userVotes: {},
-          votingHistory: [],
-        }),
-
       setSidebarOpen: (open) => set({ sidebarOpen: open }),
 
       toggleSidebar: () => set((state) => ({ sidebarOpen: !state.sidebarOpen })),
@@ -107,8 +83,6 @@ export const useWebsiteStore = create<WebsiteStore>()(
     {
       name: 'website-storage',
       partialize: (state) => ({
-        userVotes: state.userVotes,
-        votingHistory: state.votingHistory,
         sidebarOpen: state.sidebarOpen,
       }),
     }

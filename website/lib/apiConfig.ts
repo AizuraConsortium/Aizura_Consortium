@@ -18,11 +18,5 @@ export const WEBSITE_API = {
       `${API_BASE}/api/website/proposals${status ? `?status=${status}` : ''}`,
     getById: (id: string) =>
       `${API_BASE}/api/website/proposals/${id}`,
-    create: () =>
-      `${API_BASE}/api/website/proposals`,
-    vote: (id: string) =>
-      `${API_BASE}/api/website/proposals/${id}/vote`,
-    getUserVote: (id: string, userId: string) =>
-      `${API_BASE}/api/website/proposals/${id}/vote?userId=${userId}`,
   },
 };

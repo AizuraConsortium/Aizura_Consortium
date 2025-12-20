@@ -1,29 +1,22 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useAuth } from '../contexts/AuthContext';
+import { api } from '../lib/api';
 import type { Proposal } from '@shared/types';
 
 export default function Dashboard() {
+  const { session } = useAuth();
   const [proposals, setProposals] = useState<Proposal[]>([]);
 
   useEffect(() => {
     fetchProposals();
-  }, []);
+  }, [session]);
 
   const fetchProposals = async () => {
     try {
-      const user = JSON.parse(localStorage.getItem('client_user') || '{}');
-      const response = await fetch(
-        `${import.meta.env.VITE_API_URL}/api/client/proposals?userId=${user.id}`,
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem('client_token')}`,
-          },
-        }
-      );
+      if (!session?.access_token) return;
 
-      if (!response.ok) throw new Error('Failed to fetch proposals');
-
-      const data = await response.json();
+      const data = await api.getProposals(session.access_token);
       setProposals(data.proposals || []);
     } catch (error) {
       console.error('Error fetching proposals:', error);
@@ -141,7 +134,7 @@ export default function Dashboard() {
 
           <div className="mt-8">
             <Link
-              to="/my-proposals"
+              to="/proposals"
               className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
             >
               View All Proposals
