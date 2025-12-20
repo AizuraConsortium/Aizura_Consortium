@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import type { Topic, AgentId } from '../../shared/types';
+import type { Topic, AgentId, Message } from '../../shared/types';
 
 interface MessageFilter {
   agentId?: AgentId;
@@ -17,14 +17,23 @@ interface TopicState {
 }
 
 interface MessageState {
+  messages: Message[];
   selectedMessages: string[];
   messageFilters: MessageFilter;
   currentPage: number;
   pageSize: number;
+  totalMessages: number;
+  hasMore: boolean;
+  setMessages: (messages: Message[]) => void;
+  addMessage: (message: Message) => void;
+  prependMessages: (messages: Message[]) => void;
+  setTotalMessages: (total: number) => void;
+  setHasMore: (hasMore: boolean) => void;
   setSelectedMessages: (ids: string[]) => void;
   setMessageFilters: (filters: MessageFilter) => void;
   setCurrentPage: (page: number) => void;
   resetFilters: () => void;
+  clearMessages: () => void;
 }
 
 interface UIState {
@@ -42,10 +51,13 @@ export const useWebsiteStore = create<WebsiteStore>()(
     (set) => ({
       currentTopic: null,
       endedTopics: [],
+      messages: [],
       selectedMessages: [],
       messageFilters: {},
       currentPage: 1,
       pageSize: 20,
+      totalMessages: 0,
+      hasMore: false,
       sidebarOpen: true,
       debugMode: false,
 
@@ -57,6 +69,25 @@ export const useWebsiteStore = create<WebsiteStore>()(
         set((state) => ({
           endedTopics: [topic, ...state.endedTopics],
         })),
+
+      setMessages: (messages) => set({ messages }),
+
+      addMessage: (message) =>
+        set((state) => ({
+          messages: [...state.messages, message],
+          totalMessages: state.totalMessages + 1,
+        })),
+
+      prependMessages: (messages) =>
+        set((state) => ({
+          messages: [...messages, ...state.messages],
+        })),
+
+      setTotalMessages: (total) => set({ totalMessages: total }),
+
+      setHasMore: (hasMore) => set({ hasMore }),
+
+      clearMessages: () => set({ messages: [], totalMessages: 0, hasMore: false }),
 
       setSelectedMessages: (ids) => set({ selectedMessages: ids }),
 

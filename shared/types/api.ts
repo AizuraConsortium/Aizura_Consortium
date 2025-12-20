@@ -106,3 +106,67 @@ export interface ErrorsResponse {
   errors: ErrorLog[];
   count: number;
 }
+
+export type RealtimeMessageType =
+  | 'connected'
+  | 'message_added'
+  | 'topic_updated'
+  | 'error'
+  | 'ping'
+  | 'pong';
+
+export interface RealtimeMessage {
+  type: RealtimeMessageType;
+  data?: any;
+  timestamp: string;
+}
+
+export interface RealtimeMessageAdded {
+  type: 'message_added';
+  data: {
+    id: string;
+    topic_id: string;
+    agent_id: string;
+    agent_role: string;
+    phase: string;
+    importance: number;
+    message_type: 'message' | 'vote';
+    message_title: string | null;
+    message_body_md: string | null;
+    message_citations: string[] | null;
+    vote_choice: string | null;
+    vote_rationale_md: string | null;
+    vote_conditions: string[] | null;
+    selected: boolean;
+    created_at: string;
+  };
+  timestamp: string;
+}
+
+export interface RealtimeTopicUpdated {
+  type: 'topic_updated';
+  data: {
+    topic_id: string;
+    state?: string;
+    updated_at: string;
+  };
+  timestamp: string;
+}
+
+export interface RealtimeError {
+  type: 'error';
+  data: {
+    message: string;
+    code?: string;
+  };
+  timestamp: string;
+}
+
+export interface RealtimeConnected {
+  type: 'connected';
+  data: {
+    topic_id: string;
+    client_id: string;
+  };
+  timestamp: string;
+}

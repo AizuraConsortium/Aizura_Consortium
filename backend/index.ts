@@ -10,6 +10,7 @@ import adminSystemRoutes from './admin/routes/systemRoutes.js';
 import websiteTopicRoutes from './website/routes/topicRoutes.js';
 import websiteMessageRoutes from './website/routes/messageRoutes.js';
 import websiteProposalRoutes from './website/routes/proposalRoutes.js';
+import websiteRealtimeRoutes, { realtimeService } from './website/routes/realtimeRoutes.js';
 import clientProposalRoutes from './client/routes/proposalRoutes.js';
 
 dotenv.config();
@@ -136,6 +137,7 @@ app.use('/api/admin/system', adminSystemRoutes);
 app.use('/api/website/topics', websiteTopicRoutes);
 app.use('/api/website/messages', websiteMessageRoutes);
 app.use('/api/website/proposals', websiteProposalRoutes);
+app.use('/api/website/realtime', websiteRealtimeRoutes);
 app.use('/api/client/proposals', clientProposalRoutes);
 
 // Global error handling middleware
@@ -289,6 +291,7 @@ process.on('SIGINT', async () => {
   if (orchestrator) {
     await orchestrator.stop();
   }
+  await realtimeService.cleanup();
   process.exit(0);
 });
 
@@ -297,5 +300,6 @@ process.on('SIGTERM', async () => {
   if (orchestrator) {
     await orchestrator.stop();
   }
+  await realtimeService.cleanup();
   process.exit(0);
 });
