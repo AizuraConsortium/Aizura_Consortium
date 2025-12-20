@@ -40,7 +40,8 @@ export async function addPlanRevision(
   op: PlanOperation,
   path: string,
   contentMd: string,
-  diff: any
+  addedChars: number,
+  removedChars: number
 ): Promise<PlanRevision> {
   const revision = await create<PlanRevision>('plan_revisions', {
     plan_id: planId,
@@ -48,7 +49,8 @@ export async function addPlanRevision(
     op,
     path,
     content_md: contentMd,
-    diff
+    added_chars: addedChars,
+    removed_chars: removedChars
   });
 
   await updateById('plans', planId, {

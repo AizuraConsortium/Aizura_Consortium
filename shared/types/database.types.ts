@@ -252,7 +252,8 @@ export interface Database {
           op: 'upsert_section' | 'append' | 'replace' | 'delete' | 'move'
           path: string
           content_md: string | null
-          diff: Json | null
+          added_chars: number
+          removed_chars: number
           created_at: string
         }
         Insert: {
@@ -262,7 +263,8 @@ export interface Database {
           op: 'upsert_section' | 'append' | 'replace' | 'delete' | 'move'
           path: string
           content_md?: string | null
-          diff?: Json | null
+          added_chars?: number
+          removed_chars?: number
           created_at?: string
         }
         Update: {
@@ -272,7 +274,8 @@ export interface Database {
           op?: 'upsert_section' | 'append' | 'replace' | 'delete' | 'move'
           path?: string
           content_md?: string | null
-          diff?: Json | null
+          added_chars?: number
+          removed_chars?: number
           created_at?: string
         }
       }

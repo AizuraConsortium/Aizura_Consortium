@@ -455,10 +455,11 @@ export class Orchestrator {
       args.op,
       args.path,
       result.planMd,
-      result.diff
+      result.addedChars,
+      result.removedChars
     );
 
-    console.log(`   📝 Plan edited: ${args.op} at ${args.path} (+${result.diff.addedChars} chars)`);
+    console.log(`   📝 Plan edited: ${args.op} at ${args.path} (+${result.addedChars} chars)`);
   }
 
   private async handleVote(agentId: AgentId, voteMessage: AgentVoteMessage): Promise<void> {

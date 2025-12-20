@@ -5,12 +5,8 @@ import { ErrorLogger } from './errorLogger.js';
 export interface PlanEditorResult {
   revisionId: string;
   planMd: string;
-  diff: {
-    op: string;
-    path: string;
-    addedChars: number;
-    removedChars: number;
-  };
+  addedChars: number;
+  removedChars: number;
 }
 
 export class PlanEditor {
@@ -42,12 +38,8 @@ export class PlanEditor {
     return {
       revisionId,
       planMd: newPlan,
-      diff: {
-        op: args.op,
-        path: args.path,
-        addedChars,
-        removedChars
-      }
+      addedChars,
+      removedChars
     };
   }
 
