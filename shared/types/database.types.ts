@@ -365,21 +365,30 @@ export interface Database {
           id: string
           topic_id: string
           winner_message_id: string
-          decision: Json | null
+          winner_importance: number | null
+          candidate_count: number | null
+          runner_up_importance: number | null
+          decision_metadata_json: Json | null
           created_at: string
         }
         Insert: {
           id?: string
           topic_id: string
           winner_message_id: string
-          decision?: Json | null
+          winner_importance?: number | null
+          candidate_count?: number | null
+          runner_up_importance?: number | null
+          decision_metadata_json?: Json | null
           created_at?: string
         }
         Update: {
           id?: string
           topic_id?: string
           winner_message_id?: string
-          decision?: Json | null
+          winner_importance?: number | null
+          candidate_count?: number | null
+          runner_up_importance?: number | null
+          decision_metadata_json?: Json | null
           created_at?: string
         }
       }

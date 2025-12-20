@@ -374,6 +374,7 @@ export class Orchestrator {
     });
 
     const [winnerAgentId, winnerMessage] = candidates[0];
+    const runnerUpImportance = candidates.length > 1 ? candidates[1][1].importance : undefined;
 
     const messages = await this.supabase.getMessagesInCurrentTick(
       this.currentTopic!.id,
@@ -388,7 +389,11 @@ export class Orchestrator {
       await this.supabase.logArbitration(
         this.currentTopic!.id,
         winnerDbMessage.id,
-        { importance: winnerMessage.importance, candidateCount: candidates.length }
+        {
+          winnerImportance: winnerMessage.importance,
+          candidateCount: candidates.length,
+          runnerUpImportance: runnerUpImportance
+        }
       );
     }
 

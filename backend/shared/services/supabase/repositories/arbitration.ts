@@ -1,14 +1,24 @@
 import { create } from '../queryBuilder.js';
 import type { ArbitrationEntry } from '../../../../../shared/types/index.js';
 
+export interface ArbitrationDecision {
+  winnerImportance: number;
+  candidateCount: number;
+  runnerUpImportance?: number;
+  metadata?: Record<string, any>;
+}
+
 export async function logArbitration(
   topicId: string,
   winnerMessageId: string,
-  decision: any
+  decision: ArbitrationDecision
 ): Promise<ArbitrationEntry> {
   return create<ArbitrationEntry>('arbitration', {
     topic_id: topicId,
     winner_message_id: winnerMessageId,
-    decision
+    winner_importance: decision.winnerImportance,
+    candidate_count: decision.candidateCount,
+    runner_up_importance: decision.runnerUpImportance || null,
+    decision_metadata_json: decision.metadata || null
   });
 }
