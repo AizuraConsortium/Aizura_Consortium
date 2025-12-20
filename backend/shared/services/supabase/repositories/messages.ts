@@ -16,7 +16,7 @@ export async function insertMessage(
     agent_role: agentRole,
     phase,
     importance,
-    body,
+    body: body as any,
     selected
   });
 }

@@ -1,29 +1,18 @@
-export type AgentId = 'claude' | 'chatgpt' | 'grok' | 'gemini' | 'deepseek' | 'qwen';
+import type { Database } from './database.types';
 
-export type AgentRole =
-  | 'product-strategy'
-  | 'engineering-arch'
-  | 'gtm-marketing'
-  | 'ops-automation'
-  | 'finance-tokenomics'
-  | 'risk-compliance';
+export type AgentId = Database['public']['Tables']['messages']['Row']['agent_id'];
 
-export type Phase =
-  | 'intake'
-  | 'debate'
-  | 'plan_drafting'
-  | 'pre_vote'
-  | 'vote'
-  | 'commit'
-  | 'idle';
+export type AgentRole = Database['public']['Tables']['messages']['Row']['agent_role'];
 
-export type VoteChoice = 'approve' | 'reject' | 'abstain';
+export type Phase = Database['public']['Tables']['topics']['Row']['state'];
 
-export type PlanOperation = 'upsert_section' | 'append' | 'replace' | 'delete' | 'move';
+export type VoteChoice = Database['public']['Tables']['agent_votes']['Row']['choice'];
 
-export type ProposalStatus = 'queued' | 'in_debate' | 'adopted' | 'rejected';
+export type PlanOperation = Database['public']['Tables']['plan_revisions']['Row']['op'];
 
-export type StepStatus = 'todo' | 'in_progress' | 'blocked' | 'done';
+export type ProposalStatus = Database['public']['Tables']['proposals']['Row']['status'];
+
+export type StepStatus = Database['public']['Tables']['steps']['Row']['status'];
 
 export interface AgentMessage {
   type: 'message';
@@ -82,100 +71,30 @@ export interface RefusalNotice {
   instruction: string;
 }
 
-export interface Proposal {
-  id: string;
-  title: string;
-  summary: string | null;
-  submitted_by: string | null;
-  status: ProposalStatus;
-  votes_for: number;
-  votes_against: number;
-  voting_ends_at: string | null;
-  created_at: string;
-  updated_at: string;
-}
+export type Proposal = Database['public']['Tables']['proposals']['Row'];
 
-export interface Topic {
-  id: string;
-  proposal_id: string | null;
-  state: Phase;
-  started_at: string;
-  ended_at: string | null;
-}
+export type Topic = Database['public']['Tables']['topics']['Row'];
 
-export interface Message {
-  id: string;
-  topic_id: string;
-  agent_id: AgentId;
-  agent_role: AgentRole;
-  phase: Phase;
-  importance: number;
-  body: AgentMessage | AgentVoteMessage;
-  selected: boolean;
-  created_at: string;
-}
+export type Message = Database['public']['Tables']['messages']['Row'];
 
-export interface Plan {
-  id: string;
-  topic_id: string;
-  title: string | null;
-  current_revision_id: string | null;
-  status: 'draft' | 'final' | 'adopted';
-  created_at: string;
-}
+export type Plan = Database['public']['Tables']['plans']['Row'];
 
-export interface PlanRevision {
-  id: string;
-  plan_id: string;
-  agent_id: AgentId;
-  op: PlanOperation;
-  path: string;
-  content_md: string | null;
-  diff: any;
-  created_at: string;
-}
+export type PlanRevision = Database['public']['Tables']['plan_revisions']['Row'];
 
-export interface Step {
-  id: string;
-  plan_id: string;
-  title: string;
-  owner_agent_role: AgentRole;
-  status: StepStatus;
-  depends_on: string | null;
-  eta_days: number | null;
-  created_at: string;
-}
+export type Step = Database['public']['Tables']['steps']['Row'];
 
-export interface AgentVote {
-  id: string;
-  topic_id: string;
-  agent_id: AgentId;
-  choice: VoteChoice;
-  rationale_md: string | null;
-  conditions: string[];
-  created_at: string;
-}
+export type AgentVote = Database['public']['Tables']['agent_votes']['Row'];
 
-export interface ArbitrationEntry {
-  id: string;
-  topic_id: string;
-  winner_message_id: string;
-  decision: any;
-  created_at: string;
-}
+export type ArbitrationEntry = Database['public']['Tables']['arbitration']['Row'];
 
-export interface ProposalQueue {
-  id: string;
-  proposal_id: string;
-  priority: number;
-  status: 'queued' | 'processing' | 'completed';
-  created_at: string;
-  started_at: string | null;
-  completed_at: string | null;
-}
+export type ProposalQueue = Database['public']['Tables']['proposal_queue']['Row'];
 
-export type ErrorSource = 'backend' | 'frontend' | 'agent';
-export type ErrorSeverity = 'info' | 'warning' | 'error' | 'critical';
+export type User = Database['public']['Tables']['users']['Row'];
+
+export type ErrorLog = Database['public']['Tables']['error_logs']['Row'];
+
+export type ErrorSource = Database['public']['Tables']['error_logs']['Row']['source'];
+export type ErrorSeverity = Database['public']['Tables']['error_logs']['Row']['severity'];
 
 export const AGENT_ROLE_MAPPING: Record<AgentId, AgentRole> = {
   claude: 'engineering-arch',
