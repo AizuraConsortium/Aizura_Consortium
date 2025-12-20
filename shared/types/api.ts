@@ -42,3 +42,67 @@ export interface SystemHealth {
     }>;
   };
 }
+
+export interface TopicWithDetails {
+  id: string;
+  title: string;
+  description: string;
+  state: string;
+  proposal_id: string;
+  created_at: string;
+  updated_at: string;
+  proposal: {
+    id: string;
+    title: string;
+    description: string;
+    status: string;
+    created_at: string;
+    user_id: string | null;
+  } | null;
+  plan: {
+    id: string;
+    topic_id: string;
+    content_md: string;
+    created_at: string;
+    updated_at: string;
+  } | null;
+}
+
+export interface PaginatedMessages {
+  messages: Array<{
+    id: string;
+    topic_id: string;
+    agent_id: string;
+    agent_role: string;
+    phase: string;
+    importance: number;
+    message_type: 'message' | 'vote';
+    message_title: string | null;
+    message_body_md: string | null;
+    message_citations: string[] | null;
+    vote_choice: string | null;
+    vote_rationale_md: string | null;
+    vote_conditions: string[] | null;
+    selected: boolean;
+    created_at: string;
+  }>;
+  total: number;
+  hasMore: boolean;
+}
+
+export interface ProposalsResponse {
+  proposals: Array<{
+    id: string;
+    title: string;
+    description: string;
+    status: string;
+    created_at: string;
+    user_id: string | null;
+  }>;
+  count: number;
+}
+
+export interface ErrorsResponse {
+  errors: ErrorLog[];
+  count: number;
+}

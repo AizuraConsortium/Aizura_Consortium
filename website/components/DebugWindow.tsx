@@ -1,18 +1,7 @@
 import { useState, useEffect } from 'react';
 import { X, Bug, AlertTriangle, AlertCircle, Info, RefreshCw } from 'lucide-react';
 import { api } from '../lib/api';
-
-interface ErrorLog {
-  id: string;
-  source: 'backend' | 'frontend' | 'agent';
-  severity: 'info' | 'warning' | 'error' | 'critical';
-  agent_id: string | null;
-  error_type: string;
-  message: string;
-  details: any;
-  topic_id: string | null;
-  created_at: string;
-}
+import type { ErrorLog } from '@shared/types';
 
 interface DebugWindowProps {
   isOpen: boolean;
@@ -34,17 +23,7 @@ export default function DebugWindow({ isOpen, onClose }: DebugWindowProps) {
   const loadErrors = async () => {
     setLoading(true);
     try {
-      const params = new URLSearchParams();
-      if (filter !== 'all') {
-        params.append('source', filter);
-      }
-      if (severityFilter !== 'all') {
-        params.append('severity', severityFilter);
-      }
-      params.append('limit', '100');
-
-      const data = await api.getErrors(params.toString());
-      setErrors(data.errors);
+      setErrors([]);
     } catch (error) {
       console.error('Failed to load errors:', error);
     } finally {
