@@ -1,24 +1,17 @@
-import {
-  getTopicMessages,
-  getMessageById,
-  type Pagination,
-  type PaginatedMessages,
-} from '../../shared/services/supabase/repositories/messages.js';
-import type { Database } from '../../../shared/types/database.types.js';
+import * as MessagesRepo from '../repositories/messages.js';
+import type { Message } from '../../../shared/types/index.js';
 
-type Message = Database['public']['Tables']['messages']['Row'];
-
-export { Pagination, PaginatedMessages };
+export type { Pagination, PaginatedMessages } from '../repositories/messages.js';
 
 export class MessageService {
   async getTopicMessages(
     topicId: string,
-    pagination: Pagination = {}
-  ): Promise<PaginatedMessages> {
-    return getTopicMessages(topicId, pagination);
+    pagination: MessagesRepo.Pagination = {}
+  ): Promise<MessagesRepo.PaginatedMessages> {
+    return MessagesRepo.getTopicMessages(topicId, pagination);
   }
 
   async getMessageById(messageId: string): Promise<Message | null> {
-    return getMessageById(messageId);
+    return MessagesRepo.getMessageById(messageId);
   }
 }

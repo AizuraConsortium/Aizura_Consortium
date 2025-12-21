@@ -1,6 +1,5 @@
 import { Response } from 'express';
-import { supabase } from '../../shared/services/supabase/client.js';
-import type { RealtimeChannel } from '@supabase/supabase-js';
+import { RealtimeRepository } from '../repositories/realtime.js';
 import type { Message } from '../../../shared/types/index.js';
 
 interface SSEClient {
@@ -12,10 +11,11 @@ interface SSEClient {
 
 export class RealtimeService {
   private clients: Map<string, SSEClient> = new Map();
-  private channels: Map<string, RealtimeChannel> = new Map();
+  private realtimeRepo: RealtimeRepository;
   private pingInterval: NodeJS.Timeout | null = null;
 
   constructor() {
+    this.realtimeRepo = new RealtimeRepository();
     this.startPingInterval();
   }
 
@@ -62,7 +62,7 @@ export class RealtimeService {
       timestamp: new Date().toISOString(),
     });
 
-    if (!this.channels.has(topicId)) {
+    if (!this.realtimeRepo.isSubscribed(topicId)) {
       await this.subscribeToTopic(topicId);
     }
 
@@ -72,52 +72,27 @@ export class RealtimeService {
   }
 
   private async subscribeToTopic(topicId: string): Promise<void> {
-    const channel = supabase
-      .channel(`realtime-messages-${topicId}`)
-      .on(
-        'postgres_changes',
-        {
-          event: 'INSERT',
-          schema: 'public',
-          table: 'messages',
-          filter: `topic_id=eq.${topicId}`,
-        },
-        (payload) => {
-          const message = payload.new as Message;
-          if (message.selected) {
-            this.broadcastToTopic(topicId, {
-              type: 'message_added',
-              data: message,
-              timestamp: new Date().toISOString(),
-            });
-          }
-        }
-      )
-      .on(
-        'postgres_changes',
-        {
-          event: 'UPDATE',
-          schema: 'public',
-          table: 'topics',
-          filter: `id=eq.${topicId}`,
-        },
-        (payload) => {
-          this.broadcastToTopic(topicId, {
-            type: 'topic_updated',
-            data: {
-              topic_id: topicId,
-              state: payload.new.state,
-              updated_at: payload.new.updated_at,
-            },
-            timestamp: new Date().toISOString(),
-          });
-        }
-      )
-      .subscribe((status) => {
-        console.log(`Realtime subscription for topic ${topicId}: ${status}`);
-      });
-
-    this.channels.set(topicId, channel);
+    await this.realtimeRepo.subscribeToTopicMessages(
+      topicId,
+      (message: Message) => {
+        this.broadcastToTopic(topicId, {
+          type: 'message_added',
+          data: message,
+          timestamp: new Date().toISOString(),
+        });
+      },
+      (topicUpdate: any) => {
+        this.broadcastToTopic(topicId, {
+          type: 'topic_updated',
+          data: {
+            topic_id: topicId,
+            state: topicUpdate.state,
+            updated_at: topicUpdate.updated_at,
+          },
+          timestamp: new Date().toISOString(),
+        });
+      }
+    );
   }
 
   private sendToClient(client: SSEClient, data: any): void {
@@ -159,12 +134,7 @@ export class RealtimeService {
   }
 
   private async unsubscribeFromTopic(topicId: string): Promise<void> {
-    const channel = this.channels.get(topicId);
-    if (channel) {
-      await supabase.removeChannel(channel);
-      this.channels.delete(topicId);
-      console.log(`Unsubscribed from topic ${topicId}`);
-    }
+    await this.realtimeRepo.unsubscribe(topicId);
   }
 
   async cleanup(): Promise<void> {
@@ -177,8 +147,6 @@ export class RealtimeService {
       this.removeClient(clientId);
     }
 
-    for (const topicId of this.channels.keys()) {
-      await this.unsubscribeFromTopic(topicId);
-    }
+    await this.realtimeRepo.unsubscribeAll();
   }
 }
