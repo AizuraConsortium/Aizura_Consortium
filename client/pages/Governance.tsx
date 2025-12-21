@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
 import { Plus } from 'lucide-react';
 import { api } from '../lib/api';
+import { validateProposalTitle, validateProposalSummary } from '../lib/validation/proposalValidation';
+import { logApiError } from '../lib/logging/errorLogger';
 import { useAuth } from '../contexts/AuthContext';
 import { CardSkeleton } from '@shared/components/skeletons';
-import { Navigation } from '../components/Navigation';
-import { ProposalForm } from '../components/ProposalForm';
-import { ProposalCard } from '../components/ProposalCard';
+import { Navigation, ProposalForm, ProposalCard } from '../components';
 
 export default function Governance() {
   const { session } = useAuth();
@@ -23,7 +23,7 @@ export default function Governance() {
       const data = await api.getProposals(session?.access_token);
       setProposals(data.proposals);
     } catch (error) {
-      console.error('Failed to load proposals:', error);
+      logApiError(error, '/client/proposals', 'GET', { component: 'Governance' });
       setError('Failed to load proposals');
     } finally {
       setLoading(false);
@@ -31,14 +31,13 @@ export default function Governance() {
   };
 
   const handleCreateProposal = async (title: string, summary: string) => {
-    if (title.length > 200) {
-      setError('Title must be 200 characters or less');
-      throw new Error('Title must be 200 characters or less');
-    }
+    const titleError = validateProposalTitle(title);
+    const summaryError = validateProposalSummary(summary);
 
-    if (summary.length > 5000) {
-      setError('Summary must be 5000 characters or less');
-      throw new Error('Summary must be 5000 characters or less');
+    if (titleError || summaryError) {
+      const errorMsg = [titleError, summaryError].filter(Boolean).join('; ');
+      setError(errorMsg);
+      throw new Error(errorMsg);
     }
 
     setError('');
@@ -49,7 +48,10 @@ export default function Governance() {
       setShowCreateForm(false);
       loadProposals();
     } catch (error: any) {
-      console.error('Failed to create proposal:', error);
+      logApiError(error, '/client/proposals', 'POST', {
+        component: 'Governance',
+        additionalData: { titleLength: title.length, summaryLength: summary.length }
+      });
       setError(error.message || 'Failed to create proposal');
       throw error;
     }
@@ -65,7 +67,10 @@ export default function Governance() {
       await api.voteOnProposal(proposalId, vote, token);
       loadProposals();
     } catch (error: any) {
-      console.error('Failed to vote:', error);
+      logApiError(error, `/client/proposals/${proposalId}/vote`, 'POST', {
+        component: 'Governance',
+        additionalData: { vote }
+      });
       setError(error.message || 'Failed to vote');
     }
   };

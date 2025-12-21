@@ -1,4 +1,5 @@
 import { apiClient, APIError, logError } from '@shared/lib';
+import { validateProposal } from './validation/proposalValidation';
 
 export const api = {
   ...apiClient,
@@ -12,10 +13,20 @@ export const api = {
   },
 
   async createProposal(title: string, summary: string, token?: string) {
+    const validation = validateProposal(title, summary);
+    if (!validation.isValid) {
+      const errorMessage = Object.values(validation.errors).join('; ');
+      throw new APIError(errorMessage, 400, 'Validation Error', validation.errors);
+    }
+
     return this.post('/client/proposals', { title, summary }, token);
   },
 
   async voteOnProposal(proposalId: string, vote: 'for' | 'against', token: string) {
+    if (vote !== 'for' && vote !== 'against') {
+      throw new APIError('Invalid vote value. Must be "for" or "against"', 400, 'Validation Error');
+    }
+
     return this.post(`/client/proposals/${proposalId}/vote`, { vote }, token);
   },
 

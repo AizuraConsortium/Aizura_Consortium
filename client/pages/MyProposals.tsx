@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { api } from '../lib/api';
+import { logApiError } from '../lib/logging/errorLogger';
 import { LoadingSpinner } from '@shared/components';
 import type { Proposal } from '@shared/types';
 
@@ -24,7 +25,7 @@ export default function MyProposals() {
       const data = await api.getMyProposals(session.access_token);
       setProposals(data.proposals || []);
     } catch (error) {
-      console.error('Error fetching proposals:', error);
+      logApiError(error, '/client/proposals/my', 'GET', { component: 'MyProposals' });
     } finally {
       setLoading(false);
     }

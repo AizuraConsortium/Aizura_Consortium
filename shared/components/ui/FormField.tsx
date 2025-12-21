@@ -32,14 +32,22 @@ export function FormField({
     <div className={cn('w-full', className)}>
       <label
         htmlFor={htmlFor}
-        className="flex items-center justify-between text-sm font-medium text-gray-700 mb-1"
+        className={`flex items-center justify-between text-sm font-medium mb-1 ${
+          error ? 'text-red-700' : 'text-gray-700'
+        }`}
       >
         <span>
           {label}
           {required && <span className="text-red-500 ml-1">*</span>}
         </span>
         {characterCount && (
-          <span className="text-xs text-gray-500">
+          <span className={`text-xs ${
+            characterCount.current > characterCount.max * 0.9
+              ? 'text-orange-600'
+              : error
+              ? 'text-red-600'
+              : 'text-gray-500'
+          }`}>
             {characterCount.current}/{characterCount.max}
           </span>
         )}
