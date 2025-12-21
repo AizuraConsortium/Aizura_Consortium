@@ -139,6 +139,48 @@ Supabase Database
 - **Services**: Business logic and orchestration
 - **Repositories**: Database queries and data access
 
+### Website Backend Architecture
+
+The website backend (`/backend/website/`) serves public-facing endpoints with read-only access.
+
+#### Security Model
+- **Supabase Client**: ANON_KEY (read-only)
+- **Authentication**: None (public endpoints)
+- **Authorization**: Row Level Security (RLS) policies
+- **Middleware**: Rate limiting only
+
+#### Layer Structure
+```
+Routes → Controllers → Services → Repositories → Database
+(thin)   (try/catch)   (business) (data access)  (Supabase)
+```
+
+#### Repository Pattern
+All database access goes through website-specific repositories:
+- `/backend/website/repositories/` - Website data access layer
+- Uses `websiteSupabase` client (ANON_KEY)
+- Read-only operations only
+- Proper RLS enforcement
+
+This ensures:
+1. Least privilege principle
+2. Clear security boundaries
+3. No accidental privilege escalation
+4. Testable data access layer
+
+#### Comparison with Shared Repositories
+- **Shared Repositories** (`/backend/shared/services/supabase/repositories/`)
+  - Use SERVICE_ROLE_KEY
+  - Full read/write access
+  - Used by admin backend and orchestrator
+  - Bypass RLS when needed
+
+- **Website Repositories** (`/backend/website/repositories/`)
+  - Use ANON_KEY
+  - Read-only access
+  - Used by public website backend
+  - RLS enforced
+
 ### Multi-Tenant Structure
 
 All endpoints are organized by tenant:
