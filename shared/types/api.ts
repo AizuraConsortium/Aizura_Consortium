@@ -33,12 +33,32 @@ export interface ErrorLog {
 export interface SystemHealth {
   status: 'healthy' | 'degraded' | 'unhealthy';
   uptime: number;
+  timestamp: string;
+  database: {
+    connected: boolean;
+    responseTimeMs?: number;
+  };
   errors: {
     last24h: number;
-    recent: Array<{
-      severity: string;
+    bySeverity: {
+      info: number;
+      warning: number;
+      error: number;
+      critical: number;
+    };
+    recentCritical: Array<{
+      id: string;
+      severity: 'critical';
+      error_type: string;
       message: string;
-      timestamp: string;
+      created_at: string;
+    }>;
+  };
+  rateLimits: {
+    violationsLast24h: number;
+    topViolators: Array<{
+      identifier: string;
+      count: number;
     }>;
   };
 }

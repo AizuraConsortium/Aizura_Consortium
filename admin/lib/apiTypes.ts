@@ -1,4 +1,4 @@
-import type { ErrorLog } from '@shared/types';
+import type { ErrorLog, SystemHealth } from '@shared/types';
 
 export interface AdminAPIEndpoints {
   errors: {
@@ -19,22 +19,7 @@ export interface ErrorLogResponse {
   total: number;
 }
 
-export interface SystemHealthResponse {
-  status: 'healthy' | 'degraded' | 'unhealthy';
-  uptime: number;
-  errors: {
-    last24h: number;
-    bySeverity: {
-      info: number;
-      warning: number;
-      error: number;
-      critical: number;
-    };
-  };
-  database: {
-    connected: boolean;
-  };
-}
+export type SystemHealthResponse = SystemHealth;
 
 export interface RateLimitStats {
   identifier: string;

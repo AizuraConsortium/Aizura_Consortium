@@ -166,9 +166,9 @@ export const RATE_LIMIT_CONFIG: Record<string, RateLimitConfig> = {
     description: 'Admin endpoint for bulk error cleanup (heavy operation)'
   },
   'GET:/api/admin/system/health': {
-    maxRequests: 120,
+    maxRequests: 60,
     windowMinutes: 1,
-    description: 'Admin endpoint for system health check'
+    description: 'Admin endpoint for comprehensive system health check (now requires authentication)'
   },
   'GET:/api/admin/system/rate-limits': {
     maxRequests: 120,
