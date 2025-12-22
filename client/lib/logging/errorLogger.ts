@@ -93,7 +93,15 @@ export class ClientErrorLogger {
       });
     }
 
-    sharedLogError(error, enrichedContext);
+    sharedLogError(
+      'frontend',
+      error instanceof Error ? error.name : 'UnknownError',
+      errorMessage,
+      {
+        stack: errorStack,
+        ...enrichedContext,
+      }
+    );
   }
 
   /**

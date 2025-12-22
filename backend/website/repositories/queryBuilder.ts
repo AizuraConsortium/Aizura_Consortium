@@ -12,17 +12,9 @@
 
 import { websiteSupabase } from '../config/supabaseWebsiteClient.js';
 import type { SupabaseClient } from '@supabase/supabase-js';
+import type { QueryOptions, FilterOptions } from '../../../shared/types/index.js';
 
-export interface QueryOptions {
-  orderBy?: string;
-  ascending?: boolean;
-  limit?: number;
-  offset?: number;
-}
-
-export interface FilterOptions {
-  [key: string]: any;
-}
+export type { QueryOptions, FilterOptions };
 
 /**
  * Retrieves a single record by ID

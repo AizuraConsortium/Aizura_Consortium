@@ -100,6 +100,12 @@ export type ErrorLog = Database['public']['Tables']['error_logs']['Row'];
 export type ErrorSource = Database['public']['Tables']['error_logs']['Row']['source'];
 export type ErrorSeverity = Database['public']['Tables']['error_logs']['Row']['severity'];
 
+export type RateLimit = Database['public']['Tables']['rate_limits']['Row'];
+
+export type OrchestratorLock = Database['public']['Tables']['orchestrator_locks']['Row'];
+
+export type AdminAction = Database['public']['Tables']['admin_actions']['Row'];
+
 export const AGENT_ROLE_MAPPING: Record<AgentId, AgentRole> = {
   claude: 'engineering-arch',
   chatgpt: 'product-strategy',
@@ -136,3 +142,4 @@ export interface QueueOperationResult {
 export * from './api';
 export * from './forms';
 export * from './components';
+export * from './query';

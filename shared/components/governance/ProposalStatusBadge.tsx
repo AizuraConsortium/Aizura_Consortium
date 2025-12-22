@@ -1,9 +1,8 @@
 interface ProposalStatusBadgeProps {
   status: string;
-  variant?: 'light' | 'dark';
 }
 
-export function ProposalStatusBadge({ status, variant = 'light' }: ProposalStatusBadgeProps) {
+export function ProposalStatusBadge({ status }: ProposalStatusBadgeProps) {
   const getStatusColor = (status: string) => {
     switch (status) {
       case 'adopted':

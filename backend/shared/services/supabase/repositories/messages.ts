@@ -1,5 +1,5 @@
 import { create, getMany, updateById } from '../queryBuilder.js';
-import type { Message, MessageToolCall, AgentId, AgentRole, Phase, AgentMessage, AgentVoteMessage, ToolCall } from '../../../../../shared/types/index.js';
+import type { Message, MessageToolCall, AgentId, AgentRole, Phase, AgentMessage, AgentVoteMessage, ToolCall, PaginatedMessages } from '../../../../../shared/types/index.js';
 import { supabase } from '../client.js';
 
 export async function insertMessage(
@@ -196,16 +196,10 @@ export interface Pagination {
   offset?: number;
 }
 
-export interface PaginatedMessages {
-  messages: Message[];
-  total: number;
-  hasMore: boolean;
-}
-
 export async function getTopicMessages(
   topicId: string,
   pagination: Pagination = {}
-): Promise<PaginatedMessages> {
+): Promise<PaginatedMessages<Message>> {
   const limit = pagination.limit || 50;
   const offset = pagination.offset || 0;
 

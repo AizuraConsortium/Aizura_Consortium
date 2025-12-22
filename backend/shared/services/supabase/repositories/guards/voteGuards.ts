@@ -5,10 +5,7 @@
  */
 
 import { ValidationError } from '../errors/index.js';
-import type { Database } from '../../../../../../shared/types/database.types.js';
-
-type AgentId = Database['public']['Tables']['agent_votes']['Row']['agent_id'];
-type VoteChoice = Database['public']['Tables']['agent_votes']['Row']['choice'];
+import type { AgentId, VoteChoice } from '../../../../../../shared/types/index.js';
 
 const VALID_AGENT_IDS: readonly AgentId[] = ['claude', 'chatgpt', 'grok', 'gemini', 'deepseek', 'qwen'] as const;
 const VALID_VOTE_CHOICES: readonly VoteChoice[] = ['approve', 'reject', 'abstain'] as const;

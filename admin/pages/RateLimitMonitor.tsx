@@ -5,29 +5,13 @@ import { usePolling } from '../hooks/usePolling';
 import { ErrorAlert, LoadingSpinner } from '@shared/components';
 import { api } from '../lib/api';
 import { useAdminAuth } from '../contexts/AdminAuthContext';
-
-interface RateLimitStats {
-  endpoint: string;
-  current_count: number;
-  limit: number;
-  window_seconds: number;
-  blocked_requests: number;
-  reset_at: string;
-  usage_percentage: number;
-}
-
-interface RateLimitData {
-  active_limits: RateLimitStats[];
-  total_blocked_today: number;
-  most_active_endpoint: string;
-  system_health: 'healthy' | 'warning' | 'critical';
-}
+import type { RateLimitResponse } from '../lib/apiTypes';
 
 export default function RateLimitMonitor() {
   const { session } = useAdminAuth();
   const [autoRefresh, setAutoRefresh] = useState(true);
 
-  const { data, loading, error, refetch } = useDataFetch<RateLimitData>(
+  const { data, loading, error, refetch } = useDataFetch<RateLimitResponse>(
     async () => api.getRateLimits(undefined, session?.access_token),
     [session?.access_token]
   );

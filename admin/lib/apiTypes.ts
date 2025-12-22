@@ -22,11 +22,13 @@ export interface ErrorLogResponse {
 export type SystemHealthResponse = SystemHealth;
 
 export interface RateLimitStats {
-  identifier: string;
   endpoint: string;
-  count: number;
-  first_request_at: string;
-  last_request_at: string;
+  current_count: number;
+  limit: number;
+  window_seconds: number;
+  blocked_requests: number;
+  reset_at: string;
+  usage_percentage: number;
 }
 
 export interface RateLimitResponse {

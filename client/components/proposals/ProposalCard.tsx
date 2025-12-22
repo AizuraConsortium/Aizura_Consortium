@@ -23,7 +23,7 @@ export function ProposalCard({ proposal, onVote }: ProposalCardProps) {
           <p className="text-slate-600">{proposal.summary}</p>
         </div>
 
-        <ProposalStatusBadge status={proposal.status} variant="light" />
+        <ProposalStatusBadge status={proposal.status} />
       </div>
 
       <div className="flex items-center justify-between">

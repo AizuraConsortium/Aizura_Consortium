@@ -6,9 +6,9 @@
 
 import { ValidationError } from '../errors/index.js';
 import type { Database } from '../../../../../../shared/types/database.types.js';
+import type { AgentId, AgentRole } from '../../../../../../shared/types/index.js';
+import { AGENT_ROLE_MAPPING } from '../../../../../../shared/types/index.js';
 
-type AgentId = Database['public']['Tables']['messages']['Row']['agent_id'];
-type AgentRole = Database['public']['Tables']['messages']['Row']['agent_role'];
 type MessageType = Database['public']['Tables']['messages']['Row']['message_type'];
 
 const VALID_AGENT_IDS: readonly AgentId[] = ['claude', 'chatgpt', 'grok', 'gemini', 'deepseek', 'qwen'] as const;
@@ -26,18 +26,6 @@ const IMPORTANCE_MIN = 1;
 const IMPORTANCE_MAX = 10;
 const MESSAGE_TITLE_MAX_LENGTH = 200;
 const MESSAGE_BODY_MAX_LENGTH = 10000;
-
-/**
- * Agent ID to Role mapping
- */
-const AGENT_ROLE_MAPPING: Record<AgentId, AgentRole> = {
-  claude: 'product-strategy',
-  chatgpt: 'engineering-arch',
-  grok: 'gtm-marketing',
-  gemini: 'ops-automation',
-  deepseek: 'finance-tokenomics',
-  qwen: 'risk-compliance',
-};
 
 /**
  * Validate agent ID

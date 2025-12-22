@@ -1,3 +1,5 @@
+import type { ErrorLog, Plan } from './index.js';
+
 export interface ApiResponse<T = any> {
   data?: T;
   error?: string;
@@ -16,18 +18,6 @@ export interface ApiError {
   status: number;
   message: string;
   details?: any;
-}
-
-export interface ErrorLog {
-  id: string;
-  source: 'frontend' | 'backend' | 'agent';
-  severity: 'info' | 'warning' | 'error' | 'critical';
-  error_type: string;
-  message: string;
-  details?: any;
-  created_at: string;
-  agent_id?: string;
-  topic_id?: string;
 }
 
 export interface SystemHealth {
@@ -88,26 +78,28 @@ export interface TopicWithDetails {
   } | null;
 }
 
-export interface PaginatedMessages {
-  messages: Array<{
-    id: string;
-    topic_id: string;
-    agent_id: string;
-    agent_role: string;
-    phase: string;
-    importance: number;
-    message_type: 'message' | 'vote';
-    message_title: string | null;
-    message_body_md: string | null;
-    message_citations: string[] | null;
-    vote_choice: string | null;
-    vote_rationale_md: string | null;
-    vote_conditions: string[] | null;
-    selected: boolean;
-    created_at: string;
-  }>;
+export interface PaginatedMessages<T = any> {
+  messages: T[];
   total: number;
   hasMore: boolean;
+}
+
+export interface FullMessageData {
+  id: string;
+  topic_id: string;
+  agent_id: string;
+  agent_role: string;
+  phase: string;
+  importance: number;
+  message_type: 'message' | 'vote';
+  message_title: string | null;
+  message_body_md: string | null;
+  message_citations: string[] | null;
+  vote_choice: string | null;
+  vote_rationale_md: string | null;
+  vote_conditions: string[] | null;
+  selected: boolean;
+  created_at: string;
 }
 
 export interface ProposalsResponse {
@@ -237,14 +229,6 @@ export interface TopicInfo {
     status: string;
     created_at: string;
   } | null;
-}
-
-export interface Plan {
-  id: string;
-  topic_id: string;
-  content_md: string;
-  created_at: string;
-  updated_at: string;
 }
 
 export interface PlanStep {

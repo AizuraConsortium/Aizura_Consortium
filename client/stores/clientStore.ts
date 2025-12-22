@@ -36,7 +36,7 @@ interface ProposalState {
   resetFilters: () => void;
   fetchProposals: (token?: string) => Promise<void>;
   createProposal: (title: string, summary: string, token?: string) => Promise<void>;
-  voteOnProposal: (proposalId: string, vote: 'for' | 'against', token?: string) => Promise<void>;
+  voteOnProposal: (proposalId: string, vote: 'for' | 'against', token: string) => Promise<void>;
 }
 
 interface DraftState {

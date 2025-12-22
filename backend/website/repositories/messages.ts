@@ -9,7 +9,7 @@
  */
 
 import { getById, query } from './queryBuilder.js';
-import type { Message } from '../../../shared/types/index.js';
+import type { Message, PaginatedMessages } from '../../../shared/types/index.js';
 
 /**
  * Pagination parameters for message queries
@@ -19,14 +19,7 @@ export interface Pagination {
   offset?: number;
 }
 
-/**
- * Paginated message response with metadata
- */
-export interface PaginatedMessages {
-  messages: Message[];
-  total: number;
-  hasMore: boolean;
-}
+export type { PaginatedMessages };
 
 /**
  * Retrieves paginated messages for a specific topic
@@ -50,7 +43,7 @@ export interface PaginatedMessages {
 export async function getTopicMessages(
   topicId: string,
   pagination: Pagination = {}
-): Promise<PaginatedMessages> {
+): Promise<PaginatedMessages<Message>> {
   const limit = pagination.limit || 50;
   const offset = pagination.offset || 0;
 
