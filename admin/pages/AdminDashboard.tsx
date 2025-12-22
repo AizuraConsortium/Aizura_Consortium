@@ -60,7 +60,7 @@ export function AdminDashboard() {
 
   const handleSignOut = async () => {
     await signOut();
-    navigate('/admin/login', { replace: true });
+    navigate('/login', { replace: true });
   };
 
   const getStatusColor = (status: string) => {
@@ -225,7 +225,7 @@ export function AdminDashboard() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <Link
-            to="/admin/errors"
+            to="/errors"
             className="bg-white rounded-lg border border-gray-200 p-6 hover:border-blue-300 hover:shadow-md transition group"
           >
             <div className="flex items-start justify-between mb-4">
@@ -241,7 +241,7 @@ export function AdminDashboard() {
           </Link>
 
           <Link
-            to="/admin/rate-limits"
+            to="/rate-limits"
             className="bg-white rounded-lg border border-gray-200 p-6 hover:border-blue-300 hover:shadow-md transition group"
           >
             <div className="flex items-start justify-between mb-4">
