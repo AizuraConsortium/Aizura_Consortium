@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { api } from '../lib/api';
-import type { User } from '../../shared/types';
+import type { User } from '@shared/types';
 
 interface ProposalDraft {
   title: string;

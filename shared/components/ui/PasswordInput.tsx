@@ -2,13 +2,79 @@ import { useState, forwardRef, InputHTMLAttributes } from 'react';
 import { Eye, EyeOff } from 'lucide-react';
 import { cn, themeClasses } from '@shared/styles';
 
+/**
+ * Props for the PasswordInput component.
+ */
 interface PasswordInputProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'type'> {
+  /**
+   * Label text to display above the password field.
+   */
   label?: string;
+
+  /**
+   * Error message to display below the password field.
+   * When provided, the input will be styled with error colors.
+   */
   error?: string;
+
+  /**
+   * Helper text to display below the password field when there's no error.
+   */
   helperText?: string;
+
+  /**
+   * Whether to show the password visibility toggle button.
+   * @default true
+   */
   showToggle?: boolean;
 }
 
+/**
+ * PasswordInput component for password fields with show/hide toggle.
+ *
+ * An accessible password input that includes a toggle button to show or hide
+ * the password text. Supports all standard input features including labels,
+ * errors, and helper text.
+ *
+ * @example
+ * ```tsx
+ * // Basic password input
+ * <PasswordInput
+ *   label="Password"
+ *   value={password}
+ *   onChange={handleChange}
+ * />
+ *
+ * // Password input with error
+ * <PasswordInput
+ *   label="Confirm Password"
+ *   value={confirmPassword}
+ *   onChange={handleChange}
+ *   error="Passwords do not match"
+ * />
+ *
+ * // Required password with helper text
+ * <PasswordInput
+ *   label="New Password"
+ *   value={newPassword}
+ *   onChange={handleChange}
+ *   required
+ *   helperText="Must be at least 8 characters"
+ * />
+ *
+ * // Without show/hide toggle
+ * <PasswordInput
+ *   label="Password"
+ *   value={password}
+ *   onChange={handleChange}
+ *   showToggle={false}
+ * />
+ * ```
+ *
+ * @param props - PasswordInput props including label, error, helperText, showToggle, and standard input attributes
+ * @param ref - Forwarded ref to the input element
+ * @returns A styled password input with show/hide toggle functionality
+ */
 export const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>(
   ({ label, error, helperText, showToggle = true, className = '', ...props }, ref) => {
     const [showPassword, setShowPassword] = useState(false);
