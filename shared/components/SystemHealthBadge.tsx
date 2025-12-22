@@ -15,24 +15,37 @@ interface SystemHealth {
   };
 }
 
-export function SystemHealthBadge() {
+export interface SystemHealthBadgeProps {
+  endpoint: string;
+  pollingInterval?: number;
+  onError?: (error: Error) => void;
+}
+
+export function SystemHealthBadge({
+  endpoint,
+  pollingInterval = 60000,
+  onError
+}: SystemHealthBadgeProps) {
   const [health, setHealth] = useState<SystemHealth | null>(null);
   const [isExpanded, setIsExpanded] = useState(false);
   const [error, setError] = useState('');
 
   useEffect(() => {
     fetchHealth();
-    const interval = setInterval(fetchHealth, 60000);
+    const interval = setInterval(fetchHealth, pollingInterval);
     return () => clearInterval(interval);
-  }, []);
+  }, [endpoint, pollingInterval]);
 
   const fetchHealth = async () => {
     try {
-      const data = await apiClient.get('/admin/system/health');
+      const data = await apiClient.get(endpoint);
       setHealth(data);
       setError('');
     } catch (err: any) {
       setError(err.message);
+      if (onError) {
+        onError(err);
+      }
     }
   };
 

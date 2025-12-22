@@ -2,6 +2,7 @@ import React, { createContext, useContext, useState, useEffect } from 'react';
 import { supabase, apiClient } from '@shared/lib';
 import { useSupabaseAuth } from '@shared/hooks';
 import { User } from '@supabase/supabase-js';
+import { ProtectedRouteAuthProvider } from '@shared/contexts/AuthContext';
 
 interface AdminAuthContextType {
   user: User | null;
@@ -98,7 +99,9 @@ export function AdminAuthProvider({ children }: { children: React.ReactNode }) {
 
   return (
     <AdminAuthContext.Provider value={{ user, session, isAdmin, isLoading, signIn, signOut, checkAdminRole }}>
-      {children}
+      <ProtectedRouteAuthProvider value={{ user, isLoading, isAdmin }}>
+        {children}
+      </ProtectedRouteAuthProvider>
     </AdminAuthContext.Provider>
   );
 }

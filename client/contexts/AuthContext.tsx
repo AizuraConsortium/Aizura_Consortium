@@ -2,6 +2,7 @@ import React, { createContext, useContext, useState, useEffect } from 'react';
 import { supabase } from '@shared/lib';
 import { User, Session } from '@supabase/supabase-js';
 import { setUserContext, setSessionContext, logComponentError } from '../lib/logging/errorLogger';
+import { ProtectedRouteAuthProvider } from '@shared/contexts/AuthContext';
 
 interface AuthContextType {
   user: User | null;
@@ -103,7 +104,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   return (
     <AuthContext.Provider value={{ user, session, isLoading, signIn, signUp, signOut }}>
-      {children}
+      <ProtectedRouteAuthProvider value={{ user, isLoading, isAdmin: false }}>
+        {children}
+      </ProtectedRouteAuthProvider>
     </AuthContext.Provider>
   );
 }

@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { MessageSquare, Users, TrendingUp } from 'lucide-react';
 import { api } from '../lib/api';
-import { SystemHealthBadge } from '../../shared/components/SystemHealthBadge';
+import { WebsiteHealthBadge } from '../components/WebsiteHealthBadge';
 import { Navigation } from '../components/layout/Navigation';
 import type { HomeData } from '@shared/types/api';
 
@@ -148,7 +148,7 @@ export default function Home() {
         </main>
       </div>
 
-      <SystemHealthBadge />
+      <WebsiteHealthBadge />
     </div>
   );
 }

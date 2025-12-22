@@ -18,7 +18,7 @@ export default function App() {
               <Route
                 path="/"
                 element={
-                  <ProtectedRoute authContextType="client" redirectTo="/login">
+                  <ProtectedRoute redirectTo="/login">
                     <Dashboard />
                   </ProtectedRoute>
                 }
@@ -26,7 +26,7 @@ export default function App() {
               <Route
                 path="/proposals"
                 element={
-                  <ProtectedRoute authContextType="client" redirectTo="/login">
+                  <ProtectedRoute redirectTo="/login">
                     <MyProposals />
                   </ProtectedRoute>
                 }
@@ -34,7 +34,7 @@ export default function App() {
               <Route
                 path="/governance"
                 element={
-                  <ProtectedRoute authContextType="client" redirectTo="/login">
+                  <ProtectedRoute redirectTo="/login">
                     <Governance />
                   </ProtectedRoute>
                 }

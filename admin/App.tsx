@@ -18,7 +18,7 @@ export default function App() {
               <Route
                 path="/"
                 element={
-                  <ProtectedRoute authContextType="admin" requireAdmin redirectTo="/login">
+                  <ProtectedRoute requireAdmin redirectTo="/login">
                     <AdminDashboard />
                   </ProtectedRoute>
                 }
@@ -26,7 +26,7 @@ export default function App() {
               <Route
                 path="/errors"
                 element={
-                  <ProtectedRoute authContextType="admin" requireAdmin redirectTo="/login">
+                  <ProtectedRoute requireAdmin redirectTo="/login">
                     <ErrorMonitor />
                   </ProtectedRoute>
                 }
@@ -34,7 +34,7 @@ export default function App() {
               <Route
                 path="/rate-limits"
                 element={
-                  <ProtectedRoute authContextType="admin" requireAdmin redirectTo="/login">
+                  <ProtectedRoute requireAdmin redirectTo="/login">
                     <RateLimitMonitor />
                   </ProtectedRoute>
                 }

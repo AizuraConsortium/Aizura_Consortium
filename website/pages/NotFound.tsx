@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { XCircle, Home, MessageSquare, Vote } from 'lucide-react';
 import { Navigation } from '../components/layout/Navigation';
-import { SystemHealthBadge } from '../../shared/components/SystemHealthBadge';
+import { WebsiteHealthBadge } from '../components/WebsiteHealthBadge';
 
 export default function NotFound() {
   const navigate = useNavigate();
@@ -57,7 +57,7 @@ export default function NotFound() {
         </main>
       </div>
 
-      <SystemHealthBadge />
+      <WebsiteHealthBadge />
     </div>
   );
 }
