@@ -1,23 +1,24 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import { User, Session } from '@supabase/supabase-js';
 import { supabase, apiClient } from '@shared/lib';
-import { useSupabaseAuth } from '@shared/hooks';
-import { Session, User } from '@supabase/supabase-js';
+import { BaseAuthProvider, useBaseAuth } from '@shared/contexts/BaseAuthContext';
 import { ProtectedRouteAuthProvider } from '@shared/contexts/AuthContext';
+import type { AuthResult } from '@shared/types/auth';
 
 interface AdminAuthContextType {
   user: User | null;
   session: Session | null;
   isAdmin: boolean;
   isLoading: boolean;
-  signIn: (email: string, password: string) => Promise<{ success: boolean; error?: string }>;
+  signIn: (email: string, password: string) => Promise<AuthResult>;
   signOut: () => Promise<void>;
   checkAdminRole: () => Promise<boolean>;
 }
 
 const AdminAuthContext = createContext<AdminAuthContextType | undefined>(undefined);
 
-export function AdminAuthProvider({ children }: { children: React.ReactNode }) {
-  const { user, session, loading: authLoading, signOut: baseSignOut } = useSupabaseAuth();
+function AdminAuthProviderInner({ children }: { children: React.ReactNode }) {
+  const { user, session, isLoading: baseLoading, executeSignIn, executeSignOut } = useBaseAuth();
   const [isAdmin, setIsAdmin] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -43,7 +44,7 @@ export function AdminAuthProvider({ children }: { children: React.ReactNode }) {
   };
 
   useEffect(() => {
-    if (authLoading) {
+    if (baseLoading) {
       return;
     }
 
@@ -57,44 +58,29 @@ export function AdminAuthProvider({ children }: { children: React.ReactNode }) {
     };
 
     initAdminCheck();
-  }, [user, authLoading]);
+  }, [user, baseLoading]);
 
-  const signIn = async (email: string, password: string): Promise<{ success: boolean; error?: string }> => {
-    try {
-      const { data, error } = await supabase.auth.signInWithPassword({
-        email,
-        password
-      });
+  const signIn = async (email: string, password: string): Promise<AuthResult> => {
+    const result = await executeSignIn(email, password);
 
-      if (error) {
-        return { success: false, error: error.message };
-      }
-
-      if (!data.user) {
-        return { success: false, error: 'Login failed' };
-      }
-
-      const isUserAdmin = await checkAdminRole();
-
-      if (!isUserAdmin) {
-        await supabase.auth.signOut();
-        setIsAdmin(false);
-        return { success: false, error: 'Access denied. Admin privileges required.' };
-      }
-
-      return { success: true };
-    } catch (error: any) {
-      return { success: false, error: error.message || 'An error occurred during sign in' };
+    if (!result.success) {
+      return result;
     }
+
+    const isUserAdmin = await checkAdminRole();
+
+    if (!isUserAdmin) {
+      await supabase.auth.signOut();
+      setIsAdmin(false);
+      return { success: false, error: 'Access denied. Admin privileges required.' };
+    }
+
+    return { success: true };
   };
 
   const signOut = async () => {
-    try {
-      await baseSignOut();
-      setIsAdmin(false);
-    } catch (error) {
-      console.error('Error signing out:', error);
-    }
+    await executeSignOut();
+    setIsAdmin(false);
   };
 
   return (
@@ -103,6 +89,14 @@ export function AdminAuthProvider({ children }: { children: React.ReactNode }) {
         {children}
       </ProtectedRouteAuthProvider>
     </AdminAuthContext.Provider>
+  );
+}
+
+export function AdminAuthProvider({ children }: { children: React.ReactNode }) {
+  return (
+    <BaseAuthProvider>
+      <AdminAuthProviderInner>{children}</AdminAuthProviderInner>
+    </BaseAuthProvider>
   );
 }
 
