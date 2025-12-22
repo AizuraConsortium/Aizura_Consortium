@@ -18,6 +18,7 @@ import webhookRoutes, { webhookController } from './shared/routes/webhookRoutes.
 import healthRoutes, { healthController } from './shared/routes/healthRoutes.js';
 import adminErrorRoutes from './admin/routes/errorRoutes.js';
 import adminSystemRoutes from './admin/routes/systemRoutes.js';
+import adminUserRoutes from './admin/routes/userRoutes.js';
 import websiteTopicRoutes from './website/routes/topicRoutes.js';
 import websiteMessageRoutes from './website/routes/messageRoutes.js';
 import websiteProposalRoutes from './website/routes/proposalRoutes.js';
@@ -156,6 +157,7 @@ app.use('/api/errors', sharedErrorRoutes);
  */
 app.use('/api/admin/errors', adminErrorRoutes);
 app.use('/api/admin/system', adminSystemRoutes);
+app.use('/api/admin/users', adminUserRoutes);
 
 /**
  * Website routes (public)

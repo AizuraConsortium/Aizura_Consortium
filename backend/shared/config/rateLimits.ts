@@ -179,6 +179,31 @@ export const RATE_LIMIT_CONFIG: Record<string, RateLimitConfig> = {
     maxRequests: 30,
     windowMinutes: 1,
     description: 'Admin endpoint for clearing rate limit violations'
+  },
+  'GET:/api/admin/users': {
+    maxRequests: 120,
+    windowMinutes: 1,
+    description: 'Admin endpoint for listing users'
+  },
+  'GET:/api/admin/users/stats': {
+    maxRequests: 120,
+    windowMinutes: 1,
+    description: 'Admin endpoint for user statistics'
+  },
+  'POST:/api/admin/users': {
+    maxRequests: 30,
+    windowMinutes: 1,
+    description: 'Admin endpoint for creating users (destructive)'
+  },
+  'PATCH:/api/admin/users/:userId/role': {
+    maxRequests: 30,
+    windowMinutes: 1,
+    description: 'Admin endpoint for updating user roles (destructive)'
+  },
+  'DELETE:/api/admin/users/:userId': {
+    maxRequests: 30,
+    windowMinutes: 1,
+    description: 'Admin endpoint for deleting users (destructive)'
   }
 };
 
