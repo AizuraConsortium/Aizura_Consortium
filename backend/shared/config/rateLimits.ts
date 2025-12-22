@@ -45,6 +45,11 @@ export const RATE_LIMIT_CONFIG: Record<string, RateLimitConfig> = {
     windowMinutes: 1,
     description: 'Main health check endpoint for monitoring systems'
   },
+  'GET:/health/orchestrator': {
+    maxRequests: 120,
+    windowMinutes: 1,
+    description: 'Orchestrator health check endpoint for monitoring systems'
+  },
   'GET:/api/errors/recent': {
     maxRequests: 30,
     windowMinutes: 1,
