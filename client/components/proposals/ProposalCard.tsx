@@ -1,16 +1,9 @@
 import { ThumbsUp, ThumbsDown } from 'lucide-react';
 import { ProposalStatusBadge, ProposalVoteDisplay } from '@shared/components/governance';
+import type { Proposal } from '@shared/types';
 
 interface ProposalCardProps {
-  proposal: {
-    id: string;
-    title: string;
-    summary: string;
-    status: string;
-    votes_for: number;
-    votes_against: number;
-    voting_ends_at?: string;
-  };
+  proposal: Proposal;
   onVote?: (proposalId: string, vote: 'for' | 'against') => void;
 }
 
@@ -20,7 +13,7 @@ export function ProposalCard({ proposal, onVote }: ProposalCardProps) {
       <div className="flex items-start justify-between mb-4">
         <div className="flex-1">
           <h3 className="text-xl font-bold text-slate-900 mb-2">{proposal.title}</h3>
-          <p className="text-slate-600">{proposal.summary}</p>
+          <p className="text-slate-600">{proposal.summary || ''}</p>
         </div>
 
         <ProposalStatusBadge status={proposal.status} />

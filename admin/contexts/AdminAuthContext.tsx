@@ -1,12 +1,12 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { supabase, apiClient } from '@shared/lib';
 import { useSupabaseAuth } from '@shared/hooks';
-import { User } from '@supabase/supabase-js';
+import { Session, User } from '@supabase/supabase-js';
 import { ProtectedRouteAuthProvider } from '@shared/contexts/AuthContext';
 
 interface AdminAuthContextType {
   user: User | null;
-  session: any;
+  session: Session | null;
   isAdmin: boolean;
   isLoading: boolean;
   signIn: (email: string, password: string) => Promise<{ success: boolean; error?: string }>;

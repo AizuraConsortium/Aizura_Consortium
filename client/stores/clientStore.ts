@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { api } from '../lib/api';
-import type { User } from '@shared/types';
+import type { User, Proposal, ProposalStatus } from '@shared/types';
 
 interface ProposalDraft {
   title: string;
@@ -10,7 +10,7 @@ interface ProposalDraft {
 }
 
 interface ProposalFilter {
-  status?: 'queued' | 'in_debate' | 'adopted' | 'rejected';
+  status?: ProposalStatus;
   dateRange?: { start: Date; end: Date };
 }
 
@@ -25,7 +25,7 @@ interface AuthState {
 }
 
 interface ProposalState {
-  proposals: any[];
+  proposals: Proposal[];
   isLoadingProposals: boolean;
   proposalError: string | null;
   filters: ProposalFilter;

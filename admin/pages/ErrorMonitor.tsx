@@ -11,7 +11,7 @@ import {
   AlertCircle
 } from 'lucide-react';
 import { ErrorDetailsModal } from '../components/ErrorDetailsModal';
-import { FilterPanel } from '../components/FilterPanel';
+import { FilterPanel, ErrorFilters } from '../components/FilterPanel';
 import { PaginationControls } from '../components/PaginationControls';
 import { ErrorTable } from '../components/ErrorTable';
 import { TableSkeleton } from '@shared/components/skeletons';
@@ -25,7 +25,7 @@ export function ErrorMonitor() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState('');
 
-  const [filters, setFilters] = useState({
+  const [filters, setFilters] = useState<ErrorFilters>({
     source: '',
     severity: '',
     agentId: '',

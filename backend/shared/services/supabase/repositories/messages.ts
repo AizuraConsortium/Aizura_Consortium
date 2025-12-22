@@ -1,6 +1,9 @@
 import { create, getMany, updateById } from '../queryBuilder.js';
-import type { Message, MessageToolCall, AgentId, AgentRole, Phase, AgentMessage, AgentVoteMessage, ToolCall, PaginatedMessages } from '../../../../../shared/types/index.js';
+import type { Message, MessageToolCall, AgentId, AgentRole, Phase, AgentMessage, AgentVoteMessage, ToolCall, PaginatedMessages, PlanOperation, VoteChoice } from '../../../../../shared/types/index.js';
+import type { Database } from '../../../../../shared/types/database.types.js';
 import { supabase } from '../client.js';
+
+type Json = Database['public']['Tables']['message_proposed_actions']['Row']['data'];
 
 export async function insertMessage(
   topicId: string,
@@ -74,13 +77,13 @@ async function insertToolCalls(messageId: string, toolCalls: ToolCall[]): Promis
   if (error) throw error;
 }
 
-async function insertProposedActions(messageId: string, proposedActions: Array<{ kind: string; [key: string]: any }>): Promise<void> {
+async function insertProposedActions(messageId: string, proposedActions: Array<{ kind: string; [key: string]: Json }>): Promise<void> {
   const actionsData = proposedActions.map(action => {
     const { kind, ...rest } = action;
     return {
       message_id: messageId,
       kind,
-      data: rest,
+      data: rest as Json,
     };
   });
 
@@ -139,7 +142,11 @@ export async function getMessageWithRelations(messageId: string): Promise<Messag
   };
 }
 
-export function reconstructMessageBody(message: Message, toolCalls?: MessageToolCall[], proposedActions?: any[]): AgentMessage | AgentVoteMessage {
+export function reconstructMessageBody(
+  message: Message,
+  toolCalls?: MessageToolCall[],
+  proposedActions?: Array<{ kind: string; data: Json }>
+): AgentMessage | AgentVoteMessage {
   if (message.message_type === 'message') {
     const agentMessage: AgentMessage = {
       type: 'message',
@@ -153,7 +160,7 @@ export function reconstructMessageBody(message: Message, toolCalls?: MessageTool
         citations: message.message_citations || undefined,
         proposed_actions: proposedActions?.map(pa => ({
           kind: pa.kind,
-          ...pa.data
+          ...(pa.data as Record<string, unknown>)
         })),
       },
     };
@@ -162,7 +169,7 @@ export function reconstructMessageBody(message: Message, toolCalls?: MessageTool
       agentMessage.tool_calls = toolCalls.map(tc => ({
         tool: 'plan_editor' as const,
         args: {
-          op: tc.op as any,
+          op: tc.op as PlanOperation,
           path: tc.path,
           target_path: tc.target_path || undefined,
           after: tc.after_section || undefined,
@@ -183,7 +190,7 @@ export function reconstructMessageBody(message: Message, toolCalls?: MessageTool
       agent_id: message.agent_id,
       importance: message.importance,
       vote: {
-        choice: message.vote_choice as any,
+        choice: message.vote_choice as VoteChoice,
         rationale_md: message.vote_rationale_md!,
         conditions: message.vote_conditions || undefined,
       },

@@ -3,7 +3,7 @@ import { ThumbsUp, ThumbsDown } from 'lucide-react';
 interface ProposalVoteDisplayProps {
   votesFor: number;
   votesAgainst: number;
-  votingEndsAt?: string;
+  votingEndsAt?: string | null;
   variant?: 'light' | 'dark';
 }
 

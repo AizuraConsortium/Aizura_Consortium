@@ -1,14 +1,17 @@
 import { X } from 'lucide-react';
+import type { ErrorSource, ErrorSeverity } from '@shared/types';
+
+export interface ErrorFilters {
+  source: ErrorSource | '';
+  severity: ErrorSeverity | '';
+  agentId: string;
+  startDate: string;
+  endDate: string;
+}
 
 interface FilterPanelProps {
-  filters: {
-    source: string;
-    severity: string;
-    agentId: string;
-    startDate: string;
-    endDate: string;
-  };
-  onFilterChange: (filters: any) => void;
+  filters: ErrorFilters;
+  onFilterChange: (filters: ErrorFilters) => void;
   onClear: () => void;
   hasActiveFilters: boolean;
 }
@@ -34,7 +37,7 @@ export function FilterPanel({ filters, onFilterChange, onClear, hasActiveFilters
           <label className="block text-sm font-medium text-gray-700 mb-2">Source</label>
           <select
             value={filters.source}
-            onChange={(e) => onFilterChange({ ...filters, source: e.target.value })}
+            onChange={(e) => onFilterChange({ ...filters, source: e.target.value as ErrorSource | '' })}
             className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
           >
             <option value="">All sources</option>
@@ -48,7 +51,7 @@ export function FilterPanel({ filters, onFilterChange, onClear, hasActiveFilters
           <label className="block text-sm font-medium text-gray-700 mb-2">Severity</label>
           <select
             value={filters.severity}
-            onChange={(e) => onFilterChange({ ...filters, severity: e.target.value })}
+            onChange={(e) => onFilterChange({ ...filters, severity: e.target.value as ErrorSeverity | '' })}
             className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
           >
             <option value="">All severities</option>
