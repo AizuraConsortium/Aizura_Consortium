@@ -1,5 +1,15 @@
+/**
+ * Message Controller
+ *
+ * Handles message retrieval for the public website.
+ * Uses standardized error handling and pagination from middleware.
+ */
+
 import { Request, Response } from 'express';
 import { MessageService } from '../services/messageService.js';
+import { handleControllerError } from '../../shared/utils/errorHandler.js';
+import { NotFoundError } from '../../shared/errors/HttpErrors.js';
+import { PaginatedRequest } from '../../shared/middleware/pagination.js';
 
 export class MessageController {
   private messageService: MessageService;
@@ -8,33 +18,47 @@ export class MessageController {
     this.messageService = new MessageService();
   }
 
-  async getTopicMessages(req: Request, res: Response) {
+  /**
+   * GET /api/website/messages/:topicId
+   * Get messages for a specific topic
+   * Pagination handled by middleware
+   */
+  async getTopicMessages(req: Request, res: Response): Promise<void> {
     try {
       const { topicId } = req.params;
-      const pagination = {
-        limit: parseInt(req.query.limit as string) || 50,
-        offset: parseInt(req.query.offset as string) || 0,
-      };
+
+      // Pagination is already parsed and validated by middleware
+      const pagination = (req as PaginatedRequest).pagination;
 
       const result = await this.messageService.getTopicMessages(topicId, pagination);
       res.json(result);
     } catch (error) {
-      console.error('Error fetching topic messages:', error);
-      res.status(500).json({ error: 'Failed to fetch messages' });
+      handleControllerError(error, res, {
+        requestPath: req.path,
+        requestMethod: req.method,
+      });
     }
   }
 
-  async getMessageById(req: Request, res: Response) {
+  /**
+   * GET /api/website/messages/single/:messageId
+   * Get a specific message by ID
+   */
+  async getMessageById(req: Request, res: Response): Promise<void> {
     try {
       const { messageId } = req.params;
       const message = await this.messageService.getMessageById(messageId);
+
       if (!message) {
-        return res.status(404).json({ error: 'Message not found' });
+        throw new NotFoundError('Message not found');
       }
+
       res.json(message);
     } catch (error) {
-      console.error('Error fetching message by ID:', error);
-      res.status(500).json({ error: 'Failed to fetch message' });
+      handleControllerError(error, res, {
+        requestPath: req.path,
+        requestMethod: req.method,
+      });
     }
   }
 }

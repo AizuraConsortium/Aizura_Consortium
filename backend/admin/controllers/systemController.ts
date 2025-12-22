@@ -1,5 +1,14 @@
+/**
+ * System Controller
+ *
+ * Handles system health and monitoring endpoints for admin users.
+ * Uses standardized error handling and admin action logging.
+ */
+
 import { Request, Response } from 'express';
 import { SystemService } from '../services/systemService.js';
+import { handleControllerError } from '../../shared/utils/errorHandler.js';
+import { withAdminAction } from '../../shared/utils/adminActionHelper.js';
 
 export class SystemController {
   private systemService: SystemService;
@@ -8,102 +17,101 @@ export class SystemController {
     this.systemService = new SystemService();
   }
 
-  async getSystemHealth(req: Request, res: Response) {
+  /**
+   * GET /api/admin/system/health
+   * Get system health status
+   */
+  async getSystemHealth(req: Request, res: Response): Promise<void> {
     try {
-      const health = await this.systemService.getSystemHealth();
+      await withAdminAction(
+        req,
+        res,
+        'system_health_check',
+        'system',
+        async () => {
+          const health = await this.systemService.getSystemHealth();
+          res.json(health);
 
-      if (req.logAdminAction) {
-        await req.logAdminAction({
-          actionType: 'system_health_check',
-          resourceType: 'system',
-          actionDetails: {
-            systemStatus: health.status,
-            uptime: health.uptime
-          },
-          success: true
-        });
-      }
-
-      res.json(health);
+          return {
+            details: {
+              systemStatus: health.status,
+              uptime: health.uptime,
+            },
+          };
+        }
+      );
     } catch (error) {
-      console.error('Error fetching system health:', error);
-
-      if (req.logAdminAction) {
-        await req.logAdminAction({
-          actionType: 'system_health_check',
-          resourceType: 'system',
-          success: false,
-          errorMessage: error instanceof Error ? error.message : 'Unknown error'
-        });
-      }
-
-      res.status(500).json({ error: 'Failed to fetch system health' });
+      handleControllerError(error, res, {
+        requestPath: req.path,
+        requestMethod: req.method,
+        userId: req.user?.id,
+      });
     }
   }
 
-  async getRateLimitStats(req: Request, res: Response) {
+  /**
+   * GET /api/admin/system/rate-limit-stats
+   * Get rate limit statistics
+   */
+  async getRateLimitStats(req: Request, res: Response): Promise<void> {
     try {
-      const hours = parseInt(req.query.hours as string) || 24;
-      const stats = await this.systemService.getRateLimitStats(hours);
+      await withAdminAction(
+        req,
+        res,
+        'rate_limit_view',
+        'rate_limit',
+        async () => {
+          const hours = parseInt(req.query.hours as string, 10) || 24;
+          const stats = await this.systemService.getRateLimitStats(hours);
 
-      if (req.logAdminAction) {
-        await req.logAdminAction({
-          actionType: 'rate_limit_view',
-          resourceType: 'rate_limit',
-          actionDetails: {
-            hours,
-            statsCount: stats.length
-          },
-          success: true
-        });
-      }
+          res.json({ stats, count: stats.length });
 
-      res.json({ stats, count: stats.length });
+          return {
+            details: {
+              hours,
+              statsCount: stats.length,
+            },
+          };
+        }
+      );
     } catch (error) {
-      console.error('Error fetching rate limit stats:', error);
-
-      if (req.logAdminAction) {
-        await req.logAdminAction({
-          actionType: 'rate_limit_view',
-          resourceType: 'rate_limit',
-          success: false,
-          errorMessage: error instanceof Error ? error.message : 'Unknown error'
-        });
-      }
-
-      res.status(500).json({ error: 'Failed to fetch rate limit stats' });
+      handleControllerError(error, res, {
+        requestPath: req.path,
+        requestMethod: req.method,
+        userId: req.user?.id,
+      });
     }
   }
 
-  async clearRateLimitViolations(req: Request, res: Response) {
+  /**
+   * POST /api/admin/system/rate-limit-clear
+   * Clear all rate limit violations
+   */
+  async clearRateLimitViolations(req: Request, res: Response): Promise<void> {
     try {
-      const cleared = await this.systemService.clearRateLimitViolations();
+      await withAdminAction(
+        req,
+        res,
+        'rate_limit_clear',
+        'rate_limit',
+        async () => {
+          const cleared = await this.systemService.clearRateLimitViolations();
 
-      if (req.logAdminAction) {
-        await req.logAdminAction({
-          actionType: 'rate_limit_clear',
-          resourceType: 'rate_limit',
-          actionDetails: {
-            clearedCount: cleared
-          },
-          success: true
-        });
-      }
+          res.json({ cleared });
 
-      res.json({ cleared });
+          return {
+            details: {
+              clearedCount: cleared,
+            },
+          };
+        }
+      );
     } catch (error) {
-      console.error('Error clearing rate limit violations:', error);
-
-      if (req.logAdminAction) {
-        await req.logAdminAction({
-          actionType: 'rate_limit_clear',
-          resourceType: 'rate_limit',
-          success: false,
-          errorMessage: error instanceof Error ? error.message : 'Unknown error'
-        });
-      }
-
-      res.status(500).json({ error: 'Failed to clear violations' });
+      handleControllerError(error, res, {
+        requestPath: req.path,
+        requestMethod: req.method,
+        userId: req.user?.id,
+      });
     }
   }
 }

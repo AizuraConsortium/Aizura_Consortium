@@ -1,15 +1,19 @@
 import { Router } from 'express';
 import { MessageController } from '../controllers/messageController.js';
 import { createRateLimit } from '../../shared/middleware/validation.js';
-import { createQueryValidator, paginationSchema } from '../../shared/validation/schemas.js';
+import { parsePagination } from '../../shared/middleware/pagination.js';
 
 const router = Router();
 const messageController = new MessageController();
 
+/**
+ * GET /api/website/messages/topic/:topicId
+ * Get messages for a topic with pagination
+ */
 router.get(
   '/topic/:topicId',
   createRateLimit('GET:/api/website/messages/topic/:topicId'),
-  createQueryValidator(paginationSchema),
+  parsePagination({ defaultLimit: 50, maxLimit: 100 }),
   messageController.getTopicMessages.bind(messageController)
 );
 
