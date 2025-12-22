@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Shield, Clock, TrendingUp, AlertCircle } from 'lucide-react';
-import { useDataFetch, usePolling } from '@shared/hooks';
+import { useDataFetch } from '../hooks/useDataFetch';
+import { usePolling } from '../hooks/usePolling';
 import { ErrorAlert, LoadingSpinner } from '@shared/components';
 import { api } from '../lib/api';
 import { useAdminAuth } from '../contexts/AdminAuthContext';
