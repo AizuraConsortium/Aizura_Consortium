@@ -1,5 +1,7 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
+import { createFilteredStore, createPaginatedStore } from '@shared/store';
+import type { FilteredStoreState, PaginatedStoreState } from '@shared/store';
 import { api } from '../lib/api';
 import type { User, Proposal, ProposalStatus } from '@shared/types';
 
@@ -28,12 +30,6 @@ interface ProposalState {
   proposals: Proposal[];
   isLoadingProposals: boolean;
   proposalError: string | null;
-  filters: ProposalFilter;
-  currentPage: number;
-  pageSize: number;
-  setFilters: (filters: ProposalFilter) => void;
-  setCurrentPage: (page: number) => void;
-  resetFilters: () => void;
   fetchProposals: (token?: string) => Promise<void>;
   createProposal: (title: string, summary: string, token?: string) => Promise<void>;
   voteOnProposal: (proposalId: string, vote: 'for' | 'against', token: string) => Promise<void>;
@@ -46,20 +42,31 @@ interface DraftState {
   updateDraft: (updates: Partial<ProposalDraft>) => void;
 }
 
-interface ClientStore extends AuthState, ProposalState, DraftState {}
+type ClientStore = AuthState &
+  ProposalState &
+  DraftState &
+  FilteredStoreState<ProposalFilter> &
+  PaginatedStoreState;
 
 export const useClientStore = create<ClientStore>()(
   persist(
-    (set, get) => ({
+    (set, get, store) => ({
+      ...createFilteredStore<ProposalFilter>({
+        defaultFilters: {},
+        resetPagination: true,
+      })(set, get, store),
+
+      ...createPaginatedStore({
+        initialPage: 1,
+        pageSize: 10,
+      })(set, get, store),
+
       user: null,
       isAuthenticated: false,
       isLoading: true,
       proposals: [],
       isLoadingProposals: false,
       proposalError: null,
-      filters: {},
-      currentPage: 1,
-      pageSize: 10,
       draft: null,
 
       setUser: (user) =>
@@ -84,20 +91,6 @@ export const useClientStore = create<ClientStore>()(
           isAuthenticated: false,
           isLoading: false,
           draft: null,
-        }),
-
-      setFilters: (filters) =>
-        set((state) => ({
-          filters: { ...state.filters, ...filters },
-          currentPage: 1,
-        })),
-
-      setCurrentPage: (page) => set({ currentPage: page }),
-
-      resetFilters: () =>
-        set({
-          filters: {},
-          currentPage: 1,
         }),
 
       setDraft: (draft) => set({ draft }),

@@ -1,5 +1,7 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
+import { createFilteredStore, createPaginatedStore } from '@shared/store';
+import type { FilteredStoreState, PaginatedStoreState } from '@shared/store';
 
 interface ErrorFilter {
   severity?: string;
@@ -9,13 +11,7 @@ interface ErrorFilter {
 
 interface ErrorMonitoringState {
   selectedErrors: string[];
-  filters: ErrorFilter;
-  currentPage: number;
-  pageSize: number;
   setSelectedErrors: (ids: string[]) => void;
-  setFilters: (filters: ErrorFilter) => void;
-  setCurrentPage: (page: number) => void;
-  resetFilters: () => void;
 }
 
 interface RateLimitState {
@@ -31,35 +27,32 @@ interface SystemHealthState {
   updateHealth: (status: 'healthy' | 'degraded' | 'unhealthy' | 'unknown') => void;
 }
 
-interface AdminStore extends ErrorMonitoringState, RateLimitState, SystemHealthState {}
+type AdminStore = ErrorMonitoringState &
+  RateLimitState &
+  SystemHealthState &
+  FilteredStoreState<ErrorFilter> &
+  PaginatedStoreState;
 
 export const useAdminStore = create<AdminStore>()(
   persist(
-    (set) => ({
+    (set, get, store) => ({
+      ...createFilteredStore<ErrorFilter>({
+        defaultFilters: {},
+        resetPagination: true,
+      })(set, get, store),
+
+      ...createPaginatedStore({
+        initialPage: 1,
+        pageSize: 20,
+      })(set, get, store),
+
       selectedErrors: [],
-      filters: {},
-      currentPage: 1,
-      pageSize: 20,
       selectedClient: undefined,
       timeRange: '24h',
       lastCheck: null,
       status: 'unknown',
 
       setSelectedErrors: (ids) => set({ selectedErrors: ids }),
-
-      setFilters: (filters) =>
-        set((state) => ({
-          filters: { ...state.filters, ...filters },
-          currentPage: 1,
-        })),
-
-      setCurrentPage: (page) => set({ currentPage: page }),
-
-      resetFilters: () =>
-        set({
-          filters: {},
-          currentPage: 1,
-        }),
 
       setSelectedClient: (client) => set({ selectedClient: client }),
 

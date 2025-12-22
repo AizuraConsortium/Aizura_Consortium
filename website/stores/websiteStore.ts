@@ -1,5 +1,7 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
+import { createFilteredStore, createPaginatedStore } from '@shared/store';
+import type { FilteredStoreState, PaginatedStoreState } from '@shared/store';
 import type { Topic, AgentId, Message } from '@shared/types';
 
 interface MessageFilter {
@@ -19,20 +21,13 @@ interface TopicState {
 interface MessageState {
   messages: Message[];
   selectedMessages: string[];
-  messageFilters: MessageFilter;
-  currentPage: number;
-  pageSize: number;
   totalMessages: number;
   hasMore: boolean;
   setMessages: (messages: Message[]) => void;
   addMessage: (message: Message) => void;
   prependMessages: (messages: Message[]) => void;
-  setTotalMessages: (total: number) => void;
   setHasMore: (hasMore: boolean) => void;
   setSelectedMessages: (ids: string[]) => void;
-  setMessageFilters: (filters: MessageFilter) => void;
-  setCurrentPage: (page: number) => void;
-  resetFilters: () => void;
   clearMessages: () => void;
 }
 
@@ -44,73 +39,88 @@ interface UIState {
   setDebugMode: (enabled: boolean) => void;
 }
 
-interface WebsiteStore extends TopicState, MessageState, UIState {}
+type WebsiteStoreFiltered = FilteredStoreState<MessageFilter> & {
+  setMessageFilters: (filters: MessageFilter) => void;
+  messageFilters: MessageFilter;
+};
+
+type WebsiteStore = TopicState &
+  MessageState &
+  UIState &
+  Omit<WebsiteStoreFiltered, 'filters' | 'setFilters'> &
+  PaginatedStoreState;
 
 export const useWebsiteStore = create<WebsiteStore>()(
   persist(
-    (set) => ({
-      currentTopic: null,
-      endedTopics: [],
-      messages: [],
-      selectedMessages: [],
-      messageFilters: {},
-      currentPage: 1,
-      pageSize: 20,
-      totalMessages: 0,
-      hasMore: false,
-      sidebarOpen: true,
-      debugMode: false,
+    (set, get, store) => {
+      const filteredStore = createFilteredStore<MessageFilter>({
+        defaultFilters: {},
+        resetPagination: true,
+      })(set, get, store);
 
-      setCurrentTopic: (topic) => set({ currentTopic: topic }),
+      return {
+        ...createPaginatedStore({
+          initialPage: 1,
+          pageSize: 20,
+        })(set, get, store),
 
-      setEndedTopics: (topics) => set({ endedTopics: topics }),
+        currentTopic: null,
+        endedTopics: [],
+        messages: [],
+        selectedMessages: [],
+        messageFilters: {},
+        totalMessages: 0,
+        hasMore: false,
+        sidebarOpen: true,
+        debugMode: false,
 
-      addEndedTopic: (topic) =>
-        set((state) => ({
-          endedTopics: [topic, ...state.endedTopics],
-        })),
+        setMessageFilters: (filters: MessageFilter) =>
+          set((state) => ({
+            messageFilters: { ...state.messageFilters, ...filters },
+            currentPage: 1,
+          })),
 
-      setMessages: (messages) => set({ messages }),
+        resetFilters: () =>
+          set({
+            messageFilters: {},
+            currentPage: 1,
+          }),
 
-      addMessage: (message) =>
-        set((state) => ({
-          messages: [...state.messages, message],
-          totalMessages: state.totalMessages + 1,
-        })),
+        setCurrentTopic: (topic) => set({ currentTopic: topic }),
 
-      prependMessages: (messages) =>
-        set((state) => ({
-          messages: [...messages, ...state.messages],
-        })),
+        setEndedTopics: (topics) => set({ endedTopics: topics }),
 
-      setTotalMessages: (total) => set({ totalMessages: total }),
+        addEndedTopic: (topic) =>
+          set((state) => ({
+            endedTopics: [topic, ...state.endedTopics],
+          })),
 
-      setHasMore: (hasMore) => set({ hasMore }),
+        setMessages: (messages) => set({ messages }),
 
-      clearMessages: () => set({ messages: [], totalMessages: 0, hasMore: false }),
+        addMessage: (message) =>
+          set((state) => ({
+            messages: [...state.messages, message],
+            totalMessages: state.totalMessages + 1,
+          })),
 
-      setSelectedMessages: (ids) => set({ selectedMessages: ids }),
+        prependMessages: (messages) =>
+          set((state) => ({
+            messages: [...messages, ...state.messages],
+          })),
 
-      setMessageFilters: (filters) =>
-        set((state) => ({
-          messageFilters: { ...state.messageFilters, ...filters },
-          currentPage: 1,
-        })),
+        setHasMore: (hasMore) => set({ hasMore }),
 
-      setCurrentPage: (page) => set({ currentPage: page }),
+        clearMessages: () => set({ messages: [], totalMessages: 0, hasMore: false }),
 
-      resetFilters: () =>
-        set({
-          messageFilters: {},
-          currentPage: 1,
-        }),
+        setSelectedMessages: (ids) => set({ selectedMessages: ids }),
 
-      setSidebarOpen: (open) => set({ sidebarOpen: open }),
+        setSidebarOpen: (open) => set({ sidebarOpen: open }),
 
-      toggleSidebar: () => set((state) => ({ sidebarOpen: !state.sidebarOpen })),
+        toggleSidebar: () => set((state) => ({ sidebarOpen: !state.sidebarOpen })),
 
-      setDebugMode: (enabled) => set({ debugMode: enabled }),
-    }),
+        setDebugMode: (enabled) => set({ debugMode: enabled }),
+      };
+    },
     {
       name: 'website-storage',
       partialize: (state) => ({
