@@ -390,6 +390,39 @@ class ProposalsRepository extends BaseRepository {
       return data;
     }, context);
   }
+
+  /**
+   * Get proposals with aggregated vote data using performance view
+   * This eliminates N+1 queries by pre-joining vote data
+   */
+  async getProposalsWithVotes(status?: ProposalStatus): Promise<unknown[]> {
+    const context: OperationContext = {
+      operation: 'getProposalsWithVotes',
+      table: 'v_proposals_with_votes',
+      metadata: { status },
+    };
+
+    return this.execute(async () => {
+      if (status) {
+        if (!isValidProposalStatus(status)) {
+          this.validateEnum(status, 'status', ['queued', 'in_debate', 'adopted', 'rejected']);
+        }
+      }
+
+      let query = this.client
+        .from('v_proposals_with_votes')
+        .select('*');
+
+      if (status) {
+        query = query.eq('status', status);
+      }
+
+      const { data, error } = await query.order('created_at', { ascending: false });
+
+      if (error) throw error;
+      return data || [];
+    }, context);
+  }
 }
 
 const proposalsRepository = new ProposalsRepository();
@@ -406,4 +439,5 @@ export const {
   updateProposalStatus,
   addToProposalQueue,
   getNextQueuedProposal,
+  getProposalsWithVotes,
 } = proposalsRepository;

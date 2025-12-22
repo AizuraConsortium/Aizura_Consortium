@@ -19,6 +19,8 @@ import {
   QueryTimeoutError,
   type ErrorContext,
 } from './errors/index.js';
+import { queryMonitor } from '../monitoring/QueryMonitor.js';
+import { repositoryCache } from '../cache/RepositoryCache.js';
 import type { SupabaseClient } from '@supabase/supabase-js';
 
 export interface OperationContext {
@@ -75,9 +77,28 @@ export abstract class BaseRepository {
       this.recordMetrics(context.operation, durationMs, true);
       this.checkSlowQuery(context.operation, durationMs);
 
+      queryMonitor.recordQuery({
+        operation: context.operation,
+        table: context.table || this.tableName,
+        durationMs,
+        timestamp: new Date(),
+        success: true,
+        correlationId,
+      });
+
       return result;
     } catch (error) {
       const durationMs = Date.now() - startTime;
+
+      queryMonitor.recordQuery({
+        operation: context.operation,
+        table: context.table || this.tableName,
+        durationMs,
+        timestamp: new Date(),
+        success: false,
+        correlationId,
+        error: error instanceof Error ? error.message : String(error),
+      });
 
       this.logOperation('error', context, correlationId, durationMs, error);
       this.recordMetrics(context.operation, durationMs, false);
@@ -390,5 +411,38 @@ export abstract class BaseRepository {
         value
       );
     }
+  }
+
+  /**
+   * Get from cache or execute function
+   */
+  protected async getFromCacheOrExecute<T>(
+    cacheKey: string,
+    operation: () => Promise<T>,
+    namespace: string = 'default',
+    ttl?: number
+  ): Promise<T> {
+    const cached = repositoryCache.get<T>(cacheKey, namespace);
+    if (cached !== null) {
+      return cached;
+    }
+
+    const result = await operation();
+    repositoryCache.set(cacheKey, result, namespace, ttl);
+    return result;
+  }
+
+  /**
+   * Invalidate cache
+   */
+  protected invalidateCache(key: string, namespace: string = 'default'): void {
+    repositoryCache.delete(key, namespace);
+  }
+
+  /**
+   * Invalidate cache namespace
+   */
+  protected invalidateCacheNamespace(namespace: string): void {
+    repositoryCache.invalidateNamespace(namespace);
   }
 }
