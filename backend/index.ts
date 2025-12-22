@@ -19,6 +19,8 @@ import healthRoutes, { healthController } from './shared/routes/healthRoutes.js'
 import adminErrorRoutes from './admin/routes/errorRoutes.js';
 import adminSystemRoutes from './admin/routes/systemRoutes.js';
 import adminUserRoutes from './admin/routes/userRoutes.js';
+import adminOrchestratorRoutes, { orchestratorController } from './admin/routes/orchestratorRoutes.js';
+import adminAuditRoutes from './admin/routes/auditRoutes.js';
 import websiteTopicRoutes from './website/routes/topicRoutes.js';
 import websiteMessageRoutes from './website/routes/messageRoutes.js';
 import websiteProposalRoutes from './website/routes/proposalRoutes.js';
@@ -158,6 +160,8 @@ app.use('/api/errors', sharedErrorRoutes);
 app.use('/api/admin/errors', adminErrorRoutes);
 app.use('/api/admin/system', adminSystemRoutes);
 app.use('/api/admin/users', adminUserRoutes);
+app.use('/api/admin/orchestrator', adminOrchestratorRoutes);
+app.use('/api/admin/audit', adminAuditRoutes);
 
 /**
  * Website routes (public)
@@ -238,6 +242,7 @@ app.listen(PORT, async () => {
 
     webhookController.setOrchestrator(orchestrator);
     healthController.setOrchestrator(orchestrator);
+    orchestratorController.setOrchestrator(orchestrator);
 
     console.log('✅ Orchestrator initialized and controllers configured\n');
   } catch (error) {

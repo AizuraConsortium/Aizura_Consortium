@@ -18,6 +18,7 @@ export type ActionType =
   | 'orchestrator_pause'
   | 'orchestrator_resume'
   | 'orchestrator_status'
+  | 'orchestrator_force_unlock'
   | 'system_health_check'
   | 'system_config_update';
 
@@ -182,4 +183,37 @@ export async function getAdminActionStats(hours: number = 24): Promise<{
   });
 
   return stats;
+}
+
+export async function getAdminActionsWithFilters(filters: {
+  admin_user_id?: string;
+  action_type?: string;
+  resource_type?: string;
+  status?: string;
+  limit?: number;
+  offset?: number;
+}): Promise<PaginatedAdminActions> {
+  const mappedFilters: AdminActionFilters = {
+    adminUserId: filters.admin_user_id,
+    actionType: filters.action_type as ActionType,
+    resourceType: filters.resource_type as ResourceType,
+    success: filters.status === 'success' ? true : filters.status === 'failed' ? false : undefined,
+    limit: filters.limit,
+    offset: filters.offset,
+  };
+
+  return getAdminActions(mappedFilters);
+}
+
+export async function getRecentAdminActions(hours: number = 24): Promise<AdminAction[]> {
+  const since = new Date(Date.now() - hours * 60 * 60 * 1000).toISOString();
+
+  const { data, error } = await query('admin_actions')
+    .select('*')
+    .gte('created_at', since)
+    .order('created_at', { ascending: false });
+
+  if (error) throw error;
+
+  return data || [];
 }

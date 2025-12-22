@@ -204,6 +204,36 @@ export const RATE_LIMIT_CONFIG: Record<string, RateLimitConfig> = {
     maxRequests: 30,
     windowMinutes: 1,
     description: 'Admin endpoint for deleting users (destructive)'
+  },
+  'GET:/api/admin/orchestrator/status': {
+    maxRequests: 120,
+    windowMinutes: 1,
+    description: 'Admin endpoint for orchestrator status'
+  },
+  'POST:/api/admin/orchestrator/stop': {
+    maxRequests: 10,
+    windowMinutes: 1,
+    description: 'Admin endpoint for stopping orchestrator (destructive)'
+  },
+  'POST:/api/admin/orchestrator/start': {
+    maxRequests: 10,
+    windowMinutes: 1,
+    description: 'Admin endpoint for starting orchestrator (destructive)'
+  },
+  'POST:/api/admin/orchestrator/force-unlock': {
+    maxRequests: 5,
+    windowMinutes: 1,
+    description: 'Admin endpoint for force releasing orchestrator lock (DANGEROUS)'
+  },
+  'GET:/api/admin/audit': {
+    maxRequests: 120,
+    windowMinutes: 1,
+    description: 'Admin endpoint for viewing audit trail'
+  },
+  'GET:/api/admin/audit/recent': {
+    maxRequests: 120,
+    windowMinutes: 1,
+    description: 'Admin endpoint for recent audit actions'
   }
 };
 

@@ -679,6 +679,64 @@ export class Orchestrator {
     return await this.lockService.getLockStatus();
   }
 
+  /**
+   * Get comprehensive orchestrator status for admin dashboard
+   */
+  getStatus(): {
+    isRunning: boolean;
+    isLeader: boolean;
+    currentState: {
+      tickInterval: number;
+      isProcessingTick: boolean;
+      tickCount: number;
+      currentTopic: {
+        id: string;
+        state: string;
+        started_at: string;
+      } | null;
+      pendingMessages: number;
+      refusalNotices: number;
+    };
+  } {
+    return {
+      isRunning: this.tickTimer !== null,
+      isLeader: this.isLeader,
+      currentState: {
+        tickInterval: this.currentTickInterval,
+        isProcessingTick: this.isProcessingTick,
+        tickCount: this.tickCount,
+        currentTopic: this.currentTopic ? {
+          id: this.currentTopic.id,
+          state: this.currentTopic.state,
+          started_at: this.currentTopic.started_at,
+        } : null,
+        pendingMessages: this.pendingMessages.size,
+        refusalNotices: this.refusalNotices.size,
+      },
+    };
+  }
+
+  /**
+   * Force release orchestrator lock (ADMIN ONLY - DANGEROUS)
+   * Use only when orchestrator is stuck or in emergency
+   */
+  async forceReleaseLock(): Promise<{ success: boolean; error?: string }> {
+    try {
+      console.warn('⚠️  FORCE RELEASING ORCHESTRATOR LOCK - This is a dangerous operation!');
+
+      await this.lockService.forceReleaseLock();
+
+      console.log('✅ Orchestrator lock forcefully released');
+      return { success: true };
+    } catch (error) {
+      console.error('❌ Failed to force release lock:', error);
+      return {
+        success: false,
+        error: error instanceof Error ? error.message : 'Unknown error',
+      };
+    }
+  }
+
   async stop(): Promise<void> {
     console.log('🛑 Stopping orchestrator...');
 

@@ -107,6 +107,27 @@ export class OrchestratorLockService extends EventEmitter {
     }
   }
 
+  /**
+   * Force release any existing lock (ADMIN ONLY - DANGEROUS)
+   */
+  async forceReleaseLock(): Promise<void> {
+    const lockId = 'orchestrator_primary';
+
+    try {
+      const { error } = await this.supabase.getClient()
+        .from('orchestrator_locks')
+        .delete()
+        .eq('lock_id', lockId);
+
+      if (error) throw error;
+
+      console.log('🔓 Lock forcefully released');
+    } catch (error) {
+      console.error('Error force releasing lock:', error);
+      throw error;
+    }
+  }
+
   async getLockStatus(): Promise<{
     isLocked: boolean;
     instanceId: string | null;

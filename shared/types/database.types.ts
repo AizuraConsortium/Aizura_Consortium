@@ -579,7 +579,7 @@ export interface Database {
         Row: {
           id: string
           admin_user_id: string
-          action_type: 'error_delete' | 'error_bulk_cleanup' | 'rate_limit_clear' | 'rate_limit_view' | 'user_role_update' | 'user_create' | 'user_view' | 'user_delete' | 'orchestrator_start' | 'orchestrator_stop' | 'orchestrator_pause' | 'orchestrator_resume' | 'orchestrator_status' | 'system_health_check' | 'system_config_update'
+          action_type: 'error_delete' | 'error_bulk_cleanup' | 'rate_limit_clear' | 'rate_limit_view' | 'user_role_update' | 'user_create' | 'user_view' | 'user_delete' | 'orchestrator_start' | 'orchestrator_stop' | 'orchestrator_pause' | 'orchestrator_resume' | 'orchestrator_status' | 'orchestrator_force_unlock' | 'system_health_check' | 'system_config_update'
           resource_type: 'error_log' | 'rate_limit' | 'user' | 'orchestrator' | 'system'
           resource_id: string | null
           action_details: Json
@@ -594,7 +594,7 @@ export interface Database {
         Insert: {
           id?: string
           admin_user_id: string
-          action_type: 'error_delete' | 'error_bulk_cleanup' | 'rate_limit_clear' | 'rate_limit_view' | 'user_role_update' | 'user_create' | 'user_view' | 'user_delete' | 'orchestrator_start' | 'orchestrator_stop' | 'orchestrator_pause' | 'orchestrator_resume' | 'orchestrator_status' | 'system_health_check' | 'system_config_update'
+          action_type: 'error_delete' | 'error_bulk_cleanup' | 'rate_limit_clear' | 'rate_limit_view' | 'user_role_update' | 'user_create' | 'user_view' | 'user_delete' | 'orchestrator_start' | 'orchestrator_stop' | 'orchestrator_pause' | 'orchestrator_resume' | 'orchestrator_status' | 'orchestrator_force_unlock' | 'system_health_check' | 'system_config_update'
           resource_type: 'error_log' | 'rate_limit' | 'user' | 'orchestrator' | 'system'
           resource_id?: string | null
           action_details?: Json
