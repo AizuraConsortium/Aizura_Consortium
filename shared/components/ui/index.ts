@@ -11,3 +11,7 @@ export { ModalFooter } from './ModalFooter';
 export type { ModalProps, ModalBodyProps } from './Modal';
 export type { ModalHeaderProps } from './ModalHeader';
 export type { ModalFooterProps } from './ModalFooter';
+export { FilterPanel } from './FilterPanel';
+export type { FilterPanelProps, FilterFieldConfig, FilterFieldOption, FilterFieldType } from './FilterPanel';
+export { Pagination, PaginationControls } from './Pagination';
+export type { PaginationProps, PaginationControlsProps } from './Pagination';

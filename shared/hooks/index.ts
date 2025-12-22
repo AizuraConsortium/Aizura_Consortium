@@ -11,8 +11,12 @@ export { useProposals } from './useProposals';
 export { useProposalForm } from './useProposalForm';
 export { useModal } from './useModal';
 export { useKeyboardShortcut } from './useKeyboardShortcut';
+export { useFilters } from './useFilters';
+export { usePagination } from './usePagination';
 
 export type { UseProposalsConfig, UseProposalsReturn, ProposalFilters } from './useProposals';
 export type { UseProposalFormConfig, UseProposalFormReturn, ProposalFormData, ProposalFormErrors } from './useProposalForm';
 export type { UseModalReturn } from './useModal';
 export type { KeyboardShortcutOptions, KeyCombo } from './useKeyboardShortcut';
+export type { UseFiltersConfig, UseFiltersReturn } from './useFilters';
+export type { UsePaginationConfig, UsePaginationReturn, PaginationState, OffsetPaginationState, CursorPaginationState, PaginationType } from './usePagination';

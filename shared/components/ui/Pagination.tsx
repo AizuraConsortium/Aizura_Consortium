@@ -1,19 +1,29 @@
 /**
  * Pagination Component
  *
- * Reusable pagination component with customization options.
- * Supports first/last page buttons, page numbers, different sizes, and styling variants.
+ * Enhanced pagination component with:
+ * - First/last page buttons
+ * - Page numbers display
+ * - Jump to page input
+ * - Page size selector
+ * - Different sizes and styling variants
  */
 
+import { useState } from 'react';
 import { ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight } from 'lucide-react';
+import { cn } from '@shared/styles';
 
 export interface PaginationProps {
   offset: number;
   limit: number;
   total: number;
   onPageChange: (offset: number) => void;
+  onLimitChange?: (limit: number) => void;
   showFirstLast?: boolean;
   showPageNumbers?: boolean;
+  showJumpToPage?: boolean;
+  showPageSizeSelector?: boolean;
+  pageSizeOptions?: number[];
   className?: string;
   size?: 'sm' | 'md' | 'lg';
   variant?: 'default' | 'minimal';
@@ -24,12 +34,18 @@ export function Pagination({
   limit,
   total,
   onPageChange,
+  onLimitChange,
   showFirstLast = false,
   showPageNumbers = true,
+  showJumpToPage = false,
+  showPageSizeSelector = false,
+  pageSizeOptions = [10, 20, 50, 100],
   className = '',
   size = 'md',
   variant = 'default'
 }: PaginationProps) {
+  const [jumpToPageValue, setJumpToPageValue] = useState('');
+
   const currentPage = Math.floor(offset / limit) + 1;
   const totalPages = Math.ceil(total / limit);
   const start = offset + 1;
@@ -40,9 +56,31 @@ export function Pagination({
   const handleNext = () => onPageChange(offset + limit);
   const handleLast = () => onPageChange((totalPages - 1) * limit);
 
+  const handleJumpToPage = (page: number) => {
+    if (page >= 1 && page <= totalPages) {
+      onPageChange((page - 1) * limit);
+      setJumpToPageValue('');
+    }
+  };
+
+  const handleJumpToPageSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    const page = parseInt(jumpToPageValue, 10);
+    if (!isNaN(page)) {
+      handleJumpToPage(page);
+    }
+  };
+
+  const handleLimitChange = (newLimit: number) => {
+    const currentPage = Math.floor(offset / limit) + 1;
+    const newOffset = (currentPage - 1) * newLimit;
+    onLimitChange?.(newLimit);
+    onPageChange(Math.min(newOffset, Math.max(0, total - 1)));
+  };
+
   const sizeClasses = {
     sm: 'text-xs px-2 py-1',
-    md: 'text-sm px-3 py-1',
+    md: 'text-sm px-3 py-1.5',
     lg: 'text-base px-4 py-2'
   };
 
@@ -53,19 +91,67 @@ export function Pagination({
     minimal: 'border-transparent hover:border-gray-300'
   };
 
-  const buttonClass = `${buttonBaseClass} ${variantClasses[variant]} ${sizeClasses[size]}`;
+  const buttonClass = cn(buttonBaseClass, variantClasses[variant], sizeClasses[size]);
 
-  const containerClass = variant === 'default'
-    ? `flex items-center justify-between px-6 py-4 border-t border-gray-200 ${className}`
-    : `flex items-center justify-between ${className}`;
+  const containerClass = cn(
+    variant === 'default' && 'border-t border-gray-200',
+    'flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 px-6 py-4',
+    className
+  );
 
   return (
     <div className={containerClass}>
-      <div className={`text-gray-600 ${sizeClasses[size]}`}>
-        {total > 0 ? (
-          <>Showing {start}-{end} of {total}</>
-        ) : (
-          <>No items</>
+      <div className="flex flex-wrap items-center gap-4">
+        <div className={cn('text-gray-600', sizeClasses[size])}>
+          {total > 0 ? (
+            <>Showing {start}-{end} of {total}</>
+          ) : (
+            <>No items</>
+          )}
+        </div>
+
+        {showPageSizeSelector && onLimitChange && (
+          <div className="flex items-center gap-2">
+            <label htmlFor="pageSize" className={cn('text-gray-600', sizeClasses[size])}>
+              Per page:
+            </label>
+            <select
+              id="pageSize"
+              value={limit}
+              onChange={(e) => handleLimitChange(Number(e.target.value))}
+              className={cn(
+                'border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent',
+                sizeClasses[size]
+              )}
+            >
+              {pageSizeOptions.map((option) => (
+                <option key={option} value={option}>
+                  {option}
+                </option>
+              ))}
+            </select>
+          </div>
+        )}
+
+        {showJumpToPage && (
+          <form onSubmit={handleJumpToPageSubmit} className="flex items-center gap-2">
+            <label htmlFor="jumpToPage" className={cn('text-gray-600', sizeClasses[size])}>
+              Go to:
+            </label>
+            <input
+              id="jumpToPage"
+              type="number"
+              min={1}
+              max={totalPages}
+              value={jumpToPageValue}
+              onChange={(e) => setJumpToPageValue(e.target.value)}
+              placeholder={String(currentPage)}
+              className={cn(
+                'w-20 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent',
+                sizeClasses[size]
+              )}
+            />
+          </form>
         )}
       </div>
 
@@ -91,7 +177,7 @@ export function Pagination({
         </button>
 
         {showPageNumbers && (
-          <span className={`text-gray-600 ${sizeClasses[size]}`}>
+          <span className={cn('text-gray-600 whitespace-nowrap', sizeClasses[size])}>
             Page {currentPage} of {totalPages || 1}
           </span>
         )}
@@ -131,7 +217,11 @@ export interface PaginationControlsProps {
     total: number;
   };
   onPageChange: (offset: number) => void;
+  onLimitChange?: (limit: number) => void;
   showFirstLast?: boolean;
+  showJumpToPage?: boolean;
+  showPageSizeSelector?: boolean;
+  pageSizeOptions?: number[];
   size?: 'sm' | 'md' | 'lg';
   variant?: 'default' | 'minimal';
 }
@@ -139,7 +229,11 @@ export interface PaginationControlsProps {
 export function PaginationControls({
   pagination,
   onPageChange,
+  onLimitChange,
   showFirstLast,
+  showJumpToPage,
+  showPageSizeSelector,
+  pageSizeOptions,
   size,
   variant
 }: PaginationControlsProps) {
@@ -149,7 +243,11 @@ export function PaginationControls({
       limit={pagination.limit}
       total={pagination.total}
       onPageChange={onPageChange}
+      onLimitChange={onLimitChange}
       showFirstLast={showFirstLast}
+      showJumpToPage={showJumpToPage}
+      showPageSizeSelector={showPageSizeSelector}
+      pageSizeOptions={pageSizeOptions}
       size={size}
       variant={variant}
     />
