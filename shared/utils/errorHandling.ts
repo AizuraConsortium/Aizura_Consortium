@@ -148,8 +148,86 @@ export function getErrorMessage(error: unknown): string {
   if (error instanceof Error) {
     return error.message;
   }
+  if (isAppError(error)) {
+    return error.message;
+  }
   if (typeof error === 'string') {
     return error;
   }
   return 'An unexpected error occurred';
+}
+
+/**
+ * Type-safe error object
+ */
+export interface AppError {
+  message: string;
+  code: string;
+  status: number;
+  details?: Record<string, unknown>;
+  stack?: string;
+}
+
+/**
+ * Error type guards
+ */
+export function isError(error: unknown): error is Error {
+  return error instanceof Error;
+}
+
+export function isAppError(error: unknown): error is AppError {
+  return (
+    typeof error === 'object' &&
+    error !== null &&
+    'message' in error &&
+    'code' in error &&
+    'status' in error
+  );
+}
+
+/**
+ * Safe error code extraction
+ */
+export function getErrorCode(error: unknown): string {
+  if (isAppError(error)) return error.code;
+  if (isError(error) && 'code' in error) return String(error.code);
+  return 'UNKNOWN_ERROR';
+}
+
+/**
+ * Type-safe try-catch wrapper
+ */
+export async function tryCatch<T>(
+  fn: () => Promise<T>,
+  errorHandler?: (error: unknown) => T
+): Promise<T> {
+  try {
+    return await fn();
+  } catch (error) {
+    if (errorHandler) {
+      return errorHandler(error);
+    }
+    throw error;
+  }
+}
+
+/**
+ * Result type for operations that can fail
+ */
+export type Result<T, E = AppError> =
+  | { success: true; data: T }
+  | { success: false; error: E };
+
+/**
+ * Create success result
+ */
+export function success<T>(data: T): Result<T, never> {
+  return { success: true, data };
+}
+
+/**
+ * Create error result
+ */
+export function failure<E = AppError>(error: E): Result<never, E> {
+  return { success: false, error };
 }

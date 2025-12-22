@@ -12,24 +12,28 @@ export class APIError extends Error {
     message: string,
     public status: number,
     public statusText: string,
-    public data?: any
+    public data?: unknown
   ) {
     super(message);
     this.name = 'APIError';
   }
 }
 
-async function handleResponse(response: Response) {
+async function handleResponse(response: Response): Promise<unknown> {
   if (!response.ok) {
-    let errorData;
+    let errorData: unknown;
     try {
       errorData = await response.json();
     } catch {
       errorData = { error: response.statusText };
     }
 
+    const errorMessage = typeof errorData === 'object' && errorData !== null && 'error' in errorData
+      ? String(errorData.error)
+      : `HTTP ${response.status}: ${response.statusText}`;
+
     throw new APIError(
-      errorData.error || `HTTP ${response.status}: ${response.statusText}`,
+      errorMessage,
       response.status,
       response.statusText,
       errorData
@@ -39,15 +43,26 @@ async function handleResponse(response: Response) {
   return response.json();
 }
 
-async function fetchWithRetry(url: string, options?: RequestInit, retries = 2): Promise<any> {
+function validateResponse<T>(
+  data: unknown,
+  validator?: (val: unknown) => val is T
+): T {
+  if (validator && !validator(data)) {
+    console.error('API response validation failed:', data);
+    throw new Error('API response does not match expected type');
+  }
+  return data as T;
+}
+
+async function fetchWithRetry(url: string, options?: RequestInit, retries = 2): Promise<unknown> {
   let lastError: Error | null = null;
 
   for (let i = 0; i <= retries; i++) {
     try {
       const response = await fetch(url, options);
       return await handleResponse(response);
-    } catch (error: any) {
-      lastError = error;
+    } catch (error) {
+      lastError = error instanceof Error ? error : new Error(String(error));
 
       if (error instanceof APIError && error.status >= 400 && error.status < 500) {
         throw error;
@@ -82,25 +97,28 @@ export const apiClient = {
     return API_URL;
   },
 
-  async get<T = any>(endpoint: string, token?: string): Promise<T> {
-    return fetchWithRetry(`${API_URL}${endpoint}`, {
+  async get<T>(endpoint: string, token?: string, validator?: (val: unknown) => val is T): Promise<T> {
+    const data = await fetchWithRetry(`${API_URL}${endpoint}`, {
       method: 'GET',
       headers: createHeaders(token)
     });
+    return validateResponse(data, validator);
   },
 
-  async post<T = any>(endpoint: string, body?: any, token?: string): Promise<T> {
-    return fetchWithRetry(`${API_URL}${endpoint}`, {
+  async post<T>(endpoint: string, body?: unknown, token?: string, validator?: (val: unknown) => val is T): Promise<T> {
+    const data = await fetchWithRetry(`${API_URL}${endpoint}`, {
       method: 'POST',
       headers: createHeaders(token),
       body: body ? JSON.stringify(body) : undefined
     });
+    return validateResponse(data, validator);
   },
 
-  async delete<T = any>(endpoint: string, token?: string): Promise<T> {
-    return fetchWithRetry(`${API_URL}${endpoint}`, {
+  async delete<T>(endpoint: string, token?: string, validator?: (val: unknown) => val is T): Promise<T> {
+    const data = await fetchWithRetry(`${API_URL}${endpoint}`, {
       method: 'DELETE',
       headers: createHeaders(token)
     });
+    return validateResponse(data, validator);
   }
 };
