@@ -575,6 +575,53 @@ export interface Database {
           completed_at?: string | null
         }
       }
+      admin_actions: {
+        Row: {
+          id: string
+          admin_user_id: string
+          action_type: 'error_delete' | 'error_bulk_cleanup' | 'rate_limit_clear' | 'rate_limit_view' | 'user_role_update' | 'user_create' | 'user_view' | 'user_delete' | 'orchestrator_start' | 'orchestrator_stop' | 'orchestrator_pause' | 'orchestrator_resume' | 'orchestrator_status' | 'system_health_check' | 'system_config_update'
+          resource_type: 'error_log' | 'rate_limit' | 'user' | 'orchestrator' | 'system'
+          resource_id: string | null
+          action_details: Json
+          ip_address: string | null
+          user_agent: string | null
+          request_path: string | null
+          request_method: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE' | null
+          success: boolean
+          error_message: string | null
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          admin_user_id: string
+          action_type: 'error_delete' | 'error_bulk_cleanup' | 'rate_limit_clear' | 'rate_limit_view' | 'user_role_update' | 'user_create' | 'user_view' | 'user_delete' | 'orchestrator_start' | 'orchestrator_stop' | 'orchestrator_pause' | 'orchestrator_resume' | 'orchestrator_status' | 'system_health_check' | 'system_config_update'
+          resource_type: 'error_log' | 'rate_limit' | 'user' | 'orchestrator' | 'system'
+          resource_id?: string | null
+          action_details?: Json
+          ip_address?: string | null
+          user_agent?: string | null
+          request_path?: string | null
+          request_method?: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE' | null
+          success?: boolean
+          error_message?: string | null
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          admin_user_id?: string
+          action_type?: 'error_delete' | 'error_bulk_cleanup' | 'rate_limit_clear' | 'rate_limit_view' | 'user_role_update' | 'user_create' | 'user_view' | 'user_delete' | 'orchestrator_start' | 'orchestrator_stop' | 'orchestrator_pause' | 'orchestrator_resume' | 'orchestrator_status' | 'system_health_check' | 'system_config_update'
+          resource_type?: 'error_log' | 'rate_limit' | 'user' | 'orchestrator' | 'system'
+          resource_id?: string | null
+          action_details?: Json
+          ip_address?: string | null
+          user_agent?: string | null
+          request_path?: string | null
+          request_method?: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE' | null
+          success?: boolean
+          error_message?: string | null
+          created_at?: string
+        }
+      }
     }
     Views: {
       [_ in never]: never

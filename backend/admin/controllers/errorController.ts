@@ -37,12 +37,35 @@ export class ErrorController {
   }
 
   async deleteError(req: Request, res: Response) {
+    const { id } = req.params;
+
     try {
-      const { id } = req.params;
       await this.errorService.deleteError(id);
+
+      if (req.logAdminAction) {
+        await req.logAdminAction({
+          actionType: 'error_delete',
+          resourceType: 'error_log',
+          resourceId: id,
+          actionDetails: { operation: 'single_delete' },
+          success: true
+        });
+      }
+
       res.json({ success: true });
     } catch (error) {
       console.error('Error deleting error:', error);
+
+      if (req.logAdminAction) {
+        await req.logAdminAction({
+          actionType: 'error_delete',
+          resourceType: 'error_log',
+          resourceId: id,
+          success: false,
+          errorMessage: error instanceof Error ? error.message : 'Unknown error'
+        });
+      }
+
       res.status(500).json({ error: 'Failed to delete error' });
     }
   }
@@ -51,9 +74,33 @@ export class ErrorController {
     try {
       const olderThan = req.body.olderThan || new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString();
       const deleted = await this.errorService.cleanupOldErrors(olderThan);
+
+      if (req.logAdminAction) {
+        await req.logAdminAction({
+          actionType: 'error_bulk_cleanup',
+          resourceType: 'error_log',
+          actionDetails: {
+            operation: 'bulk_delete',
+            deletedCount: deleted,
+            olderThan
+          },
+          success: true
+        });
+      }
+
       res.json({ deleted });
     } catch (error) {
       console.error('Error cleaning up errors:', error);
+
+      if (req.logAdminAction) {
+        await req.logAdminAction({
+          actionType: 'error_bulk_cleanup',
+          resourceType: 'error_log',
+          success: false,
+          errorMessage: error instanceof Error ? error.message : 'Unknown error'
+        });
+      }
+
       res.status(500).json({ error: 'Failed to cleanup errors' });
     }
   }

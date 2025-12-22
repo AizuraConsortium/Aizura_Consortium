@@ -4,6 +4,7 @@ import { requireAuth } from '../../shared/middleware/auth.js';
 import { requireRole } from '../../shared/middleware/rbac.js';
 import { createRateLimit } from '../../shared/middleware/validation.js';
 import { requireWhitelistedIP } from '../middleware/ipWhitelist.js';
+import { adminActionLogger } from '../../shared/middleware/adminActionLogger.js';
 
 const router = Router();
 const errorController = new ErrorController();
@@ -30,6 +31,7 @@ router.delete(
   requireAuth,
   requireRole('admin'),
   requireWhitelistedIP,
+  adminActionLogger,
   errorController.deleteError.bind(errorController)
 );
 
@@ -39,6 +41,7 @@ router.post(
   requireAuth,
   requireRole('admin'),
   requireWhitelistedIP,
+  adminActionLogger,
   errorController.cleanupOldErrors.bind(errorController)
 );
 
