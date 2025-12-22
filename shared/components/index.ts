@@ -1,3 +1,7 @@
+export * from './ui';
+export * from './governance';
+export * from './skeletons';
+
 export { ErrorBoundary } from './ErrorBoundary';
 export { ErrorAlert } from './ErrorAlert';
 export { LoadingSpinner } from './LoadingSpinner';
@@ -7,6 +11,3 @@ export { ToastComponent } from './Toast';
 export type { Toast, ToastType } from './Toast';
 export { ProtectedRoute } from './ProtectedRoute';
 export { SkipNavigation } from './SkipNavigation';
-export * from './ui';
-export * from './skeletons';
-export * from './governance';

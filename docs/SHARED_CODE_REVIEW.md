@@ -426,3 +426,112 @@ If you're unsure about a shared code review:
 5. Tag a senior developer for a second opinion
 
 Remember: It's better to be strict about shared code quality than to accumulate technical debt!
+
+## Recently Added Shared Utilities
+
+### Validation System
+
+**Location:** `/shared/utils/validation/`
+
+The validation system provides layered validation:
+- Base validators for primitives (email, URL, UUID, etc.)
+- Field validators with structured error messages
+- Business validators for domain logic (proposals, users, votes)
+- Helper functions for composition and async validation
+
+**Documentation:** See [VALIDATION_GUIDE.md](./VALIDATION_GUIDE.md)
+
+**Usage:**
+```typescript
+import { validateProposal, PROPOSAL_VALIDATION_RULES } from '@shared/utils/validation';
+
+const validation = validateProposal(title, summary);
+if (!validation.isValid) {
+  console.error(validation.errors);
+}
+```
+
+### Error Handling
+
+**Location:** `/shared/utils/errors/`
+
+Custom error classes and handling utilities:
+- `ApplicationError` base class with status codes
+- Specific error types (`ValidationError`, `NotFoundError`, `AuthenticationError`, etc.)
+- Error formatting and handling functions
+- Safe execution wrappers with retry logic
+
+**Usage:**
+```typescript
+import { ValidationError, formatError } from '@shared/utils/errors';
+
+throw new ValidationError('Invalid input', { field: 'email' });
+
+// Or format any error
+const response = formatError(error);
+```
+
+### Pagination Component
+
+**Location:** `/shared/components/ui/Pagination.tsx`
+
+Reusable pagination component with:
+- Customizable styling (size and style variants)
+- Optional first/last buttons
+- Optional page numbers display
+- Full accessibility support (ARIA labels, keyboard navigation)
+
+**Usage:**
+```typescript
+import { Pagination } from '@shared/components/ui/Pagination';
+
+<Pagination
+  offset={0}
+  limit={20}
+  total={100}
+  onPageChange={(newOffset) => setOffset(newOffset)}
+  size="md"
+  variant="default"
+/>
+```
+
+### API Logger
+
+**Location:** `/shared/lib/apiLogger.ts`
+
+Enhanced API call logging and monitoring:
+- Configurable logging (can be disabled in production)
+- Request/response body logging
+- Performance metrics tracking
+- Error tracking and filtering
+- Statistics and analytics
+- Import/export functionality
+
+**Usage:**
+```typescript
+import { apiLogger } from '@shared/lib';
+
+apiLogger.logRequest('GET', '/api/users');
+const stats = apiLogger.getStats();
+const errorLogs = apiLogger.getErrorLogs();
+```
+
+### Test Infrastructure
+
+**Location:** `/tests/`
+
+Centralized test utilities and factories:
+- Global test configuration and setup
+- Supabase test client and utilities
+- Test data factories for all entities
+- Consistent test patterns and helpers
+
+**Documentation:** See [TESTING_GUIDE.md](./TESTING_GUIDE.md)
+
+**Usage:**
+```typescript
+import { ProposalFactory, UserFactory } from '@tests/factories';
+
+const proposal = ProposalFactory.build({ status: 'adopted' });
+const users = UserFactory.buildMany(5);
+```

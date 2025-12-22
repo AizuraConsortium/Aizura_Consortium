@@ -611,38 +611,72 @@ QWEN_API_KEY=...
 
 ## Testing
 
-The project includes comprehensive testing for both unit and integration tests.
+The project uses Vitest for comprehensive testing with centralized test utilities and factories.
 
-### Quick Start
+### Running Tests
 
 ```bash
 # Run all tests
 npm test
 
+# Run tests in watch mode
+npm run test:watch
+
 # Run with coverage
 npm run test:coverage
 
-# Run in watch mode
-npm run test:watch
+# Run specific test suites
+npm run test:unit
+npm run test:integration
+
+# Run with UI
+npm run test:ui
+
+# Validate everything (typecheck + lint + tests)
+npm run validate
 ```
 
 ### Test Structure
 
 ```
 tests/
-├── unit/               # Unit tests for services, orchestrator, utils
-├── integration/        # API endpoint and webhook tests
-├── fixtures/           # Test data and mocks
-└── setup/              # Test configuration
+├── setup/              # Test configuration and global setup
+│   ├── globalSetup.ts  # Vitest global configuration
+│   ├── supabaseSetup.ts # Database test utilities
+│   └── testConfig.ts   # Environment configuration
+├── factories/          # Test data factories
+│   ├── database.factories.ts # Proposals, users, topics, etc.
+│   ├── api.factories.ts      # API response factories
+│   └── test-helpers.ts       # Utility functions
+├── unit/              # Unit tests for services, orchestrator, utils
+├── integration/       # API endpoint and webhook tests
+└── fixtures/          # Static test data and mocks
+```
+
+### Test Factories
+
+All test data is generated using factories for consistency:
+
+```typescript
+import { ProposalFactory, UserFactory } from '@tests/factories';
+
+// Create test data
+const proposal = ProposalFactory.build({ status: 'adopted' });
+const users = UserFactory.buildMany(5);
 ```
 
 ### Coverage Goals
 
-- **Overall**: >80% coverage
-- **Critical paths**: >90% coverage
-- **Utilities**: >95% coverage
+- **Lines**: 80%
+- **Functions**: 80%
+- **Branches**: 75%
+- **Statements**: 80%
 
-For detailed testing documentation, see [Developer Guide - Testing](./DEVELOPER_GUIDE.md#part-5-testing).
+### Documentation
+
+For detailed testing guidelines, see:
+- **[Testing Guide](./docs/TESTING_GUIDE.md)** - Complete testing documentation
+- **[Developer Guide - Testing](./DEVELOPER_GUIDE.md#part-5-testing)** - Testing best practices
 
 ## V2 Scaling Roadmap
 

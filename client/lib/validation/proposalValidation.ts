@@ -1,8 +1,14 @@
 /**
  * Proposal Validation
  *
- * This file re-exports shared validation functions for backwards compatibility.
- * All validation logic is now centralized in @shared/utils/validation.
+ * @deprecated This file now re-exports from @shared/utils/validation
+ * Please update imports to use @shared/utils/validation directly:
+ *
+ * ```typescript
+ * import { validateProposal, PROPOSAL_VALIDATION_RULES } from '@shared/utils/validation';
+ * ```
+ *
+ * This file may be removed in future versions.
  */
 
 import {

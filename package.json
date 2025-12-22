@@ -27,10 +27,21 @@
     "test": "vitest",
     "test:run": "vitest run",
     "test:coverage": "vitest run --coverage",
+    "test:unit": "vitest run tests/unit",
+    "test:integration": "vitest run tests/integration",
+    "test:watch": "vitest --watch",
+    "test:ui": "vitest --ui",
+    "validate": "npm run typecheck && npm run lint && npm run test:run",
+    "validate:ci": "npm run typecheck && npm run lint && npm run test:coverage",
     "validate:shared": "tsx scripts/validate-shared-imports.ts",
     "analyze:shared": "tsx scripts/analyze-shared-usage.ts",
     "generate:component": "tsx scripts/create-shared-component.ts",
-    "generate:hook": "tsx scripts/create-shared-hook.ts"
+    "generate:hook": "tsx scripts/create-shared-hook.ts",
+    "clean": "rm -rf dist node_modules/.vite admin/dist client/dist website/dist backend/dist",
+    "clean:test": "rm -rf coverage .vitest",
+    "reset": "npm run clean && npm install",
+    "docs:serve": "npx serve docs -p 3002",
+    "pre-commit": "npm run typecheck && npm run lint:types && npm run test:run"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.9.1",

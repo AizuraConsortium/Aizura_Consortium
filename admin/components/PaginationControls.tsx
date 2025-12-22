@@ -1,8 +1,14 @@
 /**
  * Pagination Controls
  *
- * This file re-exports the shared Pagination component for backwards compatibility.
- * All pagination logic is now centralized in @shared/components/ui/Pagination.
+ * @deprecated This file now re-exports from @shared/components/ui/Pagination
+ * Please update imports to use @shared/components/ui/Pagination directly:
+ *
+ * ```typescript
+ * import { Pagination } from '@shared/components/ui/Pagination';
+ * ```
+ *
+ * This file will be removed in v2.0
  */
 
 export { PaginationControls, Pagination } from '@shared/components/ui/Pagination';
