@@ -294,6 +294,252 @@ function Modal({ isOpen, onClose }) {
 
 ---
 
+### useDataFetch
+
+**Location:** `shared/hooks/useDataFetch.ts`
+
+Fetches data with automatic retry logic, caching, and error handling.
+
+**Signature:**
+```typescript
+function useDataFetch<T>(
+  fetcher: () => Promise<T>,
+  dependencies?: React.DependencyList,
+  options?: UseDataFetchOptions<T>
+): UseDataFetchResult<T>
+```
+
+**Parameters:**
+- `fetcher: () => Promise<T>` - Async function that fetches data
+- `dependencies?: React.DependencyList` - Dependencies that trigger refetch (default: [])
+- `options?: UseDataFetchOptions<T>` - Configuration options
+
+**Options:**
+- `initialData?: T` - Initial data value
+- `skip?: boolean` - Skip fetching (default: false)
+- `onError?: (error: Error) => void` - Error callback
+- `onSuccess?: (data: T) => void` - Success callback
+- `retry?: RetryConfig` - Retry configuration
+  - `maxAttempts?: number` - Max retry attempts (default: 3)
+  - `baseDelay?: number` - Base delay in ms (default: 1000)
+  - `maxDelay?: number` - Max delay in ms (default: 10000)
+- `cache?: CacheConfig` - Cache configuration
+  - `enabled?: boolean` - Enable caching (default: false)
+  - `ttl?: number` - Time to live in ms (default: 60000)
+
+**Returns:**
+- `data: T | null` - Fetched data or null
+- `loading: boolean` - Loading state
+- `error: string | null` - Error message or null
+- `refetch: () => Promise<void>` - Manual refetch function
+- `isRetrying: boolean` - Whether currently retrying
+- `attemptCount: number` - Current attempt number
+
+**Usage:**
+```typescript
+import { useDataFetch } from '@shared/hooks';
+
+function UserProfile({ userId }) {
+  const { data, loading, error, refetch } = useDataFetch(
+    () => api.getUser(userId),
+    [userId],
+    {
+      retry: { maxAttempts: 3, baseDelay: 1000 },
+      cache: { enabled: true, ttl: 60000 },
+      onError: (err) => console.error('Failed to fetch user:', err)
+    }
+  );
+
+  if (loading) return <LoadingSpinner />;
+  if (error) return <ErrorAlert message={error} onRetry={refetch} />;
+  if (!data) return null;
+
+  return <div>{data.name}</div>;
+}
+```
+
+**When to Use:**
+- API data fetching with retry logic
+- Caching expensive API calls
+- Dashboard data loading
+- Real-time data monitoring
+
+**Features:**
+- Exponential backoff retry
+- Automatic request cancellation on unmount
+- Optional response caching
+- Granular loading and retry states
+- Type-safe with TypeScript generics
+- Handles race conditions
+
+**Best Practices:**
+```typescript
+// ✅ GOOD - Enable cache for frequently accessed data
+const { data } = useDataFetch(
+  () => api.getSettings(),
+  [],
+  { cache: { enabled: true, ttl: 300000 } }
+);
+
+// ✅ GOOD - Skip fetching conditionally
+const { data } = useDataFetch(
+  () => api.getUserData(userId),
+  [userId],
+  { skip: !userId }
+);
+
+// ❌ BAD - Too many retries
+const { data } = useDataFetch(
+  () => api.getData(),
+  [],
+  { retry: { maxAttempts: 100 } } // Excessive
+);
+```
+
+**Performance:**
+- Caching reduces API calls significantly
+- Abort controllers prevent memory leaks
+- Exponential backoff prevents server overload
+
+---
+
+### usePolling
+
+**Location:** `shared/hooks/usePolling.ts`
+
+Polls a function at regular intervals with smart pause/resume controls.
+
+**Signature:**
+```typescript
+function usePolling(
+  callback: () => void | Promise<void>,
+  interval: number,
+  options?: UsePollingOptions
+): UsePollingControls
+```
+
+**Parameters:**
+- `callback: () => void | Promise<void>` - Function to poll
+- `interval: number` - Polling interval in milliseconds
+- `options?: UsePollingOptions` - Configuration options
+
+**Options:**
+- `enabled?: boolean` - Enable polling (default: true)
+- `immediate?: boolean` - Run immediately on mount (default: true)
+- `pauseWhenHidden?: boolean` - Pause when tab hidden (default: true)
+- `pauseWhenOffline?: boolean` - Pause when offline (default: true)
+- `adaptivePolling?: boolean` - Slow down on errors (default: true)
+- `maxErrorDelay?: number` - Max delay on errors in ms (default: 30000)
+- `errorMultiplier?: number` - Error delay multiplier (default: 2)
+
+**Returns:**
+- `pause: () => void` - Pause polling
+- `resume: () => void` - Resume polling
+- `isPaused: boolean` - Whether currently paused
+- `errorCount: number` - Number of consecutive errors
+
+**Usage:**
+```typescript
+import { usePolling } from '@shared/hooks';
+
+function RealTimeMonitor() {
+  const [autoRefresh, setAutoRefresh] = useState(true);
+  const [data, setData] = useState(null);
+
+  const { pause, resume, isPaused, errorCount } = usePolling(
+    async () => {
+      const result = await api.getLatestData();
+      setData(result);
+    },
+    5000,
+    {
+      enabled: autoRefresh,
+      pauseWhenHidden: true,
+      pauseWhenOffline: true,
+      adaptivePolling: true
+    }
+  );
+
+  return (
+    <div>
+      <button onClick={isPaused ? resume : pause}>
+        {isPaused ? 'Resume' : 'Pause'} Auto-refresh
+      </button>
+      {errorCount > 0 && <p>Connection issues: {errorCount} errors</p>}
+      <DataDisplay data={data} />
+    </div>
+  );
+}
+```
+
+**When to Use:**
+- Real-time dashboards
+- Status monitoring
+- Live data updates
+- Periodic health checks
+
+**Features:**
+- Automatically pauses when browser tab hidden
+- Pauses when network goes offline
+- Adaptive polling (slows down on errors)
+- Manual pause/resume controls
+- Error counting and tracking
+- Automatic cleanup on unmount
+
+**Best Practices:**
+```typescript
+// ✅ GOOD - Use visibility API for better performance
+const controls = usePolling(
+  fetchData,
+  10000,
+  { pauseWhenHidden: true }
+);
+
+// ✅ GOOD - Handle network changes
+const controls = usePolling(
+  fetchData,
+  5000,
+  { pauseWhenOffline: true }
+);
+
+// ✅ GOOD - Use adaptive polling for unreliable APIs
+const controls = usePolling(
+  fetchData,
+  3000,
+  {
+    adaptivePolling: true,
+    maxErrorDelay: 60000
+  }
+);
+
+// ❌ BAD - Polling too frequently
+const controls = usePolling(
+  fetchData,
+  100 // Too fast, can overload server
+);
+
+// ❌ BAD - Not using visibility API
+const controls = usePolling(
+  fetchData,
+  1000,
+  { pauseWhenHidden: false } // Wastes resources
+);
+```
+
+**Performance:**
+- Visibility API saves significant resources
+- Adaptive polling prevents server overload
+- Offline detection prevents failed requests
+- Automatic cleanup prevents memory leaks
+
+**Recommended Intervals:**
+- Critical data: 1000-3000ms
+- Dashboard data: 5000-10000ms
+- Status updates: 10000-30000ms
+- Low-priority updates: 30000-60000ms
+
+---
+
 ## Usage Guidelines
 
 ### When to Create a New Hook
