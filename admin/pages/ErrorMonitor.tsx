@@ -223,6 +223,7 @@ export function ErrorMonitor() {
         <ErrorDetailsModal
           error={selectedError}
           onClose={() => setSelectedError(null)}
+          isOpen={!!selectedError}
         />
       )}
     </div>

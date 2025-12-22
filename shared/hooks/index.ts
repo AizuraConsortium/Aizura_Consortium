@@ -9,6 +9,10 @@ export { useAuthBase } from './useAuthBase';
 export { useNavigation } from './useNavigation';
 export { useProposals } from './useProposals';
 export { useProposalForm } from './useProposalForm';
+export { useModal } from './useModal';
+export { useKeyboardShortcut } from './useKeyboardShortcut';
 
 export type { UseProposalsConfig, UseProposalsReturn, ProposalFilters } from './useProposals';
 export type { UseProposalFormConfig, UseProposalFormReturn, ProposalFormData, ProposalFormErrors } from './useProposalForm';
+export type { UseModalReturn } from './useModal';
+export type { KeyboardShortcutOptions, KeyCombo } from './useKeyboardShortcut';
