@@ -1,28 +1,36 @@
 import { Router } from 'express';
-import { HealthController } from '../controllers/healthController.js';
 import { createRateLimit } from '../middleware/validation.js';
+import { getContainer } from '../infrastructure/Container.js';
 
 const router = Router();
-export const healthController = new HealthController();
 
 /**
- * GET /health
- * Checks overall system health including database connectivity
+ * Factory function to create health routes with container dependency
+ * Routes are configured to get the controller from the container
  */
-router.get(
-  '/',
-  createRateLimit('GET:/health'),
-  healthController.checkHealth.bind(healthController)
-);
+export default function createHealthRoutes(): Router {
+  const container = getContainer();
+  const healthController = container.get('healthController');
 
-/**
- * GET /health/orchestrator
- * Checks orchestrator health and leadership status
- */
-router.get(
-  '/orchestrator',
-  createRateLimit('GET:/health/orchestrator'),
-  healthController.checkOrchestratorHealth.bind(healthController)
-);
+  /**
+   * GET /health
+   * Checks overall system health including database connectivity
+   */
+  router.get(
+    '/',
+    createRateLimit('GET:/health'),
+    healthController.checkHealth.bind(healthController)
+  );
 
-export default router;
+  /**
+   * GET /health/orchestrator
+   * Checks orchestrator health and leadership status
+   */
+  router.get(
+    '/orchestrator',
+    createRateLimit('GET:/health/orchestrator'),
+    healthController.checkOrchestratorHealth.bind(healthController)
+  );
+
+  return router;
+}

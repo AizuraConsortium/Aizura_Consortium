@@ -3,6 +3,7 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import { Orchestrator } from './shared/orchestrator/index.js';
 import { ErrorLogger } from './shared/services/errorLogger.js';
+import { Container } from './shared/infrastructure/Container.js';
 import {
   REQUIRED_ENV_VARS,
   OPTIONAL_ENV_VARS,
@@ -13,18 +14,19 @@ import {
   buildHSTSHeader
 } from './shared/config/server.js';
 
-import sharedErrorRoutes from './shared/routes/errorRoutes.js';
-import webhookRoutes, { webhookController } from './shared/routes/webhookRoutes.js';
-import healthRoutes, { healthController } from './shared/routes/healthRoutes.js';
+// Import route factory functions
+import createSharedErrorRoutes from './shared/routes/errorRoutes.js';
+import createWebhookRoutes from './shared/routes/webhookRoutes.js';
+import createHealthRoutes from './shared/routes/healthRoutes.js';
 import adminErrorRoutes from './admin/routes/errorRoutes.js';
 import adminSystemRoutes from './admin/routes/systemRoutes.js';
 import adminUserRoutes from './admin/routes/userRoutes.js';
-import adminOrchestratorRoutes, { orchestratorController } from './admin/routes/orchestratorRoutes.js';
-import adminAuditRoutes from './admin/routes/auditRoutes.js';
+import createOrchestratorRoutes from './admin/routes/orchestratorRoutes.js';
+import createAuditRoutes from './admin/routes/auditRoutes.js';
 import websiteTopicRoutes from './website/routes/topicRoutes.js';
 import websiteMessageRoutes from './website/routes/messageRoutes.js';
 import websiteProposalRoutes from './website/routes/proposalRoutes.js';
-import websiteRealtimeRoutes, { realtimeService } from './website/routes/realtimeRoutes.js';
+import createRealtimeRoutes from './website/routes/realtimeRoutes.js';
 import clientProposalRoutes from './client/routes/proposalRoutes.js';
 
 dotenv.config();
@@ -61,6 +63,13 @@ validateEnvironment();
 const app = express();
 const PORT = getServerPort();
 const allowedOrigins = getAllowedOrigins();
+
+/**
+ * Initialize the Dependency Injection Container
+ * Must be done before route registration
+ */
+const container = Container.getInstance();
+await container.initialize();
 
 /**
  * Middleware to log requests without Origin header in production
@@ -142,17 +151,17 @@ app.use(express.json({ limit: REQUEST_BODY_LIMIT }));
 /**
  * Health check routes (must be before other routes for proper prioritization)
  */
-app.use('/health', healthRoutes);
+app.use('/health', createHealthRoutes());
 
 /**
  * Webhook routes
  */
-app.use('/webhook', webhookRoutes);
+app.use('/webhook', createWebhookRoutes());
 
 /**
  * Shared routes (public, rate-limited)
  */
-app.use('/api/errors', sharedErrorRoutes);
+app.use('/api/errors', createSharedErrorRoutes());
 
 /**
  * Admin routes (auth required)
@@ -160,8 +169,8 @@ app.use('/api/errors', sharedErrorRoutes);
 app.use('/api/admin/errors', adminErrorRoutes);
 app.use('/api/admin/system', adminSystemRoutes);
 app.use('/api/admin/users', adminUserRoutes);
-app.use('/api/admin/orchestrator', adminOrchestratorRoutes);
-app.use('/api/admin/audit', adminAuditRoutes);
+app.use('/api/admin/orchestrator', createOrchestratorRoutes());
+app.use('/api/admin/audit', createAuditRoutes());
 
 /**
  * Website routes (public)
@@ -169,7 +178,7 @@ app.use('/api/admin/audit', adminAuditRoutes);
 app.use('/api/website/topics', websiteTopicRoutes);
 app.use('/api/website/messages', websiteMessageRoutes);
 app.use('/api/website/proposals', websiteProposalRoutes);
-app.use('/api/website/realtime', websiteRealtimeRoutes);
+app.use('/api/website/realtime', createRealtimeRoutes());
 
 /**
  * Client routes (authenticated)
@@ -240,6 +249,11 @@ app.listen(PORT, async () => {
     orchestrator = new Orchestrator();
     await orchestrator.start();
 
+    // Get controllers from container and configure with orchestrator
+    const webhookController = container.get('webhookController');
+    const healthController = container.get('healthController');
+    const orchestratorController = container.get('orchestratorController');
+
     webhookController.setOrchestrator(orchestrator);
     healthController.setOrchestrator(orchestrator);
     orchestratorController.setOrchestrator(orchestrator);
@@ -272,7 +286,8 @@ process.on('SIGINT', async () => {
     if (orchestrator) {
       await orchestrator.stop();
     }
-    await realtimeService.cleanup();
+    // Cleanup container (includes realtime service)
+    await container.cleanup();
     console.log('✅ Graceful shutdown complete');
     process.exit(0);
   } catch (error) {
@@ -301,7 +316,8 @@ process.on('SIGTERM', async () => {
     if (orchestrator) {
       await orchestrator.stop();
     }
-    await realtimeService.cleanup();
+    // Cleanup container (includes realtime service)
+    await container.cleanup();
     console.log('✅ Graceful shutdown complete');
     process.exit(0);
   } catch (error) {
