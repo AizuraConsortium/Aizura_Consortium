@@ -1,2 +1,1 @@
-export { ProposalCard } from './ProposalCard';
-export { ProposalForm } from './ProposalForm';
+export { ProposalCard, ProposalForm, ProposalList } from '@shared/components/proposals';

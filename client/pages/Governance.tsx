@@ -1,52 +1,38 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Plus } from 'lucide-react';
 import { api } from '../lib/api';
-import { validateProposalTitle, validateProposalSummary } from '../lib/validation/proposalValidation';
 import { logApiError } from '../lib/logging/errorLogger';
 import { useAuth } from '../contexts/AuthContext';
-import { CardSkeleton } from '@shared/components/skeletons';
-import { Navigation, ProposalForm, ProposalCard } from '../components';
+import { useProposals } from '@shared/hooks';
+import { ProposalList, ProposalForm } from '@shared/components';
+import { Navigation } from '../components';
 
 export default function Governance() {
   const { session } = useAuth();
-  const [proposals, setProposals] = useState<any[]>([]);
-  const [loading, setLoading] = useState(true);
   const [showCreateForm, setShowCreateForm] = useState(false);
   const [error, setError] = useState('');
 
-  useEffect(() => {
-    loadProposals();
-  }, []);
-
-  const loadProposals = async () => {
-    try {
-      const data = await api.getProposals(session?.access_token);
-      setProposals(data.proposals);
-    } catch (error) {
-      logApiError(error, '/client/proposals', 'GET', { component: 'Governance' });
-      setError('Failed to load proposals');
-    } finally {
-      setLoading(false);
-    }
-  };
+  const {
+    proposals,
+    loading,
+    error: loadError,
+    refetch,
+  } = useProposals({
+    apiClient: api,
+    token: session?.access_token,
+    onError: (err) => {
+      logApiError(err, '/client/proposals', 'GET', { component: 'Governance' });
+    },
+  });
 
   const handleCreateProposal = async (title: string, summary: string) => {
-    const titleError = validateProposalTitle(title);
-    const summaryError = validateProposalSummary(summary);
-
-    if (titleError || summaryError) {
-      const errorMsg = [titleError, summaryError].filter(Boolean).join('; ');
-      setError(errorMsg);
-      throw new Error(errorMsg);
-    }
-
     setError('');
 
     try {
       const token = session?.access_token;
       await api.createProposal(title, summary, token);
       setShowCreateForm(false);
-      loadProposals();
+      refetch();
     } catch (error: any) {
       logApiError(error, '/client/proposals', 'POST', {
         component: 'Governance',
@@ -65,7 +51,7 @@ export default function Governance() {
         return;
       }
       await api.voteOnProposal(proposalId, vote, token);
-      loadProposals();
+      refetch();
     } catch (error: any) {
       logApiError(error, `/client/proposals/${proposalId}/vote`, 'POST', {
         component: 'Governance',
@@ -74,6 +60,8 @@ export default function Governance() {
       setError(error.message || 'Failed to vote');
     }
   };
+
+  const displayError = error || loadError;
 
   return (
     <div className="min-h-screen bg-slate-50">
@@ -99,9 +87,9 @@ export default function Governance() {
           </button>
         </div>
 
-        {error && (
+        {displayError && (
           <div className="bg-red-50 border border-red-200 rounded-xl p-4 mb-6 text-red-700" role="alert" aria-live="assertive">
-            {error}
+            {displayError}
           </div>
         )}
 
@@ -109,30 +97,19 @@ export default function Governance() {
           <ProposalForm
             onSubmit={handleCreateProposal}
             onCancel={() => setShowCreateForm(false)}
+            variant="light"
+            enableDrafts
           />
         )}
 
-        {loading ? (
-          <div className="space-y-4">
-            <CardSkeleton count={3} />
-          </div>
-        ) : (
-          <div className="space-y-4">
-            {proposals.map((proposal) => (
-              <ProposalCard
-                key={proposal.id}
-                proposal={proposal}
-                onVote={handleVote}
-              />
-            ))}
-
-            {proposals.length === 0 && (
-              <div className="text-center text-slate-500 py-12 bg-white border border-slate-200 rounded-xl">
-                No proposals yet. Be the first to submit one!
-              </div>
-            )}
-          </div>
-        )}
+        <ProposalList
+          proposals={proposals}
+          loading={loading}
+          onVote={handleVote}
+          variant="light"
+          showVoteButtons
+          emptyMessage="No proposals yet. Be the first to submit one!"
+        />
       </main>
     </div>
   );

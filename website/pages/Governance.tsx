@@ -1,31 +1,16 @@
-import { useEffect, useState } from 'react';
 import { ExternalLink } from 'lucide-react';
 import { api } from '../lib/api';
-import { CardSkeleton } from '@shared/components/skeletons';
-import { ProposalStatusBadge, ProposalVoteDisplay } from '@shared/components/governance';
+import { useProposals } from '@shared/hooks';
+import { ProposalList } from '@shared/components';
 import { Navigation } from '../components/layout/Navigation';
-import type { Proposal } from '@shared/types';
 
 export default function Governance() {
-  const [proposals, setProposals] = useState<Proposal[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState('');
-
-  useEffect(() => {
-    loadProposals();
-  }, []);
-
-  const loadProposals = async () => {
-    try {
-      const data = await api.getProposals();
-      setProposals(data.proposals);
-    } catch (error) {
-      console.error('Failed to load proposals:', error);
-      setError('Failed to load proposals');
-    } finally {
-      setLoading(false);
-    }
-  };
+  const { proposals, loading, error } = useProposals({
+    apiClient: api,
+    onError: (err) => {
+      console.error('Failed to load proposals:', err);
+    },
+  });
 
   return (
     <div className="min-h-screen bg-slate-900 text-white">
@@ -60,48 +45,14 @@ export default function Governance() {
           </div>
         </div>
 
-        {error && (
-          <div className="bg-red-500/10 border border-red-500/50 rounded-xl p-4 mb-6 text-red-400" role="alert" aria-live="assertive">
-            {error}
-          </div>
-        )}
-
-        {loading ? (
-          <div className="space-y-4">
-            <CardSkeleton count={3} />
-          </div>
-        ) : (
-          <div className="space-y-4">
-            {proposals.map((proposal) => (
-              <div
-                key={proposal.id}
-                className="bg-slate-800 border border-slate-700 rounded-xl p-6 hover:border-cyan-500/50 transition-colors"
-              >
-                <div className="flex items-start justify-between mb-4">
-                  <div className="flex-1">
-                    <h3 className="text-xl font-bold mb-2">{proposal.title}</h3>
-                    <p className="text-slate-300">{proposal.summary}</p>
-                  </div>
-
-                  <ProposalStatusBadge status={proposal.status} variant="dark" />
-                </div>
-
-                <ProposalVoteDisplay
-                  votesFor={proposal.votes_for}
-                  votesAgainst={proposal.votes_against}
-                  votingEndsAt={proposal.voting_ends_at}
-                  variant="dark"
-                />
-              </div>
-            ))}
-
-            {proposals.length === 0 && (
-              <div className="text-center text-slate-400 py-12">
-                No proposals yet.
-              </div>
-            )}
-          </div>
-        )}
+        <ProposalList
+          proposals={proposals}
+          loading={loading}
+          error={error}
+          variant="dark"
+          showVoteButtons={false}
+          emptyMessage="No proposals yet."
+        />
       </main>
     </div>
   );

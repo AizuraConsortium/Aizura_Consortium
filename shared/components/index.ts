@@ -3,6 +3,7 @@ export * from './governance';
 export * from './skeletons';
 export * from './auth';
 export * from './layout';
+export * from './proposals';
 
 export { ErrorBoundary } from './ErrorBoundary';
 export { ErrorAlert } from './ErrorAlert';
