@@ -1,6 +1,7 @@
 export * from './ui';
 export * from './governance';
 export * from './skeletons';
+export * from './auth';
 
 export { ErrorBoundary } from './ErrorBoundary';
 export { ErrorAlert } from './ErrorAlert';
