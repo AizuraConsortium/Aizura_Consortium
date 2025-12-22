@@ -27,7 +27,7 @@ export function AdminAuthProvider({ children }: { children: React.ReactNode }) {
         return false;
       }
 
-      await apiClient.get('/errors/admin?limit=1', session.access_token);
+      await apiClient.get('/admin/errors/admin?limit=1', session.access_token);
       setIsAdmin(true);
       return true;
     } catch (error: any) {
