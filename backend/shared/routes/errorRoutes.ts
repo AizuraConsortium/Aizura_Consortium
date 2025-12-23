@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { createRateLimit } from '../middleware/validation.js';
-import { errorLogSchema, createBodyValidator } from '../validation/schemas.js';
+import { errorLogSchema, createBodyValidator } from '../utils/validation.js';
 import { getContainer } from '../infrastructure/Container.js';
 
 const router = Router();

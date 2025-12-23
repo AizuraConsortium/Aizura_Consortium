@@ -16,6 +16,7 @@ export interface ProposalValidationRules {
   TITLE_MAX_LENGTH: number;
   SUMMARY_MIN_LENGTH: number;
   SUMMARY_MAX_LENGTH: number;
+  DEFAULT_STATUS: 'queued';
 }
 
 export const PROPOSAL_VALIDATION_RULES: ProposalValidationRules = {
@@ -23,6 +24,7 @@ export const PROPOSAL_VALIDATION_RULES: ProposalValidationRules = {
   TITLE_MAX_LENGTH: 200,
   SUMMARY_MIN_LENGTH: 10,
   SUMMARY_MAX_LENGTH: 5000,
+  DEFAULT_STATUS: 'queued' as const,
 } as const;
 
 export interface ProposalValidationResult {
@@ -278,4 +280,54 @@ export type ProposalStatus = typeof VALID_PROPOSAL_STATUSES[number];
 
 export function validateProposalStatus(status: string): boolean {
   return VALID_PROPOSAL_STATUSES.includes(status as ProposalStatus);
+}
+
+/**
+ * Assert functions for runtime validation with error throwing
+ */
+
+/**
+ * Validate proposal ID format and throw if invalid
+ *
+ * @param proposalId - Proposal ID to validate
+ * @throws Error if proposal ID is invalid
+ */
+export function assertValidProposalId(proposalId: string): asserts proposalId is string {
+  if (!proposalId || typeof proposalId !== 'string') {
+    throw new Error('Invalid proposal ID');
+  }
+
+  if (proposalId.trim().length === 0) {
+    throw new Error('Proposal ID cannot be empty');
+  }
+}
+
+/**
+ * Validate vote type and throw if invalid
+ *
+ * @param vote - Vote type to validate
+ * @throws Error if vote type is invalid
+ */
+export function assertValidVoteType(vote: string): asserts vote is VoteChoice {
+  if (!VALID_VOTE_CHOICES.includes(vote as VoteChoice)) {
+    throw new Error(
+      `Invalid vote type. Must be one of: ${VALID_VOTE_CHOICES.join(', ')}`
+    );
+  }
+}
+
+/**
+ * Validate user ID format and throw if invalid
+ *
+ * @param userId - User ID to validate
+ * @throws Error if user ID is invalid
+ */
+export function assertValidUserId(userId: string): asserts userId is string {
+  if (!userId || typeof userId !== 'string') {
+    throw new Error('Invalid user ID');
+  }
+
+  if (userId.trim().length === 0) {
+    throw new Error('User ID cannot be empty');
+  }
 }

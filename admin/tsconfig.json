@@ -1,15 +1,3 @@
 {
-  "extends": "../tsconfig.base.json",
-  "compilerOptions": {
-    "lib": ["ES2020", "DOM", "DOM.Iterable"],
-    "jsx": "react-jsx",
-    "noEmit": true,
-    "allowImportingTsExtensions": true,
-    "moduleDetection": "force",
-    "baseUrl": ".",
-    "paths": {
-      "@shared/*": ["../shared/*"]
-    }
-  },
-  "include": ["**/*", "../shared/**/*", "../vite-env.d.ts"]
+  "extends": "../tsconfig.app.template.json"
 }

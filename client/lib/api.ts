@@ -1,5 +1,5 @@
 import { apiClient, APIError, logError } from '@shared/lib';
-import { validateProposal } from './validation/proposalValidation';
+import { validateProposal } from '@shared/utils/validation';
 import type { Proposal, ApiResponse } from '@shared/types';
 
 interface ProposalsResponse {

@@ -17,8 +17,8 @@ import {
   PROPOSAL_VALIDATION_RULES,
   assertValidProposalId,
   assertValidVoteType,
-} from '../../../shared/validation/index.js';
-import { assertValidUserId } from '../../../shared/validation/authValidation.js';
+  assertValidUserId,
+} from '../../../shared/utils/validation/index.js';
 import type { Database } from '../../../shared/types/database.types.js';
 
 type Proposal = Database['public']['Tables']['proposals']['Row'];
@@ -146,7 +146,7 @@ export class ProposalService {
   /**
    * Validate proposal data against shared business rules
    *
-   * Uses PROPOSAL_VALIDATION_RULES from @shared/validation to ensure
+   * Uses PROPOSAL_VALIDATION_RULES from @shared/utils/validation to ensure
    * frontend and backend validation are consistent.
    *
    * @private
