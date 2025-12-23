@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useCallback } from 'react';
 import { User, Session } from '@supabase/supabase-js';
-import { supabase } from '@shared/lib';
+import { supabase } from '@shared/lib/supabase';
 import { useAuthBase } from '@shared/hooks/useAuthBase';
 import type {
   BaseAuthContextType,

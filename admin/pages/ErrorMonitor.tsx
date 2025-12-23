@@ -15,7 +15,7 @@ import { FilterPanel, ErrorFilters } from '../components/FilterPanel';
 import { PaginationControls } from '../components/PaginationControls';
 import { ErrorTable } from '../components/ErrorTable';
 import { TableSkeleton } from '@shared/components/skeletons';
-import { supabase } from '@shared/lib';
+import { supabase } from '@shared/lib/supabase';
 import type { ErrorLog } from '@shared/types';
 
 export function ErrorMonitor() {

@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useEffect } from 'react';
 import { User, Session } from '@supabase/supabase-js';
-import { supabase } from '@shared/lib';
+import { supabase } from '@shared/lib/supabase';
 import { BaseAuthProvider, useBaseAuth } from '@shared/contexts/BaseAuthContext';
 import { ProtectedRouteAuthProvider } from '@shared/contexts/AuthContext';
 import { setUserContext, setSessionContext, logComponentError } from '../lib/logging/errorLogger';

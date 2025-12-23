@@ -1,5 +1,5 @@
 import { Menu } from 'lucide-react';
-import { cn } from '@shared/styles';
+import { cn } from '@shared/styles/theme';
 import { useNavigation } from '@shared/hooks/useNavigation';
 import { NavigationLink } from './NavigationLink';
 import { MobileMenu } from './MobileMenu';

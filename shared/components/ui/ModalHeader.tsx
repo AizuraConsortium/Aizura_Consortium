@@ -1,5 +1,5 @@
 import { X } from 'lucide-react';
-import { cn } from '@shared/styles';
+import { cn } from '@shared/styles/theme';
 import { handleKeyboardClick } from '@shared/utils';
 
 export interface ModalHeaderProps {

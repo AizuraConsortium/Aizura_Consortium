@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { User, Session } from '@supabase/supabase-js';
-import { supabase } from '@shared/lib';
+import { supabase } from '@shared/lib/supabase';
 import type { BaseAuthState, AuthHookCallbacks } from '@shared/types/auth';
 
 export function useAuthBase(callbacks: AuthHookCallbacks = {}): BaseAuthState {

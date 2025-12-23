@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 import { AlertCircle } from 'lucide-react';
-import { cn } from '@shared/styles';
+import { cn } from '@shared/styles/theme';
 import { CardSkeleton } from '../skeletons';
 import { ProposalCard } from './ProposalCard';
 import type { Proposal } from '@shared/types';

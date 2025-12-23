@@ -1,6 +1,6 @@
 import { useState, forwardRef, InputHTMLAttributes, useMemo } from 'react';
 import { Eye, EyeOff, Check, X } from 'lucide-react';
-import { cn, themeClasses } from '@shared/styles';
+import { cn, themeClasses } from '@shared/styles/theme';
 
 /**
  * Password strength levels

@@ -1,4 +1,4 @@
-import { logError as sharedLogError } from '@shared/lib';
+import { logError as sharedLogError } from '@shared/lib/logError';
 
 /**
  * Context information that can be attached to error logs.

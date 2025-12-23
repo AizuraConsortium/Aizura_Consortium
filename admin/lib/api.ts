@@ -1,4 +1,5 @@
-import { apiClient, APIError } from '@shared/lib';
+import { apiClient } from '@shared/lib/apiClient';
+import { APIError } from '@shared/lib/apiClient';
 import type { ErrorLogResponse, SystemHealthResponse, RateLimitResponse } from './apiTypes';
 
 const ADMIN_PREFIX = '/admin' as const;

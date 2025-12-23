@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { cn } from '@shared/styles';
+import { cn } from '@shared/styles/theme';
 import type { NavigationLink as NavigationLinkType, NavigationVariant, ActiveIndicator } from '@shared/types/navigation';
 
 interface NavigationLinkProps {

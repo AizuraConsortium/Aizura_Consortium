@@ -1,7 +1,9 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import { createFilteredStore, createPaginatedStore } from '@shared/store';
-import type { FilteredStoreState, PaginatedStoreState } from '@shared/store';
+import { createFilteredStore } from '@shared/store/createFilteredStore';
+import { createPaginatedStore } from '@shared/store/createPaginatedStore';
+import type { FilteredStoreState } from '@shared/store/createFilteredStore';
+import type { PaginatedStoreState } from '@shared/store/createPaginatedStore';
 
 interface ErrorFilter {
   severity?: string;

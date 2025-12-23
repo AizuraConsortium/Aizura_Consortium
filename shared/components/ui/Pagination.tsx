@@ -11,7 +11,7 @@
 
 import { useState } from 'react';
 import { ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight } from 'lucide-react';
-import { cn } from '@shared/styles';
+import { cn } from '@shared/styles/theme';
 
 export interface PaginationProps {
   offset: number;

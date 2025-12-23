@@ -1,5 +1,5 @@
 import { Component, ReactNode } from 'react';
-import { logError } from '@shared/lib';
+import { logError } from '@shared/lib/logError';
 
 interface Props {
   children: ReactNode;

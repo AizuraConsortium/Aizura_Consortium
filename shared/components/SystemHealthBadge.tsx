@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Activity, AlertTriangle, XCircle, CheckCircle } from 'lucide-react';
-import { apiClient } from '@shared/lib';
+import { apiClient } from '@shared/lib/apiClient';
 
 interface SystemHealth {
   status: 'healthy' | 'degraded' | 'unhealthy';

@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 import { X } from 'lucide-react';
-import { cn } from '@shared/styles';
+import { cn } from '@shared/styles/theme';
 
 export type FilterFieldType = 'text' | 'select' | 'date' | 'number' | 'datetime-local';
 

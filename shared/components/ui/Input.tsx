@@ -1,5 +1,5 @@
 import { InputHTMLAttributes, forwardRef, ReactNode } from 'react';
-import { cn, themeClasses } from '@shared/styles';
+import { cn, themeClasses } from '@shared/styles/theme';
 
 /**
  * Props for the Input component.

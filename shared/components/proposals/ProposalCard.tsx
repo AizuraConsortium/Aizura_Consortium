@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { ThumbsUp, ThumbsDown, ChevronDown, ChevronUp } from 'lucide-react';
-import { cn } from '@shared/styles';
+import { cn } from '@shared/styles/theme';
 import { ProposalStatusBadge, ProposalVoteDisplay } from '../governance';
 import type { Proposal } from '@shared/types';
 

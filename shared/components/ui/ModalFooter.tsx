@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
-import { cn } from '@shared/styles';
+import { cn } from '@shared/styles/theme';
 
 export interface ModalFooterProps {
   children: ReactNode;

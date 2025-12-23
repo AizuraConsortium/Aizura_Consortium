@@ -1,6 +1,6 @@
 import { ButtonHTMLAttributes, ReactNode } from 'react';
 import { Loader2 } from 'lucide-react';
-import { cn, themeClasses } from '@shared/styles';
+import { cn, themeClasses } from '@shared/styles/theme';
 
 /**
  * Props for the Button component.
