@@ -1,6 +1,6 @@
 import { ExternalLink } from 'lucide-react';
 import { api } from '../lib/api';
-import { useProposals } from '@shared/hooks';
+import { useProposals } from '@shared/hooks/useProposals';
 import { ProposalList } from '@shared/components';
 import { Navigation } from '../components/layout/Navigation';
 

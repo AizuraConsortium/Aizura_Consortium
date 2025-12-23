@@ -5,7 +5,7 @@ import { createPaginatedStore } from '@shared/store/createPaginatedStore';
 import type { FilteredStoreState } from '@shared/store/createFilteredStore';
 import type { PaginatedStoreState } from '@shared/store/createPaginatedStore';
 import { api } from '../lib/api';
-import type { User, Proposal, ProposalStatus } from '@shared/types';
+import type { User, Proposal, ProposalStatus } from '@shared/types/models';
 
 interface ProposalDraft {
   title: string;

@@ -1,6 +1,7 @@
 import { ReactNode, useEffect } from 'react';
-import { cn } from '@shared/styles';
-import { useEscapeKey, useFocusTrap } from '@shared/hooks';
+import { cn } from '@shared/styles/theme';
+import { useEscapeKey } from '@shared/hooks/useEscapeKey';
+import { useFocusTrap } from '@shared/hooks/useFocusTrap';
 
 export interface ModalProps {
   isOpen: boolean;

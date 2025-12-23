@@ -1,4 +1,4 @@
-import type { ErrorLog, Plan } from './index.js';
+import type { ErrorLog, Plan } from './models';
 
 export interface ApiResponse<T = any> {
   data?: T;

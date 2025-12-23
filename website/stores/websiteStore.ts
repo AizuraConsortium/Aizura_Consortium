@@ -4,7 +4,7 @@ import { createFilteredStore } from '@shared/store/createFilteredStore';
 import { createPaginatedStore } from '@shared/store/createPaginatedStore';
 import type { FilteredStoreState } from '@shared/store/createFilteredStore';
 import type { PaginatedStoreState } from '@shared/store/createPaginatedStore';
-import type { Topic, AgentId, Message } from '@shared/types';
+import type { Topic, AgentId, Message } from '@shared/types/models';
 
 interface MessageFilter {
   agentId?: AgentId;

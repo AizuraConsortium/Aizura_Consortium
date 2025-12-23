@@ -1,4 +1,5 @@
-import type { ErrorLog, SystemHealth } from '@shared/types';
+import type { ErrorLog } from '@shared/types/models';
+import type { SystemHealth } from '@shared/types/api';
 
 export interface AdminAPIEndpoints {
   errors: {

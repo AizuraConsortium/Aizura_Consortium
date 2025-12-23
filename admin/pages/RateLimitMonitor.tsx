@@ -1,7 +1,9 @@
 import { useState } from 'react';
 import { Shield, Clock, TrendingUp, AlertCircle } from 'lucide-react';
-import { useDataFetch, usePolling } from '@shared/hooks';
-import { ErrorAlert, LoadingSpinner } from '@shared/components';
+import { useDataFetch } from '@shared/hooks/useDataFetch';
+import { usePolling } from '@shared/hooks/usePolling';
+import { ErrorAlert } from '@shared/components/ErrorAlert';
+import { LoadingSpinner } from '@shared/components/LoadingSpinner';
 import { api } from '../lib/api';
 import { useAdminAuth } from '../contexts/AdminAuthContext';
 import type { RateLimitResponse } from '../lib/apiTypes';

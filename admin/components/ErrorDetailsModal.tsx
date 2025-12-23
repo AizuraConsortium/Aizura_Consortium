@@ -1,5 +1,5 @@
 import { Modal, ModalHeader, ModalBody, ModalFooter } from '@shared/components/ui';
-import type { ErrorLog } from '@shared/types';
+import type { ErrorLog } from '@shared/types/models';
 
 interface ErrorDetailsModalProps {
   error: ErrorLog;

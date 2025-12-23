@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import type { Message } from '@shared/types';
+import type { Message } from '@shared/types/models';
 import type { RealtimeMessage } from '@shared/types/api';
 
 type ConnectionStatus = 'disconnected' | 'connecting' | 'connected' | 'reconnecting' | 'error';

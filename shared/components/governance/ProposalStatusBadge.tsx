@@ -1,4 +1,4 @@
-import type { ProposalStatus } from '@shared/types';
+import type { ProposalStatus } from '@shared/types/models';
 
 interface ProposalStatusBadgeProps {
   status: ProposalStatus;

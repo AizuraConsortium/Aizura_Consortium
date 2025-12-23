@@ -1,7 +1,8 @@
 import { useEffect } from 'react';
 import { X } from 'lucide-react';
-import { cn } from '@shared/styles';
-import { useFocusTrap, useEscapeKey } from '@shared/hooks';
+import { cn } from '@shared/styles/theme';
+import { useFocusTrap } from '@shared/hooks/useFocusTrap';
+import { useEscapeKey } from '@shared/hooks/useEscapeKey';
 import { NavigationLink } from './NavigationLink';
 import type { NavigationLink as NavigationLinkType, NavigationVariant, ActiveIndicator } from '@shared/types/navigation';
 

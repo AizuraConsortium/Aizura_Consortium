@@ -3,7 +3,7 @@ import { Plus } from 'lucide-react';
 import { api } from '../lib/api';
 import { logApiError } from '../lib/logging/errorLogger';
 import { useAuth } from '../contexts/AuthContext';
-import { useProposals } from '@shared/hooks';
+import { useProposals } from '@shared/hooks/useProposals';
 import { ProposalList, ProposalForm } from '@shared/components';
 import { Navigation } from '../components';
 

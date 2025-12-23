@@ -1,4 +1,4 @@
-import type { ErrorSource, ErrorSeverity } from '@shared/types';
+import type { ErrorSource, ErrorSeverity } from '@shared/types/models';
 import { FilterPanel as SharedFilterPanel, FilterFieldConfig } from '@shared/components/ui/FilterPanel';
 
 export interface ErrorFilters {

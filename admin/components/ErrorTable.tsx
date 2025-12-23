@@ -1,6 +1,6 @@
 import { Trash2, Info, AlertTriangle, AlertCircle, XCircle } from 'lucide-react';
-import { handleKeyboardClick } from '@shared/utils';
-import type { ErrorLog } from '@shared/types';
+import { handleKeyboardClick } from '@shared/utils/accessibility';
+import type { ErrorLog } from '@shared/types/models';
 
 interface ErrorTableProps {
   errors: ErrorLog[];

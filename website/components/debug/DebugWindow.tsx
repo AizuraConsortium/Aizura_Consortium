@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { X, Bug, AlertTriangle, AlertCircle, Info, RefreshCw } from 'lucide-react';
 import { api } from '../lib/api';
-import type { ErrorLog } from '@shared/types';
+import type { ErrorLog } from '@shared/types/models';
 
 interface DebugWindowProps {
   isOpen: boolean;

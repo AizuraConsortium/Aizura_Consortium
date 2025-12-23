@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
-import type { Proposal } from '@shared/types';
+import type { Proposal } from '@shared/types/models';
 
 export interface ProposalFilters {
   status?: string;

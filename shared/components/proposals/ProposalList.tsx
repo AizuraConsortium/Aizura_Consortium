@@ -3,7 +3,7 @@ import { AlertCircle } from 'lucide-react';
 import { cn } from '@shared/styles/theme';
 import { CardSkeleton } from '../skeletons';
 import { ProposalCard } from './ProposalCard';
-import type { Proposal } from '@shared/types';
+import type { Proposal } from '@shared/types/models';
 
 export interface ProposalListProps {
   proposals: Proposal[];

@@ -2,7 +2,7 @@ import { useEffect, useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FileText, Wifi, WifiOff, RefreshCw } from 'lucide-react';
 import { api } from '../lib/api';
-import { AGENT_DISPLAY_NAMES, ROLE_DISPLAY_NAMES } from '@shared/types';
+import { AGENT_DISPLAY_NAMES, ROLE_DISPLAY_NAMES } from '@shared/types/models';
 import { WebsiteHealthBadge } from '../components/WebsiteHealthBadge';
 import { MessageSkeleton } from '@shared/components/skeletons';
 import { Navigation } from '../components/layout/Navigation';

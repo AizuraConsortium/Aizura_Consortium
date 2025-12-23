@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { api } from '../lib/api';
 import { logApiError } from '../lib/logging/errorLogger';
-import type { Proposal } from '@shared/types';
+import type { Proposal } from '@shared/types/models';
 
 export default function Dashboard() {
   const { session } = useAuth();
