@@ -48,6 +48,13 @@ import Privacy from './pages/legal/Privacy';
 import Disclaimer from './pages/legal/Disclaimer';
 import Cookies from './pages/legal/Cookies';
 
+import SmartContracts from './pages/blockchain/SmartContracts';
+import Security from './pages/blockchain/Security';
+
+import Documentation from './pages/developers/Documentation';
+
+import Litepaper from './pages/resources/Litepaper';
+
 import SignIn from './pages/auth/SignIn';
 
 export default function App() {
@@ -100,6 +107,13 @@ export default function App() {
             <Route path="/legal/privacy" element={<Privacy />} />
             <Route path="/legal/disclaimer" element={<Disclaimer />} />
             <Route path="/legal/cookies" element={<Cookies />} />
+
+            <Route path="/blockchain/smart-contracts" element={<SmartContracts />} />
+            <Route path="/blockchain/security" element={<Security />} />
+
+            <Route path="/developers/documentation" element={<Documentation />} />
+
+            <Route path="/resources/litepaper" element={<Litepaper />} />
 
             <Route path="/auth/sign-in" element={<SignIn />} />
             <Route path="/app" element={<div className="min-h-screen bg-slate-900 text-white flex items-center justify-center"><p>Dashboard coming soon</p></div>} />

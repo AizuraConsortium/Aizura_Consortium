@@ -7,7 +7,7 @@ export function Footer() {
   return (
     <footer className="bg-slate-900 border-t border-slate-800 mt-auto">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 mb-8">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8 mb-8">
           <div>
             <h3 className="text-sm font-semibold text-white mb-4">Project</h3>
             <ul className="space-y-3">
@@ -133,6 +133,32 @@ export function Footer() {
               <li>
                 <Link to="/community/media-kit" className="text-sm text-slate-400 hover:text-white transition-colors">
                   Media Kit
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          <div>
+            <h3 className="text-sm font-semibold text-white mb-4">Resources</h3>
+            <ul className="space-y-3">
+              <li>
+                <Link to="/resources/litepaper" className="text-sm text-slate-400 hover:text-white transition-colors">
+                  Litepaper
+                </Link>
+              </li>
+              <li>
+                <Link to="/developers/documentation" className="text-sm text-slate-400 hover:text-white transition-colors">
+                  Documentation
+                </Link>
+              </li>
+              <li>
+                <Link to="/blockchain/smart-contracts" className="text-sm text-slate-400 hover:text-white transition-colors">
+                  Smart Contracts
+                </Link>
+              </li>
+              <li>
+                <Link to="/blockchain/security" className="text-sm text-slate-400 hover:text-white transition-colors">
+                  Security
                 </Link>
               </li>
             </ul>

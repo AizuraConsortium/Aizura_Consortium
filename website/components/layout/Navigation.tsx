@@ -106,6 +106,17 @@ export function Navigation({ onConnectWallet }: NavigationProps) {
     },
   ];
 
+  const developersDropdown: DropdownSection[] = [
+    {
+      items: [
+        { label: 'Documentation', path: '/developers/documentation', description: 'Integration guides and API reference' },
+        { label: 'Smart Contracts', path: '/blockchain/smart-contracts', description: 'Contract addresses and ABIs' },
+        { label: 'Security', path: '/blockchain/security', description: 'Audits and bug bounty program' },
+        { label: 'Litepaper', path: '/resources/litepaper', description: 'Technical documentation' },
+      ],
+    },
+  ];
+
   const toggleMobileSection = (section: string) => {
     setExpandedSection(expandedSection === section ? null : section);
   };
@@ -133,6 +144,7 @@ export function Navigation({ onConnectWallet }: NavigationProps) {
               <DropdownMenu label="Portfolio" sections={portfolioDropdown} ctaStrip={portfolioCTA} />
               <DropdownMenu label="Token" sections={tokenDropdown} />
               <DropdownMenu label="Community" sections={communityDropdown} />
+              <DropdownMenu label="Developers" sections={developersDropdown} />
             </div>
           </div>
 
@@ -228,6 +240,14 @@ export function Navigation({ onConnectWallet }: NavigationProps) {
               items={communityDropdown[0].items}
               isExpanded={expandedSection === 'community'}
               onToggle={() => toggleMobileSection('community')}
+              onItemClick={() => setMobileMenuOpen(false)}
+            />
+
+            <MobileDropdown
+              label="Developers"
+              items={developersDropdown[0].items}
+              isExpanded={expandedSection === 'developers'}
+              onToggle={() => toggleMobileSection('developers')}
               onItemClick={() => setMobileMenuOpen(false)}
             />
 
