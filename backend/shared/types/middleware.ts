@@ -66,6 +66,17 @@ export interface AuthContext {
 }
 
 /**
+ * Authenticated Request (extends Express Request with user context)
+ */
+export interface AuthenticatedRequest extends Request {
+  user?: {
+    id: string;
+    email: string;
+    role: 'admin' | 'client' | 'agent';
+  };
+}
+
+/**
  * Pagination context
  */
 export interface PaginationContext {

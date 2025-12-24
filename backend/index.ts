@@ -28,6 +28,7 @@ import websiteMessageRoutes from './website/routes/messageRoutes.js';
 import websiteProposalRoutes from './website/routes/proposalRoutes.js';
 import createRealtimeRoutes from './website/routes/realtimeRoutes.js';
 import clientProposalRoutes from './client/routes/proposalRoutes.js';
+import clientNotificationRoutes from './client/routes/notificationRoutes.js';
 
 dotenv.config();
 
@@ -184,6 +185,7 @@ app.use('/api/website/realtime', createRealtimeRoutes());
  * Client routes (authenticated)
  */
 app.use('/api/client/proposals', clientProposalRoutes);
+app.use('/api/client', clientNotificationRoutes);
 
 /**
  * Global error handling middleware

@@ -1,15 +1,11 @@
 import { useState } from 'react';
 import { DashboardLayout } from '../components/layout/DashboardLayout';
 import { useAuth } from '../contexts/AuthContext';
-import { Wallet, Bell, Globe, Palette, Shield, LogOut } from 'lucide-react';
+import { Wallet, Globe, Palette, Shield, LogOut } from 'lucide-react';
+import { NotificationPreferences } from '../components/notifications/NotificationPreferences';
 
 export default function SettingsView() {
   const { user, logout } = useAuth();
-  const [notifications, setNotifications] = useState({
-    governance: true,
-    proposals: true,
-    rewards: true
-  });
   const [preferences, setPreferences] = useState({
     language: 'en',
     theme: 'dark'
@@ -58,62 +54,7 @@ export default function SettingsView() {
           </div>
         </div>
 
-        <div className="bg-slate-800/50 border border-slate-700 rounded-xl p-6">
-          <div className="flex items-center gap-3 mb-6">
-            <Bell className="w-6 h-6 text-cyan-400" />
-            <h2 className="text-xl font-bold text-white">Notifications</h2>
-          </div>
-
-          <div className="space-y-4">
-            <div className="flex items-center justify-between p-4 bg-slate-700/30 rounded-lg">
-              <div>
-                <div className="text-white font-medium mb-1">Governance Alerts</div>
-                <div className="text-sm text-slate-400">New proposals and voting reminders</div>
-              </div>
-              <label className="relative inline-flex items-center cursor-pointer">
-                <input
-                  type="checkbox"
-                  checked={notifications.governance}
-                  onChange={(e) => setNotifications({ ...notifications, governance: e.target.checked })}
-                  className="sr-only peer"
-                />
-                <div className="w-11 h-6 bg-slate-600 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-cyan-600"></div>
-              </label>
-            </div>
-
-            <div className="flex items-center justify-between p-4 bg-slate-700/30 rounded-lg">
-              <div>
-                <div className="text-white font-medium mb-1">Proposal Updates</div>
-                <div className="text-sm text-slate-400">Status changes on proposals you voted on</div>
-              </div>
-              <label className="relative inline-flex items-center cursor-pointer">
-                <input
-                  type="checkbox"
-                  checked={notifications.proposals}
-                  onChange={(e) => setNotifications({ ...notifications, proposals: e.target.checked })}
-                  className="sr-only peer"
-                />
-                <div className="w-11 h-6 bg-slate-600 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-cyan-600"></div>
-              </label>
-            </div>
-
-            <div className="flex items-center justify-between p-4 bg-slate-700/30 rounded-lg">
-              <div>
-                <div className="text-white font-medium mb-1">Reward Distributions</div>
-                <div className="text-sm text-slate-400">Notifications when rewards are claimable</div>
-              </div>
-              <label className="relative inline-flex items-center cursor-pointer">
-                <input
-                  type="checkbox"
-                  checked={notifications.rewards}
-                  onChange={(e) => setNotifications({ ...notifications, rewards: e.target.checked })}
-                  className="sr-only peer"
-                />
-                <div className="w-11 h-6 bg-slate-600 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-cyan-600"></div>
-              </label>
-            </div>
-          </div>
-        </div>
+        <NotificationPreferences />
 
         <div className="bg-slate-800/50 border border-slate-700 rounded-xl p-6">
           <div className="flex items-center gap-3 mb-6">

@@ -1,8 +1,11 @@
-import { Bell, LogOut, Wifi } from 'lucide-react';
+import { LogOut, Wifi } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
+import { NotificationCenter } from '../notifications/NotificationCenter';
+import { useNavigate } from 'react-router-dom';
 
 export function TopBar() {
   const { user, logout } = useAuth();
+  const navigate = useNavigate();
 
   const formatAddress = (address: string) => {
     if (!address) return '';
@@ -20,13 +23,7 @@ export function TopBar() {
             <span className="hidden sm:inline">Mainnet</span>
           </div>
 
-          <button
-            className="p-2 text-slate-400 hover:text-white rounded-lg hover:bg-slate-700 transition-colors relative"
-            aria-label="Notifications"
-          >
-            <Bell className="w-5 h-5" />
-            <span className="absolute top-1 right-1 w-2 h-2 bg-cyan-400 rounded-full" />
-          </button>
+          <NotificationCenter onViewAll={() => navigate('/app/notifications')} />
 
           <div className="flex items-center gap-3 px-3 py-2 bg-slate-700 rounded-lg">
             <div className="w-8 h-8 bg-gradient-to-br from-cyan-400 to-blue-500 rounded-full flex items-center justify-center text-white font-bold text-sm">
