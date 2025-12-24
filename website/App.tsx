@@ -47,6 +47,7 @@ import CommunityHub from './pages/community/CommunityHub';
 import FAQ from './pages/community/FAQ';
 import MediaKit from './pages/community/MediaKit';
 import Contact from './pages/community/Contact';
+import Social from './pages/community/Social';
 
 import Terms from './pages/legal/Terms';
 import Privacy from './pages/legal/Privacy';
@@ -65,6 +66,9 @@ import Documentation from './pages/developers/Documentation';
 import Litepaper from './pages/resources/Litepaper';
 
 import SignIn from './pages/auth/SignIn';
+
+import News from './pages/News';
+import NewsArticle from './pages/NewsArticle';
 
 export default function App() {
   return (
@@ -113,9 +117,13 @@ export default function App() {
             <Route path="/governance/treasury" element={<Treasury />} />
 
             <Route path="/community" element={<CommunityHub />} />
+            <Route path="/community/social" element={<Social />} />
             <Route path="/community/faq" element={<FAQ />} />
             <Route path="/community/media-kit" element={<MediaKit />} />
             <Route path="/community/contact" element={<Contact />} />
+
+            <Route path="/news" element={<News />} />
+            <Route path="/news/:slug" element={<NewsArticle />} />
 
             <Route path="/legal/terms" element={<Terms />} />
             <Route path="/legal/privacy" element={<Privacy />} />

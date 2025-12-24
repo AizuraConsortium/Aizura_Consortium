@@ -121,6 +121,11 @@ export function Footer() {
                 </Link>
               </li>
               <li>
+                <Link to="/community/social" className="text-sm text-slate-400 hover:text-white transition-colors">
+                  Social & Channels
+                </Link>
+              </li>
+              <li>
                 <Link to="/community/faq" className="text-sm text-slate-400 hover:text-white transition-colors">
                   FAQ
                 </Link>
@@ -130,17 +135,17 @@ export function Footer() {
                   Contact
                 </Link>
               </li>
-              <li>
-                <Link to="/community/media-kit" className="text-sm text-slate-400 hover:text-white transition-colors">
-                  Media Kit
-                </Link>
-              </li>
             </ul>
           </div>
 
           <div>
             <h3 className="text-sm font-semibold text-white mb-4">Resources</h3>
             <ul className="space-y-3">
+              <li>
+                <Link to="/news" className="text-sm text-slate-400 hover:text-white transition-colors">
+                  News & Updates
+                </Link>
+              </li>
               <li>
                 <Link to="/resources/litepaper" className="text-sm text-slate-400 hover:text-white transition-colors">
                   Litepaper
@@ -149,11 +154,6 @@ export function Footer() {
               <li>
                 <Link to="/developers/documentation" className="text-sm text-slate-400 hover:text-white transition-colors">
                   Documentation
-                </Link>
-              </li>
-              <li>
-                <Link to="/blockchain/smart-contracts" className="text-sm text-slate-400 hover:text-white transition-colors">
-                  Smart Contracts
                 </Link>
               </li>
               <li>
