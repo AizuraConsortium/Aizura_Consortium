@@ -88,6 +88,9 @@ export function Navigation({ onConnectWallet }: NavigationProps) {
       items: [
         { label: 'Token Overview', path: '/token', description: 'Utility and governance rights' },
         { label: 'Tokenomics', path: '/token/tokenomics', description: 'Supply and distribution' },
+        { label: 'Token Utility', path: '/token/utility', description: '10+ ways to use AAIC' },
+        { label: 'Live Metrics', path: '/token/live-metrics', description: 'Real-time price and stats' },
+        { label: 'Where to Buy', path: '/token/where-to-buy', description: 'DEX and CEX listings' },
         { label: 'Airdrop', path: '/token/airdrop', description: 'No token sale, only airdrop' },
         { label: 'Staking', path: '/token/staking', description: 'Coming soon' },
         { label: 'Transparency', path: '/token/transparency', description: 'Metrics and distributions' },

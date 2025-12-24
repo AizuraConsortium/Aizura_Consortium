@@ -32,6 +32,9 @@ import Tokenomics from './pages/token/Tokenomics';
 import Airdrop from './pages/token/Airdrop';
 import Staking from './pages/token/Staking';
 import Transparency from './pages/token/Transparency';
+import LiveMetrics from './pages/token/LiveMetrics';
+import WhereToBuy from './pages/token/WhereToBuy';
+import Utility from './pages/token/Utility';
 
 import GovernanceOverview from './pages/governance/GovernanceOverview';
 import GovernanceRules from './pages/governance/GovernanceRules';
@@ -92,6 +95,9 @@ export default function App() {
             <Route path="/token/airdrop" element={<Airdrop />} />
             <Route path="/token/staking" element={<Staking />} />
             <Route path="/token/transparency" element={<Transparency />} />
+            <Route path="/token/live-metrics" element={<LiveMetrics />} />
+            <Route path="/token/where-to-buy" element={<WhereToBuy />} />
+            <Route path="/token/utility" element={<Utility />} />
 
             <Route path="/governance" element={<GovernanceOverview />} />
             <Route path="/governance/rules" element={<GovernanceRules />} />

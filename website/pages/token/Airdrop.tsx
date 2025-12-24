@@ -1,11 +1,12 @@
 import { PageLayout } from '../../components/layout/PageLayout';
 import { Link } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import {
   Award, Users, Vote, TrendingUp, Shield, CheckCircle2,
   Clock, Target, Zap, Lock, Unlock, AlertTriangle, BarChart3,
   ArrowRight, ExternalLink, Gift, Activity, Calendar, Info,
-  FileText, Lightbulb, Trophy, Eye, Ban, Wallet
+  FileText, Lightbulb, Trophy, Eye, Ban, Wallet, Share2, Flame,
+  Star, Medal, Crown
 } from 'lucide-react';
 
 type PhaseStatus = 'active' | 'upcoming' | 'completed';
@@ -98,8 +99,24 @@ const MOCK_TRANSPARENCY_DATA = {
   distributedSoFar: 450000000,
   remainingTokens: 2550000000,
   eligibleWallets: 12847,
-  nextSnapshotDate: 'Jan 15, 2026'
+  nextSnapshotDate: 'Jan 15, 2026',
+  totalParticipants: 5284,
+  tier1SpotsRemaining: 127,
+  snapshotDays: 42
 };
+
+const LEADERBOARD_DATA = [
+  { rank: 1, address: '0x1234...5678', score: 9850, tier: 'Diamond', multiplier: '3.2x', badge: '👑' },
+  { rank: 2, address: '0xabcd...efgh', score: 8920, tier: 'Platinum', multiplier: '2.8x', badge: '💎' },
+  { rank: 3, address: '0x9876...5432', score: 7845, tier: 'Platinum', multiplier: '2.5x', badge: '💎' },
+  { rank: 4, address: '0xfedc...ba98', score: 6720, tier: 'Gold', multiplier: '2.2x', badge: '🏆' },
+  { rank: 5, address: '0x5555...6666', score: 5890, tier: 'Gold', multiplier: '2.0x', badge: '🏆' },
+  { rank: 6, address: '0x3333...4444', score: 4950, tier: 'Silver', multiplier: '1.7x', badge: '🥈' },
+  { rank: 7, address: '0x7777...8888', score: 4120, tier: 'Silver', multiplier: '1.5x', badge: '🥈' },
+  { rank: 8, address: '0x2222...3333', score: 3580, tier: 'Bronze', multiplier: '1.3x', badge: '🥉' },
+  { rank: 9, address: '0x4444...5555', score: 2940, tier: 'Bronze', multiplier: '1.2x', badge: '🥉' },
+  { rank: 10, address: '0x6666...7777', score: 2150, tier: 'Bronze', multiplier: '1.1x', badge: '🥉' },
+];
 
 const FAQ_ITEMS = [
   {
@@ -124,9 +141,41 @@ const FAQ_ITEMS = [
   }
 ];
 
+function useCountdown(days: number) {
+  const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+
+  useEffect(() => {
+    const targetDate = new Date();
+    targetDate.setDate(targetDate.getDate() + days);
+
+    const timer = setInterval(() => {
+      const now = new Date().getTime();
+      const distance = targetDate.getTime() - now;
+
+      if (distance < 0) {
+        clearInterval(timer);
+        setTimeLeft({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+        return;
+      }
+
+      setTimeLeft({
+        days: Math.floor(distance / (1000 * 60 * 60 * 24)),
+        hours: Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
+        minutes: Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)),
+        seconds: Math.floor((distance % (1000 * 60)) / 1000)
+      });
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, [days]);
+
+  return timeLeft;
+}
+
 export default function Airdrop() {
   const [isWalletConnected] = useState(false);
   const [selectedPhase, setSelectedPhase] = useState<number>(1);
+  const countdown = useCountdown(MOCK_TRANSPARENCY_DATA.snapshotDays);
 
   return (
     <PageLayout>
@@ -175,6 +224,216 @@ export default function Airdrop() {
               <Shield className="w-4 h-4 inline mr-2" />
               Designed for long-term alignment, not short-term hype
             </p>
+          </div>
+        </section>
+
+        <section className="bg-gradient-to-r from-green-500/10 to-cyan-500/10 border border-green-500/30 rounded-2xl p-8">
+          <div className="grid md:grid-cols-3 gap-6 mb-6">
+            <div className="text-center">
+              <div className="flex items-center justify-center gap-2 mb-2">
+                <Flame className="w-6 h-6 text-orange-400" />
+                <div className="text-4xl font-bold text-white">{MOCK_TRANSPARENCY_DATA.totalParticipants.toLocaleString()}</div>
+              </div>
+              <p className="text-sm text-slate-300">Participants already qualified and growing rapidly!</p>
+            </div>
+
+            <div className="text-center">
+              <div className="flex items-center justify-center gap-2 mb-2">
+                <AlertTriangle className="w-6 h-6 text-yellow-400" />
+                <div className="text-4xl font-bold text-yellow-400">{MOCK_TRANSPARENCY_DATA.tier1SpotsRemaining}</div>
+              </div>
+              <p className="text-sm text-slate-300">Tier 1 allocation spots remaining</p>
+            </div>
+
+            <div className="text-center">
+              <div className="flex items-center justify-center gap-2 mb-2">
+                <Clock className="w-6 h-6 text-cyan-400" />
+                <div className="text-4xl font-bold text-cyan-400">{countdown.days}d {countdown.hours}h</div>
+              </div>
+              <p className="text-sm text-slate-300">Until next snapshot - Time is running out!</p>
+            </div>
+          </div>
+
+          <div className="bg-slate-900/50 rounded-xl p-6">
+            <div className="flex items-center justify-center gap-4 mb-4">
+              <Clock className="w-8 h-8 text-cyan-400" />
+              <h3 className="text-2xl font-bold text-white">Snapshot Countdown</h3>
+            </div>
+
+            <div className="grid grid-cols-4 gap-4 max-w-2xl mx-auto">
+              <div className="bg-slate-800 rounded-lg p-4 text-center">
+                <div className="text-3xl font-bold text-cyan-400 mb-1">{countdown.days}</div>
+                <div className="text-sm text-slate-400">Days</div>
+              </div>
+              <div className="bg-slate-800 rounded-lg p-4 text-center">
+                <div className="text-3xl font-bold text-cyan-400 mb-1">{countdown.hours}</div>
+                <div className="text-sm text-slate-400">Hours</div>
+              </div>
+              <div className="bg-slate-800 rounded-lg p-4 text-center">
+                <div className="text-3xl font-bold text-cyan-400 mb-1">{countdown.minutes}</div>
+                <div className="text-sm text-slate-400">Minutes</div>
+              </div>
+              <div className="bg-slate-800 rounded-lg p-4 text-center">
+                <div className="text-3xl font-bold text-cyan-400 mb-1">{countdown.seconds}</div>
+                <div className="text-sm text-slate-400">Seconds</div>
+              </div>
+            </div>
+
+            <div className="mt-6 text-center">
+              <p className="text-slate-300 mb-4">
+                Check your eligibility now before the next snapshot! Every action counts toward your allocation.
+              </p>
+              <button className="px-8 py-4 bg-cyan-600 hover:bg-cyan-700 text-white font-bold rounded-lg transition-colors inline-flex items-center gap-2">
+                <Zap className="w-5 h-5" />
+                Check Eligibility Before It's Too Late
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <section className="bg-slate-800/30 backdrop-blur border border-slate-700 rounded-2xl p-8">
+          <div className="flex items-center justify-between mb-6">
+            <div className="flex items-center gap-3">
+              <Trophy className="w-8 h-8 text-yellow-400" />
+              <h2 className="text-3xl font-bold text-white">Qualification Leaderboard</h2>
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="w-2 h-2 rounded-full bg-green-400 animate-pulse"></div>
+              <span className="text-sm text-slate-400">Live Rankings</span>
+            </div>
+          </div>
+
+          <p className="text-slate-300 mb-6">
+            Top participants earn higher multipliers and tier upgrades. Your ranking is based on participation quality,
+            consistency, and contribution value.
+          </p>
+
+          <div className="bg-slate-900/50 rounded-xl overflow-hidden">
+            <table className="w-full">
+              <thead>
+                <tr className="border-b border-slate-700">
+                  <th className="text-left py-4 px-4 text-sm font-semibold text-slate-400">Rank</th>
+                  <th className="text-left py-4 px-4 text-sm font-semibold text-slate-400">Address</th>
+                  <th className="text-center py-4 px-4 text-sm font-semibold text-slate-400">Score</th>
+                  <th className="text-center py-4 px-4 text-sm font-semibold text-slate-400">Tier</th>
+                  <th className="text-center py-4 px-4 text-sm font-semibold text-slate-400">Multiplier</th>
+                </tr>
+              </thead>
+              <tbody>
+                {LEADERBOARD_DATA.map((entry) => (
+                  <tr key={entry.rank} className="border-b border-slate-800 hover:bg-slate-800/50 transition-colors">
+                    <td className="py-4 px-4">
+                      <div className="flex items-center gap-2">
+                        <span className="text-2xl">{entry.badge}</span>
+                        <span className="text-white font-bold">#{entry.rank}</span>
+                      </div>
+                    </td>
+                    <td className="py-4 px-4">
+                      <code className="text-cyan-400 font-mono text-sm">{entry.address}</code>
+                    </td>
+                    <td className="py-4 px-4 text-center">
+                      <span className="text-white font-semibold">{entry.score.toLocaleString()}</span>
+                    </td>
+                    <td className="py-4 px-4 text-center">
+                      <span className={`px-3 py-1 rounded-full text-xs font-medium ${
+                        entry.tier === 'Diamond' ? 'bg-purple-500/20 text-purple-400' :
+                        entry.tier === 'Platinum' ? 'bg-blue-500/20 text-blue-400' :
+                        entry.tier === 'Gold' ? 'bg-yellow-500/20 text-yellow-400' :
+                        entry.tier === 'Silver' ? 'bg-slate-500/20 text-slate-400' :
+                        'bg-orange-500/20 text-orange-400'
+                      }`}>
+                        {entry.tier}
+                      </span>
+                    </td>
+                    <td className="py-4 px-4 text-center">
+                      <span className="text-green-400 font-bold">{entry.multiplier}</span>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          <div className="mt-6 text-center">
+            <button className="px-6 py-3 bg-slate-700 hover:bg-slate-600 text-white font-medium rounded-lg transition-colors inline-flex items-center gap-2">
+              <Eye className="w-4 h-4" />
+              View Full Leaderboard (1,000+ Entries)
+            </button>
+          </div>
+        </section>
+
+        <section className="bg-gradient-to-br from-cyan-500/10 to-blue-500/10 border-2 border-cyan-500/30 rounded-2xl p-8">
+          <div className="text-center mb-6">
+            <div className="inline-flex items-center gap-2 px-4 py-2 bg-cyan-500/20 border border-cyan-400/50 rounded-full text-cyan-300 text-sm font-medium mb-4">
+              <Share2 className="w-4 h-4" />
+              BOOST YOUR ALLOCATION
+            </div>
+
+            <h2 className="text-3xl font-bold text-white mb-4">
+              Share to Earn: Referral Multipliers
+            </h2>
+            <p className="text-lg text-slate-300 max-w-2xl mx-auto">
+              Invite friends to participate and earn bonus allocation multipliers. The more qualified users you refer,
+              the higher your rewards!
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-6 mb-8">
+            <div className="bg-slate-900/50 rounded-xl p-6 text-center">
+              <Medal className="w-12 h-12 text-orange-400 mx-auto mb-3" />
+              <div className="text-2xl font-bold text-white mb-2">+5%</div>
+              <div className="text-sm text-slate-400 mb-3">Per Qualified Referral</div>
+              <p className="text-xs text-slate-500">Your friend must complete at least 3 actions to qualify</p>
+            </div>
+
+            <div className="bg-slate-900/50 rounded-xl p-6 text-center ring-2 ring-cyan-500">
+              <Star className="w-12 h-12 text-cyan-400 mx-auto mb-3" />
+              <div className="text-2xl font-bold text-cyan-400 mb-2">+50%</div>
+              <div className="text-sm text-slate-400 mb-3">At 10 Qualified Referrals</div>
+              <p className="text-xs text-slate-500">Unlock mega multiplier bonus tier</p>
+            </div>
+
+            <div className="bg-slate-900/50 rounded-xl p-6 text-center">
+              <Crown className="w-12 h-12 text-yellow-400 mx-auto mb-3" />
+              <div className="text-2xl font-bold text-yellow-400 mb-2">+2% Lifetime</div>
+              <div className="text-sm text-slate-400 mb-3">Of Referee's Staking Rewards</div>
+              <p className="text-xs text-slate-500">Earn passive income from your referrals forever</p>
+            </div>
+          </div>
+
+          <div className="bg-slate-900/50 rounded-xl p-6">
+            <h3 className="font-bold text-white mb-4 text-center">Your Referral Link</h3>
+            <div className="flex gap-3">
+              <input
+                type="text"
+                readOnly
+                value="https://aizura.com/ref/0x1234...5678"
+                className="flex-1 px-4 py-3 bg-slate-800 border border-slate-700 rounded-lg text-slate-300 font-mono text-sm"
+              />
+              <button className="px-6 py-3 bg-cyan-600 hover:bg-cyan-700 text-white font-medium rounded-lg transition-colors inline-flex items-center gap-2">
+                <Share2 className="w-4 h-4" />
+                Copy & Share
+              </button>
+            </div>
+
+            <div className="grid grid-cols-3 gap-4 mt-6">
+              <div className="text-center">
+                <div className="text-2xl font-bold text-white mb-1">12</div>
+                <div className="text-xs text-slate-400">Total Referrals</div>
+              </div>
+              <div className="text-center">
+                <div className="text-2xl font-bold text-green-400 mb-1">8</div>
+                <div className="text-xs text-slate-400">Qualified</div>
+              </div>
+              <div className="text-center">
+                <div className="text-2xl font-bold text-cyan-400 mb-1">+40%</div>
+                <div className="text-xs text-slate-400">Your Bonus</div>
+              </div>
+            </div>
+          </div>
+
+          <div className="mt-6 text-center text-sm text-slate-400">
+            Referrals must connect wallet and complete genuine participation to qualify. Gaming attempts will be detected and penalized.
           </div>
         </section>
 
