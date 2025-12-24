@@ -1,7 +1,7 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import App from './App.tsx';
-import '../shared/styles/base.css';
+import './index.css';
 // import { validateEnvironment } from '../shared/utils/envValidation.js';
 
 // Temporarily disabled for development without Supabase

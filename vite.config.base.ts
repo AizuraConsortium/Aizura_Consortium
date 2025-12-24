@@ -1,5 +1,6 @@
 import { defineConfig, UserConfig } from 'vite';
 import react from '@vitejs/plugin-react';
+import tailwindcss from '@tailwindcss/vite';
 import path from 'path';
 
 export interface AppConfig {
@@ -12,7 +13,10 @@ export const createViteConfig = (config: AppConfig): UserConfig => {
   const appDir = path.resolve(__dirname, config.appName);
 
   return defineConfig({
-    plugins: [react()],
+    plugins: [
+      tailwindcss(),
+      react()
+    ],
     root: appDir,
     build: {
       outDir: path.resolve(__dirname, `dist/${config.appName}`),
