@@ -17,6 +17,8 @@ export function Navigation({ onConnectWallet }: NavigationProps) {
       items: [
         { label: 'Overview', path: '/ecosystem', description: 'AI-managed businesses governed by token holders' },
         { label: 'How It Works', path: '/ecosystem/how-it-works', description: 'The lifecycle from idea to revenue' },
+        { label: 'Why Aizura', path: '/ecosystem/why-aizura', description: 'Competitive advantage and value proposition' },
+        { label: 'Use Cases', path: '/ecosystem/use-cases', description: 'Real-world applications and results' },
         { label: 'AI Consortium', path: '/ecosystem/ai-consortium', description: 'The 6 AI collaboration model' },
         { label: 'Roadmap', path: '/ecosystem/roadmap', description: 'Timeline and upcoming launches' },
       ],

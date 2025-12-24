@@ -13,6 +13,8 @@ import EcosystemOverview from './pages/ecosystem/EcosystemOverview';
 import HowItWorks from './pages/ecosystem/HowItWorks';
 import AIConsortium from './pages/ecosystem/AIConsortium';
 import Roadmap from './pages/ecosystem/Roadmap';
+import WhyAizura from './pages/ecosystem/WhyAizura';
+import UseCases from './pages/ecosystem/UseCases';
 
 import LaunchpadOverview from './pages/launchpad/LaunchpadOverview';
 import SubmitProposal from './pages/launchpad/SubmitProposal';
@@ -76,6 +78,8 @@ export default function App() {
             <Route path="/ecosystem/how-it-works" element={<HowItWorks />} />
             <Route path="/ecosystem/ai-consortium" element={<AIConsortium />} />
             <Route path="/ecosystem/roadmap" element={<Roadmap />} />
+            <Route path="/ecosystem/why-aizura" element={<WhyAizura />} />
+            <Route path="/ecosystem/use-cases" element={<UseCases />} />
 
             <Route path="/launchpad" element={<LaunchpadOverview />} />
             <Route path="/launchpad/submit" element={<SubmitProposal />} />
