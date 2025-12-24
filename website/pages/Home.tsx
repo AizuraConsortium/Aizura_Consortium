@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { EnhancedNavigation } from '../components/layout/EnhancedNavigation';
+import { Navigation } from '../components/layout/Navigation';
 import { Footer } from '../components/layout/Footer';
 import {
   Sparkles, TrendingUp, Zap, Users, Clock, Rocket, FileText, Vote, Cpu, DollarSign,
@@ -15,7 +15,7 @@ export default function NewHome() {
       <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZGVmcz48cGF0dGVybiBpZD0iZ3JpZCIgd2lkdGg9IjQwIiBoZWlnaHQ9IjQwIiBwYXR0ZXJuVW5pdHM9InVzZXJTcGFjZU9uVXNlIj48cGF0aCBkPSJNIDQwIDAgTCAwIDAgMCA0MCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSJyZ2JhKDI1NSwgMjU1LCAyNTUsIDAuMDMpIiBzdHJva2Utd2lkdGg9IjEiLz48L3BhdHRlcm4+PC9kZWZzPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JpZCkiLz48L3N2Zz4=')] opacity-40"></div>
 
       <div className="relative">
-        <EnhancedNavigation onConnectWallet={() => setConnectWalletModal(true)} />
+        <Navigation onConnectWallet={() => setConnectWalletModal(true)} />
 
         <main id="main-content">
           <HeroSection />
