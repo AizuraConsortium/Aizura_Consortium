@@ -67,7 +67,7 @@ export function ToastComponent({ toast, onClose }: ToastComponentProps) {
       aria-live="assertive"
     >
       <div className="flex items-start">
-        <div className="flex-shrink-0">
+        <div className="shrink-0">
           <Icon className={`h-5 w-5 ${iconColor}`} aria-hidden="true" />
         </div>
         <div className="ml-3 flex-1">
@@ -76,7 +76,7 @@ export function ToastComponent({ toast, onClose }: ToastComponentProps) {
             <p className={`mt-1 text-sm ${textColor} opacity-90`}>{toast.message}</p>
           )}
         </div>
-        <div className="ml-4 flex-shrink-0">
+        <div className="ml-4 shrink-0">
           <button
             onClick={() => onClose(toast.id)}
             className={`inline-flex rounded-md ${bgColor} ${textColor} hover:opacity-75 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-${toast.type}-50`}

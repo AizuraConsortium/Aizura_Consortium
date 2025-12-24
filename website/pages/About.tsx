@@ -98,9 +98,9 @@ function FAQItem({ question, answer }: { question: string; answer: string }) {
       >
         <span className="text-lg font-medium text-white pr-8">{question}</span>
         {isOpen ? (
-          <ChevronUp className="w-5 h-5 text-cyan-400 flex-shrink-0" />
+          <ChevronUp className="w-5 h-5 text-cyan-400 shrink-0" />
         ) : (
-          <ChevronDown className="w-5 h-5 text-slate-400 flex-shrink-0" />
+          <ChevronDown className="w-5 h-5 text-slate-400 shrink-0" />
         )}
       </button>
       {isOpen && (
@@ -114,7 +114,7 @@ function FAQItem({ question, answer }: { question: string; answer: string }) {
 
 export default function About() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
+    <div className="min-h-screen bg-linear-to-br from-slate-900 via-slate-800 to-slate-900">
       <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZGVmcz48cGF0dGVybiBpZD0iZ3JpZCIgd2lkdGg9IjQwIiBoZWlnaHQ9IjQwIiBwYXR0ZXJuVW5pdHM9InVzZXJTcGFjZU9uVXNlIj48cGF0aCBkPSJNIDQwIDAgTCAwIDAgMCA0MCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSJyZ2JhKDI1NSwgMjU1LCAyNTUsIDAuMDMpIiBzdHJva2Utd2lkdGg9IjEiLz48L3BhdHRlcm4+PC9kZWZzPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JpZCkiLz48L3N2Zz4=')] opacity-40"></div>
 
       <div className="relative">
@@ -124,7 +124,7 @@ export default function About() {
           <div className="text-center mb-12 sm:mb-16">
             <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-6">
               How Aizura Consortium
-              <span className="block bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
+              <span className="block bg-linear-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
                 Works
               </span>
             </h1>
@@ -145,7 +145,7 @@ export default function About() {
                   key={agent.name}
                   className="bg-slate-800/50 backdrop-blur-sm border border-slate-700/50 rounded-xl p-6 hover:border-cyan-500/50 transition-all hover:transform hover:scale-105"
                 >
-                  <div className={`w-12 h-12 rounded-lg bg-gradient-to-br ${agent.color} mb-4`}></div>
+                  <div className={`w-12 h-12 rounded-lg bg-linear-to-br ${agent.color} mb-4`}></div>
                   <h3 className="text-xl font-bold text-white mb-2">{agent.name}</h3>
                   <p className="text-cyan-400 text-sm font-medium mb-3">{agent.provider}</p>
                   <p className="text-slate-300 text-sm">{agent.role}</p>

@@ -85,7 +85,7 @@ export function NavigationLink({
   const content = (
     <>
       {link.icon && (
-        <span className={cn('flex-shrink-0', isMobile ? 'w-5 h-5' : 'w-4 h-4')} aria-hidden="true">
+        <span className={cn('shrink-0', isMobile ? 'w-5 h-5' : 'w-4 h-4')} aria-hidden="true">
           {link.icon}
         </span>
       )}

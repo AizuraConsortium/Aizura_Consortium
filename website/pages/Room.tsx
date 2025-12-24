@@ -295,7 +295,7 @@ export default function Room() {
                 return (
                   <div key={msg.id} className="bg-slate-900/50 rounded-lg p-4 border border-slate-700/50">
                     <div className="flex items-start space-x-3">
-                      <div className={`w-10 h-10 rounded-full bg-gradient-to-br ${getAgentColor(msg.agent_id)} flex items-center justify-center text-white font-bold text-sm flex-shrink-0`}>
+                      <div className={`w-10 h-10 rounded-full bg-linear-to-br ${getAgentColor(msg.agent_id)} flex items-center justify-center text-white font-bold text-sm shrink-0`}>
                         {msg.agent_id.charAt(0).toUpperCase()}
                       </div>
 

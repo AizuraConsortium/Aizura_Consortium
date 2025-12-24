@@ -142,7 +142,7 @@ export function ProposalForm({
           )}
         >
           <Save
-            className={cn('w-5 h-5 flex-shrink-0 mt-0.5', variant === 'light' ? 'text-blue-600' : 'text-blue-400')}
+            className={cn('w-5 h-5 shrink-0 mt-0.5', variant === 'light' ? 'text-blue-600' : 'text-blue-400')}
             aria-hidden="true"
           />
           <div className="flex-1">
@@ -254,7 +254,7 @@ export function ProposalForm({
           <div className={cn('rounded-xl p-6 max-w-md w-full', containerClasses)}>
             <div className="flex items-start space-x-3 mb-4">
               <AlertCircle
-                className={cn('w-6 h-6 flex-shrink-0', variant === 'light' ? 'text-amber-600' : 'text-amber-400')}
+                className={cn('w-6 h-6 shrink-0', variant === 'light' ? 'text-amber-600' : 'text-amber-400')}
                 aria-hidden="true"
               />
               <div>

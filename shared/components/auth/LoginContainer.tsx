@@ -9,7 +9,7 @@ export interface LoginContainerProps {
 }
 
 const containerVariants: Record<'admin' | 'client' | 'custom', string> = {
-  admin: 'min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900',
+  admin: 'min-h-screen flex items-center justify-center bg-linear-to-br from-gray-900 via-gray-800 to-gray-900',
   client: 'min-h-screen flex items-center justify-center bg-gray-50',
   custom: 'min-h-screen flex items-center justify-center bg-gray-50'
 };

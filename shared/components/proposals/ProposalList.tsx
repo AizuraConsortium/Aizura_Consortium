@@ -106,7 +106,7 @@ export function ProposalList({
       <div className={errorClasses} role="alert" aria-live="assertive">
         <div className="flex items-start space-x-3">
           <AlertCircle
-            className="w-5 h-5 flex-shrink-0 mt-0.5"
+            className="w-5 h-5 shrink-0 mt-0.5"
             aria-hidden="true"
           />
           <div className="flex-1">

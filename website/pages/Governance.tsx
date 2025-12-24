@@ -28,7 +28,7 @@ export default function Governance() {
 
         <div className="bg-blue-500/10 border border-blue-500/50 rounded-xl p-6 mb-6">
           <div className="flex items-start space-x-4">
-            <ExternalLink className="w-6 h-6 text-blue-400 flex-shrink-0 mt-1" aria-hidden="true" />
+            <ExternalLink className="w-6 h-6 text-blue-400 shrink-0 mt-1" aria-hidden="true" />
             <div>
               <h3 className="text-lg font-bold text-blue-300 mb-2">Want to create proposals and vote?</h3>
               <p className="text-slate-300 mb-4">

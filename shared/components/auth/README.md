@@ -252,7 +252,7 @@ import { LoginContainer, LoginForm } from '@shared/components/auth';
 function CustomStyledLogin() {
   return (
     <LoginContainer
-      className="bg-gradient-to-br from-blue-500 to-purple-600"
+      className="bg-linear-to-br from-blue-500 to-purple-600"
       title="Welcome"
       subtitle="Your governance platform"
     >

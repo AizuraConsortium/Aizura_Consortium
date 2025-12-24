@@ -83,7 +83,7 @@ export default function MyProposals() {
                             {proposal.summary}
                           </p>
                         </div>
-                        <div className="ml-4 flex-shrink-0">
+                        <div className="ml-4 shrink-0">
                           <span
                             className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${getStatusBadge(
                               proposal.status
@@ -97,7 +97,7 @@ export default function MyProposals() {
                         <div className="sm:flex">
                           <p className="flex items-center text-sm text-gray-500">
                             <svg
-                              className="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400"
+                              className="shrink-0 mr-1.5 h-5 w-5 text-gray-400"
                               fill="none"
                               viewBox="0 0 24 24"
                               stroke="currentColor"

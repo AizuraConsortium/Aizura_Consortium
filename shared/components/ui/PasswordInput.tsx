@@ -284,9 +284,9 @@ export const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>(
             {validationResults.map((result, index) => (
               <div key={index} className="flex items-center text-xs">
                 {result.passed ? (
-                  <Check className="h-3.5 w-3.5 text-green-600 mr-1.5 flex-shrink-0" aria-hidden="true" />
+                  <Check className="h-3.5 w-3.5 text-green-600 mr-1.5 shrink-0" aria-hidden="true" />
                 ) : (
-                  <X className="h-3.5 w-3.5 text-gray-400 mr-1.5 flex-shrink-0" aria-hidden="true" />
+                  <X className="h-3.5 w-3.5 text-gray-400 mr-1.5 shrink-0" aria-hidden="true" />
                 )}
                 <span className={result.passed ? 'text-green-700' : 'text-gray-600'}>
                   {result.label}

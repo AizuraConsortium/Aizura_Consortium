@@ -193,7 +193,7 @@ export function FormField({
           aria-live="polite"
         >
           {showErrorIcon && (
-            <AlertCircle className="h-4 w-4 mr-1.5 mt-0.5 flex-shrink-0" aria-hidden="true" />
+            <AlertCircle className="h-4 w-4 mr-1.5 mt-0.5 shrink-0" aria-hidden="true" />
           )}
           <span>{error}</span>
         </div>

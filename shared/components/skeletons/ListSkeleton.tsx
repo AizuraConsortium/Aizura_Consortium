@@ -20,7 +20,7 @@ export function ListSkeleton({ items = 5, hasAvatar = false, hasActions = false,
           className={`flex items-center space-x-4 p-4 ${cardBg} border ${borderColor} rounded-lg`}
         >
           {hasAvatar && (
-            <div className="flex-shrink-0">
+            <div className="shrink-0">
               <div className={`h-12 w-12 ${primarySkeleton} rounded-full`} />
             </div>
           )}
@@ -31,7 +31,7 @@ export function ListSkeleton({ items = 5, hasAvatar = false, hasActions = false,
           </div>
 
           {hasActions && (
-            <div className="flex-shrink-0 flex space-x-2">
+            <div className="shrink-0 flex space-x-2">
               <div className={`h-8 w-8 ${primarySkeleton} rounded`} />
               <div className={`h-8 w-8 ${primarySkeleton} rounded`} />
             </div>

@@ -59,7 +59,7 @@ export function ErrorAlert({
       <div className={`${baseClasses} border rounded-lg p-6 ${className}`} role="alert">
         <div className="flex items-start">
           {showIcon && (
-            <AlertCircle className={`h-5 w-5 ${iconColorClass} mr-3 flex-shrink-0 mt-0.5`} aria-hidden="true" />
+            <AlertCircle className={`h-5 w-5 ${iconColorClass} mr-3 shrink-0 mt-0.5`} aria-hidden="true" />
           )}
           <div className="flex-1">
             <p className={`text-sm ${isDark ? 'text-red-300' : 'text-red-800'}`}>{message}</p>
@@ -93,7 +93,7 @@ export function ErrorAlert({
   return (
     <div className={`${baseClasses} border rounded-lg p-4 flex items-start ${className}`} role="alert">
       {showIcon && (
-        <AlertCircle className={`h-5 w-5 ${iconColorClass} mr-2 flex-shrink-0 mt-0.5`} aria-hidden="true" />
+        <AlertCircle className={`h-5 w-5 ${iconColorClass} mr-2 shrink-0 mt-0.5`} aria-hidden="true" />
       )}
       <p className={`text-sm ${isDark ? 'text-red-300' : 'text-red-800'} flex-1`}>{message}</p>
       {onDismiss && (

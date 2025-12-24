@@ -39,7 +39,7 @@ export default function Dashboard() {
             <div className="bg-white overflow-hidden shadow rounded-lg">
               <div className="p-5">
                 <div className="flex items-center">
-                  <div className="flex-shrink-0">
+                  <div className="shrink-0">
                     <svg
                       className="h-6 w-6 text-gray-400"
                       fill="none"
@@ -71,7 +71,7 @@ export default function Dashboard() {
             <div className="bg-white overflow-hidden shadow rounded-lg">
               <div className="p-5">
                 <div className="flex items-center">
-                  <div className="flex-shrink-0">
+                  <div className="shrink-0">
                     <svg
                       className="h-6 w-6 text-green-400"
                       fill="none"
@@ -103,7 +103,7 @@ export default function Dashboard() {
             <div className="bg-white overflow-hidden shadow rounded-lg">
               <div className="p-5">
                 <div className="flex items-center">
-                  <div className="flex-shrink-0">
+                  <div className="shrink-0">
                     <svg
                       className="h-6 w-6 text-blue-400"
                       fill="none"
