@@ -1,7 +1,7 @@
 import { ReactNode } from 'react';
 import { AlertCircle } from 'lucide-react';
 import { cn } from '@shared/styles/theme';
-import { CardSkeleton } from '../skeletons';
+import { CardSkeleton } from '../skeletons/CardSkeleton';
 import { ProposalCard } from './ProposalCard';
 import type { Proposal } from '@shared/types/models';
 

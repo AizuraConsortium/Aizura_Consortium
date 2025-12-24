@@ -1,5 +1,7 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { ErrorBoundary, SkipNavigation, ToastProvider } from '@shared/components';
+import { ErrorBoundary } from '@shared/components/ErrorBoundary';
+import { SkipNavigation } from '@shared/components/SkipNavigation';
+import { ToastProvider } from '@shared/components/ToastProvider';
 import Home from './pages/Home';
 import Room from './pages/Room';
 import PlanViewer from './pages/PlanViewer';

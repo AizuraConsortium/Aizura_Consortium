@@ -1,5 +1,6 @@
 import { useAuth } from '../contexts/AuthContext';
-import { LoginForm, LoginContainer } from '@shared/components/auth';
+import { LoginForm } from '@shared/components/auth/LoginForm';
+import { LoginContainer } from '@shared/components/auth/LoginContainer';
 
 export default function Login() {
   const { signIn, user } = useAuth();

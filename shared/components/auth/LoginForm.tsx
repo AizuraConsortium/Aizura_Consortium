@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Loader2 } from 'lucide-react';
-import { ErrorAlert } from '@shared/components';
-import { Input, PasswordInput } from '@shared/components/ui';
+import { ErrorAlert } from '../ErrorAlert';
+import { Input } from '../ui/Input';
+import { PasswordInput } from '../ui/PasswordInput';
 import type { AuthResult } from '@shared/types/auth';
 
 export interface LoginFormProps {

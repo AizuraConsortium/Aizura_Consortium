@@ -1,6 +1,6 @@
 import { Home, FileText, ThumbsUp } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import { BaseNavigation } from '@shared/components/layout';
+import { BaseNavigation } from '@shared/components/layout/BaseNavigation';
 import type { NavigationLink } from '@shared/types/navigation';
 
 export function Navigation() {

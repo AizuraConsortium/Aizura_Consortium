@@ -1,6 +1,7 @@
 import { Shield } from 'lucide-react';
 import { useAdminAuth } from '../contexts/AdminAuthContext';
-import { LoginForm, LoginContainerWithLink } from '@shared/components/auth';
+import { LoginForm } from '@shared/components/auth/LoginForm';
+import { LoginContainerWithLink } from '@shared/components/auth/LoginContainer';
 
 export function AdminLogin() {
   const { signIn, isAdmin, user } = useAdminAuth();

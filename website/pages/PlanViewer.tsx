@@ -4,7 +4,7 @@ import { CheckCircle, Circle, Clock } from 'lucide-react';
 import { marked } from 'marked';
 import DOMPurify from 'dompurify';
 import { api } from '../lib/api';
-import { PlanSkeleton } from '@shared/components/skeletons';
+import { PlanSkeleton } from '@shared/components/skeletons/PlanSkeleton';
 import { Navigation } from '../components/layout/Navigation';
 import type { PlanData } from '@shared/types/api';
 

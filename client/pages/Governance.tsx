@@ -4,8 +4,9 @@ import { api } from '../lib/api';
 import { logApiError } from '../lib/logging/errorLogger';
 import { useAuth } from '../contexts/AuthContext';
 import { useProposals } from '@shared/hooks/useProposals';
-import { ProposalList, ProposalForm } from '@shared/components';
-import { Navigation } from '../components';
+import { ProposalList } from '@shared/components/proposals/ProposalList';
+import { ProposalForm } from '@shared/components/proposals/ProposalForm';
+import { Navigation } from '../components/layout/Navigation';
 
 export default function Governance() {
   const { session } = useAuth();

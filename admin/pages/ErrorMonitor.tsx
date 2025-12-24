@@ -14,7 +14,7 @@ import { ErrorDetailsModal } from '../components/ErrorDetailsModal';
 import { FilterPanel, ErrorFilters } from '../components/FilterPanel';
 import { PaginationControls } from '../components/PaginationControls';
 import { ErrorTable } from '../components/ErrorTable';
-import { TableSkeleton } from '@shared/components/skeletons';
+import { TableSkeleton } from '@shared/components/skeletons/TableSkeleton';
 import { supabase } from '@shared/lib/supabase';
 import type { ErrorLog } from '@shared/types/models';
 

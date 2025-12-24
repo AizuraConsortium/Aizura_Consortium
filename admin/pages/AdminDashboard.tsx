@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAdminAuth } from '../contexts/AdminAuthContext';
 import { api } from '../lib/api';
-import { ErrorAlert } from '@shared/components';
+import { ErrorAlert } from '@shared/components/ErrorAlert';
 import {
   Shield,
   LogOut,

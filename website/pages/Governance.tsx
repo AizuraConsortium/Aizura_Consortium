@@ -1,7 +1,7 @@
 import { ExternalLink } from 'lucide-react';
 import { api } from '../lib/api';
 import { useProposals } from '@shared/hooks/useProposals';
-import { ProposalList } from '@shared/components';
+import { ProposalList } from '@shared/components/proposals/ProposalList';
 import { Navigation } from '../components/layout/Navigation';
 
 export default function Governance() {

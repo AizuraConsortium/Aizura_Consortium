@@ -1,7 +1,8 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import { ErrorBoundary, ToastProvider } from '@shared/components';
+import { ErrorBoundary } from '@shared/components/ErrorBoundary';
+import { ToastProvider } from '@shared/components/ToastProvider';
 import { AdminAuthProvider } from './contexts/AdminAuthContext';
-import { ProtectedRoute } from '@shared/components';
+import { ProtectedRoute } from '@shared/components/ProtectedRoute';
 import { AdminLogin } from './pages/AdminLogin';
 import { AdminDashboard } from './pages/AdminDashboard';
 import { ErrorMonitor } from './pages/ErrorMonitor';

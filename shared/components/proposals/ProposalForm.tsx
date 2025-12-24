@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { AlertCircle, Save } from 'lucide-react';
 import { cn } from '@shared/styles/theme';
-import { FormField } from '../ui';
+import { FormField } from '../ui/FormField';
 import { useProposalForm } from '@shared/hooks/useProposalForm';
 
 export interface ProposalFormProps {

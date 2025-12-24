@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { ThumbsUp, ThumbsDown, ChevronDown, ChevronUp } from 'lucide-react';
 import { cn } from '@shared/styles/theme';
-import { ProposalStatusBadge, ProposalVoteDisplay } from '../governance';
+import { ProposalStatusBadge } from '../governance/ProposalStatusBadge';
+import { ProposalVoteDisplay } from '../governance/ProposalVoteDisplay';
 import type { Proposal } from '@shared/types/models';
 
 export interface ProposalCardProps {
