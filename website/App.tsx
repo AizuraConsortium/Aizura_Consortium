@@ -18,6 +18,7 @@ import LaunchpadOverview from './pages/launchpad/LaunchpadOverview';
 import SubmitProposal from './pages/launchpad/SubmitProposal';
 import VotingRewards from './pages/launchpad/VotingRewards';
 import ProposalLifecycle from './pages/launchpad/ProposalLifecycle';
+import ProposalDetail from './pages/launchpad/ProposalDetail';
 
 import PortfolioOverview from './pages/portfolio/PortfolioOverview';
 import AITraders from './pages/portfolio/AITraders';
@@ -70,6 +71,7 @@ export default function App() {
             <Route path="/launchpad/submit" element={<SubmitProposal />} />
             <Route path="/launchpad/voting-rewards" element={<VotingRewards />} />
             <Route path="/launchpad/lifecycle" element={<ProposalLifecycle />} />
+            <Route path="/launchpad/:proposalId" element={<ProposalDetail />} />
 
             <Route path="/portfolio" element={<PortfolioOverview />} />
             <Route path="/portfolio/ai-traders" element={<AITraders />} />
