@@ -347,7 +347,7 @@ export default function Room() {
         </div>
       </main>
 
-      <SystemHealthBadge />
+      <WebsiteHealthBadge />
     </div>
   );
 }
