@@ -4,7 +4,7 @@
  * Runtime validation for agent vote data and vote aggregation
  */
 
-import { ValidationError } from '../errors/index.js';
+import { ValidationError } from '../errors/RepositoryError.js';
 import type { AgentId, VoteChoice } from '../../../../../../shared/types/models.js';
 
 const VALID_AGENT_IDS: readonly AgentId[] = ['claude', 'chatgpt', 'grok', 'gemini', 'deepseek', 'qwen'] as const;

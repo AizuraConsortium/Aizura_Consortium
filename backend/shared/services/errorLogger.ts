@@ -1,4 +1,4 @@
-import { SupabaseService } from './supabase/index.js';
+import { SupabaseService } from './supabase/SupabaseService.js';
 import type { AgentId, ErrorSource, ErrorSeverity } from '../../../shared/types/models.js';
 
 export interface ErrorDetails {

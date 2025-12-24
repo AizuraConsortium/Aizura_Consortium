@@ -16,7 +16,7 @@ import {
   CircularDependencyError,
   DependencyBlockedError,
   StateTransitionError,
-} from './errors/index.js';
+} from './errors/RepositoryError.js';
 import type { Database } from '../../../../../shared/types/database.types.js';
 
 type Step = Database['public']['Tables']['steps']['Row'];

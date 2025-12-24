@@ -7,7 +7,7 @@
 
 import { BaseRepository, type OperationContext } from './BaseRepository.js';
 import { isDuplicateKeyError } from '../errorHandlers.js';
-import { NotFoundError } from './errors/index.js';
+import { NotFoundError } from './errors/RepositoryError.js';
 import {
   validateProposalData,
   validateProposalTitle,
@@ -17,7 +17,7 @@ import {
   validateStatusTransition,
   isValidProposalStatus,
   isValidVoteType,
-} from './guards/index.js';
+} from './guards/proposalGuards.js';
 import type { Proposal, ProposalQueue, QueueOperationResult } from '../../../../../shared/types/models.js';
 import type { Database } from '../../../../../shared/types/database.types.js';
 

@@ -1,7 +1,7 @@
 import type { AgentId, AgentMessage, AgentVoteMessage, Phase, Topic, AgentVote, PlanEditorArgs } from '../../../shared/types/models.js';
 import { AGENT_ROLE_MAPPING } from '../../../shared/types/models.js';
 import { AgentRunner, type AgentContext } from '../agents/runner.js';
-import { SupabaseService } from '../services/supabase/index.js';
+import { SupabaseService } from '../services/supabase/SupabaseService.js';
 import { PlanEditor } from '../services/planEditor.js';
 import { PhaseValidator } from './phaseValidator.js';
 import { OrchestratorLockService } from '../services/orchestratorLock.js';

@@ -5,7 +5,7 @@
  * external services, and resource availability.
  */
 
-import { SupabaseService } from './supabase/index.js';
+import { SupabaseService } from './supabase/SupabaseService.js';
 import { PerformanceMonitor } from '../monitoring/PerformanceMonitor.js';
 
 /**

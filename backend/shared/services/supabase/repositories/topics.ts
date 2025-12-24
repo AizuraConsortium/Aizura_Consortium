@@ -5,7 +5,7 @@
  */
 
 import { BaseRepository, type OperationContext } from './BaseRepository.js';
-import { NotFoundError } from './errors/index.js';
+import { NotFoundError } from './errors/RepositoryError.js';
 import {
   validateTopicData,
   validateTopicId,
@@ -13,7 +13,7 @@ import {
   validatePhaseTransition,
   validateCanEndTopic,
   isValidPhase,
-} from './guards/index.js';
+} from './guards/topicGuards.js';
 import type { Topic, Phase } from '../../../../../shared/types/models.js';
 import type { Database } from '../../../../../shared/types/database.types.js';
 

@@ -4,7 +4,7 @@
  * Records business events and user actions for audit trail.
  */
 
-import { SupabaseService } from './supabase/index.js';
+import { SupabaseService } from './supabase/SupabaseService.js';
 
 /**
  * Audit event types

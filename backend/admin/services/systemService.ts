@@ -5,7 +5,7 @@ import {
   getRecentCriticalErrors,
   getTopRateLimitViolators,
 } from '../../shared/services/supabase/repositories/system.js';
-import { SupabaseService } from '../../shared/services/supabase/index.js';
+import { SupabaseService } from '../../shared/services/supabase/SupabaseService.js';
 import type { SystemHealth } from '../../../shared/types/api.js';
 import type { Database } from '../../../shared/types/database.types.js';
 

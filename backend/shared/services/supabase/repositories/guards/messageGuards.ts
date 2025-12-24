@@ -4,7 +4,7 @@
  * Runtime validation for message-related data including agent mappings
  */
 
-import { ValidationError } from '../errors/index.js';
+import { ValidationError } from '../errors/RepositoryError.js';
 import type { Database } from '../../../../../../shared/types/database.types.js';
 import type { AgentId, AgentRole } from '../../../../../../shared/types/models.js';
 import { AGENT_ROLE_MAPPING } from '../../../../../../shared/types/models.js';

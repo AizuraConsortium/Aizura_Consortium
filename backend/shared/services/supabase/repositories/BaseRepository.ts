@@ -18,7 +18,7 @@ import {
   ConstraintViolationError,
   QueryTimeoutError,
   type ErrorContext,
-} from './errors/index.js';
+} from './errors/RepositoryError.js';
 import { queryMonitor } from '../monitoring/QueryMonitor.js';
 import { repositoryCache } from '../cache/RepositoryCache.js';
 import type { SupabaseClient } from '@supabase/supabase-js';

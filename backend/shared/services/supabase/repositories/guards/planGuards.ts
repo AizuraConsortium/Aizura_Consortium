@@ -4,7 +4,7 @@
  * Runtime validation for plan-related data and operations
  */
 
-import { ValidationError, StateTransitionError, OperationNotAllowedError } from '../errors/index.js';
+import { ValidationError, StateTransitionError, OperationNotAllowedError } from '../errors/RepositoryError.js';
 import type { Database } from '../../../../../../shared/types/database.types.js';
 
 type PlanStatus = Database['public']['Tables']['plans']['Row']['status'];

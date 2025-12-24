@@ -4,7 +4,7 @@
  * Runtime validation for proposal-related data and state transitions
  */
 
-import { ValidationError, StateTransitionError } from '../errors/index.js';
+import { ValidationError, StateTransitionError } from '../errors/RepositoryError.js';
 import type { Database } from '../../../../../../shared/types/database.types.js';
 
 type ProposalStatus = Database['public']['Tables']['proposals']['Row']['status'];

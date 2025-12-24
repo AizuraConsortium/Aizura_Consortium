@@ -28,7 +28,7 @@ export class HealthController {
    */
   async checkHealth(req: Request, res: Response): Promise<void> {
     try {
-      const { SupabaseService } = await import('../services/supabase/index.js');
+      const { SupabaseService } = await import('../services/supabase/SupabaseService.js');
       const supabase = SupabaseService.getInstance();
       const dbHealth = await supabase.healthCheck();
 
