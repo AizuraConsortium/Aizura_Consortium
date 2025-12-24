@@ -4,9 +4,13 @@ import { ToastProvider } from '@shared/components/ToastProvider';
 import { AuthProvider } from './contexts/AuthContext';
 import { ProtectedRoute } from '@shared/components/ProtectedRoute';
 import Login from './pages/Login';
-import Dashboard from './pages/Dashboard';
-import MyProposals from './pages/MyProposals';
-import Governance from './pages/Governance';
+import DashboardHome from './pages/DashboardHome';
+import LaunchpadView from './pages/LaunchpadView';
+import GovernanceView from './pages/GovernanceView';
+import PortfolioView from './pages/PortfolioView';
+import RewardsView from './pages/RewardsView';
+import TokenView from './pages/TokenView';
+import SettingsView from './pages/SettingsView';
 
 export default function App() {
   return (
@@ -17,30 +21,63 @@ export default function App() {
             <Routes>
               <Route path="/login" element={<Login />} />
               <Route
-                path="/"
+                path="/app"
                 element={
                   <ProtectedRoute redirectTo="/login">
-                    <Dashboard />
+                    <DashboardHome />
                   </ProtectedRoute>
                 }
               />
               <Route
-                path="/proposals"
+                path="/app/launchpad"
                 element={
                   <ProtectedRoute redirectTo="/login">
-                    <MyProposals />
+                    <LaunchpadView />
                   </ProtectedRoute>
                 }
               />
               <Route
-                path="/governance"
+                path="/app/governance"
                 element={
                   <ProtectedRoute redirectTo="/login">
-                    <Governance />
+                    <GovernanceView />
                   </ProtectedRoute>
                 }
               />
-              <Route path="*" element={<Navigate to="/" replace />} />
+              <Route
+                path="/app/portfolio"
+                element={
+                  <ProtectedRoute redirectTo="/login">
+                    <PortfolioView />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/app/rewards"
+                element={
+                  <ProtectedRoute redirectTo="/login">
+                    <RewardsView />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/app/token"
+                element={
+                  <ProtectedRoute redirectTo="/login">
+                    <TokenView />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/app/settings"
+                element={
+                  <ProtectedRoute redirectTo="/login">
+                    <SettingsView />
+                  </ProtectedRoute>
+                }
+              />
+              <Route path="/" element={<Navigate to="/app" replace />} />
+              <Route path="*" element={<Navigate to="/app" replace />} />
             </Routes>
           </BrowserRouter>
         </AuthProvider>
