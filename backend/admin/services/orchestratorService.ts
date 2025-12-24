@@ -1,4 +1,4 @@
-import type { Orchestrator } from '../../shared/orchestrator/index.js';
+import type { Orchestrator } from '../../shared/orchestrator/Orchestrator.js';
 
 export interface OrchestratorStatus {
   isRunning: boolean;

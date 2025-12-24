@@ -1,7 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
-import { Orchestrator } from './shared/orchestrator/index.js';
+import { Orchestrator } from './shared/orchestrator/Orchestrator.js';
 import { ErrorLogger } from './shared/services/errorLogger.js';
 import { Container } from './shared/infrastructure/Container.js';
 import {

@@ -1,5 +1,5 @@
 import type { Request, Response } from 'express';
-import type { Orchestrator } from '../orchestrator/index.js';
+import type { Orchestrator } from '../orchestrator/Orchestrator.js';
 import { ErrorLogger } from '../services/errorLogger.js';
 
 /**

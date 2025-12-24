@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { OrchestratorService } from '../services/orchestratorService.js';
-import type { Orchestrator } from '../../shared/orchestrator/index.js';
+import type { Orchestrator } from '../../shared/orchestrator/Orchestrator.js';
 
 export class OrchestratorController {
   private orchestratorService: OrchestratorService;
