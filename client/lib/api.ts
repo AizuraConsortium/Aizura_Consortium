@@ -1,7 +1,7 @@
 import { apiClient } from '@shared/lib/apiClient';
 import { APIError } from '@shared/lib/apiClient';
 import { logError } from '@shared/lib/logError';
-import { validateProposal } from '@shared/utils/validation';
+import { validateProposal } from '@shared/utils/validation/business-validators';
 import type { Proposal } from '@shared/types/models';
 import type { ApiResponse } from '@shared/types/api';
 

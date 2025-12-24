@@ -18,7 +18,7 @@ import {
   assertValidProposalId,
   assertValidVoteType,
   assertValidUserId,
-} from '../../../shared/utils/validation/index.js';
+} from '../../../shared/utils/validation/business-validators.js';
 import type { Database } from '../../../shared/types/database.types.js';
 
 type Proposal = Database['public']['Tables']['proposals']['Row'];

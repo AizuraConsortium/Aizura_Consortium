@@ -4,7 +4,7 @@ import {
   validateProposalTitle,
   validateProposalSummary,
   PROPOSAL_VALIDATION_RULES,
-} from '@shared/utils/validation';
+} from '@shared/utils/validation/business-validators';
 
 export interface ProposalFormData {
   title: string;
