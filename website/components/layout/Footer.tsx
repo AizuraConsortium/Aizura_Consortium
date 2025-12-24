@@ -157,8 +157,8 @@ export function Footer() {
                 </Link>
               </li>
               <li>
-                <Link to="/blockchain/security" className="text-sm text-slate-400 hover:text-white transition-colors">
-                  Security
+                <Link to="/security/bug-bounty" className="text-sm text-slate-400 hover:text-white transition-colors">
+                  Bug Bounty
                 </Link>
               </li>
             </ul>
@@ -181,7 +181,11 @@ export function Footer() {
             </Link>
             <span>•</span>
             <Link to="/legal/disclaimer" className="hover:text-white transition-colors">
-              Disclaimer / Risk
+              Disclaimer
+            </Link>
+            <span>•</span>
+            <Link to="/legal/risk-disclosure" className="hover:text-white transition-colors">
+              Risk Disclosure
             </Link>
             <span>•</span>
             <Link to="/legal/cookies" className="hover:text-white transition-colors">

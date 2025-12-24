@@ -116,7 +116,9 @@ export function Navigation({ onConnectWallet }: NavigationProps) {
       items: [
         { label: 'Documentation', path: '/developers/documentation', description: 'Integration guides and API reference' },
         { label: 'Smart Contracts', path: '/blockchain/smart-contracts', description: 'Contract addresses and ABIs' },
-        { label: 'Security', path: '/blockchain/security', description: 'Audits and bug bounty program' },
+        { label: 'Security', path: '/blockchain/security', description: 'Audits and security overview' },
+        { label: 'Bug Bounty Program', path: '/security/bug-bounty', description: 'Earn up to $50K for security research' },
+        { label: 'Incident Response', path: '/security/incident-response', description: 'Report security vulnerabilities' },
         { label: 'Litepaper', path: '/resources/litepaper', description: 'Technical documentation' },
       ],
     },

@@ -357,24 +357,115 @@ export default function DisclaimerRisk() {
           </div>
         </section>
 
+        <section className="bg-red-500/10 border border-red-500/30 rounded-2xl p-8 lg:p-12">
+          <h2 className="text-3xl font-bold text-white mb-6 text-center flex items-center justify-center gap-3">
+            <Scale className="w-8 h-8 text-red-400" />
+            Legal Disclaimers
+          </h2>
+
+          <div className="space-y-6 max-w-4xl mx-auto">
+            <div className="bg-slate-900/50 border border-slate-700 rounded-xl p-6">
+              <h3 className="text-xl font-bold text-white mb-3">No Liability</h3>
+              <p className="text-slate-300 mb-3">
+                <strong className="text-white">THE PLATFORM, ITS OPERATORS, CONTRIBUTORS, DEVELOPERS, AND ALL ASSOCIATED PARTIES ACCEPT ABSOLUTELY NO LIABILITY FOR ANY LOSSES, DAMAGES, OR CONSEQUENCES ARISING FROM YOUR USE OF THIS PLATFORM OR PARTICIPATION IN THIS ECOSYSTEM.</strong>
+              </p>
+              <p className="text-slate-300">
+                This includes without limitation: loss of funds, loss of access, loss of data, lost profits, business interruption, financial losses of any kind, legal consequences, tax consequences, regulatory consequences, reputational harm, or any other direct, indirect, incidental, special, consequential, or punitive damages. To the maximum extent permitted by applicable law, you agree that the platform and its operators shall have no liability whatsoever.
+              </p>
+            </div>
+
+            <div className="bg-slate-900/50 border border-slate-700 rounded-xl p-6">
+              <h3 className="text-xl font-bold text-white mb-3">Securities Law Disclaimer</h3>
+              <p className="text-slate-300 mb-3">
+                <strong className="text-white">AAIC IS NOT A SECURITY.</strong> The AAIC token is a utility and governance token. It is not an investment contract, equity security, debt instrument, or any other form of security as defined under U.S. or international securities laws.
+              </p>
+              <p className="text-slate-300">
+                AAIC tokens grant governance rights and ecosystem utility. They do not represent ownership, equity, shares, units, or interests in any entity. No dividends, profits, or returns are promised or guaranteed. Token holders have no rights to the assets, revenues, or profits of any business or entity. This is not an offering of securities and should not be viewed as an investment opportunity.
+              </p>
+            </div>
+
+            <div className="bg-slate-900/50 border border-slate-700 rounded-xl p-6">
+              <h3 className="text-xl font-bold text-white mb-3">No Financial Advice</h3>
+              <p className="text-slate-300">
+                Nothing on this platform constitutes financial, investment, legal, tax, or professional advice of any kind. All information is provided for general educational and informational purposes only. You should not rely on any information provided here to make financial or investment decisions. Always conduct your own research and consult with qualified professional advisors (financial advisors, accountants, lawyers) before making any financial decisions.
+              </p>
+            </div>
+
+            <div className="bg-slate-900/50 border border-slate-700 rounded-xl p-6">
+              <h3 className="text-xl font-bold text-white mb-3">Forward-Looking Statements</h3>
+              <p className="text-slate-300">
+                This platform may contain forward-looking statements, projections, estimates, predictions, and statements about future events. These are subject to significant risks, uncertainties, and assumptions. Actual results may differ materially from any forward-looking statements. We undertake no obligation to update or revise any forward-looking statements. Do not rely on projections, roadmaps, timelines, or future plans as guarantees or promises.
+              </p>
+            </div>
+
+            <div className="bg-slate-900/50 border border-slate-700 rounded-xl p-6">
+              <h3 className="text-xl font-bold text-white mb-3">Third-Party Links and Services</h3>
+              <p className="text-slate-300">
+                This platform may contain links to third-party websites, services, or resources. We do not endorse, control, or assume responsibility for any third-party sites or services. Your use of third-party services is at your own risk and subject to their terms and conditions. We are not liable for any harm or losses resulting from your use of third-party services.
+              </p>
+            </div>
+
+            <div className="bg-slate-900/50 border border-slate-700 rounded-xl p-6">
+              <h3 className="text-xl font-bold text-white mb-3">Force Majeure</h3>
+              <p className="text-slate-300">
+                We shall not be liable for any failure or delay in performance due to circumstances beyond our reasonable control, including but not limited to: acts of God, war, terrorism, civil unrest, government actions, epidemics or pandemics, natural disasters, internet or telecommunications failures, blockchain network issues, cyberattacks, third-party service failures, or any other events constituting force majeure. In such events, we reserve the right to suspend or terminate operations without liability.
+              </p>
+            </div>
+
+            <div className="bg-slate-900/50 border border-slate-700 rounded-xl p-6">
+              <h3 className="text-xl font-bold text-white mb-3">Jurisdiction-Specific Disclaimers</h3>
+              <p className="text-slate-300 mb-3">
+                <strong className="text-white">United States:</strong> This platform is not registered with the SEC or any U.S. regulatory authority. AAIC tokens may not be available to U.S. persons depending on regulatory determinations. U.S. persons participate at their own risk and should consult legal counsel regarding applicable laws.
+              </p>
+              <p className="text-slate-300 mb-3">
+                <strong className="text-white">European Union:</strong> This platform may not comply with MiCA (Markets in Crypto-Assets Regulation) or other EU directives. EU residents should be aware that consumer protections may not apply.
+              </p>
+              <p className="text-slate-300 mb-3">
+                <strong className="text-white">Other Jurisdictions:</strong> Cryptocurrency regulations vary significantly by country. You are solely responsible for determining whether your participation is legal in your jurisdiction. We make no representations about the lawfulness of this platform in any jurisdiction.
+              </p>
+              <p className="text-slate-300">
+                <strong className="text-white">Service Restrictions:</strong> We reserve the right to restrict or prohibit access from any jurisdiction at any time without notice, for any reason including legal or regulatory requirements.
+              </p>
+            </div>
+
+            <div className="bg-slate-900/50 border border-slate-700 rounded-xl p-6">
+              <h3 className="text-xl font-bold text-white mb-3">AS-IS and No Warranties</h3>
+              <p className="text-slate-300">
+                THE PLATFORM IS PROVIDED "AS IS" AND "AS AVAILABLE" WITHOUT ANY WARRANTIES OF ANY KIND, WHETHER EXPRESS, IMPLIED, OR STATUTORY. WE DISCLAIM ALL WARRANTIES INCLUDING BUT NOT LIMITED TO WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, TITLE, NON-INFRINGEMENT, ACCURACY, COMPLETENESS, AVAILABILITY, SECURITY, COMPATIBILITY, OR ERROR-FREE OPERATION. We do not warrant that the platform will be uninterrupted, secure, or free from bugs, viruses, or other harmful components.
+              </p>
+            </div>
+
+            <div className="bg-red-500/10 border border-red-500/30 rounded-xl p-6">
+              <h3 className="text-xl font-bold text-white mb-3">Comprehensive Release and Indemnification</h3>
+              <p className="text-slate-300 mb-3">
+                By using this platform, you RELEASE, WAIVE, DISCHARGE, and COVENANT NOT TO SUE the platform, its operators, contributors, developers, affiliates, and all associated parties from any and all liabilities, claims, demands, actions, or causes of action arising out of or related to your use of the platform.
+              </p>
+              <p className="text-slate-300">
+                You agree to INDEMNIFY, DEFEND, and HOLD HARMLESS the platform and its operators from any claims, losses, damages, liabilities, costs, or expenses (including reasonable attorneys' fees) arising from: (1) your use of the platform, (2) your violation of these terms, (3) your violation of any law or regulation, or (4) your violation of any third-party rights.
+              </p>
+            </div>
+          </div>
+        </section>
+
         <section className="bg-slate-800/30 backdrop-blur border border-slate-700 rounded-2xl p-8 text-center">
-          <h3 className="text-2xl font-bold text-white mb-4">Ready to Proceed?</h3>
-          <p className="text-slate-300 mb-8 max-w-2xl mx-auto">
-            If you understand the risks and wish to explore the ecosystem, start with these resources
+          <h3 className="text-2xl font-bold text-white mb-4">Acknowledgment Required</h3>
+          <p className="text-slate-300 mb-6 max-w-2xl mx-auto">
+            By proceeding to use this platform, you acknowledge that you have read, understood, and agreed to all disclaimers, risk disclosures, and terms stated on this page and throughout the platform.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Link
+              to="/legal/risk-disclosure"
+              className="px-8 py-4 bg-red-600 hover:bg-red-700 text-white font-bold rounded-lg transition-colors inline-flex items-center justify-center gap-2"
+            >
+              <AlertTriangle className="w-5 h-5" />
+              Read Full Risk Disclosure
+            </Link>
             <Link
               to="/ecosystem"
               className="px-8 py-4 bg-cyan-600 hover:bg-cyan-700 text-white font-bold rounded-lg transition-colors inline-flex items-center justify-center gap-2"
             >
               Explore the Ecosystem
               <ArrowRight className="w-5 h-5" />
-            </Link>
-            <Link
-              to="/community/faq"
-              className="px-8 py-4 bg-slate-700 hover:bg-slate-600 text-white font-bold rounded-lg transition-colors"
-            >
-              Read FAQ
             </Link>
           </div>
         </section>

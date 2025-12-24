@@ -52,9 +52,13 @@ import Terms from './pages/legal/Terms';
 import Privacy from './pages/legal/Privacy';
 import Disclaimer from './pages/legal/Disclaimer';
 import Cookies from './pages/legal/Cookies';
+import RiskDisclosure from './pages/legal/RiskDisclosure';
 
 import SmartContracts from './pages/blockchain/SmartContracts';
 import Security from './pages/blockchain/Security';
+
+import IncidentResponse from './pages/security/IncidentResponse';
+import BugBounty from './pages/security/BugBounty';
 
 import Documentation from './pages/developers/Documentation';
 
@@ -117,9 +121,13 @@ export default function App() {
             <Route path="/legal/privacy" element={<Privacy />} />
             <Route path="/legal/disclaimer" element={<Disclaimer />} />
             <Route path="/legal/cookies" element={<Cookies />} />
+            <Route path="/legal/risk-disclosure" element={<RiskDisclosure />} />
 
             <Route path="/blockchain/smart-contracts" element={<SmartContracts />} />
             <Route path="/blockchain/security" element={<Security />} />
+
+            <Route path="/security/incident-response" element={<IncidentResponse />} />
+            <Route path="/security/bug-bounty" element={<BugBounty />} />
 
             <Route path="/developers/documentation" element={<Documentation />} />
 
