@@ -6,17 +6,14 @@
  */
 
 import { Request, Response } from 'express';
-import { MessageService } from '../services/messageService.js';
+import { createMessagesRepository } from '../../shared/services/supabase/repositories/messages.js';
+import { getWebsiteSupabaseClient } from '../config/supabaseWebsiteClient.js';
 import { handleControllerError } from '../../shared/utils/errorHandler.js';
 import { NotFoundError } from '../../shared/errors/HttpErrors.js';
 import { PaginatedRequest } from '../../shared/middleware/pagination.js';
 
 export class MessageController {
-  private messageService: MessageService;
-
-  constructor() {
-    this.messageService = new MessageService();
-  }
+  private messagesRepo = createMessagesRepository(getWebsiteSupabaseClient());
 
   /**
    * GET /api/website/messages/:topicId
@@ -30,7 +27,7 @@ export class MessageController {
       // Pagination is already parsed and validated by middleware
       const pagination = (req as PaginatedRequest).pagination;
 
-      const result = await this.messageService.getTopicMessages(topicId, pagination);
+      const result = await this.messagesRepo.getTopicMessages(topicId, pagination);
       res.json(result);
     } catch (error) {
       handleControllerError(error, res, {
@@ -47,7 +44,7 @@ export class MessageController {
   async getMessageById(req: Request, res: Response): Promise<void> {
     try {
       const { messageId } = req.params;
-      const message = await this.messageService.getMessageById(messageId);
+      const message = await this.messagesRepo.getMessageById(messageId);
 
       if (!message) {
         throw new NotFoundError('Message not found');

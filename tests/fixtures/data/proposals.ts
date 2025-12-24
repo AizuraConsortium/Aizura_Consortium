@@ -1,4 +1,4 @@
-import type { Proposal } from '../../../shared/types/index.js';
+import type { Proposal } from '../../../shared/types/models.js';
 
 export const mockProposal1: Proposal = {
   id: '123e4567-e89b-12d3-a456-426614174000',

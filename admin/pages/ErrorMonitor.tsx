@@ -16,7 +16,7 @@ import { PaginationControls } from '../components/PaginationControls';
 import { ErrorTable } from '../components/ErrorTable';
 import { TableSkeleton } from '@shared/components/skeletons';
 import { supabase } from '@shared/lib/supabase';
-import type { ErrorLog } from '@shared/types';
+import type { ErrorLog } from '@shared/types/models';
 
 export function ErrorMonitor() {
   const { user, signOut } = useAdminAuth();

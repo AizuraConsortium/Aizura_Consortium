@@ -1,17 +1,14 @@
 import { Request, Response } from 'express';
-import { ProposalService } from '../services/proposalService.js';
+import { createProposalsRepository } from '../../shared/services/supabase/repositories/proposals.js';
+import { getWebsiteSupabaseClient } from '../config/supabaseWebsiteClient.js';
 
 export class ProposalController {
-  private proposalService: ProposalService;
-
-  constructor() {
-    this.proposalService = new ProposalService();
-  }
+  private proposalsRepo = createProposalsRepository(getWebsiteSupabaseClient());
 
   async getProposals(req: Request, res: Response) {
     try {
       const status = req.query.status as string;
-      const proposals = await this.proposalService.getProposals(status);
+      const proposals = await this.proposalsRepo.getProposals(status as any);
       res.json({ proposals, count: proposals.length });
     } catch (error) {
       console.error('Error fetching proposals:', error);
@@ -22,7 +19,7 @@ export class ProposalController {
   async getProposalById(req: Request, res: Response) {
     try {
       const { id } = req.params;
-      const proposal = await this.proposalService.getProposalById(id);
+      const proposal = await this.proposalsRepo.getProposalById(id);
       if (!proposal) {
         return res.status(404).json({ error: 'Proposal not found' });
       }

@@ -33,9 +33,6 @@ import { UserService } from '../../admin/services/userService.js';
 import { ErrorService } from '../../admin/services/errorService.js';
 import { OrchestratorService } from '../../admin/services/orchestratorService.js';
 import { AuditService } from '../../admin/services/auditService.js';
-import { TopicService } from '../../website/services/topicService.js';
-import { MessageService } from '../../website/services/messageService.js';
-import { ProposalService as WebsiteProposalService } from '../../website/services/proposalService.js';
 import { RealtimeService } from '../../website/services/realtimeService.js';
 import { ProposalService as ClientProposalService } from '../../client/services/proposalService.js';
 
@@ -48,9 +45,6 @@ type ServiceMap = {
   auditService: AuditService;
 
   // Website Services
-  topicService: TopicService;
-  messageService: MessageService;
-  websiteProposalService: WebsiteProposalService;
   realtimeService: RealtimeService;
 
   // Client Services
@@ -121,9 +115,6 @@ export class Container {
     this.registry.set('adminErrorService', new ErrorService());
     this.registry.set('orchestratorService', new OrchestratorService());
     this.registry.set('auditService', new AuditService());
-    this.registry.set('topicService', new TopicService());
-    this.registry.set('messageService', new MessageService());
-    this.registry.set('websiteProposalService', new WebsiteProposalService());
     this.registry.set('realtimeService', new RealtimeService());
     this.registry.set('clientProposalService', new ClientProposalService());
 

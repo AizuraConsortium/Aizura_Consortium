@@ -1,4 +1,4 @@
-import type { QueueOperationResult } from '../../../shared/types/index.js';
+import type { QueueOperationResult } from '../../../shared/types/models.js';
 
 export class MockSupabaseService {
   private queuedProposals: Set<string> = new Set();

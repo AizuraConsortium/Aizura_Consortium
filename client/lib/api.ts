@@ -2,7 +2,8 @@ import { apiClient } from '@shared/lib/apiClient';
 import { APIError } from '@shared/lib/apiClient';
 import { logError } from '@shared/lib/logError';
 import { validateProposal } from '@shared/utils/validation';
-import type { Proposal, ApiResponse } from '@shared/types';
+import type { Proposal } from '@shared/types/models';
+import type { ApiResponse } from '@shared/types/api';
 
 interface ProposalsResponse {
   proposals: Proposal[];
