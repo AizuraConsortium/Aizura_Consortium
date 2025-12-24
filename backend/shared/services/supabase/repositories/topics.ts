@@ -14,7 +14,7 @@ import {
   validateCanEndTopic,
   isValidPhase,
 } from './guards/index.js';
-import type { Topic, Phase } from '../../../../../shared/types/index.js';
+import type { Topic, Phase } from '../../../../../shared/types/models.js';
 import type { Database } from '../../../../../shared/types/database.types.js';
 
 type TopicInsert = Database['public']['Tables']['topics']['Insert'];

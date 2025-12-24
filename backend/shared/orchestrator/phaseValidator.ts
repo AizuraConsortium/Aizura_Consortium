@@ -1,4 +1,4 @@
-import type { Phase } from '../../../shared/types/index.js';
+import type { Phase } from '../../../shared/types/models.js';
 
 const VALID_TRANSITIONS: Record<Phase, Phase[]> = {
   idle: ['intake'],

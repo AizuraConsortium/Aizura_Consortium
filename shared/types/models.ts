@@ -138,3 +138,9 @@ export interface QueueOperationResult {
   wasAlreadyQueued: boolean;
   message: string;
 }
+
+export interface PaginatedMessages<T = any> {
+  messages: T[];
+  total: number;
+  hasMore: boolean;
+}

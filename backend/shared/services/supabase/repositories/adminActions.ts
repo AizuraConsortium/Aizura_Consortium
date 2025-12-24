@@ -171,13 +171,13 @@ export async function getAdminActionStats(hours: number = 24): Promise<{
 
   const stats = {
     total: data?.length || 0,
-    successful: data?.filter(a => a.success).length || 0,
-    failed: data?.filter(a => !a.success).length || 0,
+    successful: data?.filter((a: { success: boolean }) => a.success).length || 0,
+    failed: data?.filter((a: { success: boolean }) => !a.success).length || 0,
     byType: {} as Record<string, number>,
     byUser: {} as Record<string, number>
   };
 
-  data?.forEach(action => {
+  data?.forEach((action: { action_type: string; admin_user_id: string }) => {
     stats.byType[action.action_type] = (stats.byType[action.action_type] || 0) + 1;
     stats.byUser[action.admin_user_id] = (stats.byUser[action.admin_user_id] || 0) + 1;
   });

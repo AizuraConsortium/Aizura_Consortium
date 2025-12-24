@@ -18,7 +18,7 @@ import {
   isValidProposalStatus,
   isValidVoteType,
 } from './guards/index.js';
-import type { Proposal, ProposalQueue, QueueOperationResult } from '../../../../../shared/types/index.js';
+import type { Proposal, ProposalQueue, QueueOperationResult } from '../../../../../shared/types/models.js';
 import type { Database } from '../../../../../shared/types/database.types.js';
 
 type ProposalInsert = Database['public']['Tables']['proposals']['Insert'];

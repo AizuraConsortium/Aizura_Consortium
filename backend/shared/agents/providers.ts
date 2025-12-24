@@ -1,7 +1,7 @@
 import OpenAI from 'openai';
 import Anthropic from '@anthropic-ai/sdk';
 import { GoogleGenerativeAI } from '@google/generative-ai';
-import type { AgentId, AgentMessage, AgentVoteMessage } from '../../../shared/types/index.js';
+import type { AgentId, AgentMessage, AgentVoteMessage } from '../../../shared/types/models.js';
 import { ErrorLogger } from '../services/errorLogger.js';
 
 export interface LLMProvider {
@@ -319,7 +319,8 @@ export function createProvider(agentId: AgentId, isIdle: boolean = false): LLMPr
     };
 
     console.log(`[${agentId}] Using cheap model for idle mode`);
-    return cheapProviders[agentId]();
+    const cheapProvider = cheapProviders[agentId as keyof typeof cheapProviders];
+    return cheapProvider();
   }
 
   // During active debate, use premium models per agent
@@ -332,5 +333,6 @@ export function createProvider(agentId: AgentId, isIdle: boolean = false): LLMPr
     qwen: () => new QwenProvider(apiKeys.qwen)
   };
 
-  return providers[agentId]();
+  const provider = providers[agentId as keyof typeof providers];
+  return provider();
 }

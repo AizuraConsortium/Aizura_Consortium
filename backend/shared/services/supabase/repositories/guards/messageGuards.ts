@@ -6,8 +6,8 @@
 
 import { ValidationError } from '../errors/index.js';
 import type { Database } from '../../../../../../shared/types/database.types.js';
-import type { AgentId, AgentRole } from '../../../../../../shared/types/index.js';
-import { AGENT_ROLE_MAPPING } from '../../../../../../shared/types/index.js';
+import type { AgentId, AgentRole } from '../../../../../../shared/types/models.js';
+import { AGENT_ROLE_MAPPING } from '../../../../../../shared/types/models.js';
 
 type MessageType = Database['public']['Tables']['messages']['Row']['message_type'];
 

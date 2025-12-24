@@ -1,6 +1,6 @@
 import { create, getMany, rpc } from '../queryBuilder.js';
 import { getSupabaseClient } from '../client.js';
-import type { AgentVote, AgentId } from '../../../../../shared/types/index.js';
+import type { AgentVote, AgentId } from '../../../../../shared/types/models.js';
 
 export async function addAgentVote(
   topicId: string,

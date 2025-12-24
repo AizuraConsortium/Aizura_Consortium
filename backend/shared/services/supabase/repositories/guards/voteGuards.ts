@@ -5,7 +5,7 @@
  */
 
 import { ValidationError } from '../errors/index.js';
-import type { AgentId, VoteChoice } from '../../../../../../shared/types/index.js';
+import type { AgentId, VoteChoice } from '../../../../../../shared/types/models.js';
 
 const VALID_AGENT_IDS: readonly AgentId[] = ['claude', 'chatgpt', 'grok', 'gemini', 'deepseek', 'qwen'] as const;
 const VALID_VOTE_CHOICES: readonly VoteChoice[] = ['approve', 'reject', 'abstain'] as const;

@@ -1,5 +1,5 @@
-import type { AgentId, AgentRole, AgentMessage, AgentVoteMessage, Phase } from '../../../shared/types/index.js';
-import { AGENT_ROLE_MAPPING } from '../../../shared/types/index.js';
+import type { AgentId, AgentRole, AgentMessage, AgentVoteMessage, Phase } from '../../../shared/types/models.js';
+import { AGENT_ROLE_MAPPING } from '../../../shared/types/models.js';
 import { GLOBAL_GUARDRAILS, ROLE_PROMPTS, IDLE_PROMPT } from '../types/prompts.js';
 import { createProvider, type LLMProvider } from './providers.js';
 
@@ -62,7 +62,8 @@ export class AgentRunner {
     if (isIdle) {
       return `${GLOBAL_GUARDRAILS}\n\n${IDLE_PROMPT}`;
     }
-    return `${GLOBAL_GUARDRAILS}\n\n${ROLE_PROMPTS[role]}`;
+    const rolePrompt = ROLE_PROMPTS[role as keyof typeof ROLE_PROMPTS];
+    return `${GLOBAL_GUARDRAILS}\n\n${rolePrompt}`;
   }
 
   private buildUserPrompt(agentId: AgentId, context: AgentContext): string {

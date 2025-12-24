@@ -107,7 +107,7 @@ export async function getUserStats(): Promise<{
     },
   };
 
-  data?.forEach((user) => {
+  data?.forEach((user: { role: string }) => {
     if (user.role === 'admin') stats.byRole.admin++;
     if (user.role === 'client') stats.byRole.client++;
   });

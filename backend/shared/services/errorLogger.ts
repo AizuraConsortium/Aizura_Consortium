@@ -1,5 +1,5 @@
 import { SupabaseService } from './supabase/index.js';
-import type { AgentId, ErrorSource, ErrorSeverity } from '../../../shared/types/index.js';
+import type { AgentId, ErrorSource, ErrorSeverity } from '../../../shared/types/models.js';
 
 export interface ErrorDetails {
   stackTrace?: string;

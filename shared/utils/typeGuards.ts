@@ -15,7 +15,7 @@ import type {
   Proposal,
   Topic,
   Message
-} from '../types';
+} from '../types/models.js';
 
 /**
  * Proposal Status Guards

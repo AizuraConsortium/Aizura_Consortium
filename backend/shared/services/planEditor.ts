@@ -1,4 +1,4 @@
-import type { PlanEditorArgs, AgentId } from '../../../shared/types/index.js';
+import type { PlanEditorArgs, AgentId } from '../../../shared/types/models.js';
 import { BUSINESS_PLAN_TEMPLATE } from '../types/prompts.js';
 import { ErrorLogger } from './errorLogger.js';
 
