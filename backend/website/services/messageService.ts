@@ -1,17 +1,20 @@
-import * as MessagesRepo from '../repositories/messages.js';
-import type { Message } from '../../../shared/types/index.js';
+import { createMessagesRepository, type Pagination } from '../../shared/services/supabase/repositories/messages.js';
+import { getWebsiteSupabaseClient } from '../config/supabaseWebsiteClient.js';
+import type { Message, PaginatedMessages } from '../../../shared/types/models.js';
 
-export type { Pagination, PaginatedMessages } from '../repositories/messages.js';
+export type { Pagination, PaginatedMessages };
 
 export class MessageService {
+  private messagesRepo = createMessagesRepository(getWebsiteSupabaseClient());
+
   async getTopicMessages(
     topicId: string,
-    pagination: MessagesRepo.Pagination = {}
-  ): Promise<MessagesRepo.PaginatedMessages> {
-    return MessagesRepo.getTopicMessages(topicId, pagination);
+    pagination: Pagination = {}
+  ): Promise<PaginatedMessages<Message>> {
+    return this.messagesRepo.getTopicMessages(topicId, pagination);
   }
 
   async getMessageById(messageId: string): Promise<Message | null> {
-    return MessagesRepo.getMessageById(messageId);
+    return this.messagesRepo.getMessageById(messageId);
   }
 }

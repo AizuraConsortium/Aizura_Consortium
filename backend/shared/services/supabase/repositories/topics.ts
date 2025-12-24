@@ -24,8 +24,8 @@ type TopicPhase = Database['public']['Tables']['topics']['Row']['state'];
  * Topics Repository Class
  */
 class TopicsRepository extends BaseRepository {
-  constructor() {
-    super('topics');
+  constructor(client?: import('@supabase/supabase-js').SupabaseClient) {
+    super('topics', client);
   }
 
   /**
@@ -231,3 +231,7 @@ export const {
   getCurrentTopic,
   getTopicByProposalId,
 } = topicsRepository;
+
+export function createTopicsRepository(client?: import('@supabase/supabase-js').SupabaseClient): TopicsRepository {
+  return new TopicsRepository(client);
+}

@@ -31,8 +31,8 @@ type ProposalStatus = Database['public']['Tables']['proposals']['Row']['status']
  * Proposals Repository Class
  */
 class ProposalsRepository extends BaseRepository {
-  constructor() {
-    super('proposals');
+  constructor(client?: import('@supabase/supabase-js').SupabaseClient) {
+    super('proposals', client);
   }
 
   /**
@@ -441,3 +441,7 @@ export const {
   getNextQueuedProposal,
   getProposalsWithVotes,
 } = proposalsRepository;
+
+export function createProposalsRepository(client?: import('@supabase/supabase-js').SupabaseClient): ProposalsRepository {
+  return new ProposalsRepository(client);
+}

@@ -1,65 +1,91 @@
-import { create, getOne, updateById, rpc } from '../queryBuilder.js';
-import type { Plan, PlanRevision, AgentId, PlanOperation } from '../../../../../shared/types/index.js';
+import { createQueryBuilder, type WriteQueryBuilder } from '../queryBuilderFactory.js';
 import { getSupabaseClient } from '../client.js';
+import type { Plan, PlanRevision, AgentId, PlanOperation } from '../../../../../shared/types/index.js';
+import type { SupabaseClient } from '@supabase/supabase-js';
 
-export async function createPlan(
-  topicId: string,
-  title: string,
-  initialContent: string
-): Promise<Plan> {
-  return rpc<Plan>('create_plan_with_revision', {
-    p_topic_id: topicId,
-    p_title: title,
-    p_initial_content: initialContent
-  });
-}
+function createPlansRepository(client?: SupabaseClient) {
+  const supabase = client || getSupabaseClient();
+  const builder = createQueryBuilder(supabase, { readOnly: false }) as WriteQueryBuilder;
 
-export async function getPlan(topicId: string): Promise<Plan | null> {
-  return getOne<Plan>('plans', { topic_id: topicId });
-}
-
-export async function getCurrentPlanContent(topicId: string): Promise<string> {
-  const plan = await getPlan(topicId);
-  if (!plan || !plan.current_revision_id) {
-    return '';
+  async function createPlan(
+    topicId: string,
+    title: string,
+    initialContent: string
+  ): Promise<Plan> {
+    return builder.rpc<Plan>('create_plan_with_revision', {
+      p_topic_id: topicId,
+      p_title: title,
+      p_initial_content: initialContent
+    });
   }
 
-  const { data, error } = await getSupabaseClient()
-    .from('plan_revisions')
-    .select('content_md')
-    .eq('id', plan.current_revision_id)
-    .single();
+  async function getPlan(topicId: string): Promise<Plan | null> {
+    return builder.getOne<Plan>('plans', { topic_id: topicId });
+  }
 
-  if (error) throw error;
-  return data?.content_md || '';
+  async function getCurrentPlanContent(topicId: string): Promise<string> {
+    const plan = await getPlan(topicId);
+    if (!plan || !plan.current_revision_id) {
+      return '';
+    }
+
+    const { data, error } = await supabase
+      .from('plan_revisions')
+      .select('content_md')
+      .eq('id', plan.current_revision_id)
+      .single();
+
+    if (error) throw error;
+    return data?.content_md || '';
+  }
+
+  async function addPlanRevision(
+    planId: string,
+    agentId: AgentId,
+    op: PlanOperation,
+    path: string,
+    contentMd: string,
+    addedChars: number,
+    removedChars: number
+  ): Promise<PlanRevision> {
+    const revision = await builder.create<PlanRevision>('plan_revisions', {
+      plan_id: planId,
+      agent_id: agentId,
+      op,
+      path,
+      content_md: contentMd,
+      added_chars: addedChars,
+      removed_chars: removedChars
+    });
+
+    await builder.updateById('plans', planId, {
+      current_revision_id: revision.id
+    });
+
+    return revision;
+  }
+
+  async function markPlanAsAdopted(planId: string): Promise<void> {
+    await builder.updateById('plans', planId, { status: 'adopted' });
+  }
+
+  return {
+    createPlan,
+    getPlan,
+    getCurrentPlanContent,
+    addPlanRevision,
+    markPlanAsAdopted,
+  };
 }
 
-export async function addPlanRevision(
-  planId: string,
-  agentId: AgentId,
-  op: PlanOperation,
-  path: string,
-  contentMd: string,
-  addedChars: number,
-  removedChars: number
-): Promise<PlanRevision> {
-  const revision = await create<PlanRevision>('plan_revisions', {
-    plan_id: planId,
-    agent_id: agentId,
-    op,
-    path,
-    content_md: contentMd,
-    added_chars: addedChars,
-    removed_chars: removedChars
-  });
+const defaultRepository = createPlansRepository();
 
-  await updateById('plans', planId, {
-    current_revision_id: revision.id
-  });
+export const {
+  createPlan,
+  getPlan,
+  getCurrentPlanContent,
+  addPlanRevision,
+  markPlanAsAdopted,
+} = defaultRepository;
 
-  return revision;
-}
-
-export async function markPlanAsAdopted(planId: string): Promise<void> {
-  await updateById('plans', planId, { status: 'adopted' });
-}
+export { createPlansRepository };

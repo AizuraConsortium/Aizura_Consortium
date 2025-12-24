@@ -52,9 +52,9 @@ export abstract class BaseRepository {
   protected readonly tableName: string;
   private readonly performanceMetrics: PerformanceMetrics[] = [];
 
-  constructor(tableName: string) {
+  constructor(tableName: string, client?: SupabaseClient) {
     this.tableName = tableName;
-    this.client = getSupabaseClient();
+    this.client = client || getSupabaseClient();
   }
 
   /**

@@ -2,12 +2,13 @@
  * Realtime Service
  *
  * Manages Server-Sent Events (SSE) connections for real-time updates.
- * Handles message broadcasts and topic subscriptions.
+ * Handles message broadcasts and topic subscriptions using Supabase Realtime.
  */
 
 import { Response } from 'express';
-import { RealtimeRepository } from '../repositories/realtime.js';
-import type { Message } from '../../../shared/types/index.js';
+import { getWebsiteSupabaseClient } from '../config/supabaseWebsiteClient.js';
+import type { Message } from '../../../shared/types/models.js';
+import type { RealtimeChannel } from '@supabase/supabase-js';
 
 /**
  * SSE client connection
@@ -73,11 +74,11 @@ type SSEData = SSEMessage | SSETopicUpdate | SSEPing | SSEConnected;
  */
 export class RealtimeService {
   private clients: Map<string, SSEClient> = new Map();
-  private realtimeRepo: RealtimeRepository;
+  private subscriptions: Map<string, RealtimeChannel> = new Map();
   private pingInterval: NodeJS.Timeout | null = null;
+  private supabase = getWebsiteSupabaseClient();
 
   constructor() {
-    this.realtimeRepo = new RealtimeRepository();
     this.startPingInterval();
   }
 
@@ -111,7 +112,6 @@ export class RealtimeService {
    * @param res - Express response object
    */
   async addClient(clientId: string, topicId: string, res: Response): Promise<void> {
-    // Set SSE headers
     res.writeHead(200, {
       'Content-Type': 'text/event-stream',
       'Cache-Control': 'no-cache',
@@ -128,7 +128,6 @@ export class RealtimeService {
 
     this.clients.set(clientId, client);
 
-    // Send connected event
     this.sendToClient(client, {
       type: 'connected',
       data: {
@@ -138,45 +137,64 @@ export class RealtimeService {
       timestamp: new Date().toISOString(),
     });
 
-    // Subscribe to topic if not already subscribed
-    if (!this.realtimeRepo.isSubscribed(topicId)) {
+    if (!this.subscriptions.has(topicId)) {
       await this.subscribeToTopic(topicId);
     }
 
-    // Clean up on client disconnect
     res.on('close', () => {
       this.removeClient(clientId);
     });
   }
 
   /**
-   * Subscribe to topic changes in database
+   * Subscribe to topic changes in database using Supabase Realtime
    *
    * @param topicId - Topic to subscribe to
    * @private
    */
   private async subscribeToTopic(topicId: string): Promise<void> {
-    await this.realtimeRepo.subscribeToTopicMessages(
-      topicId,
-      (message: Message) => {
-        this.broadcastToTopic(topicId, {
-          type: 'message_added',
-          data: message,
-          timestamp: new Date().toISOString(),
-        });
-      },
-      (topicUpdate: TopicUpdate) => {
-        this.broadcastToTopic(topicId, {
-          type: 'topic_updated',
-          data: {
-            topic_id: topicId,
-            state: topicUpdate.state,
-            updated_at: topicUpdate.updated_at,
-          },
-          timestamp: new Date().toISOString(),
-        });
-      }
-    );
+    const channel = this.supabase
+      .channel(`topic:${topicId}`)
+      .on(
+        'postgres_changes',
+        {
+          event: 'INSERT',
+          schema: 'public',
+          table: 'messages',
+          filter: `topic_id=eq.${topicId}`,
+        },
+        (payload) => {
+          this.broadcastToTopic(topicId, {
+            type: 'message_added',
+            data: payload.new as Message,
+            timestamp: new Date().toISOString(),
+          });
+        }
+      )
+      .on(
+        'postgres_changes',
+        {
+          event: 'UPDATE',
+          schema: 'public',
+          table: 'topics',
+          filter: `id=eq.${topicId}`,
+        },
+        (payload) => {
+          const update = payload.new as TopicUpdate;
+          this.broadcastToTopic(topicId, {
+            type: 'topic_updated',
+            data: {
+              topic_id: topicId,
+              state: update.state,
+              updated_at: update.updated_at,
+            },
+            timestamp: new Date().toISOString(),
+          });
+        }
+      )
+      .subscribe();
+
+    this.subscriptions.set(topicId, channel);
   }
 
   /**
@@ -226,7 +244,6 @@ export class RealtimeService {
       }
       this.clients.delete(clientId);
 
-      // Unsubscribe from topic if no more clients
       const topicHasClients = Array.from(this.clients.values()).some(
         (c) => c.topicId === client.topicId
       );
@@ -244,7 +261,11 @@ export class RealtimeService {
    * @private
    */
   private async unsubscribeFromTopic(topicId: string): Promise<void> {
-    await this.realtimeRepo.unsubscribe(topicId);
+    const channel = this.subscriptions.get(topicId);
+    if (channel) {
+      await this.supabase.removeChannel(channel);
+      this.subscriptions.delete(topicId);
+    }
   }
 
   /**
@@ -261,6 +282,8 @@ export class RealtimeService {
       this.removeClient(clientId);
     }
 
-    await this.realtimeRepo.unsubscribeAll();
+    for (const topicId of this.subscriptions.keys()) {
+      await this.unsubscribeFromTopic(topicId);
+    }
   }
 }

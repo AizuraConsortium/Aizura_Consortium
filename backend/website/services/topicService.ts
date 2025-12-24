@@ -5,10 +5,11 @@
  * Topics represent active discussion/consensus-building sessions around proposals.
  */
 
-import * as TopicsRepo from '../repositories/topics.js';
-import * as ProposalsRepo from '../repositories/proposals.js';
-import * as PlansRepo from '../repositories/plans.js';
-import type { Topic, Proposal, Plan } from '../../../shared/types/index.js';
+import { createTopicsRepository } from '../../shared/services/supabase/repositories/topics.js';
+import { createProposalsRepository } from '../../shared/services/supabase/repositories/proposals.js';
+import { createPlansRepository } from '../../shared/services/supabase/repositories/plans.js';
+import { getWebsiteSupabaseClient } from '../config/supabaseWebsiteClient.js';
+import type { Topic, Proposal, Plan } from '../../../shared/types/models.js';
 import type { TopicWithDetails } from '../../../shared/types/api.js';
 import { BaseService } from '../../shared/services/BaseService.js';
 
@@ -18,6 +19,10 @@ import { BaseService } from '../../shared/services/BaseService.js';
  * Manages topic lifecycle and provides topic details with related data.
  */
 export class TopicService extends BaseService {
+  private topicsRepo = createTopicsRepository(getWebsiteSupabaseClient());
+  private proposalsRepo = createProposalsRepository(getWebsiteSupabaseClient());
+  private plansRepo = createPlansRepository(getWebsiteSupabaseClient());
+
   constructor() {
     super('TopicService');
   }
@@ -37,7 +42,7 @@ export class TopicService extends BaseService {
    * }
    */
   async getCurrentTopic(): Promise<TopicWithDetails | null> {
-    const topic = await TopicsRepo.getCurrentTopic();
+    const topic = await this.topicsRepo.getCurrentTopic();
 
     if (!topic) {
       return null;
@@ -68,7 +73,7 @@ export class TopicService extends BaseService {
       'INVALID_TOPIC_ID'
     );
 
-    const topic = await TopicsRepo.getTopic(topicId);
+    const topic = await this.topicsRepo.getTopic(topicId);
 
     if (!topic) {
       return null;
@@ -88,11 +93,10 @@ export class TopicService extends BaseService {
    * @private
    */
   private async buildTopicWithDetails(topic: Topic): Promise<TopicWithDetails> {
-    // Fetch related data in parallel for better performance
     const [proposal, planData, planContent] = await Promise.all([
-      ProposalsRepo.getProposalById(topic.proposal_id),
-      PlansRepo.getPlan(topic.id),
-      PlansRepo.getPlanContent(topic.id),
+      this.proposalsRepo.getProposalById(topic.proposal_id),
+      this.plansRepo.getPlan(topic.id),
+      this.plansRepo.getCurrentPlanContent(topic.id),
     ]);
 
     return {
@@ -143,5 +147,4 @@ export class TopicService extends BaseService {
       updated_at: planData.created_at,
     };
   }
-
 }
