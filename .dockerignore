@@ -36,10 +36,21 @@ coverage
 .nyc_output
 *.test.js
 *.spec.js
+*.test.ts
+*.test.tsx
+*.spec.ts
+*.spec.tsx
+tests/
+__tests__/
+.vitest/
 
 # Build artifacts
 *.log
 .turbo
+*.tsbuildinfo
+tsconfig.tsbuildinfo
+node_modules/.tmp/
+.cache/
 
 # Docker
 Dockerfile*
