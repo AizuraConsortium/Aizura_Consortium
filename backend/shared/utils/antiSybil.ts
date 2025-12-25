@@ -39,20 +39,38 @@ export class AntiSybilDetector {
       reasons: [],
     };
 
-    const [walletCheck, ipCheck, behaviorCheck, socialCheck] = await Promise.all([
+    const [walletCheck, ipCheck, ipClusterCheck, behaviorCheck, socialCheck, referralCheck] = await Promise.all([
       this.checkDuplicateWallets(userId),
       this.checkSuspiciousIP(userId),
+      this.checkIPClustering(userId),
       this.checkSuspiciousBehavior(userId),
       this.checkSocialAccounts(userId),
+      this.checkReferralChains(userId),
     ]);
 
     result.riskScore += walletCheck.riskScore || 0;
     result.riskScore += ipCheck.riskScore || 0;
+    result.riskScore += ipClusterCheck.riskScore || 0;
     result.riskScore += behaviorCheck.riskScore || 0;
     result.riskScore += socialCheck.riskScore || 0;
+    result.riskScore += referralCheck.riskScore || 0;
 
-    result.flags.push(...(walletCheck.flags || []), ...(ipCheck.flags || []), ...(behaviorCheck.flags || []), ...(socialCheck.flags || []));
-    result.reasons.push(...(walletCheck.reasons || []), ...(ipCheck.reasons || []), ...(behaviorCheck.reasons || []), ...(socialCheck.reasons || []));
+    result.flags.push(
+      ...(walletCheck.flags || []),
+      ...(ipCheck.flags || []),
+      ...(ipClusterCheck.flags || []),
+      ...(behaviorCheck.flags || []),
+      ...(socialCheck.flags || []),
+      ...(referralCheck.flags || [])
+    );
+    result.reasons.push(
+      ...(walletCheck.reasons || []),
+      ...(ipCheck.reasons || []),
+      ...(ipClusterCheck.reasons || []),
+      ...(behaviorCheck.reasons || []),
+      ...(socialCheck.reasons || []),
+      ...(referralCheck.reasons || [])
+    );
 
     result.isSuspicious = result.riskScore >= this.RISK_THRESHOLDS.MEDIUM;
 
@@ -198,6 +216,123 @@ export class AntiSybilDetector {
           result.riskScore += 35;
           result.flags.push(`duplicate_${platform}`);
           result.reasons.push(`${platform} account linked to ${count} other user(s)`);
+        }
+      }
+    }
+
+    return result;
+  }
+
+  private async checkIPClustering(userId: string): Promise<Partial<SybilCheckResult>> {
+    const result = { riskScore: 0, flags: [] as string[], reasons: [] as string[] };
+
+    const { data: userActivities } = await this.supabase
+      .from('daily_activities')
+      .select('metadata')
+      .eq('user_id', userId)
+      .order('created_at', { ascending: false })
+      .limit(5);
+
+    if (!userActivities || userActivities.length === 0) return result;
+
+    const userIPs = new Set<string>();
+    userActivities.forEach((activity) => {
+      const metadata = activity.metadata as Record<string, unknown>;
+      if (metadata?.ipAddress) {
+        userIPs.add(metadata.ipAddress as string);
+      }
+    });
+
+    for (const ip of userIPs) {
+      const { data: sameIPUsers } = await this.supabase
+        .from('daily_activities')
+        .select('user_id')
+        .contains('metadata', { ipAddress: ip })
+        .neq('user_id', userId);
+
+      if (sameIPUsers) {
+        const uniqueUsers = new Set(sameIPUsers.map(a => a.user_id));
+
+        if (uniqueUsers.size > 5) {
+          result.riskScore += 50;
+          result.flags.push('ip_clustering');
+          result.reasons.push(`IP address ${ip.substring(0, 10)}... shared with ${uniqueUsers.size} other accounts`);
+        } else if (uniqueUsers.size > 2) {
+          result.riskScore += 25;
+          result.flags.push('shared_ip');
+          result.reasons.push(`IP address shared with ${uniqueUsers.size} other accounts`);
+        }
+      }
+    }
+
+    return result;
+  }
+
+  private async checkReferralChains(userId: string): Promise<Partial<SybilCheckResult>> {
+    const result = { riskScore: 0, flags: [] as string[], reasons: [] as string[] };
+
+    const { data: leaderboard } = await this.supabase
+      .from('airdrop_leaderboard')
+      .select('referral_code, referred_by_code')
+      .eq('user_id', userId)
+      .maybeSingle();
+
+    if (!leaderboard || !leaderboard.referral_code) return result;
+
+    const visited = new Set<string>();
+    const chain: string[] = [];
+    let currentCode = leaderboard.referred_by_code;
+
+    while (currentCode && !visited.has(currentCode) && chain.length < 10) {
+      visited.add(currentCode);
+      chain.push(currentCode);
+
+      const { data: referrer } = await this.supabase
+        .from('airdrop_leaderboard')
+        .select('referral_code, referred_by_code, user_id')
+        .eq('referral_code', currentCode)
+        .maybeSingle();
+
+      if (!referrer) break;
+
+      if (referrer.referral_code === leaderboard.referral_code) {
+        result.riskScore += 60;
+        result.flags.push('circular_referral');
+        result.reasons.push(`Circular referral chain detected (length: ${chain.length + 1})`);
+        break;
+      }
+
+      currentCode = referrer.referred_by_code;
+    }
+
+    if (leaderboard.referral_code) {
+      const { data: referrals } = await this.supabase
+        .from('airdrop_leaderboard')
+        .select('user_id, score, created_at')
+        .eq('referred_by_code', leaderboard.referral_code)
+        .gte('score', 100);
+
+      if (referrals && referrals.length > 0) {
+        const referralTimes = referrals.map(r => new Date(r.created_at).getTime());
+        const avgTimeDiff = referralTimes.length > 1
+          ? referralTimes.reduce((sum, time, i, arr) => i > 0 ? sum + (time - arr[i-1]) : sum, 0) / (referralTimes.length - 1)
+          : 0;
+
+        if (referrals.length >= 5 && avgTimeDiff < 3600000) {
+          result.riskScore += 35;
+          result.flags.push('suspicious_referral_pattern');
+          result.reasons.push(`${referrals.length} referrals joined within short time periods (avg ${Math.round(avgTimeDiff / 60000)} minutes apart)`);
+        }
+
+        const scores = referrals.map(r => r.score);
+        const avgScore = scores.reduce((a, b) => a + b, 0) / scores.length;
+        const scoreVariance = scores.reduce((sum, score) => sum + Math.pow(score - avgScore, 2), 0) / scores.length;
+        const scoreStdDev = Math.sqrt(scoreVariance);
+
+        if (referrals.length >= 3 && scoreStdDev < avgScore * 0.1) {
+          result.riskScore += 25;
+          result.flags.push('identical_referral_behavior');
+          result.reasons.push(`Referrals have suspiciously similar scores (${Math.round(avgScore)} ± ${Math.round(scoreStdDev)})`);
         }
       }
     }
