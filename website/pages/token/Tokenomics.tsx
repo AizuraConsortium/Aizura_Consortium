@@ -148,6 +148,99 @@ export default function Tokenomics() {
           </div>
         </section>
 
+        <section className="bg-gradient-to-br from-cyan-500/10 to-blue-500/10 border border-cyan-500/30 rounded-2xl p-8 lg:p-12">
+          <h2 className="text-3xl font-bold text-white mb-6 text-center flex items-center justify-center gap-3">
+            <Zap className="w-8 h-8 text-cyan-400" />
+            Use-to-Earn (U2E) Distribution
+          </h2>
+
+          <p className="text-center text-slate-300 mb-10 max-w-2xl mx-auto">
+            Part of the community allocation rewards genuine ecosystem usage through our innovative U2E system
+          </p>
+
+          <div className="grid md:grid-cols-2 gap-8 mb-8">
+            <div className="bg-slate-800/50 border border-slate-700 rounded-xl p-6">
+              <h3 className="text-xl font-bold text-white mb-4">What is Use-to-Earn?</h3>
+              <p className="text-slate-300 mb-4">
+                U2E distributes AAIC tokens to users based on their actual usage of ecosystem products:
+                AI Traders, AI Business Factory, and AI Web Dev.
+              </p>
+              <div className="space-y-2">
+                <div className="flex items-start gap-2">
+                  <CheckCircle2 className="w-5 h-5 text-cyan-400 flex-shrink-0 mt-0.5" />
+                  <span className="text-sm text-slate-300">Earn by trading with AI Traders</span>
+                </div>
+                <div className="flex items-start gap-2">
+                  <CheckCircle2 className="w-5 h-5 text-cyan-400 flex-shrink-0 mt-0.5" />
+                  <span className="text-sm text-slate-300">Earn by creating businesses</span>
+                </div>
+                <div className="flex items-start gap-2">
+                  <CheckCircle2 className="w-5 h-5 text-cyan-400 flex-shrink-0 mt-0.5" />
+                  <span className="text-sm text-slate-300">Earn by building with AI Web Dev</span>
+                </div>
+              </div>
+            </div>
+
+            <div className="bg-slate-800/50 border border-slate-700 rounded-xl p-6">
+              <h3 className="text-xl font-bold text-white mb-4">Three-Phase Model</h3>
+              <div className="space-y-4">
+                <div>
+                  <div className="flex items-center gap-2 mb-2">
+                    <div className="px-2 py-1 bg-cyan-500/20 text-cyan-400 rounded text-xs font-bold">PHASE 1</div>
+                    <span className="text-sm font-medium text-white">Years 0-2</span>
+                  </div>
+                  <p className="text-sm text-slate-400">Fixed token supply rewards</p>
+                </div>
+                <div>
+                  <div className="flex items-center gap-2 mb-2">
+                    <div className="px-2 py-1 bg-blue-500/20 text-blue-400 rounded text-xs font-bold">PHASE 2</div>
+                    <span className="text-sm font-medium text-white">Years 2-4</span>
+                  </div>
+                  <p className="text-sm text-slate-400">Hybrid transition model</p>
+                </div>
+                <div>
+                  <div className="flex items-center gap-2 mb-2">
+                    <div className="px-2 py-1 bg-green-500/20 text-green-400 rounded text-xs font-bold">PHASE 3</div>
+                    <span className="text-sm font-medium text-white">Year 4+</span>
+                  </div>
+                  <p className="text-sm text-slate-400">100% revenue-backed rewards</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="bg-slate-800/50 border border-slate-700 rounded-xl p-6 mb-6">
+            <h3 className="text-xl font-bold text-white mb-4">How It Works</h3>
+            <div className="grid md:grid-cols-3 gap-6">
+              <div>
+                <div className="w-10 h-10 bg-cyan-600 rounded-full flex items-center justify-center text-white font-bold mb-3">1</div>
+                <h4 className="font-bold text-white mb-2">Use Products</h4>
+                <p className="text-sm text-slate-400">Use any ecosystem platform for legitimate purposes</p>
+              </div>
+              <div>
+                <div className="w-10 h-10 bg-cyan-600 rounded-full flex items-center justify-center text-white font-bold mb-3">2</div>
+                <h4 className="font-bold text-white mb-2">Earn Automatically</h4>
+                <p className="text-sm text-slate-400">Rewards accrue in real-time based on your actions</p>
+              </div>
+              <div>
+                <div className="w-10 h-10 bg-cyan-600 rounded-full flex items-center justify-center text-white font-bold mb-3">3</div>
+                <h4 className="font-bold text-white mb-2">Claim Rewards</h4>
+                <p className="text-sm text-slate-400">Claim accumulated tokens when system goes live</p>
+              </div>
+            </div>
+          </div>
+
+          <div className="text-center">
+            <Link
+              to="/token/u2e-explained"
+              className="inline-flex items-center gap-2 px-8 py-4 bg-cyan-600 hover:bg-cyan-700 text-white font-bold rounded-lg transition-colors"
+            >
+              Learn More About U2E
+              <ArrowRight className="w-5 h-5" />
+            </Link>
+          </div>
+        </section>
+
         <section>
           <h2 className="text-3xl font-bold text-white mb-8 text-center">Emissions & Staking</h2>
 

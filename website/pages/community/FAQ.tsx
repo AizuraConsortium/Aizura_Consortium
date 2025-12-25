@@ -113,6 +113,36 @@ export default function FAQ() {
       category: 'Risks',
       question: 'What if a business fails?',
       answer: 'Not all businesses will succeed. The portfolio approach diversifies risk across multiple ventures. Failed businesses are shut down, and learnings inform future proposals. The ecosystem is designed to survive individual business failures.'
+    },
+    {
+      category: 'U2E',
+      question: 'What is Use-to-Earn (U2E)?',
+      answer: 'Use-to-Earn (U2E) is a reward system that distributes AAIC tokens based on your actual usage of ecosystem products. Use AI Traders, AI Business Factory, or AI Web Dev, and earn tokens automatically.'
+    },
+    {
+      category: 'U2E',
+      question: 'How do I participate in U2E?',
+      answer: 'Simply use any participating platform (AI Traders, AI Business Factory, AI Web Dev) for legitimate purposes. Rewards accrue automatically based on your actions. No manual claiming required until the system goes live.'
+    },
+    {
+      category: 'U2E',
+      question: 'When can I claim U2E rewards?',
+      answer: 'The U2E system will be activated after the airdrop campaign concludes. However, all eligible actions are being tracked from day one, so you will be credited for all your historical usage.'
+    },
+    {
+      category: 'U2E',
+      question: 'What actions earn U2E rewards?',
+      answer: 'Each platform has specific reward-earning actions. For example: AI Traders (execute trades), AI Business Factory (create businesses), AI Web Dev (complete projects). Reward rates are published openly and may change based on governance.'
+    },
+    {
+      category: 'U2E',
+      question: 'Is there a limit to U2E earnings?',
+      answer: 'There are no hard limits, but rate limiting prevents abuse and fraud detection flags suspicious patterns. Rewards must come from genuine, legitimate usage of the platforms.'
+    },
+    {
+      category: 'U2E',
+      question: 'What are the three phases of U2E?',
+      answer: 'Phase 1 (Years 0-2): Fixed token supply rewards. Phase 2 (Years 2-4): Hybrid transition mixing fixed and revenue-backed rewards. Phase 3 (Year 4+): 100% revenue-backed sustainable model.'
     }
   ];
 

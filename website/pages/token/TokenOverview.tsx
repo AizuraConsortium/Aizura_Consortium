@@ -231,6 +231,17 @@ export default function TokenOverview() {
               requirement="50,000 AAIC minimum"
             />
             <UtilityCard
+              icon={<Zap className="w-8 h-8 text-cyan-400" />}
+              title="Use-to-Earn Rewards"
+              actions={[
+                'Earn tokens by using ecosystem products',
+                'AI Traders, AI Business Factory, AI Web Dev',
+                'Automatic reward accrual',
+                'Sustainable long-term distribution'
+              ]}
+              requirement="Active ecosystem usage"
+            />
+            <UtilityCard
               icon={<Lock className="w-8 h-8 text-purple-400" />}
               title="Future Staking"
               actions={[

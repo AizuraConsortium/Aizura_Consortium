@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { PageLayout } from '../../components/layout/PageLayout';
 import {
   AlertTriangle, TrendingDown, Code, Scale, Briefcase,
-  Users, Server, Shield, CheckCircle2
+  Users, Server, Shield, CheckCircle2, Zap
 } from 'lucide-react';
 
 export default function RiskDisclosure() {
@@ -149,6 +149,45 @@ export default function RiskDisclosure() {
         {
           title: 'Conflict of Interest',
           description: 'Community decisions may not benefit all holders equally. Some decisions may benefit certain groups at the expense of others.'
+        },
+      ],
+    },
+    {
+      icon: <Zap className="w-8 h-8 text-cyan-400" />,
+      title: 'Use-to-Earn (U2E) Risks',
+      color: 'cyan',
+      risks: [
+        {
+          title: 'Reward Rate Changes',
+          description: 'U2E reward rates may change at any time via governance votes or administrative adjustments. Rates may decrease significantly or be eliminated entirely. Historical rates do not predict future rewards.'
+        },
+        {
+          title: 'No Guarantee of Rewards',
+          description: 'U2E rewards are not guaranteed. The program may be suspended, modified, or terminated at any time. Tracked usage does not guarantee reward distribution. System activation may be delayed indefinitely.'
+        },
+        {
+          title: 'Token Value Fluctuation',
+          description: 'AAIC token value may decrease, making accumulated rewards worth less than expected. A significant drop in token price could make rewards negligible or worthless regardless of usage.'
+        },
+        {
+          title: 'Phase Transition Risks',
+          description: 'Transitions between U2E phases (fixed supply → hybrid → revenue-backed) may reduce reward amounts, change distribution mechanisms, or introduce new limitations. Phase 3 sustainability is unproven.'
+        },
+        {
+          title: 'Fraud Detection False Positives',
+          description: 'Legitimate usage may be flagged as fraudulent. Your account may be suspended or rewards forfeited due to automated pattern detection errors. Appeals may not resolve issues.'
+        },
+        {
+          title: 'Retroactive Changes',
+          description: 'Program terms may change retroactively. Previously earned but unclaimed rewards may be subject to new rules, reduced amounts, extended vesting, or other modifications.'
+        },
+        {
+          title: 'Revenue-Backed Model Failure',
+          description: 'Phase 3 revenue-backed rewards depend on business profitability. If ecosystem businesses fail to generate sufficient revenue, rewards may drop to near-zero. This model is experimental and may not work.'
+        },
+        {
+          title: 'Platform Usage Not Guaranteed Valuable',
+          description: 'Using ecosystem platforms does not guarantee those platforms provide value. You may spend time and resources using products that ultimately fail or become obsolete, receiving worthless tokens in return.'
         },
       ],
     },

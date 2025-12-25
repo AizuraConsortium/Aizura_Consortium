@@ -217,6 +217,78 @@ export default function EcosystemOverview() {
           </div>
         </section>
 
+        <section className="bg-gradient-to-br from-cyan-500/10 to-blue-500/10 border border-cyan-500/30 rounded-2xl p-8 lg:p-12">
+          <h2 className="text-3xl font-bold text-white mb-6 text-center flex items-center justify-center gap-3">
+            <Zap className="w-8 h-8 text-cyan-400" />
+            Ecosystem Benefit: Use-to-Earn
+          </h2>
+
+          <p className="text-center text-slate-300 mb-10 max-w-2xl mx-auto">
+            Our Use-to-Earn system rewards genuine ecosystem participation, not speculation
+          </p>
+
+          <div className="grid md:grid-cols-3 gap-6 mb-8">
+            <div className="bg-slate-800/50 border border-slate-700 rounded-xl p-6 text-center">
+              <TrendingUp className="w-10 h-10 text-cyan-400 mx-auto mb-4" />
+              <h3 className="font-bold text-white mb-2">Earn While You Use</h3>
+              <p className="text-sm text-slate-300">
+                Every action on AI Traders, AI Business Factory, and AI Web Dev earns you AAIC tokens
+              </p>
+            </div>
+            <div className="bg-slate-800/50 border border-slate-700 rounded-xl p-6 text-center">
+              <Users className="w-10 h-10 text-green-400 mx-auto mb-4" />
+              <h3 className="font-bold text-white mb-2">Aligned Incentives</h3>
+              <p className="text-sm text-slate-300">
+                Users who derive the most value from the ecosystem are rewarded proportionally
+              </p>
+            </div>
+            <div className="bg-slate-800/50 border border-slate-700 rounded-xl p-6 text-center">
+              <CheckCircle2 className="w-10 h-10 text-blue-400 mx-auto mb-4" />
+              <h3 className="font-bold text-white mb-2">Sustainable Model</h3>
+              <p className="text-sm text-slate-300">
+                Transitions from fixed rewards to revenue-backed distribution over time
+              </p>
+            </div>
+          </div>
+
+          <div className="bg-slate-900/50 border border-cyan-500/30 rounded-xl p-6">
+            <h3 className="text-xl font-bold text-white mb-4 text-center">Participating Businesses</h3>
+            <div className="grid md:grid-cols-3 gap-4">
+              <div className="flex items-center gap-3 p-3 bg-slate-800/50 rounded-lg">
+                <div className="w-2 h-2 bg-green-400 rounded-full flex-shrink-0"></div>
+                <div>
+                  <div className="font-medium text-white text-sm">AI Traders</div>
+                  <div className="text-xs text-slate-400">Active Tracking</div>
+                </div>
+              </div>
+              <div className="flex items-center gap-3 p-3 bg-slate-800/50 rounded-lg">
+                <div className="w-2 h-2 bg-yellow-400 rounded-full flex-shrink-0"></div>
+                <div>
+                  <div className="font-medium text-white text-sm">AI Business Factory</div>
+                  <div className="text-xs text-slate-400">Reserved</div>
+                </div>
+              </div>
+              <div className="flex items-center gap-3 p-3 bg-slate-800/50 rounded-lg">
+                <div className="w-2 h-2 bg-blue-400 rounded-full flex-shrink-0"></div>
+                <div>
+                  <div className="font-medium text-white text-sm">AI Web Dev</div>
+                  <div className="text-xs text-slate-400">Planned</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="mt-8 text-center">
+            <Link
+              to="/token/u2e-explained"
+              className="inline-flex items-center gap-2 px-8 py-4 bg-cyan-600 hover:bg-cyan-700 text-white font-bold rounded-lg transition-colors"
+            >
+              Learn More About U2E
+              <ArrowRight className="w-5 h-5" />
+            </Link>
+          </div>
+        </section>
+
         <section className="text-center">
           <h2 className="text-3xl font-bold text-white mb-8">Explore the Ecosystem</h2>
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 max-w-4xl mx-auto">
