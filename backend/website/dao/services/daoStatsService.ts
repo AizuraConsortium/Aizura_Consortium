@@ -58,7 +58,7 @@ export class DAOStatsService extends BaseService {
             lastUpdated: stats.last_updated,
           };
         } catch (error) {
-          this.logError('getDAOStats', error as Error);
+          await this.logError('GET_DAO_STATS', 'Failed to fetch DAO statistics', error as Error);
           throw error;
         }
       },
@@ -91,7 +91,7 @@ export class DAOStatsService extends BaseService {
             data,
           };
         } catch (error) {
-          this.logError('getGovernanceTrends', error as Error);
+          await this.logError('GET_GOVERNANCE_TRENDS', 'Failed to fetch governance trends', error as Error);
           throw error;
         }
       },
@@ -121,7 +121,7 @@ export class DAOStatsService extends BaseService {
             lastUpdated: new Date().toISOString(),
           };
         } catch (error) {
-          this.logError('getRecentActivity', error as Error);
+          await this.logError('GET_RECENT_ACTIVITY', 'Failed to fetch recent DAO activity', error as Error);
           throw error;
         }
       },
@@ -140,9 +140,9 @@ export class DAOStatsService extends BaseService {
       // Invalidate all DAO caches
       this.cache.invalidatePattern('dao:*');
 
-      this.logInfo('refreshViews', 'Materialized views refreshed and caches invalidated');
+      this.logInfo('Materialized views refreshed and caches invalidated');
     } catch (error) {
-      this.logError('refreshViews', error as Error);
+      await this.logError('REFRESH_VIEWS', 'Failed to refresh materialized views', error as Error);
       throw error;
     }
   }
@@ -154,9 +154,9 @@ export class DAOStatsService extends BaseService {
   async captureSnapshot(): Promise<void> {
     try {
       await this.daoRepo.captureGovernanceSnapshot();
-      this.logInfo('captureSnapshot', 'Governance snapshot captured');
+      this.logInfo('Governance snapshot captured');
     } catch (error) {
-      this.logError('captureSnapshot', error as Error);
+      await this.logError('CAPTURE_SNAPSHOT', 'Failed to capture governance snapshot', error as Error);
       throw error;
     }
   }
@@ -198,16 +198,16 @@ export class DAOStatsService extends BaseService {
    */
   async warmCache(): Promise<void> {
     try {
-      this.logInfo('warmCache', 'Warming DAO stats cache...');
+      this.logInfo('Warming DAO stats cache...');
 
       await this.cache.warmCache({
         [this.cache.CACHE_CONFIG.DAO_STATS.key]: async () => this.getDAOStats(),
         [this.cache.CACHE_CONFIG.RECENT_PROPOSALS.key]: async () => this.getRecentActivity(10),
       });
 
-      this.logInfo('warmCache', 'DAO stats cache warmed successfully');
+      this.logInfo('DAO stats cache warmed successfully');
     } catch (error) {
-      this.logError('warmCache', error as Error);
+      await this.logError('WARM_CACHE', 'Failed to warm DAO stats cache', error as Error);
       // Don't throw - cache warming failures shouldn't prevent server startup
     }
   }

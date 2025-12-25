@@ -18,7 +18,7 @@ import { requireRole } from '../../../shared/middleware/rbac.js';
 const router = Router();
 
 // Initialize repository
-const daoRepo = new DAORepository();
+const daoRepo = new DAORepository('dao_statistics');
 
 // Initialize services
 const statsService = new DAOStatsService(daoRepo, daoCacheService);

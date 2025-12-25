@@ -3,6 +3,7 @@ import type {
   DAOStatisticsRow,
   TreasuryMetricsRow,
   GovernanceMetricsHistoryRow,
+  TreasuryHistoryRow,
   BusinessMetricsRow,
   ParticipationMetrics,
   ProposalActivity,
@@ -18,22 +19,30 @@ export class DAORepository extends BaseRepository {
    * Get current DAO statistics from materialized view
    */
   async getDAOStatistics(context?: OperationContext): Promise<DAOStatisticsRow | null> {
-    const result = await this.queryBuilder<DAOStatisticsRow>('dao_statistics', context)
-      .select('*')
-      .single();
+    return this.execute(async () => {
+      const { data, error } = await this.client
+        .from('dao_statistics')
+        .select('*')
+        .maybeSingle();
 
-    return result || null;
+      if (error) throw error;
+      return data;
+    }, context || { operation: 'getDAOStatistics', table: 'dao_statistics' });
   }
 
   /**
    * Get treasury metrics from materialized view
    */
   async getTreasuryMetrics(context?: OperationContext): Promise<TreasuryMetricsRow | null> {
-    const result = await this.queryBuilder<TreasuryMetricsRow>('treasury_metrics', context)
-      .select('*')
-      .single();
+    return this.execute(async () => {
+      const { data, error } = await this.client
+        .from('treasury_metrics')
+        .select('*')
+        .maybeSingle();
 
-    return result || null;
+      if (error) throw error;
+      return data;
+    }, context || { operation: 'getTreasuryMetrics', table: 'treasury_metrics' });
   }
 
   /**
@@ -43,26 +52,26 @@ export class DAORepository extends BaseRepository {
     period: TimePeriod,
     context?: OperationContext
   ): Promise<GovernanceMetricsHistoryRow[]> {
-    const daysMap: Record<TimePeriod, number> = {
-      '7d': 7,
-      '30d': 30,
-      '90d': 90,
-    };
+    return this.execute(async () => {
+      const daysMap: Record<TimePeriod, number> = {
+        '7d': 7,
+        '30d': 30,
+        '90d': 90,
+      };
 
-    const days = daysMap[period];
-    const cutoffDate = new Date();
-    cutoffDate.setDate(cutoffDate.getDate() - days);
+      const days = daysMap[period];
+      const cutoffDate = new Date();
+      cutoffDate.setDate(cutoffDate.getDate() - days);
 
-    const results = await this.queryBuilder<GovernanceMetricsHistoryRow>(
-      'governance_metrics_history',
-      context
-    )
-      .select('*')
-      .gte('recorded_at', cutoffDate.toISOString())
-      .order('recorded_at', { ascending: true })
-      .execute();
+      const { data, error } = await this.client
+        .from('governance_metrics_history')
+        .select('*')
+        .gte('recorded_at', cutoffDate.toISOString())
+        .order('recorded_at', { ascending: true });
 
-    return results;
+      if (error) throw error;
+      return data || [];
+    }, context || { operation: 'getGovernanceHistory', table: 'governance_metrics_history' });
   }
 
   /**
@@ -72,91 +81,98 @@ export class DAORepository extends BaseRepository {
   async getTreasuryHistory(
     period: TimePeriod,
     context?: OperationContext
-  ): Promise<GovernanceMetricsHistoryRow[]> {
-    const daysMap: Record<TimePeriod, number> = {
-      '7d': 7,
-      '30d': 30,
-      '90d': 90,
-    };
+  ): Promise<TreasuryHistoryRow[]> {
+    return this.execute(async () => {
+      const daysMap: Record<TimePeriod, number> = {
+        '7d': 7,
+        '30d': 30,
+        '90d': 90,
+      };
 
-    const days = daysMap[period];
-    const cutoffDate = new Date();
-    cutoffDate.setDate(cutoffDate.getDate() - days);
+      const days = daysMap[period];
+      const cutoffDate = new Date();
+      cutoffDate.setDate(cutoffDate.getDate() - days);
 
-    const results = await this.queryBuilder<GovernanceMetricsHistoryRow>(
-      'governance_metrics_history',
-      context
-    )
-      .select('recorded_at, total_treasury_value, monthly_revenue, active_businesses')
-      .gte('recorded_at', cutoffDate.toISOString())
-      .order('recorded_at', { ascending: true })
-      .execute();
+      const { data, error } = await this.client
+        .from('governance_metrics_history')
+        .select('recorded_at, total_treasury_value, monthly_revenue, active_businesses')
+        .gte('recorded_at', cutoffDate.toISOString())
+        .order('recorded_at', { ascending: true });
 
-    return results;
+      if (error) throw error;
+      return data || [];
+    }, context || { operation: 'getTreasuryHistory', table: 'governance_metrics_history' });
   }
 
   /**
    * Get all active businesses with metrics
    */
   async getActiveBusinesses(context?: OperationContext): Promise<BusinessMetricsRow[]> {
-    const results = await this.queryBuilder<BusinessMetricsRow>('u2e_businesses', context)
-      .select('id, name, slug, description, status, is_active, is_foundation, category, monthly_revenue, total_revenue, launch_date, created_at, updated_at')
-      .eq('status', 'active')
-      .is('deleted_at', null)
-      .order('total_revenue', { ascending: false })
-      .execute();
+    return this.execute(async () => {
+      const { data, error } = await this.client
+        .from('u2e_businesses')
+        .select('id, name, slug, description, status, is_active, is_foundation, category, monthly_revenue, total_revenue, launch_date, created_at, updated_at')
+        .eq('status', 'active')
+        .is('deleted_at', null)
+        .order('total_revenue', { ascending: false });
 
-    return results;
+      if (error) throw error;
+      return data || [];
+    }, context || { operation: 'getActiveBusinesses', table: 'u2e_businesses' });
   }
 
   /**
    * Get participation metrics
    */
   async getParticipationMetrics(context?: OperationContext): Promise<ParticipationMetrics> {
-    // Get total eligible voters
-    const usersResult = await this.queryBuilder<{ count: number }>('users', context)
-      .select('id', { count: 'exact', head: true })
-      .in('role', ['user', 'admin', 'moderator'])
-      .is('deleted_at', null)
-      .execute();
+    return this.execute(async () => {
+      // Get total eligible voters
+      const { count: eligibleVoters, error: usersError } = await this.client
+        .from('users')
+        .select('id', { count: 'exact', head: true })
+        .in('role', ['user', 'admin', 'moderator'])
+        .is('deleted_at', null);
 
-    const eligibleVoters = usersResult.length;
+      if (usersError) throw usersError;
 
-    // Get unique voters in last 30 days
-    const thirtyDaysAgo = new Date();
-    thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+      // Get unique voters in last 30 days
+      const thirtyDaysAgo = new Date();
+      thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
 
-    const uniqueVotersResult = await this.supabase
-      .from('votes')
-      .select('voter_id', { count: 'exact' })
-      .gte('created_at', thirtyDaysAgo.toISOString());
+      const { data: uniqueVotersData, error: uniqueError } = await this.client
+        .from('votes')
+        .select('voter_id')
+        .gte('created_at', thirtyDaysAgo.toISOString());
 
-    const uniqueVotersData = uniqueVotersResult.data || [];
-    const uniqueVoterIds = new Set(uniqueVotersData.map((v: any) => v.voter_id));
-    const uniqueVoters = uniqueVoterIds.size;
+      if (uniqueError) throw uniqueError;
 
-    // Get active voters in last 7 days
-    const sevenDaysAgo = new Date();
-    sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+      const uniqueVoterIds = new Set((uniqueVotersData || []).map((v: any) => v.voter_id));
+      const uniqueVoters = uniqueVoterIds.size;
 
-    const activeVotersResult = await this.supabase
-      .from('votes')
-      .select('voter_id', { count: 'exact' })
-      .gte('created_at', sevenDaysAgo.toISOString());
+      // Get active voters in last 7 days
+      const sevenDaysAgo = new Date();
+      sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
 
-    const activeVotersData = activeVotersResult.data || [];
-    const activeVoterIds = new Set(activeVotersData.map((v: any) => v.voter_id));
-    const activeVoters = activeVoterIds.size;
+      const { data: activeVotersData, error: activeError } = await this.client
+        .from('votes')
+        .select('voter_id')
+        .gte('created_at', sevenDaysAgo.toISOString());
 
-    // Calculate participation rate
-    const rate = eligibleVoters > 0 ? (uniqueVoters / eligibleVoters) * 100 : 0;
+      if (activeError) throw activeError;
 
-    return {
-      rate: Math.round(rate * 100) / 100,
-      unique_voters: uniqueVoters,
-      active_voters: activeVoters,
-      eligible_voters: eligibleVoters,
-    };
+      const activeVoterIds = new Set((activeVotersData || []).map((v: any) => v.voter_id));
+      const activeVoters = activeVoterIds.size;
+
+      // Calculate participation rate
+      const rate = (eligibleVoters || 0) > 0 ? (uniqueVoters / (eligibleVoters || 1)) * 100 : 0;
+
+      return {
+        rate: Math.round(rate * 100) / 100,
+        unique_voters: uniqueVoters,
+        active_voters: activeVoters,
+        eligible_voters: eligibleVoters || 0,
+      };
+    }, context || { operation: 'getParticipationMetrics' });
   }
 
   /**
@@ -166,76 +182,85 @@ export class DAORepository extends BaseRepository {
     limit: number = 10,
     context?: OperationContext
   ): Promise<ProposalActivity[]> {
-    const proposals = await this.queryBuilder<any>('proposals', context)
-      .select('id, title, status, created_at')
-      .is('deleted_at', null)
-      .order('created_at', { ascending: false })
-      .limit(limit)
-      .execute();
-
-    // Get vote counts for each proposal
-    const proposalActivities: ProposalActivity[] = [];
-
-    for (const proposal of proposals) {
-      const votesResult = await this.supabase
-        .from('votes')
-        .select('id', { count: 'exact', head: true })
-        .eq('proposal_id', proposal.id);
-
-      const voteCount = votesResult.count || 0;
-
-      // Get last vote timestamp
-      const lastVoteResult = await this.supabase
-        .from('votes')
-        .select('created_at')
-        .eq('proposal_id', proposal.id)
+    return this.execute(async () => {
+      const { data: proposals, error: proposalsError } = await this.client
+        .from('proposals')
+        .select('id, title, status, created_at')
+        .is('deleted_at', null)
         .order('created_at', { ascending: false })
-        .limit(1)
-        .single();
+        .limit(limit);
 
-      const lastActivity = lastVoteResult.data?.created_at || proposal.created_at;
+      if (proposalsError) throw proposalsError;
 
-      proposalActivities.push({
-        id: proposal.id,
-        title: proposal.title,
-        status: proposal.status,
-        created_at: proposal.created_at,
-        vote_count: voteCount,
-        last_activity: lastActivity,
-      });
-    }
+      const proposalActivities: ProposalActivity[] = [];
 
-    return proposalActivities;
+      for (const proposal of proposals || []) {
+        const { count: voteCount, error: voteError } = await this.client
+          .from('votes')
+          .select('id', { count: 'exact', head: true })
+          .eq('proposal_id', proposal.id);
+
+        if (voteError) throw voteError;
+
+        const { data: lastVote } = await this.client
+          .from('votes')
+          .select('created_at')
+          .eq('proposal_id', proposal.id)
+          .order('created_at', { ascending: false })
+          .limit(1)
+          .maybeSingle();
+
+        const lastActivity = lastVote?.created_at || proposal.created_at;
+
+        proposalActivities.push({
+          id: proposal.id,
+          title: proposal.title,
+          status: proposal.status,
+          created_at: proposal.created_at,
+          vote_count: voteCount || 0,
+          last_activity: lastActivity,
+        });
+      }
+
+      return proposalActivities;
+    }, context || { operation: 'getRecentProposalActivity', table: 'proposals' });
   }
 
   /**
    * Refresh materialized views on demand
    */
   async refreshMaterializedViews(context?: OperationContext): Promise<void> {
-    await this.supabase.rpc('refresh_dao_materialized_views');
+    return this.execute(async () => {
+      const { error } = await this.client.rpc('refresh_dao_materialized_views');
+      if (error) throw error;
+    }, context || { operation: 'refreshMaterializedViews' });
   }
 
   /**
    * Capture governance snapshot (manual trigger)
    */
   async captureGovernanceSnapshot(context?: OperationContext): Promise<void> {
-    await this.supabase.rpc('capture_governance_snapshot');
+    return this.execute(async () => {
+      const { error } = await this.client.rpc('capture_governance_snapshot');
+      if (error) throw error;
+    }, context || { operation: 'captureGovernanceSnapshot' });
   }
 
   /**
    * Get latest historical snapshot
    */
   async getLatestSnapshot(context?: OperationContext): Promise<GovernanceMetricsHistoryRow | null> {
-    const result = await this.queryBuilder<GovernanceMetricsHistoryRow>(
-      'governance_metrics_history',
-      context
-    )
-      .select('*')
-      .order('recorded_at', { ascending: false })
-      .limit(1)
-      .single();
+    return this.execute(async () => {
+      const { data, error } = await this.client
+        .from('governance_metrics_history')
+        .select('*')
+        .order('recorded_at', { ascending: false })
+        .limit(1)
+        .maybeSingle();
 
-    return result || null;
+      if (error) throw error;
+      return data;
+    }, context || { operation: 'getLatestSnapshot', table: 'governance_metrics_history' });
   }
 
   /**
@@ -246,64 +271,60 @@ export class DAORepository extends BaseRepository {
     quarterly: number;
     yearly: number;
   }> {
-    const now = new Date();
+    return this.execute(async () => {
+      const now = new Date();
 
-    // Get snapshot from 30 days ago
-    const thirtyDaysAgo = new Date(now);
-    thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+      // Get snapshot from 30 days ago
+      const thirtyDaysAgo = new Date(now);
+      thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
 
-    const monthlySnapshot = await this.queryBuilder<GovernanceMetricsHistoryRow>(
-      'governance_metrics_history',
-      context
-    )
-      .select('total_treasury_value')
-      .gte('recorded_at', thirtyDaysAgo.toISOString())
-      .order('recorded_at', { ascending: true })
-      .limit(1)
-      .single();
+      const { data: monthlySnapshot } = await this.client
+        .from('governance_metrics_history')
+        .select('total_treasury_value')
+        .gte('recorded_at', thirtyDaysAgo.toISOString())
+        .order('recorded_at', { ascending: true })
+        .limit(1)
+        .maybeSingle();
 
-    // Get snapshot from 90 days ago
-    const ninetyDaysAgo = new Date(now);
-    ninetyDaysAgo.setDate(ninetyDaysAgo.getDate() - 90);
+      // Get snapshot from 90 days ago
+      const ninetyDaysAgo = new Date(now);
+      ninetyDaysAgo.setDate(ninetyDaysAgo.getDate() - 90);
 
-    const quarterlySnapshot = await this.queryBuilder<GovernanceMetricsHistoryRow>(
-      'governance_metrics_history',
-      context
-    )
-      .select('total_treasury_value')
-      .gte('recorded_at', ninetyDaysAgo.toISOString())
-      .order('recorded_at', { ascending: true })
-      .limit(1)
-      .single();
+      const { data: quarterlySnapshot } = await this.client
+        .from('governance_metrics_history')
+        .select('total_treasury_value')
+        .gte('recorded_at', ninetyDaysAgo.toISOString())
+        .order('recorded_at', { ascending: true })
+        .limit(1)
+        .maybeSingle();
 
-    // Get snapshot from 365 days ago
-    const oneYearAgo = new Date(now);
-    oneYearAgo.setDate(oneYearAgo.getDate() - 365);
+      // Get snapshot from 365 days ago
+      const oneYearAgo = new Date(now);
+      oneYearAgo.setDate(oneYearAgo.getDate() - 365);
 
-    const yearlySnapshot = await this.queryBuilder<GovernanceMetricsHistoryRow>(
-      'governance_metrics_history',
-      context
-    )
-      .select('total_treasury_value')
-      .gte('recorded_at', oneYearAgo.toISOString())
-      .order('recorded_at', { ascending: true })
-      .limit(1)
-      .single();
+      const { data: yearlySnapshot } = await this.client
+        .from('governance_metrics_history')
+        .select('total_treasury_value')
+        .gte('recorded_at', oneYearAgo.toISOString())
+        .order('recorded_at', { ascending: true })
+        .limit(1)
+        .maybeSingle();
 
-    // Get current value
-    const currentMetrics = await this.getTreasuryMetrics(context);
-    const currentValue = currentMetrics?.total_lifetime_revenue || 0;
+      // Get current value
+      const currentMetrics = await this.getTreasuryMetrics(context);
+      const currentValue = currentMetrics?.total_lifetime_revenue || 0;
 
-    // Calculate growth percentages
-    const calculateGrowth = (oldValue: number | undefined, currentValue: number): number => {
-      if (!oldValue || oldValue === 0) return 0;
-      return ((currentValue - oldValue) / oldValue) * 100;
-    };
+      // Calculate growth percentages
+      const calculateGrowth = (oldValue: number | undefined, currentValue: number): number => {
+        if (!oldValue || oldValue === 0) return 0;
+        return ((currentValue - oldValue) / oldValue) * 100;
+      };
 
-    return {
-      monthly: calculateGrowth(monthlySnapshot?.total_treasury_value, currentValue),
-      quarterly: calculateGrowth(quarterlySnapshot?.total_treasury_value, currentValue),
-      yearly: calculateGrowth(yearlySnapshot?.total_treasury_value, currentValue),
-    };
+      return {
+        monthly: calculateGrowth(monthlySnapshot?.total_treasury_value, currentValue),
+        quarterly: calculateGrowth(quarterlySnapshot?.total_treasury_value, currentValue),
+        yearly: calculateGrowth(yearlySnapshot?.total_treasury_value, currentValue),
+      };
+    }, context || { operation: 'getTreasuryGrowth' });
   }
 }

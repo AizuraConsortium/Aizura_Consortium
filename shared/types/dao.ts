@@ -95,3 +95,46 @@ export interface HistoricalMetrics {
   treasury: TreasuryHistoryPoint[];
   periodDays: number;
 }
+
+export interface GovernanceMetricsHistory {
+  id: string;
+  recordedAt: string;
+  activeProposals: number;
+  passedProposals: number;
+  rejectedProposals: number;
+  pendingProposals: number;
+  totalProposals: number;
+  uniqueVoters: number;
+  activeVoters: number;
+  participationRate: number;
+  totalTreasuryValue: number;
+  monthlyRevenue: number;
+  activeBusinesses: number;
+  createdAt: string;
+}
+
+export interface TreasuryMetricsHistory {
+  recordedAt: string;
+  totalTreasuryValue: number;
+  monthlyRevenue: number;
+  activeBusinesses: number;
+  foundationValue: number;
+  liveBusinessValue: number;
+  revenueGrowthRate: number;
+}
+
+export interface ChartDataPoint {
+  date: string;
+  value: number;
+  label?: string;
+  metadata?: Record<string, any>;
+}
+
+export interface TrendData {
+  current: number;
+  previous: number;
+  change: number;
+  changePercentage: number;
+  trend: 'up' | 'down' | 'stable';
+  isPositive: boolean;
+}

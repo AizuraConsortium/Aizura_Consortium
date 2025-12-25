@@ -65,7 +65,7 @@ export class DAOTreasuryService extends BaseService {
             lastUpdated: metrics.last_updated,
           };
         } catch (error) {
-          this.logError('getTreasurySnapshot', error as Error);
+          await this.logError('GET_TREASURY_SNAPSHOT', 'Failed to fetch treasury snapshot', error as Error);
           throw error;
         }
       },
@@ -97,7 +97,7 @@ export class DAOTreasuryService extends BaseService {
             data,
           };
         } catch (error) {
-          this.logError('getTreasuryHistory', error as Error);
+          await this.logError('GET_TREASURY_HISTORY', 'Failed to fetch treasury history', error as Error);
           throw error;
         }
       },
@@ -172,7 +172,7 @@ export class DAOTreasuryService extends BaseService {
           const businesses = await this.daoRepo.getActiveBusinesses();
           return this.calculateBusinessBreakdown(businesses, metrics.total_lifetime_revenue);
         } catch (error) {
-          this.logError('getBusinessBreakdown', error as Error);
+          await this.logError('GET_BUSINESS_BREAKDOWN', 'Failed to fetch business breakdown', error as Error);
           throw error;
         }
       },
@@ -195,7 +195,7 @@ export class DAOTreasuryService extends BaseService {
             yearlyGrowth: growth.yearly,
           };
         } catch (error) {
-          this.logError('getGrowthMetrics', error as Error);
+          await this.logError('GET_GROWTH_METRICS', 'Failed to fetch growth metrics', error as Error);
           throw error;
         }
       },
@@ -208,16 +208,16 @@ export class DAOTreasuryService extends BaseService {
    */
   async warmCache(): Promise<void> {
     try {
-      this.logInfo('warmCache', 'Warming treasury cache...');
+      this.logInfo('Warming treasury cache...');
 
       await this.cache.warmCache({
         [this.cache.CACHE_CONFIG.TREASURY_METRICS.key]: async () => this.getTreasurySnapshot(),
         [this.cache.CACHE_CONFIG.BUSINESS_BREAKDOWN.key]: async () => this.getBusinessBreakdown(),
       });
 
-      this.logInfo('warmCache', 'Treasury cache warmed successfully');
+      this.logInfo('Treasury cache warmed successfully');
     } catch (error) {
-      this.logError('warmCache', error as Error);
+      await this.logError('WARM_CACHE', 'Failed to warm treasury cache', error as Error);
       // Don't throw - cache warming failures shouldn't prevent server startup
     }
   }

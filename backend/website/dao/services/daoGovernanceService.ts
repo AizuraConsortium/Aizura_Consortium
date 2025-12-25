@@ -25,7 +25,7 @@ export class DAOGovernanceService extends BaseService {
         try {
           return await this.daoRepo.getParticipationMetrics();
         } catch (error) {
-          this.logError('getParticipationMetrics', error as Error);
+          await this.logError('GET_PARTICIPATION_METRICS', 'Failed to fetch participation metrics', error as Error);
           throw error;
         }
       },
@@ -50,7 +50,7 @@ export class DAOGovernanceService extends BaseService {
       const metrics = await this.getParticipationMetrics();
       return metrics.rate >= minParticipationRate;
     } catch (error) {
-      this.logError('isGovernanceHealthy', error as Error);
+      await this.logError('CHECK_GOVERNANCE_HEALTH', 'Failed to check governance health', error as Error);
       return false;
     }
   }
@@ -92,7 +92,7 @@ export class DAOGovernanceService extends BaseService {
         message,
       };
     } catch (error) {
-      this.logError('getHealthStatus', error as Error);
+      await this.logError('GET_HEALTH_STATUS', 'Failed to get governance health status', error as Error);
       throw error;
     }
   }
@@ -102,16 +102,16 @@ export class DAOGovernanceService extends BaseService {
    */
   async warmCache(): Promise<void> {
     try {
-      this.logInfo('warmCache', 'Warming governance cache...');
+      this.logInfo('Warming governance cache...');
 
       await this.cache.warmCache({
         [this.cache.CACHE_CONFIG.PARTICIPATION_METRICS.key]: async () =>
           this.getParticipationMetrics(),
       });
 
-      this.logInfo('warmCache', 'Governance cache warmed successfully');
+      this.logInfo('Governance cache warmed successfully');
     } catch (error) {
-      this.logError('warmCache', error as Error);
+      await this.logError('WARM_CACHE', 'Failed to warm governance cache', error as Error);
       // Don't throw - cache warming failures shouldn't prevent server startup
     }
   }

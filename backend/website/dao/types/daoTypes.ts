@@ -139,6 +139,13 @@ export interface TreasuryHistoryPoint {
   activeBusinesses: number;
 }
 
+export interface TreasuryHistoryRow {
+  recorded_at: string;
+  total_treasury_value: number;
+  monthly_revenue: number;
+  active_businesses: number;
+}
+
 export interface GovernanceTrendsResponse {
   period: '7d' | '30d' | '90d';
   data: GovernanceTrendPoint[];
