@@ -1,77 +1,72 @@
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useState, useMemo } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { DashboardLayout } from '../components/layout/DashboardLayout';
-import { Rocket, Plus, CheckCircle, XCircle, Clock, ArrowRight, ExternalLink } from 'lucide-react';
+import { ProposalCard } from '@shared/components/proposals/ProposalCard';
+import { ProposalSubmitButton } from '../components/proposals/ProposalSubmitButton';
+import { VoteButton } from '../components/proposals/VoteButton';
+import { EmptyState } from '../components/ui/EmptyState';
+import { LoadingSpinner } from '@shared/components/LoadingSpinner';
+import { CardSkeleton } from '@shared/components/skeletons/CardSkeleton';
+import { useProposals } from '@shared/hooks/useProposals';
+import { useAuth } from '../contexts/AuthContext';
+import { useToast } from '@shared/components/ToastProvider';
+import { api } from '../lib/api';
+import { Rocket, FileText, Vote, RefreshCw, AlertCircle } from 'lucide-react';
 
 export default function LaunchpadView() {
+  const { user, session } = useAuth();
+  const navigate = useNavigate();
+  const { showError } = useToast();
   const [activeTab, setActiveTab] = useState<'proposals' | 'votes'>('proposals');
 
-  const yourProposals = [
-    {
-      id: '1',
-      title: 'Automated Content Generation Platform',
-      status: 'voting',
-      votesFor: 45,
-      votesAgainst: 55,
-      timeRemaining: '12 days',
-      aiProgress: null
+  const {
+    proposals: allProposals,
+    loading: proposalsLoading,
+    error: proposalsError,
+    refetch: refetchProposals
+  } = useProposals({
+    apiClient: {
+      getProposals: (token) => api.getProposals(token)
     },
-    {
-      id: '2',
-      title: 'DeFi Portfolio Optimizer',
-      status: 'approved',
-      votesFor: 78,
-      votesAgainst: 22,
-      timeRemaining: 'Completed',
-      aiProgress: 'Planning Phase - 35%'
+    token: session?.access_token,
+    autoRefetch: true,
+    refetchInterval: 30000,
+    onError: (err) => {
+      showError('Failed to Load', err.message);
     }
-  ];
+  });
 
-  const yourVotes = [
-    {
-      id: '1',
-      proposalTitle: 'AI Trading Bot for DeFi Markets',
-      yourVote: 'FOR',
-      votingPower: '125,450',
-      outcome: 'pending',
-      votesFor: 67,
-      votesAgainst: 33
-    },
-    {
-      id: '3',
-      proposalTitle: 'Blockchain Analytics Dashboard',
-      yourVote: 'AGAINST',
-      votingPower: '125,450',
-      outcome: 'pending',
-      votesFor: 42,
-      votesAgainst: 58
-    },
-    {
-      id: '4',
-      proposalTitle: 'AI Web Dev Platform',
-      yourVote: 'FOR',
-      votingPower: '125,450',
-      outcome: 'approved',
-      votesFor: 85,
-      votesAgainst: 15
-    }
-  ];
+  const userProposals = useMemo(() => {
+    return allProposals.filter(p => p.submitted_by === user?.id);
+  }, [allProposals, user?.id]);
+
+  const votedProposals = useMemo(() => {
+    return allProposals.filter(p =>
+      p.submitted_by !== user?.id
+    );
+  }, [allProposals, user?.id]);
+
+  const handleProposalClick = (proposal: any) => {
+    navigate(`/app/launchpad/${proposal.id}`);
+  };
+
+  const handleRetry = async () => {
+    await refetchProposals();
+  };
 
   return (
     <DashboardLayout>
       <div className="space-y-8">
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between flex-wrap gap-4">
           <div>
             <h1 className="text-3xl font-bold text-white mb-2">Launchpad</h1>
             <p className="text-slate-400">Your proposals and votes</p>
           </div>
-          <Link
-            to="/launchpad/submit"
-            className="inline-flex items-center gap-2 px-6 py-3 bg-cyan-600 hover:bg-cyan-700 text-white font-medium rounded-lg transition-colors"
-          >
-            <Plus className="w-5 h-5" />
-            Submit Proposal
-          </Link>
+          <ProposalSubmitButton
+            onProposalCreated={() => refetchProposals()}
+            variant="primary"
+            size="md"
+          />
         </div>
 
         <div className="flex gap-4 border-b border-slate-700">
@@ -83,7 +78,10 @@ export default function LaunchpadView() {
                 : 'border-transparent text-slate-400 hover:text-white'
             }`}
           >
-            Your Proposals ({yourProposals.length})
+            <div className="flex items-center gap-2">
+              <FileText className="w-4 h-4" />
+              <span>Your Proposals ({userProposals.length})</span>
+            </div>
           </button>
           <button
             onClick={() => setActiveTab('votes')}
@@ -93,134 +91,131 @@ export default function LaunchpadView() {
                 : 'border-transparent text-slate-400 hover:text-white'
             }`}
           >
-            Your Votes ({yourVotes.length})
+            <div className="flex items-center gap-2">
+              <Vote className="w-4 h-4" />
+              <span>Your Votes ({votedProposals.length})</span>
+            </div>
           </button>
         </div>
 
+        {proposalsError && (
+          <div className="bg-red-500/10 border border-red-500/30 rounded-xl p-6">
+            <div className="flex items-start gap-4">
+              <AlertCircle className="w-6 h-6 text-red-400 flex-shrink-0 mt-0.5" />
+              <div className="flex-1">
+                <h3 className="text-lg font-bold text-red-400 mb-2">
+                  Failed to Load Proposals
+                </h3>
+                <p className="text-red-300 mb-4">
+                  {proposalsError}
+                </p>
+                <button
+                  onClick={handleRetry}
+                  className="inline-flex items-center gap-2 px-4 py-2 bg-red-600 hover:bg-red-700 text-white font-medium rounded-lg transition-colors"
+                >
+                  <RefreshCw className="w-4 h-4" />
+                  Retry
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+
         {activeTab === 'proposals' && (
           <div className="space-y-4">
-            {yourProposals.map((proposal) => (
-              <div
-                key={proposal.id}
-                className="bg-slate-800/50 border border-slate-700 rounded-xl p-6 hover:border-cyan-500/50 transition-colors"
-              >
-                <div className="flex items-start justify-between mb-4">
-                  <div className="flex-1">
-                    <div className="flex items-center gap-2 mb-3">
-                      <Rocket className="w-5 h-5 text-cyan-400" />
-                      <h3 className="font-bold text-white text-lg">{proposal.title}</h3>
-                    </div>
-                    <div className="flex items-center gap-3 mb-3">
-                      <span className={`px-3 py-1 text-sm font-medium rounded-full ${
-                        proposal.status === 'voting' ? 'bg-blue-500/20 text-blue-400' :
-                        proposal.status === 'approved' ? 'bg-green-500/20 text-green-400' :
-                        'bg-red-500/20 text-red-400'
-                      }`}>
-                        {proposal.status}
-                      </span>
-                      <span className="text-sm text-slate-400">
-                        <Clock className="w-4 h-4 inline mr-1" />
-                        {proposal.timeRemaining}
-                      </span>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-2 gap-4 mb-4">
-                  <div className="bg-slate-700/30 rounded-lg p-3">
-                    <div className="text-sm text-slate-400 mb-1">Votes FOR</div>
-                    <div className="text-2xl font-bold text-green-400">{proposal.votesFor}%</div>
-                  </div>
-                  <div className="bg-slate-700/30 rounded-lg p-3">
-                    <div className="text-sm text-slate-400 mb-1">Votes AGAINST</div>
-                    <div className="text-2xl font-bold text-red-400">{proposal.votesAgainst}%</div>
-                  </div>
-                </div>
-
-                {proposal.aiProgress && (
-                  <div className="bg-cyan-500/10 border border-cyan-500/30 rounded-lg p-4 mb-4">
-                    <div className="flex items-center gap-2 text-sm text-cyan-400 mb-2">
-                      <CheckCircle className="w-4 h-4" />
-                      AI Development Progress
-                    </div>
-                    <div className="text-white font-medium">{proposal.aiProgress}</div>
-                  </div>
-                )}
-
-                <Link
-                  to={`/app/launchpad/${proposal.id}`}
-                  className="inline-flex items-center gap-2 text-sm text-cyan-400 hover:text-cyan-300 font-medium"
-                >
-                  View Details
-                  <ArrowRight className="w-4 h-4" />
-                </Link>
-              </div>
-            ))}
+            {proposalsLoading ? (
+              <CardSkeleton count={3} theme="dark" />
+            ) : userProposals.length === 0 ? (
+              <EmptyState
+                icon={Rocket}
+                title="No proposals yet"
+                description="Submit your first business idea to the Aizura AI Consortium"
+                action={
+                  <ProposalSubmitButton
+                    onProposalCreated={() => refetchProposals()}
+                  />
+                }
+                variant="dark"
+              />
+            ) : (
+              userProposals.map(proposal => (
+                <ProposalCard
+                  key={proposal.id}
+                  proposal={proposal}
+                  variant="dark"
+                  showVoteButtons={false}
+                  showMetadata
+                  onClick={handleProposalClick}
+                />
+              ))
+            )}
           </div>
         )}
 
         {activeTab === 'votes' && (
           <div className="space-y-4">
-            {yourVotes.map((vote) => (
-              <div
-                key={vote.id}
-                className="bg-slate-800/50 border border-slate-700 rounded-xl p-6 hover:border-cyan-500/50 transition-colors"
-              >
-                <div className="flex items-start justify-between mb-4">
-                  <div className="flex-1">
-                    <h3 className="font-bold text-white text-lg mb-3">{vote.proposalTitle}</h3>
-                    <div className="flex items-center gap-3">
-                      <span className={`px-3 py-1 text-sm font-medium rounded-full ${
-                        vote.yourVote === 'FOR' ? 'bg-green-500/20 text-green-400' : 'bg-red-500/20 text-red-400'
-                      }`}>
-                        Your Vote: {vote.yourVote}
-                      </span>
-                      <span className={`px-3 py-1 text-sm font-medium rounded-full ${
-                        vote.outcome === 'approved' ? 'bg-cyan-500/20 text-cyan-400' :
-                        vote.outcome === 'rejected' ? 'bg-red-500/20 text-red-400' :
-                        'bg-yellow-500/20 text-yellow-400'
-                      }`}>
-                        {vote.outcome === 'pending' ? 'Voting in Progress' : vote.outcome}
-                      </span>
-                    </div>
-                  </div>
-                </div>
+            {proposalsLoading ? (
+              <CardSkeleton count={3} theme="dark" />
+            ) : votedProposals.length === 0 ? (
+              <EmptyState
+                icon={Vote}
+                title="No votes cast yet"
+                description="Browse active proposals in governance and cast your vote"
+                action={
+                  <button
+                    onClick={() => navigate('/app/governance')}
+                    className="px-6 py-3 bg-cyan-600 hover:bg-cyan-700 text-white font-medium rounded-lg transition-colors"
+                  >
+                    View Governance
+                  </button>
+                }
+                variant="dark"
+              />
+            ) : (
+              votedProposals.map(proposal => (
+                <div
+                  key={proposal.id}
+                  className="bg-slate-800/50 border border-slate-700 rounded-xl p-6 hover:border-cyan-500/50 transition-colors"
+                >
+                  <ProposalCard
+                    proposal={proposal}
+                    variant="dark"
+                    showVoteButtons={false}
+                    showMetadata
+                    onClick={handleProposalClick}
+                  />
 
-                <div className="grid grid-cols-3 gap-4">
-                  <div className="bg-slate-700/30 rounded-lg p-3">
-                    <div className="text-sm text-slate-400 mb-1">Your Voting Power</div>
-                    <div className="text-lg font-bold text-white">{vote.votingPower}</div>
-                  </div>
-                  <div className="bg-slate-700/30 rounded-lg p-3">
-                    <div className="text-sm text-slate-400 mb-1">FOR</div>
-                    <div className="text-lg font-bold text-green-400">{vote.votesFor}%</div>
-                  </div>
-                  <div className="bg-slate-700/30 rounded-lg p-3">
-                    <div className="text-sm text-slate-400 mb-1">AGAINST</div>
-                    <div className="text-lg font-bold text-red-400">{vote.votesAgainst}%</div>
+                  <div className="mt-6 pt-6 border-t border-slate-700">
+                    <VoteButton
+                      proposalId={proposal.id}
+                      onVoteChange={() => refetchProposals()}
+                      variant="dark"
+                      disabled={proposal.status !== 'queued' && proposal.status !== 'in_debate'}
+                    />
                   </div>
                 </div>
-              </div>
-            ))}
+              ))
+            )}
           </div>
         )}
 
-        <div className="bg-gradient-to-br from-cyan-600/20 to-blue-600/20 border border-cyan-500/30 rounded-xl p-8 text-center">
-          <Rocket className="w-12 h-12 text-cyan-400 mx-auto mb-4" />
-          <h3 className="text-xl font-bold text-white mb-2">Explore Public Launchpad</h3>
-          <p className="text-slate-300 mb-6">
-            View all proposals, vote on ideas, and participate in the ecosystem
-          </p>
-          <a
-            href="/launchpad"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-6 py-3 bg-cyan-600 hover:bg-cyan-700 text-white font-medium rounded-lg transition-colors"
-          >
-            Open Launchpad
-            <ExternalLink className="w-5 h-5" />
-          </a>
-        </div>
+        {!proposalsError && (
+          <div className="bg-gradient-to-br from-cyan-600/20 to-blue-600/20 border border-cyan-500/30 rounded-xl p-8 text-center">
+            <Rocket className="w-12 h-12 text-cyan-400 mx-auto mb-4" />
+            <h3 className="text-xl font-bold text-white mb-2">Explore Public Launchpad</h3>
+            <p className="text-slate-300 mb-6">
+              View all proposals, vote on ideas, and participate in the ecosystem
+            </p>
+            <a
+              href="/launchpad"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-cyan-600 hover:bg-cyan-700 text-white font-medium rounded-lg transition-colors"
+            >
+              Open Public Launchpad
+            </a>
+          </div>
+        )}
       </div>
     </DashboardLayout>
   );
