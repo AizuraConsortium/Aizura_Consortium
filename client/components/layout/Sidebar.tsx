@@ -1,6 +1,6 @@
 import { NavLink } from 'react-router-dom';
 import {
-  LayoutDashboard, Rocket, Vote, Briefcase, Award, Coins, Settings, X
+  LayoutDashboard, Rocket, Vote, Briefcase, Award, Coins, Settings, Gift, X
 } from 'lucide-react';
 import { useState } from 'react';
 
@@ -10,6 +10,7 @@ const navigation = [
   { name: 'Governance', href: '/app/governance', icon: Vote },
   { name: 'Portfolio', href: '/app/portfolio', icon: Briefcase },
   { name: 'Rewards', href: '/app/rewards', icon: Award },
+  { name: 'Airdrop', href: '/app/airdrop', icon: Gift },
   { name: 'Token', href: '/app/token', icon: Coins },
   { name: 'Settings', href: '/app/settings', icon: Settings },
 ];

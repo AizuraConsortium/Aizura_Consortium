@@ -5,6 +5,9 @@ import { ActiveParticipation } from '../components/dashboard/ActiveParticipation
 import { RewardsPreview } from '../components/dashboard/RewardsPreview';
 import { EcosystemFeed } from '../components/dashboard/EcosystemFeed';
 import { useAuth } from '../contexts/AuthContext';
+import { Gift, Trophy, ArrowRight } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { api } from '../lib/api';
 
 export default function DashboardHome() {
   const { user } = useAuth();
@@ -23,10 +26,32 @@ export default function DashboardHome() {
     lastDistribution: 'N/A'
   });
   const [ecosystemFeed, setEcosystemFeed] = useState<any[]>([]);
+  const [airdropStats, setAirdropStats] = useState<{
+    totalPoints: number;
+    rank: number;
+    totalUsers: number;
+  } | null>(null);
 
   useEffect(() => {
     fetchDashboardData();
+    fetchAirdropStats();
   }, [user]);
+
+  const fetchAirdropStats = async () => {
+    try {
+      const response = await api.get('/api/client/airdrop/stats');
+      if (response.ok) {
+        const data = await response.json();
+        setAirdropStats({
+          totalPoints: data.totalPoints || 0,
+          rank: data.rank || 0,
+          totalUsers: data.totalUsers || 0,
+        });
+      }
+    } catch (error) {
+      console.error('Failed to fetch airdrop stats:', error);
+    }
+  };
 
   const fetchDashboardData = async () => {
     setUserStats({
@@ -122,6 +147,52 @@ export default function DashboardHome() {
           rewardsEarned={userStats.rewardsEarned}
           portfolioCount={userStats.portfolioCount}
         />
+
+        {airdropStats && (
+          <div className="bg-gradient-to-br from-green-600/20 to-emerald-600/20 backdrop-blur-sm border border-green-500/30 rounded-2xl p-6">
+            <div className="flex items-start justify-between">
+              <div className="flex-1">
+                <div className="flex items-center gap-3 mb-4">
+                  <Gift className="w-6 h-6 text-green-400" />
+                  <h2 className="text-xl font-bold text-white">AAIC Token Airdrop</h2>
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+                  <div>
+                    <p className="text-sm text-slate-400 mb-1">Your Points</p>
+                    <p className="text-2xl font-bold text-white">
+                      {airdropStats.totalPoints.toLocaleString()}
+                    </p>
+                  </div>
+                  <div>
+                    <p className="text-sm text-slate-400 mb-1">Your Rank</p>
+                    <div className="flex items-center gap-2">
+                      <Trophy className="w-5 h-5 text-yellow-400" />
+                      <p className="text-2xl font-bold text-white">
+                        #{airdropStats.rank.toLocaleString()}
+                      </p>
+                    </div>
+                  </div>
+                  <div>
+                    <p className="text-sm text-slate-400 mb-1">Total Participants</p>
+                    <p className="text-2xl font-bold text-white">
+                      {airdropStats.totalUsers.toLocaleString()}
+                    </p>
+                  </div>
+                </div>
+                <p className="text-sm text-slate-300 mb-4">
+                  Earn points through social engagement, referrals, and quality content submissions to maximize your airdrop allocation.
+                </p>
+                <Link
+                  to="/app/airdrop"
+                  className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white font-medium rounded-lg transition-all shadow-lg hover:shadow-xl"
+                >
+                  View Airdrop Details
+                  <ArrowRight className="w-4 h-4" />
+                </Link>
+              </div>
+            </div>
+          </div>
+        )}
 
         <div>
           <h2 className="text-xl font-bold text-white mb-4">Active Participation</h2>
