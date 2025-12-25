@@ -734,6 +734,59 @@ export interface Database {
           recorded_at?: string
         }
       }
+      news_articles: {
+        Row: {
+          id: string
+          slug: string
+          title: string
+          content: string
+          excerpt: string
+          category: 'Development Updates' | 'Partnerships' | 'Governance' | 'Community' | 'Press Releases'
+          author: string
+          featured_image: string | null
+          published: boolean
+          featured: boolean
+          read_time: number
+          views: number
+          publish_date: string | null
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          slug: string
+          title: string
+          content: string
+          excerpt: string
+          category: 'Development Updates' | 'Partnerships' | 'Governance' | 'Community' | 'Press Releases'
+          author?: string
+          featured_image?: string | null
+          published?: boolean
+          featured?: boolean
+          read_time?: number
+          views?: number
+          publish_date?: string | null
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          slug?: string
+          title?: string
+          content?: string
+          excerpt?: string
+          category?: 'Development Updates' | 'Partnerships' | 'Governance' | 'Community' | 'Press Releases'
+          author?: string
+          featured_image?: string | null
+          published?: boolean
+          featured?: boolean
+          read_time?: number
+          views?: number
+          publish_date?: string | null
+          created_at?: string
+          updated_at?: string
+        }
+      }
     }
     Views: {
       [_ in never]: never

@@ -146,3 +146,4 @@ export interface PaginatedMessages<T = any> {
 }
 
 export * from './portfolio';
+export * from './news';
