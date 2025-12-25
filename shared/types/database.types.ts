@@ -622,6 +622,118 @@ export interface Database {
           created_at?: string
         }
       }
+      u2e_businesses: {
+        Row: {
+          id: string
+          business_name: string
+          display_name: string
+          description: string | null
+          is_active: boolean
+          integration_type: 'webhook' | 'api' | 'manual'
+          webhook_secret: string | null
+          api_key: string | null
+          metadata: Json
+          created_at: string
+          updated_at: string
+          deleted_at: string | null
+          slug: string | null
+          category: 'Trading' | 'SaaS' | 'Infrastructure' | 'Data' | 'Content' | null
+          status: 'planning' | 'development' | 'live' | 'paused'
+          development_progress: number
+          website_url: string | null
+          github_url: string | null
+          docs_url: string | null
+          featured_image: string | null
+          proposal_id: string | null
+          plan_id: string | null
+          launch_date: string | null
+          is_foundation: boolean
+        }
+        Insert: {
+          id?: string
+          business_name: string
+          display_name: string
+          description?: string | null
+          is_active?: boolean
+          integration_type?: 'webhook' | 'api' | 'manual'
+          webhook_secret?: string | null
+          api_key?: string | null
+          metadata?: Json
+          created_at?: string
+          updated_at?: string
+          deleted_at?: string | null
+          slug?: string | null
+          category?: 'Trading' | 'SaaS' | 'Infrastructure' | 'Data' | 'Content' | null
+          status?: 'planning' | 'development' | 'live' | 'paused'
+          development_progress?: number
+          website_url?: string | null
+          github_url?: string | null
+          docs_url?: string | null
+          featured_image?: string | null
+          proposal_id?: string | null
+          plan_id?: string | null
+          launch_date?: string | null
+          is_foundation?: boolean
+        }
+        Update: {
+          id?: string
+          business_name?: string
+          display_name?: string
+          description?: string | null
+          is_active?: boolean
+          integration_type?: 'webhook' | 'api' | 'manual'
+          webhook_secret?: string | null
+          api_key?: string | null
+          metadata?: Json
+          created_at?: string
+          updated_at?: string
+          deleted_at?: string | null
+          slug?: string | null
+          category?: 'Trading' | 'SaaS' | 'Infrastructure' | 'Data' | 'Content' | null
+          status?: 'planning' | 'development' | 'live' | 'paused'
+          development_progress?: number
+          website_url?: string | null
+          github_url?: string | null
+          docs_url?: string | null
+          featured_image?: string | null
+          proposal_id?: string | null
+          plan_id?: string | null
+          launch_date?: string | null
+          is_foundation?: boolean
+        }
+      }
+      business_metrics_history: {
+        Row: {
+          id: string
+          business_id: string
+          metric_type: 'revenue' | 'users' | 'transactions' | 'api_calls'
+          value: number
+          period_start: string
+          period_end: string
+          metadata: Json
+          recorded_at: string
+        }
+        Insert: {
+          id?: string
+          business_id: string
+          metric_type: 'revenue' | 'users' | 'transactions' | 'api_calls'
+          value: number
+          period_start: string
+          period_end: string
+          metadata?: Json
+          recorded_at?: string
+        }
+        Update: {
+          id?: string
+          business_id?: string
+          metric_type?: 'revenue' | 'users' | 'transactions' | 'api_calls'
+          value?: number
+          period_start?: string
+          period_end?: string
+          metadata?: Json
+          recorded_at?: string
+        }
+      }
     }
     Views: {
       [_ in never]: never

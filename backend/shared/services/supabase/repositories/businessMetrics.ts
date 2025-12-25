@@ -219,17 +219,14 @@ class BusinessMetricsRepository extends BaseRepository {
       this.validateUUID(payload.business_id, 'business_id');
 
       if (payload.value < 0) {
-        throw new ValidationError('Metric value must be non-negative', { value: payload.value });
+        throw ValidationError.single('value', 'Metric value must be non-negative', payload.value);
       }
 
       const periodStart = new Date(payload.period_start);
       const periodEnd = new Date(payload.period_end);
 
       if (periodEnd < periodStart) {
-        throw new ValidationError('period_end must be after period_start', {
-          period_start: payload.period_start,
-          period_end: payload.period_end,
-        });
+        throw ValidationError.single('period_end', 'period_end must be after period_start', payload.period_end);
       }
 
       const insert: MetricInsert = {
@@ -264,7 +261,7 @@ class BusinessMetricsRepository extends BaseRepository {
 
     return this.execute(async () => {
       if (!payloads || payloads.length === 0) {
-        throw new ValidationError('Payloads array cannot be empty');
+        throw ValidationError.single('payloads', 'Payloads array cannot be empty');
       }
 
       const inserts: MetricInsert[] = payloads.map(payload => {
@@ -277,7 +274,7 @@ class BusinessMetricsRepository extends BaseRepository {
         this.validateUUID(payload.business_id, 'business_id');
 
         if (payload.value < 0) {
-          throw new ValidationError('Metric value must be non-negative', { value: payload.value });
+          throw ValidationError.single('value', 'Metric value must be non-negative', payload.value);
         }
 
         return {

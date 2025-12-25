@@ -338,6 +338,15 @@ export abstract class BaseRepository {
   }
 
   /**
+   * Validate UUID and throw if invalid
+   */
+  protected validateUUID(uuid: string, field: string): void {
+    if (!this.isValidUuid(uuid)) {
+      throw ValidationError.single(field, `${field} must be a valid UUID`, uuid);
+    }
+  }
+
+  /**
    * Validate required string field
    */
   protected validateRequired(value: unknown, field: string): void {
