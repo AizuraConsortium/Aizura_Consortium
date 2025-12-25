@@ -31,6 +31,7 @@ import clientProposalRoutes from './client/routes/proposalRoutes.js';
 import clientNotificationRoutes from './client/routes/notificationRoutes.js';
 import clientU2ERoutes from './client/routes/u2eRoutes.js';
 import adminU2ERoutes from './admin/routes/u2eRoutes.js';
+import createU2EWebhookRoutes from './shared/routes/u2eWebhookRoutes.js';
 
 dotenv.config();
 
@@ -160,6 +161,7 @@ app.use('/health', createHealthRoutes());
  * Webhook routes
  */
 app.use('/webhook', createWebhookRoutes());
+app.use('/webhook', createU2EWebhookRoutes());
 
 /**
  * Shared routes (public, rate-limited)
