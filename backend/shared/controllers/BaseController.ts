@@ -208,11 +208,11 @@ export abstract class BaseController {
    * Handle error with standard error handler
    *
    * @param error - Error to handle
-   * @param req - Express request
+   * @param req - Express request (accepts AuthenticatedRequest or regular Request)
    * @param res - Express response
    * @protected
    */
-  protected handleError(error: unknown, req: Request, res: Response): void {
+  protected handleError(error: unknown, req: any, res: Response): void {
     handleControllerError(error, res, {
       requestPath: req.path,
       requestMethod: req.method,
@@ -224,11 +224,11 @@ export abstract class BaseController {
    * Extract user ID from request
    * Assumes requireUserId middleware has run
    *
-   * @param req - Express request
+   * @param req - Express request (accepts AuthenticatedRequest or regular Request)
    * @returns User ID
    * @protected
    */
-  protected getUserId(req: Request): string {
+  protected getUserId(req: any): string {
     const userId = req.user?.id;
     if (!userId) {
       throw new Error('User ID not found in request');

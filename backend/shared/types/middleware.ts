@@ -67,8 +67,9 @@ export interface AuthContext {
 
 /**
  * Authenticated Request (extends Express Request with user context)
+ * Uses Omit to avoid conflicts with Supabase's user property
  */
-export interface AuthenticatedRequest extends Request {
+export type AuthenticatedRequest = Omit<Request, 'user'> & {
   user?: {
     id: string;
     email: string;

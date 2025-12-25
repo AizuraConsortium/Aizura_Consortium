@@ -30,9 +30,9 @@ export class NotificationController extends BaseController {
       } = req.query;
 
       const filters = {
-        type: type as string | undefined,
-        priority: priority as string | undefined,
-        category: category as string | undefined,
+        type: type as any,
+        priority: priority as any,
+        category: category as any,
         read: read === 'true' ? true : read === 'false' ? false : undefined,
         archived: archived === 'true' ? true : archived === 'false' ? false : undefined,
         limit: parseInt(limit as string, 10),
