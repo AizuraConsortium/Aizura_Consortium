@@ -4,6 +4,7 @@ import { UserOverviewCards } from '../components/dashboard/UserOverviewCards';
 import { ActiveParticipation } from '../components/dashboard/ActiveParticipation';
 import { RewardsPreview } from '../components/dashboard/RewardsPreview';
 import { EcosystemFeed } from '../components/dashboard/EcosystemFeed';
+import { NewsFeed } from '../components/dashboard/NewsFeed';
 import { useAuth } from '../contexts/AuthContext';
 import { Gift, Trophy, ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
@@ -36,6 +37,21 @@ export default function DashboardHome() {
     fetchDashboardData();
     fetchAirdropStats();
   }, [user]);
+
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      if (!document.hidden) {
+        fetchDashboardData();
+        fetchAirdropStats();
+      }
+    };
+
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+
+    return () => {
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+    };
+  }, []);
 
   const fetchAirdropStats = async () => {
     try {
@@ -206,6 +222,8 @@ export default function DashboardHome() {
         />
 
         <EcosystemFeed items={ecosystemFeed} />
+
+        <NewsFeed limit={5} />
       </div>
     </DashboardLayout>
   );

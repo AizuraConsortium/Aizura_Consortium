@@ -13,6 +13,13 @@ import type {
   UserExposure,
   MetricType,
 } from '@shared/types/portfolio';
+import type {
+  NewsArticle,
+  NewsArticleCompact,
+  NewsFilters,
+  NewsListResponse,
+  NewsCompactListResponse,
+} from '@shared/types/news';
 
 interface ProposalsResponse {
   proposals: Proposal[];
@@ -199,6 +206,50 @@ export const api = {
       token
     );
     return response.businesses;
+  },
+
+  async getLatestNews(limit: number = 5, token?: string): Promise<NewsCompactListResponse> {
+    const params = new URLSearchParams();
+    if (limit) params.append('limit', String(limit));
+
+    const queryString = params.toString();
+    const url = queryString ? `/client/news?${queryString}` : '/client/news';
+
+    return this.get<NewsCompactListResponse>(url, token);
+  },
+
+  async getAllNews(filters?: NewsFilters, token?: string): Promise<NewsListResponse> {
+    const params = new URLSearchParams();
+    if (filters?.category) params.append('category', filters.category);
+    if (filters?.featured !== undefined) params.append('featured', String(filters.featured));
+    if (filters?.search) params.append('search', filters.search);
+    if (filters?.limit) params.append('limit', String(filters.limit));
+    if (filters?.offset) params.append('offset', String(filters.offset));
+    if (filters?.order) params.append('order', filters.order);
+    if (filters?.sort) params.append('sort', filters.sort);
+
+    const queryString = params.toString();
+    const url = queryString ? `/client/news/all?${queryString}` : '/client/news/all';
+
+    return this.get<NewsListResponse>(url, token);
+  },
+
+  async getArticleById(articleId: string, token?: string): Promise<NewsArticle> {
+    return this.get<NewsArticle>(`/client/news/${articleId}`, token);
+  },
+
+  async getArticleBySlug(slug: string, token?: string): Promise<NewsArticle> {
+    return this.get<NewsArticle>(`/client/news/slug/${slug}`, token);
+  },
+
+  async getFeaturedNews(limit: number = 3, token?: string): Promise<{ articles: NewsArticle[] }> {
+    const params = new URLSearchParams();
+    if (limit) params.append('limit', String(limit));
+
+    const queryString = params.toString();
+    const url = queryString ? `/client/news/featured?${queryString}` : '/client/news/featured';
+
+    return this.get<{ articles: NewsArticle[] }>(url, token);
   },
 
   logError
