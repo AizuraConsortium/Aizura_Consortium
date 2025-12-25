@@ -12,6 +12,7 @@ import RewardsView from './pages/RewardsView';
 import TokenView from './pages/TokenView';
 import SettingsView from './pages/SettingsView';
 import { AirdropView } from './pages/AirdropView';
+import { ProfileView } from './pages/ProfileView';
 
 export default function App() {
   return (
@@ -82,6 +83,14 @@ export default function App() {
                 element={
                   <ProtectedRoute redirectTo="/login">
                     <AirdropView />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/app/profile"
+                element={
+                  <ProtectedRoute redirectTo="/login">
+                    <ProfileView />
                   </ProtectedRoute>
                 }
               />
