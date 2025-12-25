@@ -9,7 +9,7 @@ import type { TimePeriod } from '../types/daoTypes.js';
  */
 export class DAOStatsController extends BaseController {
   constructor(private statsService: DAOStatsService) {
-    super();
+    super('DAOStatsController');
   }
 
   /**
@@ -17,10 +17,12 @@ export class DAOStatsController extends BaseController {
    * Get current DAO statistics
    */
   async getStats(req: Request, res: Response): Promise<void> {
-    return this.handleRequest(req, res, async () => {
+    try {
       const stats = await this.statsService.getDAOStats();
-      return this.ok(res, stats);
-    });
+      this.ok(res, stats);
+    } catch (error) {
+      this.handleError(error, req, res);
+    }
   }
 
   /**
@@ -28,17 +30,18 @@ export class DAOStatsController extends BaseController {
    * Get governance trends over time
    */
   async getTrends(req: Request, res: Response): Promise<void> {
-    return this.handleRequest(req, res, async () => {
+    try {
       const period = (req.query.period as TimePeriod) || '30d';
 
-      // Validate period
       if (!['7d', '30d', '90d'].includes(period)) {
         return this.badRequest(res, 'Invalid period. Must be one of: 7d, 30d, 90d');
       }
 
       const trends = await this.statsService.getGovernanceTrends(period);
-      return this.ok(res, trends);
-    });
+      this.ok(res, trends);
+    } catch (error) {
+      this.handleError(error, req, res);
+    }
   }
 
   /**
@@ -46,17 +49,18 @@ export class DAOStatsController extends BaseController {
    * Get recent DAO activity
    */
   async getActivity(req: Request, res: Response): Promise<void> {
-    return this.handleRequest(req, res, async () => {
+    try {
       const limit = parseInt(req.query.limit as string) || 10;
 
-      // Validate limit
       if (limit < 1 || limit > 50) {
         return this.badRequest(res, 'Limit must be between 1 and 50');
       }
 
       const activity = await this.statsService.getRecentActivity(limit);
-      return this.ok(res, activity);
-    });
+      this.ok(res, activity);
+    } catch (error) {
+      this.handleError(error, req, res);
+    }
   }
 
   /**
@@ -64,10 +68,12 @@ export class DAOStatsController extends BaseController {
    * Manually refresh materialized views (admin only)
    */
   async refreshViews(req: Request, res: Response): Promise<void> {
-    return this.handleRequest(req, res, async () => {
+    try {
       await this.statsService.refreshViews();
-      return this.ok(res, { message: 'Materialized views refreshed successfully' });
-    });
+      this.ok(res, { message: 'Materialized views refreshed successfully' });
+    } catch (error) {
+      this.handleError(error, req, res);
+    }
   }
 
   /**
@@ -75,10 +81,12 @@ export class DAOStatsController extends BaseController {
    * Manually capture governance snapshot (admin only)
    */
   async captureSnapshot(req: Request, res: Response): Promise<void> {
-    return this.handleRequest(req, res, async () => {
+    try {
       await this.statsService.captureSnapshot();
-      return this.ok(res, { message: 'Governance snapshot captured successfully' });
-    });
+      this.ok(res, { message: 'Governance snapshot captured successfully' });
+    } catch (error) {
+      this.handleError(error, req, res);
+    }
   }
 
   /**
@@ -86,9 +94,11 @@ export class DAOStatsController extends BaseController {
    * Get cache statistics (admin only)
    */
   async getCacheStats(req: Request, res: Response): Promise<void> {
-    return this.handleRequest(req, res, async () => {
+    try {
       const stats = this.statsService.getCacheStats();
-      return this.ok(res, stats);
-    });
+      this.ok(res, stats);
+    } catch (error) {
+      this.handleError(error, req, res);
+    }
   }
 }

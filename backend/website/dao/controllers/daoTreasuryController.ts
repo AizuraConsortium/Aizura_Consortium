@@ -9,7 +9,7 @@ import type { TimePeriod } from '../types/daoTypes.js';
  */
 export class DAOTreasuryController extends BaseController {
   constructor(private treasuryService: DAOTreasuryService) {
-    super();
+    super('DAOTreasuryController');
   }
 
   /**
@@ -17,10 +17,12 @@ export class DAOTreasuryController extends BaseController {
    * Get current treasury snapshot
    */
   async getSnapshot(req: Request, res: Response): Promise<void> {
-    return this.handleRequest(req, res, async () => {
+    try {
       const snapshot = await this.treasuryService.getTreasurySnapshot();
-      return this.ok(res, snapshot);
-    });
+      this.ok(res, snapshot);
+    } catch (error) {
+      this.handleError(error, req, res);
+    }
   }
 
   /**
@@ -28,17 +30,18 @@ export class DAOTreasuryController extends BaseController {
    * Get treasury historical data
    */
   async getHistory(req: Request, res: Response): Promise<void> {
-    return this.handleRequest(req, res, async () => {
+    try {
       const period = (req.query.period as TimePeriod) || '30d';
 
-      // Validate period
       if (!['7d', '30d', '90d'].includes(period)) {
         return this.badRequest(res, 'Invalid period. Must be one of: 7d, 30d, 90d');
       }
 
       const history = await this.treasuryService.getTreasuryHistory(period);
-      return this.ok(res, history);
-    });
+      this.ok(res, history);
+    } catch (error) {
+      this.handleError(error, req, res);
+    }
   }
 
   /**
@@ -46,10 +49,12 @@ export class DAOTreasuryController extends BaseController {
    * Get business breakdown
    */
   async getBusinessBreakdown(req: Request, res: Response): Promise<void> {
-    return this.handleRequest(req, res, async () => {
+    try {
       const breakdown = await this.treasuryService.getBusinessBreakdown();
-      return this.ok(res, breakdown);
-    });
+      this.ok(res, breakdown);
+    } catch (error) {
+      this.handleError(error, req, res);
+    }
   }
 
   /**
@@ -57,9 +62,11 @@ export class DAOTreasuryController extends BaseController {
    * Get treasury growth metrics
    */
   async getGrowthMetrics(req: Request, res: Response): Promise<void> {
-    return this.handleRequest(req, res, async () => {
+    try {
       const growth = await this.treasuryService.getGrowthMetrics();
-      return this.ok(res, growth);
-    });
+      this.ok(res, growth);
+    } catch (error) {
+      this.handleError(error, req, res);
+    }
   }
 }

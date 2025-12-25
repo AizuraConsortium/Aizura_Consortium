@@ -1,11 +1,27 @@
-import { MetricsCollector } from './MetricsCollector.js';
-
 /**
  * DAO Metrics Collector
  * Specialized metrics collector for DAO portal endpoints
  * Tracks API performance, cache efficiency, and data freshness
  */
-export class DAOMetricsCollector extends MetricsCollector {
+export class DAOMetricsCollector {
+  private metrics: Map<string, number>;
+
+  constructor() {
+    this.metrics = new Map();
+  }
+
+  private increment(key: string, value: number = 1): void {
+    const current = this.metrics.get(key) || 0;
+    this.metrics.set(key, current + value);
+  }
+
+  private gauge(key: string, value: number): void {
+    this.metrics.set(key, value);
+  }
+
+  private histogram(key: string, value: number): void {
+    this.metrics.set(key, value);
+  }
   /**
    * Track API endpoint performance
    */

@@ -8,7 +8,7 @@ import { DAOGovernanceService } from '../services/daoGovernanceService.js';
  */
 export class DAOGovernanceController extends BaseController {
   constructor(private governanceService: DAOGovernanceService) {
-    super();
+    super('DAOGovernanceController');
   }
 
   /**
@@ -16,10 +16,12 @@ export class DAOGovernanceController extends BaseController {
    * Get participation metrics
    */
   async getParticipationMetrics(req: Request, res: Response): Promise<void> {
-    return this.handleRequest(req, res, async () => {
+    try {
       const metrics = await this.governanceService.getParticipationMetrics();
-      return this.ok(res, metrics);
-    });
+      this.ok(res, metrics);
+    } catch (error) {
+      this.handleError(error, req, res);
+    }
   }
 
   /**
@@ -27,9 +29,11 @@ export class DAOGovernanceController extends BaseController {
    * Get governance health status
    */
   async getHealthStatus(req: Request, res: Response): Promise<void> {
-    return this.handleRequest(req, res, async () => {
+    try {
       const health = await this.governanceService.getHealthStatus();
-      return this.ok(res, health);
-    });
+      this.ok(res, health);
+    } catch (error) {
+      this.handleError(error, req, res);
+    }
   }
 }

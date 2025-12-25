@@ -40,6 +40,7 @@ import createU2EWebhookRoutes from './shared/routes/u2eWebhookRoutes.js';
 import daoRoutes, { statsService, treasuryService, governanceService } from './website/dao/routes/index.js';
 import { DAORepository } from './website/dao/repositories/daoRepository.js';
 import { getGovernanceMetricsCaptureJob } from './shared/jobs/captureGovernanceMetrics.js';
+import publicDaoRoutes from './dao/routes/daoRoutes.js';
 
 dotenv.config();
 
@@ -197,6 +198,11 @@ app.use('/api/website/realtime', createRealtimeRoutes());
 app.use('/api/website/dao', daoRoutes);
 
 /**
+ * DAO routes (public)
+ */
+app.use('/api/dao', publicDaoRoutes);
+
+/**
  * Client routes (authenticated)
  */
 app.use('/api/client/proposals', clientProposalRoutes);
@@ -293,7 +299,7 @@ app.listen(PORT, async () => {
     console.log('✅ DAO cache warmed successfully');
 
     // Start background job for governance metrics capture
-    const daoRepo = new DAORepository();
+    const daoRepo = new DAORepository('dao_statistics');
     governanceCaptureJob = getGovernanceMetricsCaptureJob(daoRepo);
     governanceCaptureJob.start();
     console.log('✅ Governance metrics capture job started\n');
