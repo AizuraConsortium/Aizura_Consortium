@@ -31,6 +31,8 @@ import clientProposalRoutes from './client/routes/proposalRoutes.js';
 import clientNotificationRoutes from './client/routes/notificationRoutes.js';
 import clientU2ERoutes from './client/routes/u2eRoutes.js';
 import clientPortfolioRoutes from './client/routes/portfolioRoutes.js';
+import clientAirdropRoutes from './client/routes/airdropRoutes.js';
+import clientProfileRoutes from './client/routes/profileRoutes.js';
 import adminU2ERoutes from './admin/routes/u2eRoutes.js';
 import adminBusinessRoutes from './admin/routes/businessRoutes.js';
 import createU2EWebhookRoutes from './shared/routes/u2eWebhookRoutes.js';
@@ -196,6 +198,8 @@ app.use('/api/client/proposals', clientProposalRoutes);
 app.use('/api/client', clientNotificationRoutes);
 app.use('/api/client/u2e', clientU2ERoutes);
 app.use('/api/client/portfolio', clientPortfolioRoutes);
+app.use('/api/client/airdrop', clientAirdropRoutes);
+app.use('/api/client/profile', clientProfileRoutes);
 
 /**
  * Global error handling middleware
