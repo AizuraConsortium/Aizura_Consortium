@@ -29,6 +29,8 @@ import websiteProposalRoutes from './website/routes/proposalRoutes.js';
 import createRealtimeRoutes from './website/routes/realtimeRoutes.js';
 import clientProposalRoutes from './client/routes/proposalRoutes.js';
 import clientNotificationRoutes from './client/routes/notificationRoutes.js';
+import clientU2ERoutes from './client/routes/u2eRoutes.js';
+import adminU2ERoutes from './admin/routes/u2eRoutes.js';
 
 dotenv.config();
 
@@ -172,6 +174,7 @@ app.use('/api/admin/system', adminSystemRoutes);
 app.use('/api/admin/users', adminUserRoutes);
 app.use('/api/admin/orchestrator', createOrchestratorRoutes());
 app.use('/api/admin/audit', createAuditRoutes());
+app.use('/api/admin/u2e', adminU2ERoutes);
 
 /**
  * Website routes (public)
@@ -186,6 +189,7 @@ app.use('/api/website/realtime', createRealtimeRoutes());
  */
 app.use('/api/client/proposals', clientProposalRoutes);
 app.use('/api/client', clientNotificationRoutes);
+app.use('/api/client/u2e', clientU2ERoutes);
 
 /**
  * Global error handling middleware
