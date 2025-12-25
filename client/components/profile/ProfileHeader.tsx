@@ -92,7 +92,11 @@ export function ProfileHeader({ profile, isOwnProfile, onEdit }: ProfileHeaderPr
   ];
 
   return (
-    <div className="bg-gradient-to-br from-slate-800/50 to-slate-900/50 backdrop-blur-sm border border-white/10 rounded-2xl p-8">
+    <div
+      className="bg-gradient-to-br from-slate-800/50 to-slate-900/50 backdrop-blur-sm border border-white/10 rounded-2xl p-8 transition-all duration-300 hover:border-white/20"
+      role="region"
+      aria-label="User profile header"
+    >
       <div className="flex flex-col md:flex-row gap-6">
         <div className="relative flex-shrink-0">
           <Avatar
@@ -168,17 +172,17 @@ export function ProfileHeader({ profile, isOwnProfile, onEdit }: ProfileHeaderPr
               </div>
             </div>
 
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-3" role="list" aria-label="Connected social accounts">
               {socialLinks.map((social) => {
                 if (!social.connected) return null;
 
                 const Icon = social.icon;
                 const content = (
                   <div
-                    className={`flex items-center gap-2 px-3 py-1.5 bg-white/5 hover:bg-white/10 rounded-lg transition-colors ${social.color}`}
+                    className={`flex items-center gap-2 px-3 py-1.5 bg-white/5 hover:bg-white/10 rounded-lg transition-all duration-200 transform hover:scale-105 ${social.color}`}
                     title={social.username || social.platform}
                   >
-                    <Icon className="w-4 h-4" />
+                    <Icon className="w-4 h-4" aria-hidden="true" />
                     {social.username && (
                       <span className="text-sm text-slate-300">
                         {social.username}
@@ -194,13 +198,20 @@ export function ProfileHeader({ profile, isOwnProfile, onEdit }: ProfileHeaderPr
                       href={social.url}
                       target="_blank"
                       rel="noopener noreferrer"
+                      role="listitem"
+                      aria-label={`Visit ${social.platform} profile for ${social.username}`}
+                      className="focus:outline-none focus:ring-2 focus:ring-cyan-500 rounded-lg"
                     >
                       {content}
                     </a>
                   );
                 }
 
-                return <div key={social.platform}>{content}</div>;
+                return (
+                  <div key={social.platform} role="listitem">
+                    {content}
+                  </div>
+                );
               })}
             </div>
           </div>

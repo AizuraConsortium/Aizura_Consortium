@@ -13,6 +13,8 @@ import {
   FileText,
   Award,
   LogIn,
+  AlertCircle,
+  RefreshCw,
 } from 'lucide-react';
 import { api } from '../../lib/api';
 
@@ -158,6 +160,7 @@ export function ActivityTimeline({ userId }: ActivityTimelineProps) {
   const [hasMore, setHasMore] = useState(true);
   const [activeFilter, setActiveFilter] = useState<string | null>(null);
   const [offset, setOffset] = useState(0);
+  const [error, setError] = useState<string | null>(null);
   const limit = 20;
 
   useEffect(() => {
@@ -170,6 +173,7 @@ export function ActivityTimeline({ userId }: ActivityTimelineProps) {
 
       if (reset) {
         setLoading(true);
+        setError(null);
       } else {
         setLoadingMore(true);
       }
@@ -191,14 +195,23 @@ export function ActivityTimeline({ userId }: ActivityTimelineProps) {
         }
 
         setHasMore(newTransactions.length === limit);
+        setError(null);
+      } else {
+        throw new Error('Failed to load activities');
       }
-    } catch (error) {
-      console.error('Failed to load activities:', error);
+    } catch (err) {
+      const errorMessage = err instanceof Error ? err.message : 'Failed to load activities';
+      setError(errorMessage);
+      console.error('Failed to load activities:', err);
     } finally {
       setLoading(false);
       setLoadingMore(false);
     }
   }
+
+  const handleRetry = () => {
+    loadActivities(true);
+  };
 
   const handleLoadMore = () => {
     loadActivities(false);
@@ -230,19 +243,45 @@ export function ActivityTimeline({ userId }: ActivityTimelineProps) {
   }));
 
   return (
-    <div className="space-y-4">
-      <div className="flex items-center gap-2 flex-wrap">
+    <div className="space-y-4" role="region" aria-label="Activity timeline">
+      <div className="flex items-center gap-2 flex-wrap" role="toolbar" aria-label="Activity filters">
         {FILTERS.map((filter) => (
           <Button
             key={filter.label}
             variant={activeFilter === filter.value ? 'primary' : 'ghost'}
             size="sm"
             onClick={() => setActiveFilter(filter.value)}
+            aria-pressed={activeFilter === filter.value}
+            className="transition-all duration-200"
           >
             {filter.label}
           </Button>
         ))}
       </div>
+
+      {error && (
+        <div
+          className="bg-red-500/10 border border-red-500/30 rounded-lg p-4 animate-in fade-in duration-300"
+          role="alert"
+          aria-live="polite"
+        >
+          <div className="flex items-start gap-3">
+            <AlertCircle className="w-5 h-5 text-red-400 flex-shrink-0 mt-0.5" />
+            <div className="flex-1 min-w-0">
+              <p className="text-sm text-red-400 font-medium mb-2">{error}</p>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={handleRetry}
+                className="text-red-400 hover:text-red-300 hover:bg-red-500/10"
+              >
+                <RefreshCw className="w-4 h-4 mr-2" />
+                Try Again
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
 
       <Timeline
         items={timelineItems}
@@ -251,8 +290,8 @@ export function ActivityTimeline({ userId }: ActivityTimelineProps) {
         hasMore={hasMore}
       />
 
-      {!loading && filteredTransactions.length === 0 && (
-        <div className="text-center py-12 text-slate-400">
+      {!loading && !error && filteredTransactions.length === 0 && (
+        <div className="text-center py-12 text-slate-400 animate-in fade-in duration-300">
           <Award className="w-12 h-12 mx-auto mb-4 opacity-50" />
           <p>No activity yet</p>
           <p className="text-sm mt-2">

@@ -168,27 +168,29 @@ export function BadgeCollection({ profile }: BadgeCollectionProps) {
   const unlockedCount = achievements.filter(a => a.unlocked).length;
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-4" role="region" aria-label="User achievements">
       <div className="flex items-center justify-between">
         <h3 className="text-lg font-semibold text-white">
           Achievements
         </h3>
-        <span className="text-sm text-slate-400">
+        <span className="text-sm text-slate-400" aria-live="polite">
           {unlockedCount} of {achievements.length} unlocked
         </span>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" role="list">
         {achievements.map((achievement) => {
           const Icon = achievement.icon;
 
           return (
             <div
               key={achievement.id}
+              role="listitem"
+              aria-label={`${achievement.title}: ${achievement.unlocked ? 'Unlocked' : 'Locked'}`}
               className={`
-                relative p-4 rounded-xl border transition-all
+                relative p-4 rounded-xl border transition-all duration-300 transform hover:scale-105
                 ${achievement.unlocked
-                  ? 'bg-gradient-to-br from-slate-800/50 to-slate-900/50 border-white/10 hover:border-white/20'
+                  ? 'bg-gradient-to-br from-slate-800/50 to-slate-900/50 border-white/10 hover:border-white/20 hover:shadow-lg'
                   : 'bg-slate-900/30 border-slate-800/50 opacity-60'
                 }
               `}
@@ -197,7 +199,7 @@ export function BadgeCollection({ profile }: BadgeCollectionProps) {
               <div className="flex items-start gap-3">
                 <div
                   className={`
-                    flex-shrink-0 w-12 h-12 rounded-xl flex items-center justify-center
+                    flex-shrink-0 w-12 h-12 rounded-xl flex items-center justify-center transition-all duration-300
                     ${achievement.unlocked
                       ? achievement.type === 'tier' && achievement.tier === 1
                         ? 'bg-yellow-500/20 text-yellow-500'
@@ -209,6 +211,7 @@ export function BadgeCollection({ profile }: BadgeCollectionProps) {
                       : 'bg-slate-800/50 text-slate-600'
                     }
                   `}
+                  aria-hidden="true"
                 >
                   <Icon className="w-6 h-6" />
                 </div>
