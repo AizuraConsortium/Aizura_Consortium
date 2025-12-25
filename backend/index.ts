@@ -37,6 +37,9 @@ import clientNewsRoutes from './client/routes/newsRoutes.js';
 import adminU2ERoutes from './admin/routes/u2eRoutes.js';
 import adminBusinessRoutes from './admin/routes/businessRoutes.js';
 import createU2EWebhookRoutes from './shared/routes/u2eWebhookRoutes.js';
+import daoRoutes, { statsService, treasuryService, governanceService } from './website/dao/routes/index.js';
+import { DAORepository } from './website/dao/repositories/daoRepository.js';
+import { getGovernanceMetricsCaptureJob } from './shared/jobs/captureGovernanceMetrics.js';
 
 dotenv.config();
 
@@ -191,6 +194,7 @@ app.use('/api/website/topics', websiteTopicRoutes);
 app.use('/api/website/messages', websiteMessageRoutes);
 app.use('/api/website/proposals', websiteProposalRoutes);
 app.use('/api/website/realtime', createRealtimeRoutes());
+app.use('/api/website/dao', daoRoutes);
 
 /**
  * Client routes (authenticated)
@@ -254,6 +258,7 @@ app.use((err: any, req: express.Request, res: express.Response, next: express.Ne
 });
 
 let orchestrator: Orchestrator | null = null;
+let governanceCaptureJob: any = null;
 
 /**
  * Start the Express server and initialize the orchestrator
@@ -276,7 +281,22 @@ app.listen(PORT, async () => {
     healthController.setOrchestrator(orchestrator);
     orchestratorController.setOrchestrator(orchestrator);
 
-    console.log('✅ Orchestrator initialized and controllers configured\n');
+    console.log('✅ Orchestrator initialized and controllers configured');
+
+    // Initialize DAO services - warm cache
+    console.log('🔥 Warming DAO cache...');
+    await Promise.all([
+      statsService.warmCache(),
+      treasuryService.warmCache(),
+      governanceService.warmCache(),
+    ]);
+    console.log('✅ DAO cache warmed successfully');
+
+    // Start background job for governance metrics capture
+    const daoRepo = new DAORepository();
+    governanceCaptureJob = getGovernanceMetricsCaptureJob(daoRepo);
+    governanceCaptureJob.start();
+    console.log('✅ Governance metrics capture job started\n');
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : 'Unknown error';
     const stackTrace = error instanceof Error ? error.stack : undefined;
@@ -303,6 +323,10 @@ process.on('SIGINT', async () => {
   try {
     if (orchestrator) {
       await orchestrator.stop();
+    }
+    // Stop governance metrics capture job
+    if (governanceCaptureJob) {
+      governanceCaptureJob.stop();
     }
     // Cleanup container (includes realtime service)
     await container.cleanup();
@@ -333,6 +357,10 @@ process.on('SIGTERM', async () => {
   try {
     if (orchestrator) {
       await orchestrator.stop();
+    }
+    // Stop governance metrics capture job
+    if (governanceCaptureJob) {
+      governanceCaptureJob.stop();
     }
     // Cleanup container (includes realtime service)
     await container.cleanup();
