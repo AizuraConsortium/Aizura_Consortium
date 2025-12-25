@@ -144,3 +144,5 @@ export interface PaginatedMessages<T = any> {
   total: number;
   hasMore: boolean;
 }
+
+export * from './portfolio';
