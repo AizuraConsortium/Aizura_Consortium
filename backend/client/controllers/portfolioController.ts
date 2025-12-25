@@ -50,12 +50,12 @@ export class PortfolioController {
       const userId = req.user!.id;
 
       const filters = {
-        status: req.query.status as string | undefined,
-        category: req.query.category as string | undefined,
+        status: req.query.status as any,
+        category: req.query.category as any,
         is_foundation: req.query.is_foundation === 'true' ? true : req.query.is_foundation === 'false' ? false : undefined,
         is_active: req.query.is_active === 'true' ? true : req.query.is_active === 'false' ? false : undefined,
         search: req.query.search as string | undefined,
-        sort: req.query.sort as string | undefined,
+        sort: req.query.sort as any,
         order: req.query.order as 'asc' | 'desc' | undefined,
         limit: req.query.limit ? parseInt(req.query.limit as string, 10) : undefined,
         offset: req.query.offset ? parseInt(req.query.offset as string, 10) : undefined,

@@ -19,12 +19,12 @@ export class BusinessController {
   async getAllBusinesses(req: Request, res: Response): Promise<void> {
     try {
       const filters = {
-        status: req.query.status as string | undefined,
-        category: req.query.category as string | undefined,
+        status: req.query.status as any,
+        category: req.query.category as any,
         is_foundation: req.query.is_foundation === 'true' ? true : req.query.is_foundation === 'false' ? false : undefined,
         is_active: req.query.is_active === 'true' ? true : req.query.is_active === 'false' ? false : undefined,
         search: req.query.search as string | undefined,
-        sort: req.query.sort as string | undefined,
+        sort: req.query.sort as any,
         order: req.query.order as 'asc' | 'desc' | undefined,
         limit: req.query.limit ? parseInt(req.query.limit as string, 10) : undefined,
         offset: req.query.offset ? parseInt(req.query.offset as string, 10) : undefined,
@@ -186,7 +186,7 @@ export class BusinessController {
 
       const filters = {
         business_id: id,
-        metric_type: req.query.metric_type as string | undefined,
+        metric_type: req.query.metric_type as any,
         start_date: req.query.start_date as string | undefined,
         end_date: req.query.end_date as string | undefined,
         limit: req.query.limit ? parseInt(req.query.limit as string, 10) : undefined,
@@ -262,10 +262,10 @@ export class BusinessController {
   async getAllBusinessPerformance(req: Request, res: Response): Promise<void> {
     try {
       const filters = {
-        status: req.query.status as string | undefined,
-        category: req.query.category as string | undefined,
+        status: req.query.status as any,
+        category: req.query.category as any,
         is_foundation: req.query.is_foundation === 'true' ? true : req.query.is_foundation === 'false' ? false : undefined,
-        sort: req.query.sort as string | undefined,
+        sort: req.query.sort as any,
         order: req.query.order as 'asc' | 'desc' | undefined,
         limit: req.query.limit ? parseInt(req.query.limit as string, 10) : undefined,
       };

@@ -57,7 +57,7 @@ router.post(
   createRateLimit('POST:/api/admin/businesses/refresh-views'),
   requireAuth,
   requireRole('admin'),
-  adminActionLogger('refresh_portfolio_views'),
+  adminActionLogger,
   controller.refreshPortfolioViews.bind(controller)
 );
 
@@ -82,7 +82,7 @@ router.patch(
   createRateLimit('PATCH:/api/admin/businesses/:id'),
   requireAuth,
   requireRole('admin'),
-  adminActionLogger('update_business'),
+  adminActionLogger,
   controller.updateBusiness.bind(controller)
 );
 
@@ -107,7 +107,7 @@ router.post(
   createRateLimit('POST:/api/admin/businesses/:id/metrics'),
   requireAuth,
   requireRole('admin'),
-  adminActionLogger('create_business_metric'),
+  adminActionLogger,
   controller.createMetric.bind(controller)
 );
 
@@ -120,7 +120,7 @@ router.post(
   createRateLimit('POST:/api/admin/businesses/:id/metrics/bulk'),
   requireAuth,
   requireRole('admin'),
-  adminActionLogger('create_business_metrics_bulk'),
+  adminActionLogger,
   controller.createMetricsBulk.bind(controller)
 );
 
@@ -133,7 +133,7 @@ router.delete(
   createRateLimit('DELETE:/api/admin/businesses/metrics/:metricId'),
   requireAuth,
   requireRole('admin'),
-  adminActionLogger('delete_business_metric'),
+  adminActionLogger,
   controller.deleteMetric.bind(controller)
 );
 
