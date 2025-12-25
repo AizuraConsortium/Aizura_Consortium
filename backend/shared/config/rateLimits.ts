@@ -145,6 +145,31 @@ export const RATE_LIMIT_CONFIG: Record<string, RateLimitConfig> = {
     windowMinutes: 1,
     description: 'Authenticated client endpoint for retrieving user vote'
   },
+  'GET:/api/client/news': {
+    maxRequests: 60,
+    windowMinutes: 1,
+    description: 'Latest news for dashboard widget, allow frequent refreshes'
+  },
+  'GET:/api/client/news/all': {
+    maxRequests: 30,
+    windowMinutes: 1,
+    description: 'Full news listing with pagination'
+  },
+  'GET:/api/client/news/featured': {
+    maxRequests: 60,
+    windowMinutes: 1,
+    description: 'Featured articles for homepage'
+  },
+  'GET:/api/client/news/:id': {
+    maxRequests: 60,
+    windowMinutes: 1,
+    description: 'Individual article viewing'
+  },
+  'GET:/api/client/news/slug/:slug': {
+    maxRequests: 60,
+    windowMinutes: 1,
+    description: 'Individual article viewing by slug'
+  },
   'GET:/api/admin/errors/recent': {
     maxRequests: 120,
     windowMinutes: 1,
