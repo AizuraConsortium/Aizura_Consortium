@@ -1,6 +1,7 @@
 import type { SupabaseClient } from '@supabase/supabase-js';
 import { DatabaseService } from '../../shared/services/DatabaseService.js';
 import { PointCalculator } from '../../shared/utils/pointCalculator.js';
+import { twitterClient, discordClient, githubClient, telegramClient } from '../../shared/lib/oauthClients.js';
 
 export type SocialPlatform = 'twitter' | 'discord' | 'telegram' | 'github';
 
@@ -21,37 +22,14 @@ export interface OAuthState {
 }
 
 export class SocialAuthService extends DatabaseService {
-  private readonly OFFICIAL_ACCOUNTS = {
-    twitter: process.env.OFFICIAL_TWITTER_ID || 'AizuraAI',
-    discord: process.env.OFFICIAL_DISCORD_SERVER_ID || '',
-    telegram: process.env.OFFICIAL_TELEGRAM_CHANNEL || '',
-  };
-
   constructor(supabase: SupabaseClient) {
     super('SocialAuthService', supabase);
   }
 
   async initiateTwitterAuth(userId: string, returnUrl?: string): Promise<string> {
     const state = this.encodeState({ userId, platform: 'twitter', returnUrl, timestamp: Date.now() });
-
-    const twitterClientId = process.env.TWITTER_CLIENT_ID;
-    const redirectUri = `${process.env.API_BASE_URL}/api/client/oauth/twitter/callback`;
-
-    if (!twitterClientId) {
-      throw new Error('Twitter OAuth not configured');
-    }
-
-    const params = new URLSearchParams({
-      response_type: 'code',
-      client_id: twitterClientId,
-      redirect_uri: redirectUri,
-      scope: 'tweet.read users.read follows.read',
-      state,
-      code_challenge: 'challenge',
-      code_challenge_method: 'plain',
-    });
-
-    return `https://twitter.com/i/oauth2/authorize?${params.toString()}`;
+    const codeChallenge = 'challenge';
+    return twitterClient.getAuthorizationUrl(state, codeChallenge);
   }
 
   async handleTwitterCallback(
@@ -59,9 +37,10 @@ export class SocialAuthService extends DatabaseService {
     state: string
   ): Promise<{ success: boolean; userId: string; pointsAwarded: number }> {
     const decodedState = this.decodeState(state);
+    const codeVerifier = 'challenge';
 
-    const tokenResponse = await this.exchangeTwitterCode(code);
-    const userInfo = await this.fetchTwitterUserInfo(tokenResponse.access_token);
+    const tokenResponse = await twitterClient.exchangeCodeForToken(code, codeVerifier);
+    const userInfo = await twitterClient.getUserInfo(tokenResponse.access_token);
 
     const { data: existing } = await this.supabase
       .from('airdrop_leaderboard')
@@ -74,7 +53,7 @@ export class SocialAuthService extends DatabaseService {
       throw new Error('This Twitter account is already linked to another user');
     }
 
-    const isFollowing = await this.verifyTwitterFollowing(tokenResponse.access_token, userInfo.id);
+    const isFollowing = await twitterClient.verifyFollowing(tokenResponse.access_token, userInfo.id);
 
     let pointsAwarded = 0;
 
@@ -137,7 +116,7 @@ export class SocialAuthService extends DatabaseService {
       throw new Error('Twitter not connected');
     }
 
-    const isFollowing = await this.verifyTwitterFollowing(
+    const isFollowing = await twitterClient.verifyFollowing(
       leaderboard.twitter_oauth_token,
       leaderboard.twitter_user_id
     );
@@ -176,23 +155,7 @@ export class SocialAuthService extends DatabaseService {
 
   async initiateDiscordAuth(userId: string, returnUrl?: string): Promise<string> {
     const state = this.encodeState({ userId, platform: 'discord', returnUrl, timestamp: Date.now() });
-
-    const discordClientId = process.env.DISCORD_CLIENT_ID;
-    const redirectUri = `${process.env.API_BASE_URL}/api/client/oauth/discord/callback`;
-
-    if (!discordClientId) {
-      throw new Error('Discord OAuth not configured');
-    }
-
-    const params = new URLSearchParams({
-      client_id: discordClientId,
-      redirect_uri: redirectUri,
-      response_type: 'code',
-      scope: 'identify guilds',
-      state,
-    });
-
-    return `https://discord.com/api/oauth2/authorize?${params.toString()}`;
+    return discordClient.getAuthorizationUrl(state);
   }
 
   async handleDiscordCallback(
@@ -201,8 +164,8 @@ export class SocialAuthService extends DatabaseService {
   ): Promise<{ success: boolean; userId: string; pointsAwarded: number }> {
     const decodedState = this.decodeState(state);
 
-    const tokenResponse = await this.exchangeDiscordCode(code);
-    const userInfo = await this.fetchDiscordUserInfo(tokenResponse.access_token);
+    const tokenResponse = await discordClient.exchangeCodeForToken(code);
+    const userInfo = await discordClient.getUserInfo(tokenResponse.access_token);
 
     const { data: existing } = await this.supabase
       .from('airdrop_leaderboard')
@@ -215,7 +178,7 @@ export class SocialAuthService extends DatabaseService {
       throw new Error('This Discord account is already linked to another user');
     }
 
-    const isMember = await this.verifyDiscordMembership(tokenResponse.access_token);
+    const isMember = await discordClient.verifyServerMembership(tokenResponse.access_token);
 
     let pointsAwarded = 0;
 
@@ -356,110 +319,5 @@ export class SocialAuthService extends DatabaseService {
 
   private decodeState(encodedState: string): OAuthState {
     return JSON.parse(Buffer.from(encodedState, 'base64').toString());
-  }
-
-  private async exchangeTwitterCode(code: string): Promise<{ access_token: string }> {
-    const response = await fetch('https://api.twitter.com/2/oauth2/token', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-      },
-      body: new URLSearchParams({
-        code,
-        grant_type: 'authorization_code',
-        client_id: process.env.TWITTER_CLIENT_ID!,
-        redirect_uri: `${process.env.API_BASE_URL}/api/client/oauth/twitter/callback`,
-        code_verifier: 'challenge',
-      }),
-    });
-
-    if (!response.ok) {
-      throw new Error('Failed to exchange Twitter code');
-    }
-
-    return response.json();
-  }
-
-  private async fetchTwitterUserInfo(accessToken: string): Promise<{ id: string; username: string }> {
-    const response = await fetch('https://api.twitter.com/2/users/me', {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-    });
-
-    if (!response.ok) {
-      throw new Error('Failed to fetch Twitter user info');
-    }
-
-    const data = await response.json();
-    return data.data;
-  }
-
-  private async verifyTwitterFollowing(accessToken: string, userId: string): Promise<boolean> {
-    const response = await fetch(`https://api.twitter.com/2/users/${userId}/following`, {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-    });
-
-    if (!response.ok) {
-      return false;
-    }
-
-    const data = await response.json();
-    return data.data?.some((user: { username: string }) => user.username === this.OFFICIAL_ACCOUNTS.twitter);
-  }
-
-  private async exchangeDiscordCode(code: string): Promise<{ access_token: string }> {
-    const response = await fetch('https://discord.com/api/oauth2/token', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-      },
-      body: new URLSearchParams({
-        client_id: process.env.DISCORD_CLIENT_ID!,
-        client_secret: process.env.DISCORD_CLIENT_SECRET!,
-        grant_type: 'authorization_code',
-        code,
-        redirect_uri: `${process.env.API_BASE_URL}/api/client/oauth/discord/callback`,
-      }),
-    });
-
-    if (!response.ok) {
-      throw new Error('Failed to exchange Discord code');
-    }
-
-    return response.json();
-  }
-
-  private async fetchDiscordUserInfo(accessToken: string): Promise<{ id: string; username: string }> {
-    const response = await fetch('https://discord.com/api/users/@me', {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-    });
-
-    if (!response.ok) {
-      throw new Error('Failed to fetch Discord user info');
-    }
-
-    return response.json();
-  }
-
-  private async verifyDiscordMembership(accessToken: string): Promise<boolean> {
-    if (!this.OFFICIAL_ACCOUNTS.discord) return false;
-
-    const response = await fetch('https://discord.com/api/users/@me/guilds', {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-    });
-
-    if (!response.ok) {
-      return false;
-    }
-
-    const guilds = await response.json();
-    return guilds.some((guild: { id: string }) => guild.id === this.OFFICIAL_ACCOUNTS.discord);
   }
 }
