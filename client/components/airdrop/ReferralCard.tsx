@@ -2,6 +2,9 @@ import { useState, useEffect } from 'react';
 import { Copy, Share2, Twitter, MessageCircle, Check, Loader2 } from 'lucide-react';
 import { api } from '../../lib/api';
 import { useToast } from '../../../shared/components/ToastProvider';
+import { MilestoneCard } from './MilestoneCard';
+import { EnhancedReferralEntry } from './EnhancedReferralEntry';
+import { ReferralDetailsModal } from './ReferralDetailsModal';
 
 interface ReferralStats {
   referralCode: string;
@@ -19,6 +22,8 @@ interface ReferralEntry {
   points: number;
   progress: number;
   joinedAt: string;
+  connectedSocials?: string[];
+  milestonesAchieved?: string[];
 }
 
 interface ReferralCardProps {
@@ -30,6 +35,8 @@ export function ReferralCard({ userId }: ReferralCardProps) {
   const [loading, setLoading] = useState(true);
   const [copiedCode, setCopiedCode] = useState(false);
   const [copiedUrl, setCopiedUrl] = useState(false);
+  const [showAll, setShowAll] = useState(false);
+  const [selectedReferral, setSelectedReferral] = useState<ReferralEntry | null>(null);
   const { showToast } = useToast();
 
   useEffect(() => {
@@ -87,6 +94,26 @@ export function ReferralCard({ userId }: ReferralCardProps) {
       default:
         return 'text-slate-400 bg-slate-400/10 border-slate-400/30';
     }
+  }
+
+  function checkMilestone(referrals: ReferralEntry[], milestone: string): number {
+    return referrals.filter(r =>
+      r.milestonesAchieved && r.milestonesAchieved.includes(milestone)
+    ).length;
+  }
+
+  function calculateSocialProgress(referrals: ReferralEntry[]): number {
+    const total = referrals.length;
+    if (total === 0) return 0;
+    const qualified = checkMilestone(referrals, '2_socials');
+    return Math.round((qualified / total) * 100);
+  }
+
+  function calculatePointsProgress(referrals: ReferralEntry[], target: number): number {
+    const total = referrals.length;
+    if (total === 0) return 0;
+    const qualified = referrals.filter(r => r.points >= target).length;
+    return Math.round((qualified / total) * 100);
   }
 
   if (loading) {
@@ -200,43 +227,51 @@ export function ReferralCard({ userId }: ReferralCardProps) {
           </div>
         </div>
 
+        <div className="mb-6">
+          <h4 className="text-sm font-semibold text-white mb-4">Referral Milestones</h4>
+          <div className="space-y-3">
+            <MilestoneCard
+              title="2+ Social Accounts Connected"
+              reward={100}
+              achieved={checkMilestone(stats.referrals, '2_socials')}
+              description="Referee connects Twitter + Discord"
+              progress={calculateSocialProgress(stats.referrals)}
+            />
+            <MilestoneCard
+              title="500 Points Reached"
+              reward={200}
+              achieved={checkMilestone(stats.referrals, '500_points')}
+              description="Referee earns 500 points"
+              progress={calculatePointsProgress(stats.referrals, 500)}
+            />
+            <MilestoneCard
+              title="2000 Points Reached"
+              reward={300}
+              achieved={checkMilestone(stats.referrals, '2000_points')}
+              description="Referee earns 2000 points"
+              progress={calculatePointsProgress(stats.referrals, 2000)}
+            />
+          </div>
+        </div>
+
         {stats.referrals.length > 0 && (
           <div>
-            <h4 className="text-sm font-semibold text-white mb-3">Your Referrals</h4>
-            <div className="space-y-2 max-h-64 overflow-y-auto">
-              {stats.referrals.map((referral, index) => (
-                <div
+            <div className="flex items-center justify-between mb-3">
+              <h4 className="text-sm font-semibold text-white">Your Referrals ({stats.referrals.length})</h4>
+              <button
+                onClick={() => setShowAll(!showAll)}
+                className="text-xs text-cyan-400 hover:text-cyan-300 transition-colors"
+              >
+                {showAll ? 'Show Less' : 'Show All'}
+              </button>
+            </div>
+            <div className="space-y-3 max-h-96 overflow-y-auto">
+              {(showAll ? stats.referrals : stats.referrals.slice(0, 5)).map((referral, index) => (
+                <EnhancedReferralEntry
                   key={index}
-                  className="bg-white/5 border border-white/10 rounded-lg p-3 flex items-center gap-3"
-                >
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-2 mb-1">
-                      <span className="text-sm font-medium text-white truncate">
-                        {referral.username}
-                      </span>
-                      <span className={`text-xs px-2 py-0.5 border rounded ${getStatusColor(referral.status)}`}>
-                        {referral.status}
-                      </span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <div className="flex-1 h-1.5 bg-slate-700 rounded-full overflow-hidden">
-                        <div
-                          className="h-full bg-green-500 rounded-full transition-all"
-                          style={{ width: `${referral.progress}%` }}
-                        />
-                      </div>
-                      <span className="text-xs text-slate-400 whitespace-nowrap">
-                        {referral.progress}%
-                      </span>
-                    </div>
-                  </div>
-                  <div className="text-right">
-                    <div className="text-sm font-semibold text-white">
-                      +{referral.points}
-                    </div>
-                    <div className="text-xs text-slate-400">pts</div>
-                  </div>
-                </div>
+                  referral={referral}
+                  onViewDetails={() => setSelectedReferral(referral)}
+                />
               ))}
             </div>
           </div>
@@ -249,6 +284,13 @@ export function ReferralCard({ userId }: ReferralCardProps) {
           </p>
         </div>
       </div>
+
+      {selectedReferral && (
+        <ReferralDetailsModal
+          referral={selectedReferral}
+          onClose={() => setSelectedReferral(null)}
+        />
+      )}
     </div>
   );
 }

@@ -8,11 +8,12 @@ import { ContentSubmissionForm } from '../components/airdrop/ContentSubmissionFo
 import { SubmissionHistory } from '../components/airdrop/SubmissionHistory';
 import { DailyTasks } from '../components/airdrop/DailyTasks';
 import { AirdropEstimate } from '../components/airdrop/AirdropEstimate';
+import { ReferralLeaderboard } from '../components/airdrop/ReferralLeaderboard';
 import { useAuth } from '../contexts/AuthContext';
 
 export function AirdropView() {
   const { user } = useAuth();
-  const [activeTab, setActiveTab] = useState<'overview' | 'leaderboard' | 'tasks' | 'history'>('overview');
+  const [activeTab, setActiveTab] = useState<'overview' | 'leaderboard' | 'tasks' | 'history' | 'referral-leaders'>('overview');
   const [isSubmissionFormOpen, setIsSubmissionFormOpen] = useState(false);
 
   useEffect(() => {
@@ -112,6 +113,19 @@ export function AirdropView() {
                 <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-blue-400" />
               )}
             </button>
+            <button
+              onClick={() => setActiveTab('referral-leaders')}
+              className={`pb-4 px-2 font-medium transition-colors relative ${
+                activeTab === 'referral-leaders'
+                  ? 'text-blue-400'
+                  : 'text-slate-400 hover:text-slate-300'
+              }`}
+            >
+              Referral Leaders
+              {activeTab === 'referral-leaders' && (
+                <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-blue-400" />
+              )}
+            </button>
           </nav>
         </div>
 
@@ -142,6 +156,10 @@ export function AirdropView() {
 
         {activeTab === 'history' && (
           <SubmissionHistory userId={user.id} />
+        )}
+
+        {activeTab === 'referral-leaders' && (
+          <ReferralLeaderboard userId={user.id} />
         )}
       </div>
 

@@ -135,6 +135,20 @@ router.get(
   airdropController.getReferralStats.bind(airdropController)
 );
 
+router.get(
+  '/referrals/stats',
+  createRateLimit('GET:/api/client/airdrop/referrals/stats'),
+  requireAuth,
+  requireRole('client'),
+  airdropController.getReferralStats.bind(airdropController)
+);
+
+router.get(
+  '/referrals/leaderboard',
+  createRateLimit('GET:/api/client/airdrop/referrals/leaderboard'),
+  airdropController.getReferralLeaderboard.bind(airdropController)
+);
+
 // Content Submission Endpoints
 router.post(
   '/submit-content',

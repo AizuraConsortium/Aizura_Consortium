@@ -205,6 +205,29 @@ export class AirdropController extends BaseController {
     }
   }
 
+  async getReferralLeaderboard(req: Request, res: Response): Promise<void> {
+    try {
+      const userId = req.user?.id;
+      const limit = parseInt(req.query.limit as string) || 100;
+      const supabase = getSupabaseClient();
+
+      const { data, error } = await supabase.rpc('get_referral_leaderboard', {
+        limit_count: limit
+      });
+
+      if (error) throw error;
+
+      const leaderboard = data.map((entry: any) => ({
+        ...entry,
+        isCurrentUser: userId ? entry.user_id === userId : false
+      }));
+
+      this.ok(res, leaderboard);
+    } catch (error) {
+      this.handleError(error, req, res);
+    }
+  }
+
   async submitContent(req: Request, res: Response): Promise<void> {
     try {
       const userId = this.getUserId(req);
