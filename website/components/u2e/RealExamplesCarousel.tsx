@@ -32,7 +32,7 @@ export function RealExamplesCarousel() {
 
   async function loadExamples() {
     try {
-      const response = await fetch('/api/website/p2u/examples');
+      const response = await fetch('/api/website/u2e/examples');
       if (!response.ok) throw new Error('Failed to fetch examples');
 
       const data = await response.json();

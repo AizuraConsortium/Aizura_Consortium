@@ -21,7 +21,7 @@ export default function NewHome() {
           <HeroSection />
           <FivePhaseSection />
           <WhyAIWinsSection />
-          <PayToUseSection />
+          <UseToEarnSection />
           <PortfolioPreviewSection />
           <LaunchpadTeaserSection />
           <TokenAirdropSection />
@@ -83,7 +83,7 @@ function HeroSection() {
             </Link>
           </div>
           <p className="text-sm text-slate-400">
-            The first Pay-to-Use ecosystem: Use services, earn tokens. No speculation required.
+            The first Use-to-Earn ecosystem: Use services, earn tokens. No speculation required.
           </p>
         </div>
 
@@ -239,19 +239,19 @@ function WhyAIWinsSection() {
   );
 }
 
-function PayToUseSection() {
+function UseToEarnSection() {
   const [stats, setStats] = useState<any>(null);
 
   useEffect(() => {
     async function fetchStats() {
       try {
-        const response = await fetch('/api/website/p2u/stats');
+        const response = await fetch('/api/website/u2e/stats');
         if (response.ok) {
           const data = await response.json();
           setStats(data);
         }
       } catch (error) {
-        console.error('Failed to fetch P2U stats:', error);
+        console.error('Failed to fetch U2E stats:', error);
       }
     }
     fetchStats();
@@ -267,7 +267,7 @@ function PayToUseSection() {
           </div>
 
           <h2 className="text-4xl sm:text-5xl font-bold text-white mb-4">
-            The First-Ever Pay-to-Use Ecosystem
+            The First-Ever Use-to-Earn Ecosystem
           </h2>
           <p className="text-xl text-slate-300 max-w-3xl mx-auto">
             Use our services, earn AAIC tokens. No gimmicks, just sustainable rewards backed by real AI-driven profits.
@@ -331,7 +331,7 @@ function PayToUseSection() {
 
         <div className="text-center">
           <Link
-            to="/token/pay-to-use"
+            to="/token/use-to-earn"
             className="inline-flex items-center gap-2 px-8 py-4 bg-green-600 hover:bg-green-700 text-white font-bold rounded-lg text-lg transition-colors"
           >
             See How Much You Can Earn

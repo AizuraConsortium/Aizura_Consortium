@@ -41,7 +41,7 @@ import daoRoutes, { statsService, treasuryService, governanceService } from './w
 import { DAORepository } from './website/dao/repositories/daoRepository.js';
 import { getGovernanceMetricsCaptureJob } from './shared/jobs/captureGovernanceMetrics.js';
 import publicDaoRoutes from './dao/routes/daoRoutes.js';
-import websiteP2URoutes from './website/routes/p2uRoutes.js';
+import websiteU2ERoutes from './website/routes/u2eRoutes.js';
 
 dotenv.config();
 
@@ -197,7 +197,7 @@ app.use('/api/website/messages', websiteMessageRoutes);
 app.use('/api/website/proposals', websiteProposalRoutes);
 app.use('/api/website/realtime', createRealtimeRoutes());
 app.use('/api/website/dao', daoRoutes);
-app.use('/api/website/p2u', websiteP2URoutes);
+app.use('/api/website/u2e', websiteU2ERoutes);
 
 /**
  * DAO routes (public)

@@ -12,14 +12,14 @@ import {
   Users,
   Activity
 } from 'lucide-react';
-import { LiveRatesTable } from '../../components/p2u/LiveRatesTable';
-import { PhaseTimeline } from '../../components/p2u/PhaseTimeline';
-import { ComparisonTable } from '../../components/p2u/ComparisonTable';
-import { RealExamplesCarousel } from '../../components/p2u/RealExamplesCarousel';
-import { SustainabilityDiagram } from '../../components/p2u/SustainabilityDiagram';
+import { LiveRatesTable } from '../../components/u2e/LiveRatesTable';
+import { PhaseTimeline } from '../../components/u2e/PhaseTimeline';
+import { ComparisonTable } from '../../components/u2e/ComparisonTable';
+import { RealExamplesCarousel } from '../../components/u2e/RealExamplesCarousel';
+import { SustainabilityDiagram } from '../../components/u2e/SustainabilityDiagram';
 import { U2ECalculator } from '../../components/tokenomics/U2ECalculator';
 
-interface P2UStats {
+interface U2EStats {
   total_rewards_distributed: number;
   active_businesses: number;
   active_users: number;
@@ -28,8 +28,8 @@ interface P2UStats {
   last_updated: string;
 }
 
-export default function PayToUse() {
-  const [stats, setStats] = useState<P2UStats | null>(null);
+export default function UseToEarn() {
+  const [stats, setStats] = useState<U2EStats | null>(null);
   const [expandedFAQ, setExpandedFAQ] = useState<number | null>(null);
 
   useEffect(() => {
@@ -38,27 +38,27 @@ export default function PayToUse() {
 
   async function loadStats() {
     try {
-      const response = await fetch('/api/website/p2u/stats');
+      const response = await fetch('/api/website/u2e/stats');
       if (response.ok) {
         const data = await response.json();
         setStats(data);
       }
     } catch (error) {
-      console.error('Failed to load P2U stats:', error);
+      console.error('Failed to load U2E stats:', error);
     }
   }
 
   const faqs = [
     {
-      question: 'What is Pay-to-Use (P2U)?',
-      answer: 'Pay-to-Use (P2U), also called Use-to-Earn (U2E), is a revolutionary model where users earn AAIC tokens simply by using ecosystem services. Unlike failed "play-to-earn" schemes, P2U rewards are backed by real business revenue, making them sustainable indefinitely.'
+      question: 'What is Use-to-Earn (U2E)?',
+      answer: 'Use-to-Earn (U2E) is a revolutionary model where users earn AAIC tokens simply by using ecosystem services. Unlike failed "play-to-earn" schemes, U2E rewards are backed by real business revenue, making them sustainable indefinitely.'
     },
     {
-      question: 'How is P2U different from Play-to-Earn?',
-      answer: 'Play-to-Earn models collapsed because rewards weren\'t backed by real value - they relied on new users buying tokens. P2U rewards come from actual business profits enabled by AI cost reduction. This creates a sustainable system that can operate as long as businesses remain profitable.'
+      question: 'How is U2E different from Play-to-Earn?',
+      answer: 'Play-to-Earn models collapsed because rewards weren\'t backed by real value - they relied on new users buying tokens. U2E rewards come from actual business profits enabled by AI cost reduction. This creates a sustainable system that can operate as long as businesses remain profitable.'
     },
     {
-      question: 'When will I receive my P2U rewards?',
+      question: 'When will I receive my U2E rewards?',
       answer: 'Rewards accrue automatically in real-time as you use ecosystem services. You can view your accumulated rewards in your dashboard and claim them at any time. There are no manual claims required - the system tracks everything automatically.'
     },
     {
@@ -86,11 +86,11 @@ export default function PayToUse() {
         <section className="text-center max-w-4xl mx-auto">
           <div className="inline-flex items-center gap-2 px-4 py-2 bg-green-500/20 text-green-400 rounded-full text-sm font-medium mb-6">
             <Sparkles className="w-4 h-4" />
-            World's First Sustainable P2U Model
+            World's First Sustainable U2E Model
           </div>
 
           <h1 className="text-5xl sm:text-6xl font-bold text-white mb-6 leading-tight">
-            Pay-to-Use:{' '}
+            Use-to-Earn:{' '}
             <span className="bg-gradient-to-r from-green-400 to-cyan-500 bg-clip-text text-transparent">
               Earn Tokens By Using Services
             </span>
@@ -151,7 +151,7 @@ export default function PayToUse() {
         <section>
           <div className="text-center mb-12">
             <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">
-              How Pay-to-Use Works
+              How Use-to-Earn Works
             </h2>
             <p className="text-slate-300 max-w-2xl mx-auto">
               Simple, transparent, and automatic. Use services, earn tokens.
@@ -205,7 +205,7 @@ export default function PayToUse() {
         <section>
           <div className="text-center mb-12">
             <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">
-              Why P2U Succeeds Where Play-to-Earn Failed
+              Why U2E Succeeds Where Play-to-Earn Failed
             </h2>
             <p className="text-slate-300 max-w-2xl mx-auto">
               The secret: AI cost reduction + real business revenue = sustainable rewards
@@ -219,10 +219,10 @@ export default function PayToUse() {
         <section>
           <div className="text-center mb-12">
             <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">
-              P2U vs Traditional vs Play-to-Earn
+              U2E vs Traditional vs Play-to-Earn
             </h2>
             <p className="text-slate-300 max-w-2xl mx-auto">
-              See how Pay-to-Use compares to other models
+              See how Use-to-Earn compares to other models
             </p>
           </div>
 
@@ -283,7 +283,7 @@ export default function PayToUse() {
               Frequently Asked Questions
             </h2>
             <p className="text-slate-300 max-w-2xl mx-auto">
-              Everything you need to know about Pay-to-Use rewards
+              Everything you need to know about Use-to-Earn rewards
             </p>
           </div>
 

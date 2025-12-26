@@ -91,7 +91,7 @@ export function Navigation({ onConnectWallet }: NavigationProps) {
         { label: 'Token Overview', path: '/token', description: 'Utility and governance rights' },
         { label: 'Tokenomics', path: '/token/tokenomics', description: 'Supply and distribution' },
         { label: 'Token Utility', path: '/token/utility', description: '10+ ways to use AAIC' },
-        { label: 'Pay-to-Use Model', path: '/token/pay-to-use', description: 'Earn tokens by using services' },
+        { label: 'Use-to-Earn', path: '/token/use-to-earn', description: 'Earn tokens by using services' },
         { label: 'Live Metrics', path: '/token/live-metrics', description: 'Real-time price and stats' },
         { label: 'Where to Buy', path: '/token/where-to-buy', description: 'DEX and CEX listings' },
         { label: 'Airdrop', path: '/token/airdrop', description: 'No token sale, only airdrop' },

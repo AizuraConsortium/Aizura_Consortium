@@ -56,7 +56,7 @@ export function SustainabilityDiagram() {
       {/* Sustainable model */}
       <div>
         <div className="text-center mb-8">
-          <h3 className="text-2xl font-bold text-white mb-3">How P2U Stays Sustainable</h3>
+          <h3 className="text-2xl font-bold text-white mb-3">How U2E Stays Sustainable</h3>
           <p className="text-slate-300 max-w-2xl mx-auto">
             AI cost reduction creates profit margins that enable perpetual rewards
           </p>
@@ -168,13 +168,13 @@ export function SustainabilityDiagram() {
           </div>
         </div>
 
-        {/* Sustainable (Aizura P2U) */}
+        {/* Sustainable (Aizura U2E) */}
         <div className="bg-gradient-to-br from-green-900/20 to-emerald-900/20 border border-green-500/30 rounded-xl p-6">
           <div className="flex items-center gap-3 mb-4">
             <div className="w-10 h-10 bg-green-500/20 rounded-full flex items-center justify-center">
               <CheckCircle className="w-5 h-5 text-green-400" />
             </div>
-            <h4 className="text-lg font-bold text-white">Sustainable (Aizura P2U)</h4>
+            <h4 className="text-lg font-bold text-white">Sustainable (Aizura U2E)</h4>
           </div>
 
           <ul className="space-y-3 text-sm">

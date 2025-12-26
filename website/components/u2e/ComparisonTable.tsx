@@ -5,7 +5,7 @@ interface ComparisonRow {
   feature: string;
   traditional: boolean | string;
   playToEarn: boolean | string;
-  aizuraP2U: boolean | string;
+  aizuraU2E: boolean | string;
   details?: string;
 }
 
@@ -17,56 +17,56 @@ export function ComparisonTable() {
       feature: 'Earn for Usage',
       traditional: false,
       playToEarn: false,
-      aizuraP2U: true,
+      aizuraU2E: true,
       details: 'Get rewarded for actually using services, not for repetitive tasks or speculation'
     },
     {
       feature: 'Sustainable Model',
       traditional: 'N/A',
       playToEarn: false,
-      aizuraP2U: true,
+      aizuraU2E: true,
       details: 'Rewards backed by real business profits, not dilutive token emissions'
     },
     {
       feature: 'Required Upfront Investment',
       traditional: false,
       playToEarn: 'Often Required',
-      aizuraP2U: false,
+      aizuraU2E: false,
       details: 'No NFTs to buy, no entry fees - just use the service and earn'
     },
     {
       feature: 'Real Value Creation',
       traditional: true,
       playToEarn: false,
-      aizuraP2U: true,
+      aizuraU2E: true,
       details: 'Services provide genuine utility beyond earning tokens'
     },
     {
       feature: 'Reward Longevity',
       traditional: 'N/A',
       playToEarn: '6-18 months',
-      aizuraP2U: 'Infinite',
+      aizuraU2E: 'Infinite',
       details: 'Revenue-backed model can sustain rewards indefinitely'
     },
     {
       feature: 'Price Volatility Impact',
       traditional: 'N/A',
       playToEarn: 'High Risk',
-      aizuraP2U: 'Low Risk',
+      aizuraU2E: 'Low Risk',
       details: 'Rewards adjust based on profitability, not token price'
     },
     {
       feature: 'Speculative Farmers',
       traditional: 'N/A',
       playToEarn: 'Major Problem',
-      aizuraP2U: 'Minimal',
+      aizuraU2E: 'Minimal',
       details: 'Rewards tied to genuine usage, not gaming the system'
     },
     {
       feature: 'Platform Quality',
       traditional: 'High',
       playToEarn: 'Variable',
-      aizuraP2U: 'High',
+      aizuraU2E: 'High',
       details: 'Service must be good enough that people use it without rewards'
     }
   ];
@@ -99,7 +99,7 @@ export function ComparisonTable() {
                 Play-to-Earn
               </th>
               <th className="text-center py-4 px-6 text-sm font-semibold text-cyan-400 w-1/4">
-                Aizura P2U
+                Aizura U2E
               </th>
             </tr>
           </thead>
@@ -132,7 +132,7 @@ export function ComparisonTable() {
                   {renderValue(row.playToEarn)}
                 </td>
                 <td className="py-4 px-6 text-center bg-cyan-500/5">
-                  {renderValue(row.aizuraP2U)}
+                  {renderValue(row.aizuraU2E)}
                 </td>
               </tr>
             ))}
@@ -170,8 +170,8 @@ export function ComparisonTable() {
                   <div>{renderValue(row.playToEarn)}</div>
                 </div>
                 <div className="flex items-center justify-between bg-cyan-500/10 rounded-lg p-3">
-                  <span className="text-sm font-medium text-cyan-400">Aizura P2U</span>
-                  <div>{renderValue(row.aizuraP2U)}</div>
+                  <span className="text-sm font-medium text-cyan-400">Aizura U2E</span>
+                  <div>{renderValue(row.aizuraU2E)}</div>
                 </div>
                 {row.details && (
                   <p className="text-sm text-slate-400 pt-2 border-t border-slate-700">
@@ -186,10 +186,10 @@ export function ComparisonTable() {
 
       {/* Summary callout */}
       <div className="bg-gradient-to-r from-green-500/10 to-cyan-500/10 border border-green-500/30 rounded-xl p-6">
-        <h4 className="text-lg font-bold text-white mb-2">Why P2U Succeeds Where Play-to-Earn Failed</h4>
+        <h4 className="text-lg font-bold text-white mb-2">Why U2E Succeeds Where Play-to-Earn Failed</h4>
         <p className="text-slate-300 text-sm">
           Play-to-earn models collapsed because rewards weren't backed by real value. When token prices fell,
-          the entire ecosystem died. Aizura's P2U model ties rewards directly to business profitability,
+          the entire ecosystem died. Aizura's U2E model ties rewards directly to business profitability,
           creating a sustainable system that can operate indefinitely.
         </p>
       </div>

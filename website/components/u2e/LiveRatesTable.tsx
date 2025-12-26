@@ -34,7 +34,7 @@ export function LiveRatesTable() {
 
   async function loadRates() {
     try {
-      const response = await fetch('/api/website/p2u/rates');
+      const response = await fetch('/api/website/u2e/rates');
       if (!response.ok) throw new Error('Failed to fetch rates');
 
       const result = await response.json();

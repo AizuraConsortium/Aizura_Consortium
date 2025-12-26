@@ -136,7 +136,7 @@ export default function Utility() {
     },
     {
       icon: <Zap className="w-8 h-8 text-green-400" />,
-      title: 'Pay-to-Use Rewards',
+      title: 'Use-to-Earn Rewards',
       description: 'Earn AAIC tokens automatically by using ecosystem services. The more you use, the more you earn.',
       details: [
         'Automatic rewards for platform usage',
@@ -146,7 +146,7 @@ export default function Utility() {
         'Track usage and earnings in dashboard',
       ],
       example: 'Use AI Traders for 50 trades/month = ~250 AAIC earned ($25 at $0.10/token)',
-      link: '/token/pay-to-use',
+      link: '/token/use-to-earn',
     },
     {
       icon: <Target className="w-8 h-8 text-emerald-400" />,

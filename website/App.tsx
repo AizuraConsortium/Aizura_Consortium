@@ -37,7 +37,7 @@ import Transparency from './pages/token/Transparency';
 import LiveMetrics from './pages/token/LiveMetrics';
 import WhereToBuy from './pages/token/WhereToBuy';
 import Utility from './pages/token/Utility';
-import PayToUse from './pages/token/PayToUse';
+import UseToEarn from './pages/token/UseToEarn';
 
 import GovernanceOverview from './pages/governance/GovernanceOverview';
 import GovernanceRules from './pages/governance/GovernanceRules';
@@ -111,7 +111,7 @@ export default function App() {
             <Route path="/token/live-metrics" element={<LiveMetrics />} />
             <Route path="/token/where-to-buy" element={<WhereToBuy />} />
             <Route path="/token/utility" element={<Utility />} />
-            <Route path="/token/pay-to-use" element={<PayToUse />} />
+            <Route path="/token/use-to-earn" element={<UseToEarn />} />
 
             <Route path="/governance" element={<GovernanceOverview />} />
             <Route path="/governance/rules" element={<GovernanceRules />} />

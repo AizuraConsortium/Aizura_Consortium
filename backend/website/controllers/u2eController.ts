@@ -1,17 +1,17 @@
 /**
- * P2U (Pay-to-Use / Use-to-Earn) Controller
+ * U2E (Use-to-Earn) Controller
  *
- * Handles public-facing P2U data endpoints for the website
+ * Handles public-facing U2E data endpoints for the website
  */
 
 import { Request, Response } from 'express';
 import { websiteSupabase as supabase } from '../config/supabaseWebsiteClient';
 
 /**
- * Get P2U statistics for display on website
- * GET /api/website/p2u/stats
+ * Get U2E statistics for display on website
+ * GET /api/website/u2e/stats
  */
-export async function getP2UStats(req: Request, res: Response) {
+export async function getU2EStats(req: Request, res: Response) {
   try {
     // Get total rewards distributed
     const { data: rewardsData, error: rewardsError } = await supabase
@@ -81,14 +81,14 @@ export async function getP2UStats(req: Request, res: Response) {
       last_updated: new Date().toISOString()
     });
   } catch (error) {
-    console.error('Error fetching P2U stats:', error);
-    res.status(500).json({ error: 'Failed to fetch P2U statistics' });
+    console.error('Error fetching U2E stats:', error);
+    res.status(500).json({ error: 'Failed to fetch U2E statistics' });
   }
 }
 
 /**
  * Get current reward rates for all active businesses
- * GET /api/website/p2u/rates
+ * GET /api/website/u2e/rates
  */
 export async function getRewardRates(req: Request, res: Response) {
   try {
@@ -142,7 +142,7 @@ export async function getRewardRates(req: Request, res: Response) {
 
 /**
  * Get historical rate changes for transparency
- * GET /api/website/p2u/history?business_id=uuid (optional)
+ * GET /api/website/u2e/history?business_id=uuid (optional)
  */
 export async function getRateHistory(req: Request, res: Response) {
   try {
@@ -200,7 +200,7 @@ export async function getRateHistory(req: Request, res: Response) {
 
 /**
  * Get anonymized real user earning examples
- * GET /api/website/p2u/examples
+ * GET /api/website/u2e/examples
  */
 export async function getEarningExamples(req: Request, res: Response) {
   try {
