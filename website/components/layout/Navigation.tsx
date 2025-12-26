@@ -70,6 +70,7 @@ export function Navigation({ onConnectWallet }: NavigationProps) {
     {
       items: [
         { label: 'Portfolio Overview', path: '/portfolio', description: 'All businesses and metrics' },
+        { label: 'Foundation Businesses', path: '/portfolio/foundation', description: 'Pre-DAO validation businesses' },
         { label: 'AI Traders', path: '/portfolio/ai-traders', description: 'V1 live, V2 planned Q3 2026' },
         { label: 'AI Business Factory', path: '/portfolio/ai-business-factory', description: 'Consortium Engine' },
         { label: 'AI Web Development', path: '/portfolio/ai-web-dev', description: 'V1 live, V2 advanced coming' },

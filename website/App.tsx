@@ -23,6 +23,7 @@ import ProposalLifecycle from './pages/launchpad/ProposalLifecycle';
 import ProposalDetail from './pages/launchpad/ProposalDetail';
 
 import PortfolioOverview from './pages/portfolio/PortfolioOverview';
+import FoundationBusinesses from './pages/portfolio/FoundationBusinesses';
 import AITraders from './pages/portfolio/AITraders';
 import AIBusinessFactory from './pages/portfolio/AIBusinessFactory';
 import AIWebDev from './pages/portfolio/AIWebDev';
@@ -97,6 +98,7 @@ export default function App() {
             <Route path="/launchpad/:proposalId" element={<ProposalDetail />} />
 
             <Route path="/portfolio" element={<PortfolioOverview />} />
+            <Route path="/portfolio/foundation" element={<FoundationBusinesses />} />
             <Route path="/portfolio/ai-traders" element={<AITraders />} />
             <Route path="/portfolio/ai-business-factory" element={<AIBusinessFactory />} />
             <Route path="/portfolio/ai-web-dev" element={<AIWebDev />} />

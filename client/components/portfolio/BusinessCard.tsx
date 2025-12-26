@@ -6,8 +6,9 @@
  */
 
 import { Link } from 'react-router-dom';
-import { Briefcase, ExternalLink, Github, Globe } from 'lucide-react';
+import { Briefcase, ExternalLink, Github, Globe, Vote } from 'lucide-react';
 import { StatusBadge, ProgressBadge, StatusBadgeGroup } from '@shared/components/portfolio/StatusBadge';
+import { FoundationBadge } from '@shared/components/portfolio/FoundationBadge';
 import type { BusinessWithMetrics } from '@shared/types/portfolio';
 
 interface BusinessCardProps {
@@ -71,6 +72,15 @@ export function BusinessCard({ business, showExposure = true, className = '' }: 
             {business.category && (
               <span className="inline-flex items-center gap-1.5 font-medium rounded-full border bg-slate-700/50 text-slate-300 border-slate-600 text-sm px-2.5 py-1">
                 {business.category}
+              </span>
+            )}
+            {business.is_foundation && (
+              <FoundationBadge size="sm" showTooltip />
+            )}
+            {!business.is_foundation && business.proposal_id && (
+              <span className="inline-flex items-center gap-1.5 font-medium rounded-full border bg-green-500/20 text-green-400 border-green-500/40 text-sm px-2.5 py-1">
+                <Vote className="w-3 h-3" />
+                DAO Approved
               </span>
             )}
             {showExposure && business.exposure && (
@@ -152,6 +162,12 @@ export function BusinessCard({ business, showExposure = true, className = '' }: 
               style={{ width: `${business.development_progress}%` }}
             />
           </div>
+        </div>
+      )}
+
+      {business.is_foundation && (
+        <div className="mb-4">
+          <FoundationBadge variant="full" showTooltip={false} />
         </div>
       )}
 

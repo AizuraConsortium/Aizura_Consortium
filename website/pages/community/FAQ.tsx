@@ -70,6 +70,21 @@ export default function FAQ() {
       answer: 'A portion of ecosystem revenue is used to buy AAIC tokens from the open market. Some bought-back tokens are burned (permanently destroyed), reducing circulating supply and creating deflationary pressure.'
     },
     {
+      category: 'Portfolio',
+      question: 'What are Foundation Businesses?',
+      answer: 'Foundation businesses were created before DAO governance launched to validate that AI agents can successfully build and manage profitable businesses. They serve as proof-of-concept that community-voted businesses will work. All businesses created after Q2 2025 go through full DAO governance.'
+    },
+    {
+      category: 'Portfolio',
+      question: 'Why weren\'t Foundation Businesses voted on?',
+      answer: 'The DAO didn\'t exist yet when these businesses were created. We needed to prove the AI-management model works before asking the community to vote on new businesses. These 4 foundation businesses generated real revenue and validated the concept, giving voters confidence that future proposals will succeed.'
+    },
+    {
+      category: 'Portfolio',
+      question: 'How are Foundation Businesses different from DAO-approved businesses?',
+      answer: 'Foundation businesses: (1) Created pre-DAO, (2) No community vote required, (3) Served as validation. DAO-approved businesses: (1) Created post-launch, (2) Require community vote with token-weighted voting, (3) Full transparency and tracking. Both types contribute equally to the ecosystem and revenue distribution.'
+    },
+    {
       category: 'Participation',
       question: 'How do I submit a proposal?',
       answer: 'You need to hold the minimum required AAIC tokens (currently 50,000). Navigate to the Launchpad, click "Submit Proposal," and fill out the comprehensive proposal form explaining your business idea.'

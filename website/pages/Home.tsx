@@ -1,10 +1,10 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Navigation } from '../components/layout/Navigation';
 import { Footer } from '../components/layout/Footer';
 import {
   Sparkles, TrendingUp, Zap, Users, Clock, Rocket, FileText, Vote, Cpu, DollarSign,
-  MessageSquare, BarChart3
+  MessageSquare, BarChart3, Shield, ArrowRight, CheckCircle2
 } from 'lucide-react';
 
 export default function NewHome() {
@@ -23,6 +23,7 @@ export default function NewHome() {
           <WhyAIWinsSection />
           <UseToEarnSection />
           <PortfolioPreviewSection />
+          <FoundationProofSection />
           <LaunchpadTeaserSection />
           <TokenAirdropSection />
           <LiveGovernanceSection />
@@ -415,6 +416,57 @@ function PortfolioPreviewSection() {
         </div>
       </div>
     </section>
+  );
+}
+
+function FoundationProofSection() {
+  return (
+    <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+      <div className="bg-gradient-to-br from-blue-900/30 to-cyan-900/30 border border-cyan-500/30 rounded-2xl p-8 lg:p-12">
+        <div className="grid lg:grid-cols-2 gap-8 items-center">
+          <div>
+            <div className="inline-flex items-center gap-2 px-4 py-2 bg-cyan-500/20 text-cyan-400 rounded-full text-sm font-medium mb-4">
+              <Shield className="w-4 h-4" />
+              Validation Complete
+            </div>
+            <h2 className="text-3xl font-bold text-white mb-4">
+              4 Foundation Businesses Proved the Model Works
+            </h2>
+            <p className="text-slate-300 mb-6">
+              Before opening governance to the community, we validated that AI agents
+              can build and manage profitable businesses. These foundation businesses
+              generated <strong className="text-cyan-400">$15K+/month</strong> and
+              served 2,400+ users.
+            </p>
+            <Link
+              to="/portfolio/foundation"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-cyan-600 hover:bg-cyan-700 text-white font-medium rounded-lg transition-colors"
+            >
+              See Foundation Businesses
+              <ArrowRight className="w-5 h-5" />
+            </Link>
+          </div>
+          <div className="grid grid-cols-2 gap-4">
+            <MetricCard icon={<CheckCircle2 />} value="4" label="Businesses Live" />
+            <MetricCard icon={<DollarSign />} value="$15K" label="Monthly Revenue" />
+            <MetricCard icon={<Users />} value="2.4K" label="Active Users" />
+            <MetricCard icon={<TrendingUp />} value="45%" label="Profit Margin" />
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function MetricCard({ icon, value, label }: { icon: React.ReactElement; value: string; label: string }) {
+  return (
+    <div className="bg-slate-800/50 border border-slate-700 rounded-lg p-4 text-center">
+      <div className="flex justify-center text-cyan-400 mb-2">
+        {React.cloneElement(icon, { className: 'w-6 h-6' })}
+      </div>
+      <div className="text-2xl font-bold text-white mb-1">{value}</div>
+      <div className="text-xs text-slate-400">{label}</div>
+    </div>
   );
 }
 

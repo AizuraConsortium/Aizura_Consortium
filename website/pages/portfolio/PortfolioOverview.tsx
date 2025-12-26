@@ -3,12 +3,14 @@ import { PageLayout } from '../../components/layout/PageLayout';
 import { Link } from 'react-router-dom';
 import {
   TrendingUp, Users, DollarSign, Zap, Building2, Rocket, Code,
-  Filter, ArrowRight, CircleDot, Sparkles, BarChart3, TrendingDown
+  Filter, ArrowRight, CircleDot, Sparkles, BarChart3, TrendingDown,
+  Shield, Info, ExternalLink, Vote
 } from 'lucide-react';
 
 type StatusFilter = 'all' | 'live' | 'development' | 'coming-soon';
 type CategoryFilter = 'all' | 'trading' | 'saas' | 'infrastructure' | 'data';
 type TimelineFilter = 'all' | 'live' | '2026' | '2027+';
+type GovernanceFilter = 'all' | 'foundation' | 'dao';
 
 interface Project {
   name: string;
@@ -22,12 +24,15 @@ interface Project {
   timeline: string;
   icon: React.ReactNode;
   revenueContributing: boolean;
+  is_foundation: boolean;
+  proposal_id?: string;
 }
 
 export default function PortfolioOverview() {
   const [statusFilter, setStatusFilter] = useState<StatusFilter>('all');
   const [categoryFilter, setCategoryFilter] = useState<CategoryFilter>('all');
   const [timelineFilter, setTimelineFilter] = useState<TimelineFilter>('all');
+  const [governanceFilter, setGovernanceFilter] = useState<GovernanceFilter>('all');
 
   const projects: Project[] = [
     {
@@ -42,6 +47,7 @@ export default function PortfolioOverview() {
       timeline: 'live',
       icon: <TrendingUp className="w-6 h-6" />,
       revenueContributing: true,
+      is_foundation: true,
     },
     {
       name: 'AI Web Development',
@@ -55,6 +61,7 @@ export default function PortfolioOverview() {
       timeline: 'live',
       icon: <Code className="w-6 h-6" />,
       revenueContributing: true,
+      is_foundation: true,
     },
     {
       name: 'AI Business Factory',
@@ -68,6 +75,7 @@ export default function PortfolioOverview() {
       timeline: '2026',
       icon: <Building2 className="w-6 h-6" />,
       revenueContributing: false,
+      is_foundation: true,
     },
     {
       name: 'Coinfusion',
@@ -81,6 +89,7 @@ export default function PortfolioOverview() {
       timeline: '2026',
       icon: <BarChart3 className="w-6 h-6" />,
       revenueContributing: false,
+      is_foundation: true,
     },
     {
       name: 'Q4 2026 Flagship',
@@ -94,6 +103,8 @@ export default function PortfolioOverview() {
       timeline: '2026',
       icon: <Rocket className="w-6 h-6" />,
       revenueContributing: false,
+      is_foundation: false,
+      proposal_id: 'future-proposal-1',
     },
   ];
 
@@ -101,6 +112,8 @@ export default function PortfolioOverview() {
     if (statusFilter !== 'all' && project.status !== statusFilter) return false;
     if (categoryFilter !== 'all' && project.category !== categoryFilter) return false;
     if (timelineFilter !== 'all' && project.timeline !== timelineFilter) return false;
+    if (governanceFilter === 'foundation' && !project.is_foundation) return false;
+    if (governanceFilter === 'dao' && project.is_foundation) return false;
     return true;
   });
 
@@ -216,8 +229,35 @@ export default function PortfolioOverview() {
                 <FilterButton active={timelineFilter === '2026'} onClick={() => setTimelineFilter('2026')}>2026</FilterButton>
                 <FilterButton active={timelineFilter === '2027+'} onClick={() => setTimelineFilter('2027+')}>2027+</FilterButton>
               </FilterGroup>
+
+              <FilterGroup label="Governance">
+                <FilterButton active={governanceFilter === 'all'} onClick={() => setGovernanceFilter('all')}>All</FilterButton>
+                <FilterButton active={governanceFilter === 'foundation'} onClick={() => setGovernanceFilter('foundation')}>Foundation</FilterButton>
+                <FilterButton active={governanceFilter === 'dao'} onClick={() => setGovernanceFilter('dao')}>DAO</FilterButton>
+              </FilterGroup>
             </div>
           </div>
+
+          {governanceFilter === 'foundation' && (
+            <div className="bg-blue-500/10 border border-blue-500/30 rounded-xl p-6 mb-8">
+              <div className="flex items-start gap-3">
+                <Shield className="w-5 h-5 text-blue-400 flex-shrink-0 mt-0.5" />
+                <div>
+                  <h3 className="font-bold text-white mb-2">About Foundation Businesses</h3>
+                  <p className="text-slate-300 text-sm mb-3">
+                    These businesses were built before DAO governance launched to validate
+                    the AI-management model. All future businesses go through community voting.
+                  </p>
+                  <Link
+                    to="/portfolio/foundation"
+                    className="text-cyan-400 text-sm hover:text-cyan-300 inline-flex items-center gap-1"
+                  >
+                    Learn More <ExternalLink className="w-3 h-3" />
+                  </Link>
+                </div>
+              </div>
+            </div>
+          )}
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {filteredProjects.map((project) => (
@@ -391,9 +431,23 @@ function ProjectCard({ project }: { project: Project }) {
         <div className="p-3 bg-slate-700/50 rounded-lg text-cyan-400">
           {project.icon}
         </div>
-        <span className={`px-2 py-1 text-xs font-medium rounded-full ${status.bg}`}>
-          {status.label}
-        </span>
+        <div className="flex flex-col items-end gap-2">
+          <span className={`px-2 py-1 text-xs font-medium rounded-full ${status.bg}`}>
+            {status.label}
+          </span>
+          {project.is_foundation && (
+            <span className="inline-flex items-center gap-1 px-2 py-1 bg-blue-500/20 text-blue-400 border border-blue-500/40 rounded-full text-xs font-medium">
+              <Shield className="w-3 h-3" />
+              Foundation
+            </span>
+          )}
+          {!project.is_foundation && project.proposal_id && (
+            <span className="inline-flex items-center gap-1 px-2 py-1 bg-green-500/20 text-green-400 border border-green-500/40 rounded-full text-xs font-medium">
+              <Vote className="w-3 h-3" />
+              DAO
+            </span>
+          )}
+        </div>
       </div>
 
       <h3 className="text-xl font-bold text-white mb-2 group-hover:text-cyan-400 transition-colors">

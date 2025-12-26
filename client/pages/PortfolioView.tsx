@@ -9,16 +9,25 @@ import { ExposureBreakdown } from '../components/portfolio/ExposureBreakdown';
 import { ErrorAlert } from '@shared/components/ErrorAlert';
 import type { BusinessFilters } from '@shared/types/portfolio';
 
+type GovernanceFilter = 'all' | 'foundation' | 'dao';
+
 export default function PortfolioView() {
   const [filters, setFilters] = useState<BusinessFilters>({
     sort: 'created_at',
     order: 'desc',
   });
+  const [governanceFilter, setGovernanceFilter] = useState<GovernanceFilter>('all');
 
   const { portfolio, loading, error, refetch } = usePortfolio(api, {
     userId: 'current-user',
     cache: { enabled: true, ttl: 300000 },
   });
+
+  const filteredBusinesses = portfolio?.businesses.filter(b => {
+    if (governanceFilter === 'foundation') return b.is_foundation;
+    if (governanceFilter === 'dao') return !b.is_foundation;
+    return true;
+  }) || [];
 
   return (
     <DashboardLayout>
@@ -53,11 +62,42 @@ export default function PortfolioView() {
 
         <div className="grid lg:grid-cols-3 gap-6">
           <div className="lg:col-span-2">
-            <h2 className="text-xl font-bold text-white mb-4">Your Businesses</h2>
+            <div className="flex items-center justify-between mb-6">
+              <h2 className="text-xl font-bold text-white">Your Businesses</h2>
+              <div className="flex gap-2">
+                <FilterButton
+                  active={governanceFilter === 'all'}
+                  onClick={() => setGovernanceFilter('all')}
+                  count={portfolio?.businesses.length || 0}
+                >
+                  All
+                </FilterButton>
+                <FilterButton
+                  active={governanceFilter === 'foundation'}
+                  onClick={() => setGovernanceFilter('foundation')}
+                  count={portfolio?.businesses.filter(b => b.is_foundation).length || 0}
+                >
+                  Foundation
+                </FilterButton>
+                <FilterButton
+                  active={governanceFilter === 'dao'}
+                  onClick={() => setGovernanceFilter('dao')}
+                  count={portfolio?.businesses.filter(b => !b.is_foundation).length || 0}
+                >
+                  DAO Approved
+                </FilterButton>
+              </div>
+            </div>
             <BusinessCardList
-              businesses={portfolio?.businesses || []}
+              businesses={filteredBusinesses}
               showExposure
-              emptyMessage={loading ? 'Loading businesses...' : 'No businesses found'}
+              emptyMessage={
+                governanceFilter === 'foundation'
+                  ? 'No foundation businesses found'
+                  : governanceFilter === 'dao'
+                  ? 'No DAO-approved businesses yet'
+                  : loading ? 'Loading businesses...' : 'No businesses found'
+              }
             />
           </div>
 
@@ -67,5 +107,30 @@ export default function PortfolioView() {
         </div>
       </div>
     </DashboardLayout>
+  );
+}
+
+function FilterButton({
+  active,
+  onClick,
+  count,
+  children
+}: {
+  active: boolean;
+  onClick: () => void;
+  count: number;
+  children: React.ReactNode;
+}) {
+  return (
+    <button
+      onClick={onClick}
+      className={`px-4 py-2 text-sm font-medium rounded-lg transition-colors ${
+        active
+          ? 'bg-cyan-600 text-white'
+          : 'bg-slate-800 text-slate-400 hover:text-white hover:bg-slate-700 border border-slate-700'
+      }`}
+    >
+      {children} ({count})
+    </button>
   );
 }
