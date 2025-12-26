@@ -21,6 +21,7 @@ export default function NewHome() {
           <HeroSection />
           <FivePhaseSection />
           <WhyAIWinsSection />
+          <PayToUseSection />
           <PortfolioPreviewSection />
           <LaunchpadTeaserSection />
           <TokenAirdropSection />
@@ -82,7 +83,7 @@ function HeroSection() {
             </Link>
           </div>
           <p className="text-sm text-slate-400">
-            No token sale. No VC gatekeeping. The ecosystem rewards usage + governance.
+            The first Pay-to-Use ecosystem: Use services, earn tokens. No speculation required.
           </p>
         </div>
 
@@ -233,6 +234,110 @@ function WhyAIWinsSection() {
         <p className="text-lg text-cyan-400 font-medium">
           As AI gets smarter, so does the entire ecosystem.
         </p>
+      </div>
+    </section>
+  );
+}
+
+function PayToUseSection() {
+  const [stats, setStats] = useState<any>(null);
+
+  useEffect(() => {
+    async function fetchStats() {
+      try {
+        const response = await fetch('/api/website/p2u/stats');
+        if (response.ok) {
+          const data = await response.json();
+          setStats(data);
+        }
+      } catch (error) {
+        console.error('Failed to fetch P2U stats:', error);
+      }
+    }
+    fetchStats();
+  }, []);
+
+  return (
+    <section className="bg-gradient-to-br from-green-900/20 to-emerald-900/20 py-20">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center mb-12">
+          <div className="inline-flex items-center gap-2 px-4 py-2 bg-green-500/20 text-green-400 rounded-full text-sm font-medium mb-6">
+            <Sparkles className="w-4 h-4" />
+            First-Ever Sustainable Model
+          </div>
+
+          <h2 className="text-4xl sm:text-5xl font-bold text-white mb-4">
+            The First-Ever Pay-to-Use Ecosystem
+          </h2>
+          <p className="text-xl text-slate-300 max-w-3xl mx-auto">
+            Use our services, earn AAIC tokens. No gimmicks, just sustainable rewards backed by real AI-driven profits.
+          </p>
+        </div>
+
+        <div className="grid md:grid-cols-3 gap-8 mb-12">
+          <div className="bg-slate-800/50 backdrop-blur border border-slate-700 rounded-xl p-8 text-center hover:border-green-500/50 transition-colors">
+            <DollarSign className="w-12 h-12 text-green-400 mx-auto mb-4" />
+            <h3 className="text-xl font-bold text-white mb-3">Real Usage = Real Rewards</h3>
+            <p className="text-slate-300">
+              Earn tokens for actual platform usage, not speculation. Every action you take generates rewards.
+            </p>
+          </div>
+
+          <div className="bg-slate-800/50 backdrop-blur border border-slate-700 rounded-xl p-8 text-center hover:border-green-500/50 transition-colors">
+            <Cpu className="w-12 h-12 text-cyan-400 mx-auto mb-4" />
+            <h3 className="text-xl font-bold text-white mb-3">AI-Powered Sustainability</h3>
+            <p className="text-slate-300">
+              90% cost reduction through AI automation enables genuine reward sharing from business profits.
+            </p>
+          </div>
+
+          <div className="bg-slate-800/50 backdrop-blur border border-slate-700 rounded-xl p-8 text-center hover:border-green-500/50 transition-colors">
+            <TrendingUp className="w-12 h-12 text-emerald-400 mx-auto mb-4" />
+            <h3 className="text-xl font-bold text-white mb-3">Transparent Rates</h3>
+            <p className="text-slate-300">
+              Live reward rates adjusted dynamically based on business performance. Full transparency, always.
+            </p>
+          </div>
+        </div>
+
+        {stats && (
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
+            <div className="bg-slate-900/50 backdrop-blur border border-slate-700 rounded-xl p-4 text-center">
+              <div className="text-3xl font-bold text-green-400 mb-1">
+                {Math.round(stats.total_rewards_distributed).toLocaleString()}
+              </div>
+              <div className="text-sm text-slate-400">Total Rewards Distributed</div>
+            </div>
+            <div className="bg-slate-900/50 backdrop-blur border border-slate-700 rounded-xl p-4 text-center">
+              <div className="text-3xl font-bold text-cyan-400 mb-1">
+                {stats.active_businesses}
+              </div>
+              <div className="text-sm text-slate-400">Active Businesses</div>
+            </div>
+            <div className="bg-slate-900/50 backdrop-blur border border-slate-700 rounded-xl p-4 text-center">
+              <div className="text-3xl font-bold text-blue-400 mb-1">
+                {Math.round(stats.avg_monthly_earnings)}
+              </div>
+              <div className="text-sm text-slate-400">Avg Monthly Earnings</div>
+            </div>
+            <div className="bg-slate-900/50 backdrop-blur border border-slate-700 rounded-xl p-4 text-center">
+              <div className="text-3xl font-bold text-purple-400 mb-1">
+                {stats.total_usage_events.toLocaleString()}
+              </div>
+              <div className="text-sm text-slate-400">Usage Events Tracked</div>
+            </div>
+          </div>
+        )}
+
+        <div className="text-center">
+          <Link
+            to="/token/pay-to-use"
+            className="inline-flex items-center gap-2 px-8 py-4 bg-green-600 hover:bg-green-700 text-white font-bold rounded-lg text-lg transition-colors"
+          >
+            See How Much You Can Earn
+            <TrendingUp className="w-5 h-5" />
+          </Link>
+        </div>
       </div>
     </section>
   );

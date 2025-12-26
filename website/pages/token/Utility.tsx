@@ -135,6 +135,20 @@ export default function Utility() {
       link: '/launchpad/submit',
     },
     {
+      icon: <Zap className="w-8 h-8 text-green-400" />,
+      title: 'Pay-to-Use Rewards',
+      description: 'Earn AAIC tokens automatically by using ecosystem services. The more you use, the more you earn.',
+      details: [
+        'Automatic rewards for platform usage',
+        'No manual claims - accrues in real-time',
+        'Rates adjust based on business profitability',
+        'Sustainable model backed by real revenue',
+        'Track usage and earnings in dashboard',
+      ],
+      example: 'Use AI Traders for 50 trades/month = ~250 AAIC earned ($25 at $0.10/token)',
+      link: '/token/pay-to-use',
+    },
+    {
       icon: <Target className="w-8 h-8 text-emerald-400" />,
       title: 'Future Utilities',
       description: 'Upcoming features that will expand token utility.',
