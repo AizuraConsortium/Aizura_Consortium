@@ -42,6 +42,7 @@ import { DAORepository } from './website/dao/repositories/daoRepository.js';
 import { getGovernanceMetricsCaptureJob } from './shared/jobs/captureGovernanceMetrics.js';
 import publicDaoRoutes from './dao/routes/daoRoutes.js';
 import websiteU2ERoutes from './website/routes/u2eRoutes.js';
+import tokenomicsRoutes from './shared/routes/tokenomicsRoutes.js';
 
 dotenv.config();
 
@@ -214,6 +215,11 @@ app.use('/api/client/portfolio', clientPortfolioRoutes);
 app.use('/api/client/airdrop', clientAirdropRoutes);
 app.use('/api/client/profile', clientProfileRoutes);
 app.use('/api/client/news', clientNewsRoutes);
+
+/**
+ * Tokenomics routes (public)
+ */
+app.use('/api/tokenomics', tokenomicsRoutes);
 
 /**
  * Global error handling middleware
