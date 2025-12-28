@@ -37,7 +37,7 @@ export default function FAQ() {
     {
       category: 'Token',
       question: 'What is the token supply and distribution?',
-      answer: 'AAIC has a fixed maximum supply of 1,000,000,000 tokens. Distribution includes community airdrop (30%), ecosystem treasury (20%), staking rewards (20%), team (10%), and other allocations with vesting schedules.'
+      answer: 'AAIC has a fixed maximum supply of 100,000,000 tokens. Distribution includes Use-to-Earn pool (22%), Team (16%), Staking rewards (15%), Treasury (15%), Airdrop (8%), Early investors (8%), Market Ops (7%), Liquidity (6%), and Advisors (3%).'
     },
     {
       category: 'Governance',

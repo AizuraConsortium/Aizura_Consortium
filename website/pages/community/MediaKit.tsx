@@ -78,7 +78,7 @@ export default function MediaKit() {
             <div className="space-y-3 text-sm">
               <FactItem label="Founded" value="2025" />
               <FactItem label="Token" value="AAIC" />
-              <FactItem label="Max Supply" value="1,000,000,000 AAIC" />
+              <FactItem label="Max Supply" value="100,000,000 AAIC" />
               <FactItem label="Blockchain" value="Ethereum (EVM Compatible)" />
               <FactItem label="Governance" value="Token-holder DAO" />
               <FactItem label="AI Agents" value="6 Specialized Roles" />

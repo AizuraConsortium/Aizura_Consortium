@@ -70,8 +70,8 @@ export default function LiveMetrics() {
   const priceChange24h = 8.43;
   const marketCap = 375000000;
   const volume24h = 12500000;
-  const circulatingSupply = 300000000;
-  const totalSupply = 1000000000;
+  const circulatingSupply = 30000000;
+  const totalSupply = 100000000;
   const holders = 8547;
   const totalBurned = 5000000;
   const treasuryBalance = 5000000;

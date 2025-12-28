@@ -604,9 +604,9 @@ await stakingContract.emergencyUnstake();`}
 {`{
   "tokenPrice": "1.25",
   "marketCap": "125000000",
-  "totalSupply": "1000000000",
-  "circulatingSupply": "300000000",
-  "totalStaked": "150000000",
+  "totalSupply": "100000000",
+  "circulatingSupply": "30000000",
+  "totalStaked": "15000000",
   "totalProposals": 150,
   "activeProposals": 8,
   "totalVoters": 4521,

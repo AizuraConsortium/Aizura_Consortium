@@ -16,8 +16,8 @@ export default function LiveGovernance() {
     totalPassed: 24,
     totalRejected: 8,
     currentQuorum: 23.4,
-    circulatingSupply: 1000000000,
-    tokensParticipating: 234000000,
+    circulatingSupply: 100000000,
+    tokensParticipating: 23400000,
   };
 
   return (

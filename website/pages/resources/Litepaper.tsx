@@ -250,7 +250,7 @@ export default function Litepaper() {
             <div className="grid md:grid-cols-2 gap-6 mb-8">
               <div className="bg-slate-900/50 rounded-xl p-6">
                 <div className="text-sm text-slate-400 mb-1">Total Supply</div>
-                <div className="text-3xl font-bold text-white">1,000,000,000 AAIC</div>
+                <div className="text-3xl font-bold text-white">100,000,000 AAIC</div>
                 <div className="text-sm text-slate-400 mt-2">Fixed maximum supply, no inflation</div>
               </div>
               <div className="bg-slate-900/50 rounded-xl p-6">
