@@ -366,15 +366,19 @@ Get overall treasury health status.
 
 Get weekly spend cap status.
 
+**Note:** Weekly caps are defined separately for stablecoins and AAIC:
+- Stablecoins: max($50k, 3% of balance)
+- AAIC: max(250k AAIC, 2% of balance)
+
 **Response:**
 ```json
 {
-  "name": "Weekly Spend Cap",
-  "limit": 100000,
+  "name": "Weekly Spend Cap (Stablecoins)",
+  "limit": 50000,
   "current": 45000,
   "used": 45000,
-  "remaining": 55000,
-  "percentage": 45.0,
+  "remaining": 5000,
+  "percentage": 90.0,
   "breached": false
 }
 ```
@@ -387,11 +391,11 @@ Get buyback frequency status.
 ```json
 {
   "name": "Buyback Frequency",
-  "limit": 24,
-  "current": 30,
-  "used": 30,
+  "limit": 168,
+  "current": 170,
+  "used": 170,
   "remaining": 0,
-  "percentage": 125.0,
+  "percentage": 101.2,
   "breached": false
 }
 ```
@@ -412,6 +416,30 @@ Get LP withdrawal limit status.
   "breached": false
 }
 ```
+
+### Treasury Guardrails Parameters
+
+The following guardrails are enforced:
+
+#### Weekly Caps
+- **Stablecoins**: max($50k, 3% of balance)
+- **AAIC**: max(250k AAIC, 2% of balance)
+
+#### Buyback Rules
+- **Max frequency**: 1 per week (168 hours minimum between buybacks)
+- **Slippage cap**: ≤ 2.5% (governance can adjust up to max 5%)
+- **Daily spend cap**: ≤ 0.5% of treasury balance
+
+#### LP Protections
+- **Max LP withdrawal**: 25% per month
+- Prevents liquidity shock and rug pull optics
+
+#### Allowlist
+- Treasury can ONLY interact with approved addresses:
+  - Approved DEX routers
+  - Buyback executor contract
+  - Staking/U2E vault contracts
+  - Liquidity manager contract
 
 ### Cross-Chain Tracking
 

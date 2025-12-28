@@ -26,7 +26,7 @@ export class TreasuryGuardrailService {
 
     const spent = await this.mockGetWeeklySpend(weekAgo);
 
-    const limit = this.GUARDRAILS.WEEKLY_SPEND_CAP;
+    const limit = this.GUARDRAILS.WEEKLY_CAPS.STABLECOIN_AMOUNT_USD;
     const remaining = Math.max(0, limit - spent);
     const percentage = (spent / limit) * 100;
 
@@ -43,7 +43,7 @@ export class TreasuryGuardrailService {
 
   async checkBuybackFrequency(): Promise<GuardrailStatus> {
     const lastBuyback = await this.mockGetLastBuybackTime();
-    const minHours = this.GUARDRAILS.BUYBACK_MIN_FREQUENCY_HOURS;
+    const minHours = this.GUARDRAILS.BUYBACK.MIN_FREQUENCY_HOURS;
 
     const hoursSinceLastBuyback = lastBuyback
       ? (Date.now() - lastBuyback.getTime()) / (1000 * 60 * 60)
@@ -66,7 +66,7 @@ export class TreasuryGuardrailService {
     const totalLP = await this.mockGetTotalLP();
     const withdrawnThisMonth = await this.mockGetLPWithdrawn(monthAgo);
 
-    const maxWithdrawal = totalLP * (this.GUARDRAILS.LP_WITHDRAWAL_MAX_PERCENTAGE / 100);
+    const maxWithdrawal = totalLP * (this.GUARDRAILS.LP_WITHDRAWAL.MAX_PERCENTAGE_PER_MONTH / 100);
     const remaining = Math.max(0, maxWithdrawal - withdrawnThisMonth);
     const percentage = (withdrawnThisMonth / maxWithdrawal) * 100;
 

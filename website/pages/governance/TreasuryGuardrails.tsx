@@ -56,13 +56,13 @@ export default function TreasuryGuardrails() {
               icon={<TrendingUp className="w-8 h-8 text-green-400" />}
               title="Buyback Frequency Limit"
               immutable
-              description="Minimum 24-hour cooldown between buyback operations prevents market manipulation."
+              description="Minimum 1-week cooldown between buyback operations prevents market manipulation."
             />
             <GuardrailCard
               icon={<Target className="w-8 h-8 text-purple-400" />}
               title="LP Withdrawal Caps"
               governanceAdjustable
-              description="Maximum 20% of liquidity pool can be withdrawn per proposal to protect market depth."
+              description="Maximum 25% of liquidity pool can be withdrawn per month to protect market depth."
             />
             <GuardrailCard
               icon={<Shield className="w-8 h-8 text-red-400" />}
@@ -290,17 +290,17 @@ export default function TreasuryGuardrails() {
               <div className="grid md:grid-cols-2 gap-6">
                 <GuardrailDetail
                   label="Frequency Limit"
-                  value="Minimum 24 hours between buybacks"
+                  value="Minimum 1 week between buybacks"
                   immutable
                 />
                 <GuardrailDetail
                   label="Max Slippage"
-                  value="5% (governance-adjustable 3-10%)"
+                  value="≤ 2.5% (max 5%)"
                   governanceAdjustable
                 />
                 <GuardrailDetail
                   label="Daily Cap"
-                  value="2% of treasury balance per day"
+                  value="≤ 0.5% of treasury balance per day"
                   governanceAdjustable
                 />
                 <GuardrailDetail
@@ -316,7 +316,7 @@ export default function TreasuryGuardrails() {
               <div className="grid md:grid-cols-2 gap-6">
                 <GuardrailDetail
                   label="Maximum Withdrawal"
-                  value="20% of LP per proposal"
+                  value="25% of LP per month"
                   governanceAdjustable
                 />
                 <GuardrailDetail
@@ -399,7 +399,7 @@ export default function TreasuryGuardrails() {
                 </li>
                 <li className="flex items-start gap-2">
                   <Shield className="w-4 h-4 text-blue-400 flex-shrink-0 mt-0.5" />
-                  <span>24-hour minimum buyback frequency</span>
+                  <span>1-week minimum buyback frequency</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <Shield className="w-4 h-4 text-blue-400 flex-shrink-0 mt-0.5" />
@@ -427,15 +427,15 @@ export default function TreasuryGuardrails() {
                 </li>
                 <li className="flex items-start gap-2">
                   <Zap className="w-4 h-4 text-purple-400 flex-shrink-0 mt-0.5" />
-                  <span>Buyback slippage tolerance (3-10% range)</span>
+                  <span>Buyback slippage tolerance (≤ 2.5%, max 5%)</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <Zap className="w-4 h-4 text-purple-400 flex-shrink-0 mt-0.5" />
-                  <span>Daily buyback cap (1-5% range)</span>
+                  <span>Daily buyback cap (≤ 0.5% of treasury)</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <Zap className="w-4 h-4 text-purple-400 flex-shrink-0 mt-0.5" />
-                  <span>LP withdrawal percentage (10-25% range)</span>
+                  <span>LP withdrawal (max 25% per month)</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <Zap className="w-4 h-4 text-purple-400 flex-shrink-0 mt-0.5" />
