@@ -3,8 +3,8 @@ export const TOKENOMICS = {
 
   ALLOCATION: {
     AIRDROP: {
-      amount: 33_000_000,
-      percentage: 33,
+      amount: 8_000_000,
+      percentage: 8,
       description: 'Community airdrop for early supporters',
     },
     USE_TO_EARN: {
@@ -25,31 +25,36 @@ export const TOKENOMICS = {
       },
     },
     TREASURY: {
-      amount: 12_000_000,
-      percentage: 12,
+      amount: 15_000_000,
+      percentage: 15,
       description: 'DAO-controlled treasury',
     },
-    TEAM: {
+    LIQUIDITY: {
+      amount: 6_000_000,
+      percentage: 6,
+      description: 'Multi-chain DEX liquidity',
+    },
+    MARKET_OPS: {
       amount: 7_000_000,
       percentage: 7,
+      description: 'Market operations and business development',
+    },
+    TEAM: {
+      amount: 16_000_000,
+      percentage: 16,
       description: '36-month linear vesting, NO CLIFF',
       vestingMonths: 36,
     },
-    ADVISORS: {
-      amount: 4_000_000,
-      percentage: 4,
-      description: '12-month linear vesting, NO CLIFF',
-      vestingMonths: 12,
-    },
-    LIQUIDITY: {
-      amount: 4_000_000,
-      percentage: 4,
-      description: 'Multi-chain DEX liquidity',
-    },
     INVESTORS: {
+      amount: 8_000_000,
+      percentage: 8,
+      description: 'NO VESTING (immediate unlock, labeled wallets)',
+    },
+    ADVISORS: {
       amount: 3_000_000,
       percentage: 3,
-      description: 'NO VESTING (immediate unlock, labeled wallets)',
+      description: '12-month linear vesting, NO CLIFF',
+      vestingMonths: 12,
     },
   },
 
