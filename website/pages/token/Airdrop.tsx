@@ -95,9 +95,9 @@ const AIRDROP_PHASES: AirdropPhase[] = [
 ];
 
 const MOCK_TRANSPARENCY_DATA = {
-  totalAirdropAllocation: 3000000000,
-  distributedSoFar: 450000000,
-  remainingTokens: 2550000000,
+  totalAirdropAllocation: 8000000,
+  distributedSoFar: 1200000,
+  remainingTokens: 6800000,
   eligibleWallets: 12847,
   nextSnapshotDate: 'Jan 15, 2026',
   totalParticipants: 5284,
@@ -769,7 +769,7 @@ export default function Airdrop() {
             <TransparencyMetric
               label="Total Airdrop Allocation"
               value={formatNumber(MOCK_TRANSPARENCY_DATA.totalAirdropAllocation)}
-              subtext="30% of total supply"
+              subtext="8% of total supply"
               icon={<Award className="w-6 h-6 text-cyan-400" />}
             />
             <TransparencyMetric

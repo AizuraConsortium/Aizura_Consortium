@@ -95,7 +95,7 @@ export default function Tokenomics() {
                 <ParameterRow label="Decimals" value="18" />
                 <ParameterRow label="Canonical Chain" value="BNB Chain" highlight />
                 <ParameterRow label="Max Supply" value="100,000,000 AAIC" highlight />
-                <ParameterRow label="Initial Circulation" value="~36M AAIC (36%)" sublabel="Airdrop 33M + Investors 3M" />
+                <ParameterRow label="Initial Circulation" value="~16M AAIC (16%)" sublabel="Airdrop 8M + Investors 8M" />
               </div>
             </div>
 
@@ -188,12 +188,12 @@ export default function Tokenomics() {
               <div className="space-y-4">
                 <ParameterRow label="Token Name" value="Autonomous AI Consortium" sublabel="Symbol: AAIC" />
                 <ParameterRow label="Max Supply" value="100,000,000" sublabel="Fixed Hard Cap" highlight />
-                <ParameterRow label="Initial Circulation" value="~36%" sublabel="~36,000,000 AAIC" />
+                <ParameterRow label="Initial Circulation" value="~16%" sublabel="~16,000,000 AAIC" />
               </div>
 
               <div className="mt-6 p-4 bg-cyan-500/10 border border-cyan-500/30 rounded-lg">
                 <p className="text-sm text-slate-300">
-                  <span className="font-bold text-cyan-400">Why 36% initial?</span> Airdrop (33M unlocked) + Early Investors (3M immediate) provides initial liquidity for governance while maintaining strong token value alignment.
+                  <span className="font-bold text-cyan-400">Why 16% initial?</span> Airdrop (8M unlocked) + Early Investors (8M immediate) provides initial liquidity for governance while maintaining strong token value alignment.
                 </p>
               </div>
             </div>
@@ -204,12 +204,12 @@ export default function Tokenomics() {
                 <AllocationBar label="Use-to-Earn Pool (4 years)" percent={22} tokens="22M" color="cyan" />
                 <AllocationBar label="Team" percent={16} tokens="16M" color="purple" />
                 <AllocationBar label="Staking Rewards Pool (4 years)" percent={15} tokens="15M" color="green" />
-                <AllocationBar label="Treasury Reserve" percent={12} tokens="12M" color="blue" />
-                <AllocationBar label="Airdrop" percent={33} tokens="33M" color="yellow" />
-                <AllocationBar label="Early / Private Investors" percent={3} tokens="3M" color="orange" />
+                <AllocationBar label="Treasury Reserve" percent={15} tokens="15M" color="blue" />
+                <AllocationBar label="Airdrop" percent={8} tokens="8M" color="yellow" />
+                <AllocationBar label="Early / Private Investors" percent={8} tokens="8M" color="orange" />
                 <AllocationBar label="Market Ops / CEX Readiness" percent={7} tokens="7M" color="pink" />
                 <AllocationBar label="Liquidity Provisioning" percent={6} tokens="6M" color="cyan" />
-                <AllocationBar label="Advisors / Strategic Contributors" percent={4} tokens="4M" color="yellow" />
+                <AllocationBar label="Advisors / Strategic Contributors" percent={3} tokens="3M" color="yellow" />
               </div>
 
               <div className="mt-6 p-4 bg-yellow-500/10 border border-yellow-500/30 rounded-lg">
@@ -242,9 +242,9 @@ export default function Tokenomics() {
                   <div>
                     <div className="flex justify-between items-start mb-2">
                       <span className="text-white font-semibold">TreasuryVault</span>
-                      <span className="text-cyan-400 font-bold">25,000,000</span>
+                      <span className="text-cyan-400 font-bold">28,000,000</span>
                     </div>
-                    <p className="text-xs text-slate-400">Treasury 12M + Liquidity 6M + MarketOps 7M</p>
+                    <p className="text-xs text-slate-400">Treasury 15M + Liquidity 6M + MarketOps 7M</p>
                   </div>
                   <div>
                     <div className="flex justify-between items-start mb-2">
@@ -280,7 +280,7 @@ export default function Tokenomics() {
                   <div>
                     <div className="flex justify-between items-start mb-2">
                       <span className="text-white font-semibold">MerkleAirdropDistributor</span>
-                      <span className="text-cyan-400 font-bold">33,000,000</span>
+                      <span className="text-cyan-400 font-bold">8,000,000</span>
                     </div>
                     <p className="text-xs text-slate-400">100% unlocked at claim</p>
                   </div>
@@ -300,16 +300,16 @@ export default function Tokenomics() {
                   <div>
                     <div className="flex justify-between items-start mb-2">
                       <span className="text-white font-semibold">AdvisorVestingVault</span>
-                      <span className="text-yellow-400 font-bold">4,000,000</span>
+                      <span className="text-yellow-400 font-bold">3,000,000</span>
                     </div>
                     <p className="text-xs text-slate-400">12 months linear vesting</p>
                   </div>
                   <div>
                     <div className="flex justify-between items-start mb-2">
                       <span className="text-white font-semibold">Investor Wallets</span>
-                      <span className="text-orange-400 font-bold">3,000,000</span>
+                      <span className="text-orange-400 font-bold">8,000,000</span>
                     </div>
-                    <p className="text-xs text-slate-400">3 wallets (1% each), no vesting - immediate</p>
+                    <p className="text-xs text-slate-400">No vesting - immediate</p>
                   </div>
                 </div>
 
@@ -458,20 +458,20 @@ export default function Tokenomics() {
                 items={['36 months linear vesting', 'No cliff', 'Total: 16,000,000 AAIC']}
               />
               <VestingCard
-                title="Advisors (4%)"
-                items={['12 months linear vesting', 'No cliff', 'Total: 4,000,000 AAIC']}
+                title="Advisors (3%)"
+                items={['12 months linear vesting', 'No cliff', 'Total: 3,000,000 AAIC']}
               />
               <VestingCard
-                title="Early / Private Investors (3%)"
-                items={['No vesting - Immediate unlocking', 'Public wallet labeling for transparency', 'Total: 3,000,000 AAIC']}
+                title="Early / Private Investors (8%)"
+                items={['No vesting - Immediate unlocking', 'Public wallet labeling for transparency', 'Total: 8,000,000 AAIC']}
               />
               <VestingCard
-                title="Treasury (12%)"
-                items={['Fully locked', 'Usage only via governance vote', 'Total: 12,000,000 AAIC']}
+                title="Treasury (15%)"
+                items={['Fully locked', 'Usage only via governance vote', 'Total: 15,000,000 AAIC']}
               />
               <VestingCard
-                title="Airdrop (33%)"
-                items={['No lockup', '100% unlocked at claim', 'Total: 33,000,000 AAIC']}
+                title="Airdrop (8%)"
+                items={['No lockup', '100% unlocked at claim', 'Total: 8,000,000 AAIC']}
               />
               <VestingCard
                 title="U2E + Staking Pools (37%)"
