@@ -12,6 +12,7 @@ import NotFound from './pages/NotFound';
 import EcosystemOverview from './pages/ecosystem/EcosystemOverview';
 import HowItWorks from './pages/ecosystem/HowItWorks';
 import AIConsortium from './pages/ecosystem/AIConsortium';
+import EconomicModel from './pages/ecosystem/EconomicModel';
 import Roadmap from './pages/ecosystem/Roadmap';
 import WhyAizura from './pages/ecosystem/WhyAizura';
 import UseCases from './pages/ecosystem/UseCases';
@@ -87,6 +88,7 @@ export default function App() {
 
             <Route path="/ecosystem" element={<EcosystemOverview />} />
             <Route path="/ecosystem/how-it-works" element={<HowItWorks />} />
+            <Route path="/ecosystem/economic-model" element={<EconomicModel />} />
             <Route path="/ecosystem/ai-consortium" element={<AIConsortium />} />
             <Route path="/ecosystem/roadmap" element={<Roadmap />} />
             <Route path="/ecosystem/why-aizura" element={<WhyAizura />} />

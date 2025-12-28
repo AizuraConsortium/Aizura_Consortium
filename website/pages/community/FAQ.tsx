@@ -62,7 +62,7 @@ export default function FAQ() {
     {
       category: 'Revenue',
       question: 'How is revenue distributed?',
-      answer: 'Ecosystem revenue is allocated according to governance-controlled parameters: stakers (35%), treasury (25%), token buybacks (20%), burns (10%), and governance participants (10%).'
+      answer: 'Ecosystem revenue is allocated: Buyback (15%), Burn (15%), Staking Support (15%), U2E Support (15%), Treasury (20%), and Variable allocation (15% governance-controlled). After burn target reached, burn allocation moves to variable bucket.'
     },
     {
       category: 'Revenue',

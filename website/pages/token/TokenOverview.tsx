@@ -364,7 +364,22 @@ export default function TokenOverview() {
           </div>
         </section>
 
-        <section className="grid md:grid-cols-2 gap-8">
+        <section className="grid md:grid-cols-3 gap-8">
+          <Link
+            to="/ecosystem/economic-model"
+            className="bg-gradient-to-br from-green-600/20 to-cyan-600/20 border border-green-500/30 rounded-2xl p-8 hover:border-green-500/50 transition-colors group"
+          >
+            <RefreshCw className="w-12 h-12 text-green-400 mb-4 group-hover:scale-110 transition-transform" />
+            <h3 className="text-2xl font-bold text-white mb-3">Economic Model</h3>
+            <p className="text-slate-300 mb-4">
+              How AI cost reduction creates sustainable, revenue-backed rewards
+            </p>
+            <div className="flex items-center gap-2 text-cyan-400 font-medium">
+              See Economic Model
+              <ArrowRight className="w-5 h-5" />
+            </div>
+          </Link>
+
           <Link
             to="/token/tokenomics"
             className="bg-gradient-to-br from-cyan-600/20 to-blue-600/20 border border-cyan-500/30 rounded-2xl p-8 hover:border-cyan-500/50 transition-colors group"
@@ -372,7 +387,7 @@ export default function TokenOverview() {
             <BarChart3 className="w-12 h-12 text-cyan-400 mb-4 group-hover:scale-110 transition-transform" />
             <h3 className="text-2xl font-bold text-white mb-3">View Full Tokenomics</h3>
             <p className="text-slate-300 mb-4">
-              Detailed breakdown of token distribution, emissions, and economic model
+              Detailed breakdown of token distribution, emissions, and allocations
             </p>
             <div className="flex items-center gap-2 text-cyan-400 font-medium">
               View Tokenomics
@@ -382,9 +397,9 @@ export default function TokenOverview() {
 
           <Link
             to="/token/transparency"
-            className="bg-gradient-to-br from-green-600/20 to-cyan-600/20 border border-green-500/30 rounded-2xl p-8 hover:border-green-500/50 transition-colors group"
+            className="bg-gradient-to-br from-purple-600/20 to-pink-600/20 border border-purple-500/30 rounded-2xl p-8 hover:border-purple-500/50 transition-colors group"
           >
-            <Eye className="w-12 h-12 text-green-400 mb-4 group-hover:scale-110 transition-transform" />
+            <Eye className="w-12 h-12 text-purple-400 mb-4 group-hover:scale-110 transition-transform" />
             <h3 className="text-2xl font-bold text-white mb-3">Token Transparency</h3>
             <p className="text-slate-300 mb-4">
               Real-time metrics, supply tracking, and complete transparency dashboard
