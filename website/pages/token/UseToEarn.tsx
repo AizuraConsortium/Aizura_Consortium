@@ -12,7 +12,6 @@ import {
   Users,
   Activity
 } from 'lucide-react';
-import { LiveRatesTable } from '../../components/u2e/LiveRatesTable';
 import { PhaseTimeline } from '../../components/u2e/PhaseTimeline';
 import { ComparisonTable } from '../../components/u2e/ComparisonTable';
 import { RealExamplesCarousel } from '../../components/u2e/RealExamplesCarousel';
@@ -51,31 +50,31 @@ export default function UseToEarn() {
   const faqs = [
     {
       question: 'What is Use-to-Earn (U2E)?',
-      answer: 'Use-to-Earn (U2E) is a revolutionary model where users earn AAIC tokens simply by using ecosystem services. Unlike failed "play-to-earn" schemes, U2E rewards are backed by real business revenue, making them sustainable indefinitely.'
+      answer: 'Use-to-Earn (U2E) is a revolutionary points-based reward model where users earn AAIC tokens by using ecosystem services. You earn points for actions, and monthly AAIC distribution is based on your share of total points. This scales infinitely and ensures fair rewards regardless of user base size.'
     },
     {
-      question: 'How is U2E different from Play-to-Earn?',
-      answer: 'Play-to-Earn models collapsed because rewards weren\'t backed by real value - they relied on new users buying tokens. U2E rewards come from actual business profits enabled by AI cost reduction. This creates a sustainable system that can operate as long as businesses remain profitable.'
+      question: 'How are rewards calculated with the points system?',
+      answer: 'Your monthly reward = (Your Points / Total Points Issued) × 458,333 AAIC monthly budget. For example, if you earn 1M points and total points are 1B, you get 0.1% of 458,333 AAIC = 458 AAIC. The more you contribute relative to others, the more you earn.'
     },
     {
-      question: 'When will I receive my U2E rewards?',
-      answer: 'Rewards accrue automatically in real-time as you use ecosystem services. You can view your accumulated rewards in your dashboard and claim them at any time. There are no manual claims required - the system tracks everything automatically.'
+      question: 'Can point values change?',
+      answer: 'Yes, point values for different actions are adjusted by governance to maintain ecosystem balance. If an action becomes too heavily farmed, governance can reduce its point value. This flexibility prevents gaming and ensures fair distribution.'
     },
     {
-      question: 'Can reward rates change?',
-      answer: 'Yes, reward rates adjust based on business profitability to ensure long-term sustainability. If a business becomes more profitable, rates may increase. If margins tighten, rates may decrease. This dynamic adjustment is key to maintaining an infinite reward system.'
+      question: 'Is there a limit to how many points I can earn?',
+      answer: 'Yes, there are anti-abuse protections: daily per-category caps, point decay on repetitive actions, and per-wallet monthly maximums. These prevent gaming while allowing genuine users to earn fairly.'
     },
     {
-      question: 'Is there a minimum usage requirement?',
-      answer: 'No, there\'s no minimum. You earn rewards for any usage, whether it\'s one transaction or thousands. However, consistent users who actively use multiple ecosystem services will naturally earn more over time.'
+      question: 'When do points reset?',
+      answer: 'Points reset to 0 at the start of each month. This creates fresh competition every cycle and prevents point hoarding. Your AAIC rewards from the previous month are distributed, and you start earning points anew.'
     },
     {
-      question: 'How are rewards calculated?',
-      answer: 'Each business has specific reward rates per action (e.g., 5 AAIC per trade, 10 AAIC per project). Rates are set based on the business\'s profit margins and the value you create through usage. All rates are publicly visible and transparent.'
+      question: 'Are there retroactive rewards for pre-launch usage?',
+      answer: 'No. Tracking begins after airdrop distribution, with first payments in Month 1 post-airdrop. This avoids double rewards, ensures fair competition, and prevents pre-launch gaming.'
     },
     {
-      question: 'What happens in Phase 3 (Year 4+)?',
-      answer: 'In Phase 3, rewards transition to being 100% backed by revenue buybacks instead of token supply. This creates true infinite sustainability - as long as businesses generate profits, rewards continue indefinitely. The token supply becomes deflationary as buybacks exceed emissions.'
+      question: 'What happens after Year 4 when emissions end?',
+      answer: 'Rewards transition to revenue-backed model. 15% of net profit goes to U2E support (buybacks for distribution). As long as businesses are profitable, rewards continue indefinitely with no new token minting required.'
     }
   ];
 
@@ -173,9 +172,9 @@ export default function UseToEarn() {
               <div className="w-12 h-12 bg-gradient-to-br from-cyan-500 to-green-500 rounded-full flex items-center justify-center mx-auto mb-4">
                 <Activity className="w-6 h-6 text-white" />
               </div>
-              <h3 className="font-bold text-white mb-2">2. AI Tracks Usage</h3>
+              <h3 className="font-bold text-white mb-2">2. Points System Tracks Activity</h3>
               <p className="text-sm text-slate-300">
-                System automatically tracks your usage events and calculates rewards in real-time
+                Earn POINTS for each action. Monthly rewards based on your share of total points issued.
               </p>
             </div>
 
@@ -197,6 +196,206 @@ export default function UseToEarn() {
               <p className="text-sm text-slate-300">
                 View your earnings in the dashboard and withdraw tokens whenever you want
               </p>
+            </div>
+          </div>
+
+          {/* Points System Details */}
+          <div className="mt-12 bg-gradient-to-r from-cyan-500/10 to-blue-500/10 border border-cyan-500/30 rounded-2xl p-8">
+            <h3 className="text-2xl font-bold text-white mb-6 text-center">Monthly Distribution Formula</h3>
+            <div className="bg-slate-900/50 rounded-lg p-6 mb-6">
+              <div className="text-center space-y-3">
+                <div className="text-2xl font-mono text-cyan-400">
+                  Your AAIC Reward = (Your Points / Total Points) × Monthly U2E Budget
+                </div>
+                <div className="text-lg text-slate-300">
+                  Monthly U2E Budget = <span className="font-bold text-white">458,333 AAIC</span> (22M over 48 months)
+                </div>
+              </div>
+            </div>
+
+            <div className="bg-slate-800/50 border border-slate-700 rounded-xl p-6">
+              <h4 className="font-bold text-white mb-4">Why Points?</h4>
+              <div className="grid md:grid-cols-2 gap-4">
+                <div className="flex items-start gap-2">
+                  <div className="w-2 h-2 bg-green-400 rounded-full mt-2 flex-shrink-0" />
+                  <div>
+                    <div className="font-semibold text-white text-sm">Scales Infinitely</div>
+                    <p className="text-xs text-slate-400">Works with 10 users or 10 million</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-2">
+                  <div className="w-2 h-2 bg-green-400 rounded-full mt-2 flex-shrink-0" />
+                  <div>
+                    <div className="font-semibold text-white text-sm">Fair Relative Rewards</div>
+                    <p className="text-xs text-slate-400">Regardless of participation</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-2">
+                  <div className="w-2 h-2 bg-green-400 rounded-full mt-2 flex-shrink-0" />
+                  <div>
+                    <div className="font-semibold text-white text-sm">Flexible Action Weighting</div>
+                    <p className="text-xs text-slate-400">Adjusted by governance</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-2">
+                  <div className="w-2 h-2 bg-green-400 rounded-full mt-2 flex-shrink-0" />
+                  <div>
+                    <div className="font-semibold text-white text-sm">Anti-Abuse Protections</div>
+                    <p className="text-xs text-slate-400">Built-in safeguards</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Points-Based Math Examples */}
+        <section className="bg-slate-800/30 backdrop-blur border border-slate-700 rounded-2xl p-8 lg:p-12">
+          <h2 className="text-3xl font-bold text-white mb-8 text-center">
+            Concrete Math: How Your Rewards Are Calculated
+          </h2>
+
+          <div className="space-y-8">
+            {/* Example 1 */}
+            <div className="bg-gradient-to-r from-blue-500/10 to-cyan-500/10 border border-blue-500/30 rounded-xl p-6">
+              <div className="flex items-center gap-2 mb-4">
+                <div className="px-3 py-1 bg-blue-500/20 text-blue-400 rounded-full text-sm font-bold">
+                  EXAMPLE 1
+                </div>
+                <span className="text-slate-400 text-sm">Small User Base</span>
+              </div>
+              <div className="grid md:grid-cols-2 gap-6">
+                <div className="space-y-2 text-sm">
+                  <div className="flex justify-between text-slate-300">
+                    <span>Monthly budget:</span>
+                    <span className="font-mono text-white">458,333 AAIC</span>
+                  </div>
+                  <div className="flex justify-between text-slate-300">
+                    <span>Total points issued:</span>
+                    <span className="font-mono text-white">100,000,000</span>
+                  </div>
+                  <div className="flex justify-between text-slate-300">
+                    <span>You earned:</span>
+                    <span className="font-mono text-cyan-400">1,000,000 points</span>
+                  </div>
+                </div>
+                <div className="space-y-2 text-sm">
+                  <div className="flex justify-between text-slate-300">
+                    <span>Your share:</span>
+                    <span className="font-mono text-cyan-400">1% of total</span>
+                  </div>
+                  <div className="flex justify-between items-center pt-2 border-t border-slate-700">
+                    <span className="font-bold text-white">Your reward:</span>
+                    <span className="font-mono text-2xl text-green-400">4,583 AAIC</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Example 2 */}
+            <div className="bg-gradient-to-r from-purple-500/10 to-blue-500/10 border border-purple-500/30 rounded-xl p-6">
+              <div className="flex items-center gap-2 mb-4">
+                <div className="px-3 py-1 bg-purple-500/20 text-purple-400 rounded-full text-sm font-bold">
+                  EXAMPLE 2
+                </div>
+                <span className="text-slate-400 text-sm">Large User Base (100x more users)</span>
+              </div>
+              <div className="grid md:grid-cols-2 gap-6">
+                <div className="space-y-2 text-sm">
+                  <div className="flex justify-between text-slate-300">
+                    <span>Monthly budget:</span>
+                    <span className="font-mono text-white">458,333 AAIC</span>
+                  </div>
+                  <div className="flex justify-between text-slate-300">
+                    <span>Total points issued:</span>
+                    <span className="font-mono text-white">10,000,000,000</span>
+                  </div>
+                  <div className="flex justify-between text-slate-300">
+                    <span>You earned:</span>
+                    <span className="font-mono text-cyan-400">1,000,000 points</span>
+                  </div>
+                </div>
+                <div className="space-y-2 text-sm">
+                  <div className="flex justify-between text-slate-300">
+                    <span>Your share:</span>
+                    <span className="font-mono text-cyan-400">0.01% of total</span>
+                  </div>
+                  <div className="flex justify-between items-center pt-2 border-t border-slate-700">
+                    <span className="font-bold text-white">Your reward:</span>
+                    <span className="font-mono text-2xl text-green-400">46 AAIC</span>
+                  </div>
+                </div>
+              </div>
+              <div className="mt-4 p-3 bg-yellow-500/10 border border-yellow-500/30 rounded text-sm text-slate-300">
+                <span className="font-bold text-yellow-400">Note:</span> As ecosystem grows, competition increases, but monthly budget stays fixed. This ensures sustainability.
+              </div>
+            </div>
+
+            {/* Example 3 */}
+            <div className="bg-gradient-to-r from-green-500/10 to-cyan-500/10 border border-green-500/30 rounded-xl p-6">
+              <div className="flex items-center gap-2 mb-4">
+                <div className="px-3 py-1 bg-green-500/20 text-green-400 rounded-full text-sm font-bold">
+                  EXAMPLE 3
+                </div>
+                <span className="text-slate-400 text-sm">Power User (Very Active!)</span>
+              </div>
+              <div className="grid md:grid-cols-2 gap-6">
+                <div className="space-y-2 text-sm">
+                  <div className="flex justify-between text-slate-300">
+                    <span>Monthly budget:</span>
+                    <span className="font-mono text-white">458,333 AAIC</span>
+                  </div>
+                  <div className="flex justify-between text-slate-300">
+                    <span>Total points issued:</span>
+                    <span className="font-mono text-white">1,000,000,000</span>
+                  </div>
+                  <div className="flex justify-between text-slate-300">
+                    <span>You earned:</span>
+                    <span className="font-mono text-cyan-400">50,000,000 points</span>
+                  </div>
+                </div>
+                <div className="space-y-2 text-sm">
+                  <div className="flex justify-between text-slate-300">
+                    <span>Your share:</span>
+                    <span className="font-mono text-cyan-400">5% of total</span>
+                  </div>
+                  <div className="flex justify-between items-center pt-2 border-t border-slate-700">
+                    <span className="font-bold text-white">Your reward:</span>
+                    <span className="font-mono text-2xl text-green-400">22,917 AAIC</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Action Point Values */}
+          <div className="mt-8 bg-slate-800/50 border border-slate-700 rounded-xl p-6">
+            <h3 className="font-bold text-white mb-4">Action Point Values (Examples)</h3>
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3 text-sm">
+              <div className="flex justify-between p-3 bg-slate-900/50 rounded">
+                <span className="text-slate-300">AI Traders trade</span>
+                <span className="font-mono text-cyan-400">100 pts</span>
+              </div>
+              <div className="flex justify-between p-3 bg-slate-900/50 rounded">
+                <span className="text-slate-300">Profitable trade</span>
+                <span className="font-mono text-cyan-400">+200 pts</span>
+              </div>
+              <div className="flex justify-between p-3 bg-slate-900/50 rounded">
+                <span className="text-slate-300">Business created</span>
+                <span className="font-mono text-cyan-400">5,000 pts</span>
+              </div>
+              <div className="flex justify-between p-3 bg-slate-900/50 rounded">
+                <span className="text-slate-300">Governance vote</span>
+                <span className="font-mono text-cyan-400">500 pts</span>
+              </div>
+              <div className="flex justify-between p-3 bg-slate-900/50 rounded">
+                <span className="text-slate-300">Proposal submission</span>
+                <span className="font-mono text-cyan-400">10,000 pts</span>
+              </div>
+              <div className="flex justify-between p-3 bg-slate-900/50 rounded">
+                <span className="text-slate-300">Comment/feedback</span>
+                <span className="font-mono text-cyan-400">50 pts</span>
+              </div>
             </div>
           </div>
         </section>
@@ -229,18 +428,148 @@ export default function UseToEarn() {
           <ComparisonTable />
         </section>
 
-        {/* Live Reward Rates */}
-        <section>
+        {/* Dynamic Point Allocation */}
+        <section className="bg-slate-800/30 backdrop-blur border border-slate-700 rounded-2xl p-8 lg:p-12">
           <div className="text-center mb-12">
             <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">
-              Current Reward Rates
+              How Points Are Allocated Across Activities
             </h2>
             <p className="text-slate-300 max-w-2xl mx-auto">
-              Transparent, live rates for all ecosystem businesses
+              Instead of fixed AAIC per action, each action earns POINTS that vary by governance.
             </p>
           </div>
 
-          <LiveRatesTable />
+          <div className="space-y-8">
+            {/* AI Traders */}
+            <div className="bg-slate-800/50 border border-slate-700 rounded-xl p-6">
+              <h3 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
+                <TrendingUp className="w-6 h-6 text-green-400" />
+                AI Traders
+              </h3>
+              <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-3 text-sm">
+                <div className="p-3 bg-slate-900/50 rounded">
+                  <div className="text-slate-400 mb-1">Execute trade</div>
+                  <div className="text-lg font-bold text-cyan-400">100 points</div>
+                </div>
+                <div className="p-3 bg-slate-900/50 rounded">
+                  <div className="text-slate-400 mb-1">Profitable trade</div>
+                  <div className="text-lg font-bold text-cyan-400">+100 bonus</div>
+                </div>
+                <div className="p-3 bg-slate-900/50 rounded">
+                  <div className="text-slate-400 mb-1">Strategy deployed</div>
+                  <div className="text-lg font-bold text-cyan-400">500 points</div>
+                </div>
+                <div className="p-3 bg-slate-900/50 rounded">
+                  <div className="text-slate-400 mb-1">Volume milestones</div>
+                  <div className="text-lg font-bold text-cyan-400">Up to 5,000</div>
+                </div>
+              </div>
+            </div>
+
+            {/* AI Business Factory */}
+            <div className="bg-slate-800/50 border border-slate-700 rounded-xl p-6">
+              <h3 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
+                <Sparkles className="w-6 h-6 text-blue-400" />
+                AI Business Factory
+              </h3>
+              <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-3 text-sm">
+                <div className="p-3 bg-slate-900/50 rounded">
+                  <div className="text-slate-400 mb-1">Concept submitted</div>
+                  <div className="text-lg font-bold text-cyan-400">1,000 points</div>
+                </div>
+                <div className="p-3 bg-slate-900/50 rounded">
+                  <div className="text-slate-400 mb-1">Community approved</div>
+                  <div className="text-lg font-bold text-cyan-400">+10,000 bonus</div>
+                </div>
+                <div className="p-3 bg-slate-900/50 rounded">
+                  <div className="text-slate-400 mb-1">Business launched</div>
+                  <div className="text-lg font-bold text-cyan-400">25,000 points</div>
+                </div>
+                <div className="p-3 bg-slate-900/50 rounded">
+                  <div className="text-slate-400 mb-1">Revenue milestone</div>
+                  <div className="text-lg font-bold text-cyan-400">10k-50k points</div>
+                </div>
+              </div>
+            </div>
+
+            {/* AI Web Dev */}
+            <div className="bg-slate-800/50 border border-slate-700 rounded-xl p-6">
+              <h3 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
+                <Zap className="w-6 h-6 text-purple-400" />
+                AI Web Dev
+              </h3>
+              <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-3 text-sm">
+                <div className="p-3 bg-slate-900/50 rounded">
+                  <div className="text-slate-400 mb-1">Project started</div>
+                  <div className="text-lg font-bold text-cyan-400">500 points</div>
+                </div>
+                <div className="p-3 bg-slate-900/50 rounded">
+                  <div className="text-slate-400 mb-1">Project completed</div>
+                  <div className="text-lg font-bold text-cyan-400">2,000 points</div>
+                </div>
+                <div className="p-3 bg-slate-900/50 rounded">
+                  <div className="text-slate-400 mb-1">Client satisfaction</div>
+                  <div className="text-lg font-bold text-cyan-400">+1,000 bonus</div>
+                </div>
+                <div className="p-3 bg-slate-900/50 rounded">
+                  <div className="text-slate-400 mb-1">Deployment milestone</div>
+                  <div className="text-lg font-bold text-cyan-400">3,000 points</div>
+                </div>
+              </div>
+            </div>
+
+            {/* Governance Participation */}
+            <div className="bg-slate-800/50 border border-slate-700 rounded-xl p-6">
+              <h3 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
+                <Shield className="w-6 h-6 text-cyan-400" />
+                Governance Participation
+              </h3>
+              <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-3 text-sm">
+                <div className="p-3 bg-slate-900/50 rounded">
+                  <div className="text-slate-400 mb-1">Vote on proposal</div>
+                  <div className="text-lg font-bold text-cyan-400">500 points</div>
+                </div>
+                <div className="p-3 bg-slate-900/50 rounded">
+                  <div className="text-slate-400 mb-1">Submit proposal</div>
+                  <div className="text-lg font-bold text-cyan-400">10,000 points</div>
+                </div>
+                <div className="p-3 bg-slate-900/50 rounded">
+                  <div className="text-slate-400 mb-1">Comment/discussion</div>
+                  <div className="text-lg font-bold text-cyan-400">50 points</div>
+                </div>
+                <div className="p-3 bg-slate-900/50 rounded">
+                  <div className="text-slate-400 mb-1">Early voter bonus</div>
+                  <div className="text-lg font-bold text-cyan-400">+100 bonus</div>
+                </div>
+              </div>
+            </div>
+
+            {/* Anti-Abuse Caps */}
+            <div className="bg-gradient-to-r from-orange-500/10 to-red-500/10 border border-orange-500/30 rounded-xl p-6">
+              <h3 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
+                <Shield className="w-6 h-6 text-orange-400" />
+                Anti-Abuse Caps
+              </h3>
+              <div className="grid sm:grid-cols-2 gap-4 text-sm text-slate-300">
+                <div className="flex items-start gap-2">
+                  <div className="w-2 h-2 bg-orange-400 rounded-full mt-2 flex-shrink-0" />
+                  <span>Maximum points per category per day</span>
+                </div>
+                <div className="flex items-start gap-2">
+                  <div className="w-2 h-2 bg-orange-400 rounded-full mt-2 flex-shrink-0" />
+                  <span>Decay on repetitive identical actions</span>
+                </div>
+                <div className="flex items-start gap-2">
+                  <div className="w-2 h-2 bg-orange-400 rounded-full mt-2 flex-shrink-0" />
+                  <span>Per-wallet monthly point caps (dynamic)</span>
+                </div>
+                <div className="flex items-start gap-2">
+                  <div className="w-2 h-2 bg-orange-400 rounded-full mt-2 flex-shrink-0" />
+                  <span>Anomaly detection flags suspicious patterns</span>
+                </div>
+              </div>
+            </div>
+          </div>
         </section>
 
         {/* Calculator */}
@@ -269,6 +598,68 @@ export default function UseToEarn() {
           </div>
 
           <RealExamplesCarousel />
+        </section>
+
+        {/* Retroactive Rewards */}
+        <section className="bg-gradient-to-r from-yellow-500/10 to-orange-500/10 border border-yellow-500/30 rounded-2xl p-8 lg:p-12">
+          <h2 className="text-3xl font-bold text-white mb-8 text-center">
+            When Does Tracking Start?
+          </h2>
+
+          <div className="max-w-3xl mx-auto">
+            <div className="bg-slate-800/50 border border-slate-700 rounded-xl p-8 mb-8">
+              <div className="text-center mb-6">
+                <div className="inline-flex items-center gap-2 px-4 py-2 bg-red-500/20 text-red-400 rounded-full text-sm font-bold mb-4">
+                  CURRENT POLICY
+                </div>
+                <h3 className="text-2xl font-bold text-white mb-2">NO RETROACTIVE REWARDS</h3>
+                <p className="text-slate-300">Clean start for fair competition</p>
+              </div>
+
+              <div className="grid md:grid-cols-2 gap-6 mb-6">
+                <div className="bg-slate-900/50 rounded-lg p-4">
+                  <div className="text-sm text-slate-400 mb-2">Tracking begins:</div>
+                  <div className="text-xl font-bold text-cyan-400">After airdrop distribution</div>
+                </div>
+                <div className="bg-slate-900/50 rounded-lg p-4">
+                  <div className="text-sm text-slate-400 mb-2">First payment:</div>
+                  <div className="text-xl font-bold text-green-400">Month 1 after airdrop</div>
+                </div>
+              </div>
+
+              <div className="bg-cyan-500/10 border border-cyan-500/30 rounded-lg p-6">
+                <h4 className="font-bold text-white mb-3">Why No Retroactive Rewards?</h4>
+                <div className="space-y-2 text-sm text-slate-300">
+                  <div className="flex items-start gap-2">
+                    <div className="w-2 h-2 bg-green-400 rounded-full mt-2 flex-shrink-0" />
+                    <span>Avoids "double rewards" optics</span>
+                  </div>
+                  <div className="flex items-start gap-2">
+                    <div className="w-2 h-2 bg-green-400 rounded-full mt-2 flex-shrink-0" />
+                    <span>Clean start for fair competition</span>
+                  </div>
+                  <div className="flex items-start gap-2">
+                    <div className="w-2 h-2 bg-green-400 rounded-full mt-2 flex-shrink-0" />
+                    <span>Simplifies implementation</span>
+                  </div>
+                  <div className="flex items-start gap-2">
+                    <div className="w-2 h-2 bg-green-400 rounded-full mt-2 flex-shrink-0" />
+                    <span>Prevents gaming pre-launch</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="bg-slate-800/50 border border-slate-700 rounded-xl p-6">
+              <h3 className="font-bold text-white mb-3 flex items-center gap-2">
+                <Activity className="w-5 h-5 text-blue-400" />
+                Monthly Reset
+              </h3>
+              <p className="text-slate-300 text-sm">
+                Points reset to 0 at the start of each month. Fresh competition every cycle ensures fairness and prevents point hoarding.
+              </p>
+            </div>
+          </div>
         </section>
 
         {/* Phase Timeline */}

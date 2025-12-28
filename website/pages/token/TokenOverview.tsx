@@ -60,6 +60,77 @@ export default function TokenOverview() {
         </section>
 
         <section className="bg-slate-800/30 backdrop-blur border border-slate-700 rounded-2xl p-8 lg:p-12">
+          <h2 className="text-3xl font-bold text-white mb-6 text-center flex items-center justify-center gap-3">
+            <Coins className="w-8 h-8 text-cyan-400" />
+            Token Specifications
+          </h2>
+
+          <p className="text-center text-slate-300 mb-10 max-w-2xl mx-auto">
+            Complete technical specifications for the AAIC token
+          </p>
+
+          <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+            <div className="bg-slate-700/30 border border-slate-600 rounded-xl p-6 space-y-4">
+              <h3 className="text-lg font-bold text-white mb-4 flex items-center gap-2">
+                <Info className="w-5 h-5 text-cyan-400" />
+                Core Identity
+              </h3>
+              <SpecRow label="Name" value="Autonomous AI Consortium" />
+              <SpecRow label="Symbol" value="AAIC" />
+              <SpecRow label="Standard" value="BEP-20 (EVM ERC-20 compatible)" />
+              <SpecRow label="Decimals" value="18" />
+              <SpecRow label="Canonical Chain" value="BNB Chain" highlight />
+              <SpecRow label="Max Supply" value="100,000,000 AAIC" highlight />
+            </div>
+
+            <div className="bg-slate-700/30 border border-slate-600 rounded-xl p-6 space-y-4">
+              <h3 className="text-lg font-bold text-white mb-4 flex items-center gap-2">
+                <Target className="w-5 h-5 text-blue-400" />
+                Cross-Chain Strategy
+              </h3>
+              <div className="space-y-3">
+                <div>
+                  <div className="text-xs text-slate-400 mb-1">V1 Launch (2025)</div>
+                  <div className="flex flex-wrap gap-2">
+                    <ChainBadge name="BNB Chain" isPrimary />
+                    <ChainBadge name="Base" />
+                    <ChainBadge name="Avalanche" />
+                    <ChainBadge name="Sui" />
+                    <ChainBadge name="Hyperliquid" />
+                  </div>
+                </div>
+                <div>
+                  <div className="text-xs text-slate-400 mb-1">V2 Expansion (Late 2026)</div>
+                  <div className="flex flex-wrap gap-2">
+                    <ChainBadge name="Optimism" />
+                    <ChainBadge name="Fantom" />
+                    <ChainBadge name="Solana" />
+                  </div>
+                </div>
+              </div>
+              <div className="bg-slate-800/50 rounded-lg p-3 mt-4">
+                <p className="text-xs text-slate-400">
+                  <span className="text-cyan-400 font-medium">Axelar ITS</span> handles cross-chain bridging with BNB Chain as canonical source
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div className="mt-8 bg-cyan-500/10 border border-cyan-500/30 rounded-xl p-6">
+            <div className="flex items-start gap-4">
+              <Shield className="w-6 h-6 text-cyan-400 flex-shrink-0 mt-1" />
+              <div>
+                <h4 className="font-bold text-white mb-2">Immutable Supply</h4>
+                <p className="text-sm text-slate-300">
+                  The max supply of 100,000,000 AAIC is fixed and immutable. No additional tokens can ever be created,
+                  even through governance. This ensures absolute scarcity and predictable tokenomics.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section className="bg-slate-800/30 backdrop-blur border border-slate-700 rounded-2xl p-8 lg:p-12">
           <h2 className="text-3xl font-bold text-white mb-6 text-center">Distribution Philosophy</h2>
 
           <div className="max-w-3xl mx-auto space-y-6 text-lg text-slate-300 leading-relaxed mb-10">
@@ -131,7 +202,7 @@ export default function TokenOverview() {
               status="upcoming"
               description="Supply cap reached, no new tokens can be created"
               details={[
-                '10 billion total max supply',
+                '100,000,000 total max supply',
                 'Cannot be increased through governance',
                 'Scarcity creates value as demand grows',
                 'Deflationary mechanisms active'
@@ -464,6 +535,36 @@ function ValueAccrualItem({ title, description }: {
         <h4 className="font-bold text-white mb-1">{title}</h4>
         <p className="text-sm text-slate-400">{description}</p>
       </div>
+    </div>
+  );
+}
+
+function SpecRow({ label, value, highlight }: {
+  label: string;
+  value: string;
+  highlight?: boolean;
+}) {
+  return (
+    <div className="flex justify-between items-center">
+      <span className="text-sm text-slate-400">{label}:</span>
+      <span className={`text-sm font-medium ${highlight ? 'text-cyan-400' : 'text-white'}`}>
+        {value}
+      </span>
+    </div>
+  );
+}
+
+function ChainBadge({ name, isPrimary }: {
+  name: string;
+  isPrimary?: boolean;
+}) {
+  return (
+    <div className={`px-3 py-1 rounded-full text-xs font-medium ${
+      isPrimary
+        ? 'bg-cyan-500/20 text-cyan-400 border border-cyan-500/30'
+        : 'bg-slate-700/50 text-slate-300 border border-slate-600'
+    }`}>
+      {name}
     </div>
   );
 }
