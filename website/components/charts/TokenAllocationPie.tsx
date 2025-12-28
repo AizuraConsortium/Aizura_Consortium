@@ -16,18 +16,18 @@ export function TokenAllocationPie() {
 
   const allocations: AllocationSegment[] = [
     {
-      label: 'Airdrop',
-      percentage: 33,
-      amount: 33_000_000,
-      color: 'from-cyan-500 to-cyan-600',
-      description: 'Community airdrop for early supporters and contributors',
-    },
-    {
       label: 'Use-to-Earn',
       percentage: 22,
       amount: 22_000_000,
       color: 'from-green-500 to-green-600',
       description: 'Ongoing rewards for platform usage across all businesses',
+    },
+    {
+      label: 'Team',
+      percentage: 16,
+      amount: 16_000_000,
+      color: 'from-orange-500 to-orange-600',
+      description: '36-month linear vesting, NO CLIFF',
     },
     {
       label: 'Staking Rewards',
@@ -38,38 +38,45 @@ export function TokenAllocationPie() {
     },
     {
       label: 'Treasury',
-      percentage: 12,
-      amount: 12_000_000,
+      percentage: 15,
+      amount: 15_000_000,
       color: 'from-blue-500 to-blue-600',
       description: 'DAO-controlled treasury for ecosystem development',
     },
     {
-      label: 'Team',
-      percentage: 7,
-      amount: 7_000_000,
-      color: 'from-orange-500 to-orange-600',
-      description: '36-month linear vesting, NO CLIFF',
+      label: 'Airdrop',
+      percentage: 8,
+      amount: 8_000_000,
+      color: 'from-cyan-500 to-cyan-600',
+      description: 'Community airdrop for early supporters and contributors',
     },
     {
-      label: 'Advisors',
-      percentage: 4,
-      amount: 4_000_000,
-      color: 'from-yellow-500 to-yellow-600',
-      description: '12-month linear vesting, NO CLIFF',
+      label: 'Investors',
+      percentage: 8,
+      amount: 8_000_000,
+      color: 'from-red-500 to-red-600',
+      description: 'NO VESTING (immediate unlock, publicly labeled wallets)',
+    },
+    {
+      label: 'Market Ops',
+      percentage: 7,
+      amount: 7_000_000,
+      color: 'from-amber-500 to-amber-600',
+      description: 'Market operations and business development',
     },
     {
       label: 'Liquidity',
-      percentage: 4,
-      amount: 4_000_000,
+      percentage: 6,
+      amount: 6_000_000,
       color: 'from-pink-500 to-pink-600',
       description: 'Multi-chain DEX liquidity pools',
     },
     {
-      label: 'Investors',
+      label: 'Advisors',
       percentage: 3,
       amount: 3_000_000,
-      color: 'from-red-500 to-red-600',
-      description: 'NO VESTING (immediate unlock, publicly labeled wallets)',
+      color: 'from-yellow-500 to-yellow-600',
+      description: '12-month linear vesting, NO CLIFF',
     },
   ];
 
@@ -203,7 +210,7 @@ export function TokenAllocationPie() {
             <div className="text-sm text-slate-400">Max Supply</div>
           </div>
           <div>
-            <div className="text-2xl font-bold text-green-400">55M</div>
+            <div className="text-2xl font-bold text-green-400">30M</div>
             <div className="text-sm text-slate-400">Community (Airdrop + U2E)</div>
           </div>
           <div>
@@ -211,7 +218,7 @@ export function TokenAllocationPie() {
             <div className="text-sm text-slate-400">Staking Pool Y1-4</div>
           </div>
           <div>
-            <div className="text-2xl font-bold text-blue-400">12M</div>
+            <div className="text-2xl font-bold text-blue-400">15M</div>
             <div className="text-sm text-slate-400">DAO Treasury</div>
           </div>
         </div>

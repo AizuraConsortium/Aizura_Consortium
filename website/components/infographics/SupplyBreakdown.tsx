@@ -6,23 +6,33 @@ export function SupplyBreakdown() {
   const categories = [
     {
       label: 'Circulating at Launch',
-      amount: 40_000_000,
-      percentage: 40,
+      amount: 16_000_000,
+      percentage: 16,
       color: 'from-green-500 to-emerald-500',
       items: [
-        { label: 'Liquidity Pools', amount: 4_000_000 },
-        { label: 'Investors (unlocked)', amount: 3_000_000 },
-        { label: 'Initial Airdrop Wave', amount: 33_000_000 },
+        { label: 'Airdrop (immediate unlock)', amount: 8_000_000 },
+        { label: 'Investors (immediate unlock)', amount: 8_000_000 },
+      ],
+    },
+    {
+      label: 'TreasuryVault',
+      amount: 28_000_000,
+      percentage: 28,
+      color: 'from-blue-500 to-cyan-500',
+      items: [
+        { label: 'Treasury Reserve', amount: 15_000_000 },
+        { label: 'Liquidity Provisioning', amount: 6_000_000 },
+        { label: 'Market Ops / CEX', amount: 7_000_000 },
       ],
     },
     {
       label: 'Vested (Linear Release)',
-      amount: 11_000_000,
-      percentage: 11,
+      amount: 19_000_000,
+      percentage: 19,
       color: 'from-orange-500 to-amber-500',
       items: [
-        { label: 'Team (36mo)', amount: 7_000_000 },
-        { label: 'Advisors (12mo)', amount: 4_000_000 },
+        { label: 'Team (36mo NO CLIFF)', amount: 16_000_000 },
+        { label: 'Advisors (12mo NO CLIFF)', amount: 3_000_000 },
       ],
     },
     {
@@ -35,40 +45,31 @@ export function SupplyBreakdown() {
         { label: 'Staking Rewards Pool', amount: 15_000_000 },
       ],
     },
-    {
-      label: 'DAO Treasury',
-      amount: 12_000_000,
-      percentage: 12,
-      color: 'from-blue-500 to-cyan-500',
-      items: [
-        { label: 'Ecosystem Development', amount: 12_000_000 },
-      ],
-    },
   ];
 
   const timelineStages = [
     {
       label: 'Launch Day',
-      circulating: 40_000_000,
-      locked: 60_000_000,
+      circulating: 16_000_000,
+      locked: 84_000_000,
       color: 'text-green-400',
     },
     {
       label: '6 Months',
-      circulating: 52_500_000,
-      locked: 47_500_000,
+      circulating: 32_250_000,
+      locked: 67_750_000,
       color: 'text-cyan-400',
     },
     {
       label: '12 Months',
-      circulating: 62_000_000,
-      locked: 38_000_000,
+      circulating: 48_500_000,
+      locked: 51_500_000,
       color: 'text-blue-400',
     },
     {
       label: '24 Months',
-      circulating: 75_000_000,
-      locked: 25_000_000,
+      circulating: 72_000_000,
+      locked: 28_000_000,
       color: 'text-purple-400',
     },
     {
@@ -161,7 +162,7 @@ export function SupplyBreakdown() {
                           className="bg-gradient-to-r from-green-500 to-emerald-500 flex items-center justify-center text-white text-xs font-bold"
                           style={{ width: `${(stage.circulating / totalSupply) * 100}%` }}
                         >
-                          {stage.circulating >= 40_000_000 && (
+                          {stage.circulating >= 16_000_000 && (
                             <Unlock className="w-4 h-4" />
                           )}
                         </div>
@@ -169,7 +170,7 @@ export function SupplyBreakdown() {
                           className="bg-gradient-to-r from-slate-600 to-slate-700 flex items-center justify-center text-white text-xs font-bold"
                           style={{ width: `${(stage.locked / totalSupply) * 100}%` }}
                         >
-                          {stage.locked > 0 && stage.locked < 60_000_000 && (
+                          {stage.locked > 0 && stage.locked < 84_000_000 && (
                             <Lock className="w-4 h-4" />
                           )}
                         </div>
@@ -193,13 +194,13 @@ export function SupplyBreakdown() {
           <div className="grid grid-cols-2 gap-4">
             <div className="bg-green-500/10 border border-green-500/30 rounded-lg p-4">
               <Unlock className="w-6 h-6 text-green-400 mb-2" />
-              <div className="text-2xl font-bold text-green-400 mb-1">40M</div>
+              <div className="text-2xl font-bold text-green-400 mb-1">16M</div>
               <div className="text-xs text-slate-300">Circulating at Launch</div>
             </div>
 
             <div className="bg-slate-700/50 border border-slate-600 rounded-lg p-4">
               <Lock className="w-6 h-6 text-slate-400 mb-2" />
-              <div className="text-2xl font-bold text-slate-300 mb-1">60M</div>
+              <div className="text-2xl font-bold text-slate-300 mb-1">84M</div>
               <div className="text-xs text-slate-300">Locked/Vested at Launch</div>
             </div>
           </div>
@@ -214,20 +215,20 @@ export function SupplyBreakdown() {
             <div className="text-sm text-slate-400">Minted Once</div>
           </div>
           <div className="text-center">
-            <div className="text-3xl font-bold text-green-400 mb-2">40M</div>
+            <div className="text-3xl font-bold text-green-400 mb-2">16M</div>
             <div className="text-sm text-slate-400">Instant Unlock</div>
           </div>
           <div className="text-center">
-            <div className="text-3xl font-bold text-orange-400 mb-2">11M</div>
+            <div className="text-3xl font-bold text-blue-400 mb-2">28M</div>
+            <div className="text-sm text-slate-400">TreasuryVault</div>
+          </div>
+          <div className="text-center">
+            <div className="text-3xl font-bold text-orange-400 mb-2">19M</div>
             <div className="text-sm text-slate-400">Linear Vesting</div>
           </div>
           <div className="text-center">
             <div className="text-3xl font-bold text-purple-400 mb-2">37M</div>
             <div className="text-sm text-slate-400">4-Year Emissions</div>
-          </div>
-          <div className="text-center">
-            <div className="text-3xl font-bold text-blue-400 mb-2">12M</div>
-            <div className="text-sm text-slate-400">DAO Treasury</div>
           </div>
         </div>
       </div>
@@ -239,9 +240,9 @@ export function SupplyBreakdown() {
             <div>
               <h5 className="font-bold text-white mb-2">Vesting Details</h5>
               <ul className="space-y-2 text-sm text-slate-300">
-                <li><strong className="text-white">Team:</strong> 36-month linear, NO CLIFF</li>
-                <li><strong className="text-white">Advisors:</strong> 12-month linear, NO CLIFF</li>
-                <li><strong className="text-white">Investors:</strong> NO VESTING (publicly labeled wallets)</li>
+                <li><strong className="text-white">Team (16M):</strong> 36-month linear, NO CLIFF</li>
+                <li><strong className="text-white">Advisors (3M):</strong> 12-month linear, NO CLIFF</li>
+                <li><strong className="text-white">Investors (8M):</strong> NO VESTING (publicly labeled wallets)</li>
               </ul>
             </div>
           </div>
@@ -253,7 +254,7 @@ export function SupplyBreakdown() {
             <div>
               <h5 className="font-bold text-white mb-2">Emission Schedule</h5>
               <ul className="space-y-2 text-sm text-slate-300">
-                <li><strong className="text-white">U2E:</strong> 458k/month flat (48 months)</li>
+                <li><strong className="text-white">U2E:</strong> 458,333/month flat (48 months)</li>
                 <li><strong className="text-white">Staking:</strong> Tapered Y1-4 (5M, 4M, 3.5M, 2.5M)</li>
                 <li><strong className="text-white">Post-Y4:</strong> Transition to profit-backed rewards</li>
               </ul>
