@@ -265,58 +265,74 @@ export default function Litepaper() {
             <div className="space-y-4 mb-8">
               <div className="bg-slate-900/50 rounded-lg p-4">
                 <div className="flex justify-between items-center mb-2">
-                  <span className="text-white font-semibold">Community Airdrop</span>
-                  <span className="text-cyan-400 font-bold">30%</span>
+                  <span className="text-white font-semibold">Use-to-Earn Pool</span>
+                  <span className="text-cyan-400 font-bold">22%</span>
                 </div>
-                <p className="text-sm text-slate-300">Distributed to early participants, voters, and active community members</p>
+                <p className="text-sm text-slate-300">22M AAIC distributed over 48 months to active users</p>
               </div>
 
               <div className="bg-slate-900/50 rounded-lg p-4">
                 <div className="flex justify-between items-center mb-2">
-                  <span className="text-white font-semibold">Ecosystem Treasury</span>
-                  <span className="text-blue-400 font-bold">20%</span>
+                  <span className="text-white font-semibold">Team</span>
+                  <span className="text-purple-400 font-bold">16%</span>
                 </div>
-                <p className="text-sm text-slate-300">Funding for approved proposals and ecosystem development</p>
+                <p className="text-sm text-slate-300">36-month linear vesting, NO CLIFF</p>
               </div>
 
               <div className="bg-slate-900/50 rounded-lg p-4">
                 <div className="flex justify-between items-center mb-2">
                   <span className="text-white font-semibold">Staking Rewards</span>
-                  <span className="text-green-400 font-bold">20%</span>
+                  <span className="text-green-400 font-bold">15%</span>
                 </div>
-                <p className="text-sm text-slate-300">Long-term staking rewards distributed over 5 years</p>
+                <p className="text-sm text-slate-300">15M AAIC pool for staking rewards over 48 months</p>
               </div>
 
               <div className="bg-slate-900/50 rounded-lg p-4">
                 <div className="flex justify-between items-center mb-2">
-                  <span className="text-white font-semibold">Team & Operations</span>
-                  <span className="text-purple-400 font-bold">10%</span>
+                  <span className="text-white font-semibold">Treasury Reserve</span>
+                  <span className="text-blue-400 font-bold">15%</span>
                 </div>
-                <p className="text-sm text-slate-300">4-year vesting with 1-year cliff for founding team</p>
+                <p className="text-sm text-slate-300">DAO-controlled treasury for ecosystem development</p>
               </div>
 
               <div className="bg-slate-900/50 rounded-lg p-4">
                 <div className="flex justify-between items-center mb-2">
-                  <span className="text-white font-semibold">Liquidity Provision</span>
-                  <span className="text-orange-400 font-bold">10%</span>
+                  <span className="text-white font-semibold">Airdrop</span>
+                  <span className="text-yellow-400 font-bold">8%</span>
                 </div>
-                <p className="text-sm text-slate-300">DEX liquidity pools on Uniswap and other platforms</p>
+                <p className="text-sm text-slate-300">Community airdrop, 100% unlocked immediately</p>
               </div>
 
               <div className="bg-slate-900/50 rounded-lg p-4">
                 <div className="flex justify-between items-center mb-2">
-                  <span className="text-white font-semibold">Marketing & Partnerships</span>
-                  <span className="text-pink-400 font-bold">5%</span>
+                  <span className="text-white font-semibold">Early / Private Investors</span>
+                  <span className="text-orange-400 font-bold">8%</span>
                 </div>
-                <p className="text-sm text-slate-300">Strategic partnerships and ecosystem growth initiatives</p>
+                <p className="text-sm text-slate-300">NO VESTING - immediate unlock with public wallet labeling</p>
               </div>
 
               <div className="bg-slate-900/50 rounded-lg p-4">
                 <div className="flex justify-between items-center mb-2">
-                  <span className="text-white font-semibold">Advisors & Contributors</span>
-                  <span className="text-indigo-400 font-bold">5%</span>
+                  <span className="text-white font-semibold">Market Ops / CEX Readiness</span>
+                  <span className="text-pink-400 font-bold">7%</span>
                 </div>
-                <p className="text-sm text-slate-300">2-year vesting for early contributors and advisors</p>
+                <p className="text-sm text-slate-300">Market operations and exchange listings</p>
+              </div>
+
+              <div className="bg-slate-900/50 rounded-lg p-4">
+                <div className="flex justify-between items-center mb-2">
+                  <span className="text-white font-semibold">Liquidity Provisioning</span>
+                  <span className="text-cyan-400 font-bold">6%</span>
+                </div>
+                <p className="text-sm text-slate-300">DEX liquidity pools on BNB Chain and other platforms</p>
+              </div>
+
+              <div className="bg-slate-900/50 rounded-lg p-4">
+                <div className="flex justify-between items-center mb-2">
+                  <span className="text-white font-semibold">Advisors & Strategic Contributors</span>
+                  <span className="text-indigo-400 font-bold">3%</span>
+                </div>
+                <p className="text-sm text-slate-300">12-month linear vesting, NO CLIFF</p>
               </div>
             </div>
 

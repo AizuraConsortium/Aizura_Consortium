@@ -214,15 +214,15 @@ All adjustments are logged and transparent to the user.
 
 ### Airdrop Allocation Formula
 
-**Total Airdrop Pool**: [TBD] AAIC tokens
+**Total Airdrop Pool**: 8,000,000 AAIC (8% of 100M total supply)
 
 **Your Allocation** = (Your Points / Total Points) × Total Airdrop Pool
 
 **Example**:
-- Total Pool: 100,000,000 AAIC
+- Total Pool: 8,000,000 AAIC
 - Total Points Earned by Community: 50,000,000
 - Your Points: 10,000
-- Your Allocation: (10,000 / 50,000,000) × 100,000,000 = **20,000 AAIC tokens**
+- Your Allocation: (10,000 / 50,000,000) × 8,000,000 = **1,600 AAIC tokens**
 
 **Note**: The more you contribute, the higher your percentage of the pool!
 

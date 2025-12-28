@@ -37,10 +37,58 @@ Returns token allocation breakdown.
   "totalSupply": 100000000,
   "allocation": [
     {
+      "category": "use_to_earn",
+      "amount": 22000000,
+      "percentage": 22,
+      "description": "Use-to-Earn rewards pool (48 months)"
+    },
+    {
+      "category": "team",
+      "amount": 16000000,
+      "percentage": 16,
+      "description": "36-month linear vesting, NO CLIFF"
+    },
+    {
+      "category": "staking",
+      "amount": 15000000,
+      "percentage": 15,
+      "description": "Staking rewards pool (48 months)"
+    },
+    {
+      "category": "treasury",
+      "amount": 15000000,
+      "percentage": 15,
+      "description": "DAO-controlled treasury"
+    },
+    {
       "category": "airdrop",
-      "amount": 33000000,
-      "percentage": 33,
+      "amount": 8000000,
+      "percentage": 8,
       "description": "Community airdrop for early supporters"
+    },
+    {
+      "category": "investors",
+      "amount": 8000000,
+      "percentage": 8,
+      "description": "NO VESTING (immediate unlock, labeled wallets)"
+    },
+    {
+      "category": "market_ops",
+      "amount": 7000000,
+      "percentage": 7,
+      "description": "Market operations and business development"
+    },
+    {
+      "category": "liquidity",
+      "amount": 6000000,
+      "percentage": 6,
+      "description": "Multi-chain DEX liquidity"
+    },
+    {
+      "category": "advisors",
+      "amount": 3000000,
+      "percentage": 3,
+      "description": "12-month linear vesting, NO CLIFF"
     }
   ]
 }
