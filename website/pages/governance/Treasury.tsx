@@ -407,7 +407,7 @@ export default function TreasuryDistributions() {
             <MechanismCard
               step="2"
               title="Allocation Split"
-              description="Revenue is automatically split according to governance-approved percentages (30% for buybacks by default)."
+              description="Revenue is automatically split according to governance-approved percentages (15% buyback, 15% burn, 15% staking, 15% U2E, 25% treasury, 15% variable)."
             />
             <MechanismCard
               step="3"

@@ -335,7 +335,7 @@ export default function Utility() {
                   <div className="flex-1 bg-slate-900/50 rounded-xl p-4">
                     <h3 className="font-bold text-white mb-1">Revenue Distribution</h3>
                     <p className="text-sm text-slate-300">
-                      30% Buyback+Burn, 30% Staking+U2E, 20% Treasury, 15% Variable (governance-controlled).
+                      15% Buyback, 15% Burn, 15% Staking, 15% U2E, 25% Treasury, 15% Variable (governance-controlled).
                     </p>
                   </div>
                   <ArrowRight className="w-6 h-6 text-slate-600 flex-shrink-0" />

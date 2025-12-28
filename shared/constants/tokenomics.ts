@@ -65,9 +65,13 @@ export const TOKENOMICS = {
   },
 
   REVENUE_DISTRIBUTION: {
-    BUYBACK_BURN: {
-      percentage: 30,
-      description: 'Market buyback → permanent burn',
+    BUYBACK: {
+      percentage: 15,
+      description: 'Market buyback operations',
+    },
+    BURN: {
+      percentage: 15,
+      description: 'Permanent token burn (until 21M target)',
     },
     STAKING: {
       percentage: 15,
@@ -78,11 +82,11 @@ export const TOKENOMICS = {
       description: 'Use-to-Earn pool (post-Year 4)',
     },
     TREASURY: {
-      percentage: 20,
+      percentage: 25,
       description: 'DAO treasury allocation',
     },
     VARIABLE: {
-      percentage: 20,
+      percentage: 15,
       description: 'Governance-adjustable bucket',
     },
   },

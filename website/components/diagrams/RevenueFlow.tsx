@@ -3,9 +3,16 @@ import { ArrowRight, DollarSign, Flame, Lock, TrendingUp, Wallet, Zap } from 'lu
 export function RevenueFlow() {
   const buckets = [
     {
-      label: 'Buyback → Burn',
-      percentage: 30,
-      color: 'from-red-500 to-orange-500',
+      label: 'Buyback',
+      percentage: 15,
+      color: 'from-orange-500 to-red-500',
+      icon: <TrendingUp className="w-5 h-5" />,
+      description: 'Market buyback operations',
+    },
+    {
+      label: 'Burn',
+      percentage: 15,
+      color: 'from-red-500 to-pink-500',
       icon: <Flame className="w-5 h-5" />,
       description: 'Permanent supply reduction',
     },
@@ -25,14 +32,14 @@ export function RevenueFlow() {
     },
     {
       label: 'Treasury',
-      percentage: 20,
+      percentage: 25,
       color: 'from-blue-500 to-cyan-500',
       icon: <Wallet className="w-5 h-5" />,
       description: 'Ecosystem development fund',
     },
     {
       label: 'Variable',
-      percentage: 20,
+      percentage: 15,
       color: 'from-yellow-500 to-amber-500',
       icon: <TrendingUp className="w-5 h-5" />,
       description: 'Governance-adjustable bucket',
@@ -139,7 +146,7 @@ export function RevenueFlow() {
               ))}
             </div>
 
-            <div className="grid grid-cols-5 gap-2 text-center pt-2">
+            <div className="grid grid-cols-6 gap-2 text-center pt-2">
               {buckets.map((bucket) => (
                 <div key={bucket.label} className="text-xs text-slate-400">
                   {bucket.label.split(' ')[0]}

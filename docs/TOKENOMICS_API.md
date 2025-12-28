@@ -103,9 +103,34 @@ Returns monthly profit distribution percentages.
 {
   "distribution": [
     {
-      "bucket": "buyback burn",
-      "percentage": 30,
-      "description": "Market buyback → permanent burn"
+      "bucket": "buyback",
+      "percentage": 15,
+      "description": "Market buyback operations"
+    },
+    {
+      "bucket": "burn",
+      "percentage": 15,
+      "description": "Permanent token burn (until 21M target)"
+    },
+    {
+      "bucket": "staking",
+      "percentage": 15,
+      "description": "Staking rewards (post-Year 4)"
+    },
+    {
+      "bucket": "use_to_earn",
+      "percentage": 15,
+      "description": "Use-to-Earn pool (post-Year 4)"
+    },
+    {
+      "bucket": "treasury",
+      "percentage": 25,
+      "description": "DAO treasury allocation"
+    },
+    {
+      "bucket": "variable",
+      "percentage": 15,
+      "description": "Governance-adjustable bucket"
     }
   ]
 }
