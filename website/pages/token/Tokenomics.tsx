@@ -25,10 +25,10 @@ export default function Tokenomics() {
 
           <div className="space-y-4 text-lg text-slate-300 max-w-3xl mx-auto mb-8">
             <p>
-              AAIC is not a hype token, a one-time sale, or a perpetual inflation machine.
+              <span className="font-semibold text-white">Autonomous AI Consortium (AAIC)</span> is not a hype token, a one-time sale, or a perpetual inflation machine.
             </p>
             <p className="text-cyan-400 font-medium">
-              It's a productive asset backed by AI-run businesses, designed for long-term sustainability.
+              It's a BEP-20 productive asset backed by AI-run businesses, designed for long-term sustainability.
             </p>
           </div>
 
@@ -79,6 +79,106 @@ export default function Tokenomics() {
           </div>
         </section>
 
+        <section className="bg-slate-800/30 backdrop-blur border border-slate-700 rounded-2xl p-8 lg:p-12">
+          <h2 className="text-3xl font-bold text-white mb-8 text-center">Token Specifications</h2>
+
+          <div className="grid md:grid-cols-2 gap-8 mb-8">
+            <div className="bg-slate-700/30 border border-slate-600 rounded-xl p-6">
+              <h3 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
+                <Coins className="w-6 h-6 text-cyan-400" />
+                Token Identity
+              </h3>
+              <div className="space-y-3">
+                <ParameterRow label="Name" value="Autonomous AI Consortium" />
+                <ParameterRow label="Symbol" value="AAIC" />
+                <ParameterRow label="Standard" value="BEP-20 (EVM ERC-20 compatible)" />
+                <ParameterRow label="Decimals" value="18" />
+                <ParameterRow label="Canonical Chain" value="BNB Chain" highlight />
+                <ParameterRow label="Max Supply" value="100,000,000 AAIC" highlight />
+                <ParameterRow label="Initial Circulation" value="~16M AAIC (16%)" sublabel="Airdrop 8M + Investors 8M" />
+              </div>
+            </div>
+
+            <div className="space-y-4">
+              <div className="bg-slate-700/30 border border-slate-600 rounded-xl p-6">
+                <h3 className="text-xl font-bold text-white mb-4">Core Characteristics</h3>
+                <ul className="space-y-3">
+                  <li className="flex items-start gap-2 text-sm text-slate-300">
+                    <CheckCircle2 className="w-5 h-5 text-green-400 flex-shrink-0 mt-0.5" />
+                    <div>
+                      <div className="font-bold text-white mb-1">Minting</div>
+                      One-time mint at deployment → permanently disabled
+                    </div>
+                  </li>
+                  <li className="flex items-start gap-2 text-sm text-slate-300">
+                    <CheckCircle2 className="w-5 h-5 text-green-400 flex-shrink-0 mt-0.5" />
+                    <div>
+                      <div className="font-bold text-white mb-1">Transfers</div>
+                      Enabled at launch
+                    </div>
+                  </li>
+                  <li className="flex items-start gap-2 text-sm text-slate-300">
+                    <CheckCircle2 className="w-5 h-5 text-green-400 flex-shrink-0 mt-0.5" />
+                    <div>
+                      <div className="font-bold text-white mb-1">Burning</div>
+                      Enabled (irreversible, target: 21M AAIC burned)
+                    </div>
+                  </li>
+                </ul>
+              </div>
+
+              <div className="bg-cyan-500/10 border border-cyan-500/30 rounded-lg p-4">
+                <h4 className="text-sm font-bold text-white mb-2">Why BEP-20?</h4>
+                <ul className="space-y-1 text-xs text-slate-300">
+                  <li className="flex items-start gap-1">
+                    <span className="text-cyan-400">•</span>
+                    <span>Battle-tested, universally supported</span>
+                  </li>
+                  <li className="flex items-start gap-1">
+                    <span className="text-cyan-400">•</span>
+                    <span>Native Axelar ITS compatibility for cross-chain</span>
+                  </li>
+                  <li className="flex items-start gap-1">
+                    <span className="text-cyan-400">•</span>
+                    <span>Full governance framework support (OpenZeppelin)</span>
+                  </li>
+                  <li className="flex items-start gap-1">
+                    <span className="text-cyan-400">•</span>
+                    <span>DEX/CEX integration ready</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div className="bg-slate-700/30 border border-slate-600 rounded-xl p-6">
+            <h3 className="text-xl font-bold text-white mb-4">Strategy</h3>
+            <div className="grid md:grid-cols-3 gap-4">
+              <div className="flex items-start gap-3">
+                <Shield className="w-5 h-5 text-cyan-400 flex-shrink-0 mt-1" />
+                <div>
+                  <div className="font-bold text-white text-sm mb-1">Canonical Chain: BNB Chain</div>
+                  <p className="text-xs text-slate-400">Governance + treasury + voting execution</p>
+                </div>
+              </div>
+              <div className="flex items-start gap-3">
+                <Lock className="w-5 h-5 text-green-400 flex-shrink-0 mt-1" />
+                <div>
+                  <div className="font-bold text-white text-sm mb-1">Supply Minted Once</div>
+                  <p className="text-xs text-slate-400">Immutable, no future minting</p>
+                </div>
+              </div>
+              <div className="flex items-start gap-3">
+                <Zap className="w-5 h-5 text-yellow-400 flex-shrink-0 mt-1" />
+                <div>
+                  <div className="font-bold text-white text-sm mb-1">Cross-Chain via Axelar</div>
+                  <p className="text-xs text-slate-400">Representations only, never source-of-truth</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
         <section>
           <h2 className="text-3xl font-bold text-white mb-8 text-center">Supply & Distribution</h2>
 
@@ -86,29 +186,262 @@ export default function Tokenomics() {
             <div className="bg-slate-800/50 backdrop-blur border border-slate-700 rounded-xl p-8">
               <h3 className="text-2xl font-bold text-white mb-6">Global Parameters</h3>
               <div className="space-y-4">
-                <ParameterRow label="Token Name" value="AAIC" sublabel="(Placeholder)" />
-                <ParameterRow label="Max Supply" value="1,000,000,000" sublabel="Fixed Hard Cap" highlight />
-                <ParameterRow label="Initial Circulation" value="~30%" sublabel="300,000,000 AAIC" />
+                <ParameterRow label="Token Name" value="Autonomous AI Consortium" sublabel="Symbol: AAIC" />
+                <ParameterRow label="Max Supply" value="100,000,000" sublabel="Fixed Hard Cap" highlight />
+                <ParameterRow label="Initial Circulation" value="~16%" sublabel="~16,000,000 AAIC" />
               </div>
 
               <div className="mt-6 p-4 bg-cyan-500/10 border border-cyan-500/30 rounded-lg">
                 <p className="text-sm text-slate-300">
-                  <span className="font-bold text-cyan-400">Why 30% initial?</span> Enough liquidity for
-                  governance and usage without extreme dilution. Leaves room for ecosystem growth.
+                  <span className="font-bold text-cyan-400">Why 16% initial?</span> Airdrop (8M unlocked) + Early Investors (8M immediate) provides initial liquidity for governance while maintaining strong token value alignment.
                 </p>
               </div>
             </div>
 
             <div className="bg-slate-800/50 backdrop-blur border border-slate-700 rounded-xl p-8">
-              <h3 className="text-2xl font-bold text-white mb-6">Token Allocation</h3>
+              <h3 className="text-2xl font-bold text-white mb-6">Token Allocation (100M Total)</h3>
               <div className="space-y-3">
-                <AllocationBar label="Community Airdrop & Rewards" percent={30} tokens="300M" color="cyan" />
-                <AllocationBar label="Staking Rewards Pool (4 years)" percent={20} tokens="200M" color="green" />
-                <AllocationBar label="Ecosystem Treasury" percent={20} tokens="200M" color="blue" />
-                <AllocationBar label="Founding Team" percent={10} tokens="100M" color="purple" />
-                <AllocationBar label="Contributors & Advisors" percent={5} tokens="50M" color="yellow" />
-                <AllocationBar label="Strategic Reserve" percent={10} tokens="100M" color="orange" />
-                <AllocationBar label="Liquidity & Market Ops" percent={5} tokens="50M" color="pink" />
+                <AllocationBar label="Use-to-Earn Pool (4 years)" percent={22} tokens="22M" color="cyan" />
+                <AllocationBar label="Team" percent={16} tokens="16M" color="purple" />
+                <AllocationBar label="Staking Rewards Pool (4 years)" percent={15} tokens="15M" color="green" />
+                <AllocationBar label="Treasury Reserve" percent={15} tokens="15M" color="blue" />
+                <AllocationBar label="Airdrop" percent={8} tokens="8M" color="yellow" />
+                <AllocationBar label="Early / Private Investors" percent={8} tokens="8M" color="orange" />
+                <AllocationBar label="Market Ops / CEX Readiness" percent={7} tokens="7M" color="pink" />
+                <AllocationBar label="Liquidity Provisioning" percent={6} tokens="6M" color="cyan" />
+                <AllocationBar label="Advisors / Strategic Contributors" percent={3} tokens="3M" color="yellow" />
+              </div>
+
+              <div className="mt-6 p-4 bg-yellow-500/10 border border-yellow-500/30 rounded-lg">
+                <div className="flex items-start gap-2">
+                  <AlertTriangle className="w-5 h-5 text-yellow-400 flex-shrink-0 mt-0.5" />
+                  <div>
+                    <p className="text-sm font-bold text-yellow-400 mb-1">Investor Protection Note</p>
+                    <p className="text-xs text-slate-300">
+                      While early investors have no enforced vesting, wallets are labeled publicly for transparency. Voluntary lock options available through vesting vault contracts.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="bg-gradient-to-r from-blue-500/10 to-cyan-500/10 border border-blue-500/30 rounded-2xl p-8 lg:p-12 mt-8">
+            <h3 className="text-2xl font-bold text-white mb-6 flex items-center gap-2">
+              <Target className="w-7 h-7 text-blue-400" />
+              Deploy-Time Token Distribution (Exact Recipients)
+            </h3>
+            <p className="text-slate-300 mb-8 max-w-3xl">
+              At deployment, tokens are distributed to smart contract vaults and wallets according to this exact allocation:
+            </p>
+
+            <div className="grid md:grid-cols-2 gap-6">
+              <div className="bg-slate-800/50 border border-slate-700 rounded-xl p-6">
+                <h4 className="font-bold text-cyan-400 mb-4">Smart Contract Vaults</h4>
+                <div className="space-y-4">
+                  <div>
+                    <div className="flex justify-between items-start mb-2">
+                      <span className="text-white font-semibold">TreasuryVault</span>
+                      <span className="text-cyan-400 font-bold">28,000,000</span>
+                    </div>
+                    <p className="text-xs text-slate-400">Treasury 15M + Liquidity 6M + MarketOps 7M</p>
+                  </div>
+                  <div>
+                    <div className="flex justify-between items-start mb-2">
+                      <span className="text-white font-semibold">UseToEarnRewardsVault</span>
+                      <span className="text-cyan-400 font-bold">22,000,000</span>
+                    </div>
+                    <p className="text-xs text-slate-400">48 months = 458,333 AAIC/month</p>
+                  </div>
+                  <div>
+                    <div className="flex justify-between items-start mb-2">
+                      <span className="text-white font-semibold">StakingRewardsVault</span>
+                      <span className="text-cyan-400 font-bold">15,000,000</span>
+                    </div>
+                    <div className="text-xs text-slate-400 space-y-1 ml-4">
+                      <div className="flex justify-between">
+                        <span>Year 1: 4,500,000</span>
+                        <span className="text-slate-500">(375k/month)</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span>Year 2: 3,750,000</span>
+                        <span className="text-slate-500">(312.5k/month)</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span>Year 3: 3,750,000</span>
+                        <span className="text-slate-500">(312.5k/month)</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span>Year 4: 3,000,000</span>
+                        <span className="text-slate-500">(250k/month)</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div>
+                    <div className="flex justify-between items-start mb-2">
+                      <span className="text-white font-semibold">MerkleAirdropDistributor</span>
+                      <span className="text-cyan-400 font-bold">8,000,000</span>
+                    </div>
+                    <p className="text-xs text-slate-400">100% unlocked at claim</p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="bg-slate-800/50 border border-slate-700 rounded-xl p-6">
+                <h4 className="font-bold text-yellow-400 mb-4">Team & Contributor Vaults</h4>
+                <div className="space-y-4">
+                  <div>
+                    <div className="flex justify-between items-start mb-2">
+                      <span className="text-white font-semibold">TeamVestingVault</span>
+                      <span className="text-yellow-400 font-bold">16,000,000</span>
+                    </div>
+                    <p className="text-xs text-slate-400">4 wallets, 36 months linear vesting</p>
+                  </div>
+                  <div>
+                    <div className="flex justify-between items-start mb-2">
+                      <span className="text-white font-semibold">AdvisorVestingVault</span>
+                      <span className="text-yellow-400 font-bold">3,000,000</span>
+                    </div>
+                    <p className="text-xs text-slate-400">12 months linear vesting</p>
+                  </div>
+                  <div>
+                    <div className="flex justify-between items-start mb-2">
+                      <span className="text-white font-semibold">Investor Wallets</span>
+                      <span className="text-orange-400 font-bold">8,000,000</span>
+                    </div>
+                    <p className="text-xs text-slate-400">4 wallets (2% each), no vesting - immediate</p>
+                  </div>
+                </div>
+
+                <div className="mt-6 p-3 bg-green-500/10 border border-green-500/30 rounded-lg">
+                  <p className="text-xs text-slate-300">
+                    <span className="font-bold text-green-400">Total Accounted:</span> 100,000,000 AAIC
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="bg-gradient-to-r from-cyan-500/10 to-blue-500/10 border border-cyan-500/30 rounded-2xl p-8 lg:p-12 mt-8">
+            <h3 className="text-2xl font-bold text-white mb-6 flex items-center gap-2">
+              <Zap className="w-7 h-7 text-cyan-400" />
+              Multi-Chain Presence
+            </h3>
+
+            <div className="grid md:grid-cols-2 gap-8 mb-8">
+              <div>
+                <div className="flex items-center gap-2 mb-4">
+                  <div className="px-3 py-1 bg-green-500/20 text-green-400 rounded-full text-sm font-bold">
+                    V1 LAUNCH
+                  </div>
+                  <span className="text-sm text-slate-400">Pre-Airdrop</span>
+                </div>
+                <div className="space-y-3">
+                  <div className="flex items-start gap-3 p-3 bg-slate-800/50 border border-slate-700 rounded-lg">
+                    <CheckCircle2 className="w-5 h-5 text-green-400 flex-shrink-0 mt-0.5" />
+                    <div>
+                      <div className="font-bold text-white">BNB Chain</div>
+                      <p className="text-xs text-slate-400">Canonical (source of truth, governance, treasury)</p>
+                    </div>
+                  </div>
+                  <div className="flex items-start gap-3 p-3 bg-slate-800/50 border border-slate-700 rounded-lg">
+                    <CheckCircle2 className="w-5 h-5 text-green-400 flex-shrink-0 mt-0.5" />
+                    <div>
+                      <div className="font-bold text-white">Base</div>
+                      <p className="text-xs text-slate-400">Retail + builder adoption</p>
+                    </div>
+                  </div>
+                  <div className="flex items-start gap-3 p-3 bg-slate-800/50 border border-slate-700 rounded-lg">
+                    <CheckCircle2 className="w-5 h-5 text-green-400 flex-shrink-0 mt-0.5" />
+                    <div>
+                      <div className="font-bold text-white">Avalanche</div>
+                      <p className="text-xs text-slate-400">DeFi liquidity depth, institutional capital</p>
+                    </div>
+                  </div>
+                  <div className="flex items-start gap-3 p-3 bg-slate-800/50 border border-slate-700 rounded-lg">
+                    <CheckCircle2 className="w-5 h-5 text-green-400 flex-shrink-0 mt-0.5" />
+                    <div>
+                      <div className="font-bold text-white">Sui</div>
+                      <p className="text-xs text-slate-400">Next-gen / parallel execution narrative</p>
+                    </div>
+                  </div>
+                  <div className="flex items-start gap-3 p-3 bg-slate-800/50 border border-slate-700 rounded-lg">
+                    <CheckCircle2 className="w-5 h-5 text-green-400 flex-shrink-0 mt-0.5" />
+                    <div>
+                      <div className="font-bold text-white">Hyperliquid</div>
+                      <p className="text-xs text-slate-400">Trader-heavy audience (AI Traders integration)</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <div className="flex items-center gap-2 mb-4">
+                  <div className="px-3 py-1 bg-blue-500/20 text-blue-400 rounded-full text-sm font-bold">
+                    V2 EXPANSION
+                  </div>
+                  <span className="text-sm text-slate-400">Late 2026</span>
+                </div>
+                <div className="space-y-3 mb-6">
+                  <div className="flex items-start gap-3 p-3 bg-slate-800/30 border border-slate-600 rounded-lg opacity-70">
+                    <Clock className="w-5 h-5 text-blue-400 flex-shrink-0 mt-0.5" />
+                    <div>
+                      <div className="font-bold text-white">Optimism</div>
+                      <p className="text-xs text-slate-400">Ethereum alignment, governance & public goods</p>
+                    </div>
+                  </div>
+                  <div className="flex items-start gap-3 p-3 bg-slate-800/30 border border-slate-600 rounded-lg opacity-70">
+                    <Clock className="w-5 h-5 text-blue-400 flex-shrink-0 mt-0.5" />
+                    <div>
+                      <div className="font-bold text-white">Fantom</div>
+                      <p className="text-xs text-slate-400">DeFi-native users, cheap execution</p>
+                    </div>
+                  </div>
+                  <div className="flex items-start gap-3 p-3 bg-slate-800/30 border border-slate-600 rounded-lg opacity-70">
+                    <Clock className="w-5 h-5 text-blue-400 flex-shrink-0 mt-0.5" />
+                    <div>
+                      <div className="font-bold text-white">Solana</div>
+                      <p className="text-xs text-slate-400">High-performance, retail-friendly</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="bg-cyan-500/10 border border-cyan-500/30 rounded-lg p-4">
+                  <h4 className="text-sm font-bold text-white mb-2">Why This V1 Set?</h4>
+                  <ul className="space-y-1 text-xs text-slate-300">
+                    <li className="flex items-start gap-1">
+                      <span className="text-cyan-400">•</span>
+                      <span>Small (5 chains) → manageable security</span>
+                    </li>
+                    <li className="flex items-start gap-1">
+                      <span className="text-cyan-400">•</span>
+                      <span>Diverse narratives (execution, adoption, capital, future tech, traders)</span>
+                    </li>
+                    <li className="flex items-start gap-1">
+                      <span className="text-cyan-400">•</span>
+                      <span>No liquidity fragmentation</span>
+                    </li>
+                    <li className="flex items-start gap-1">
+                      <span className="text-cyan-400">•</span>
+                      <span>Easy to explain</span>
+                    </li>
+                    <li className="flex items-start gap-1">
+                      <span className="text-cyan-400">•</span>
+                      <span>Ahead of 95% of projects</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <div className="bg-slate-800/50 border border-slate-700 rounded-xl p-6">
+              <div className="flex items-start gap-3">
+                <Shield className="w-5 h-5 text-cyan-400 flex-shrink-0 mt-1" />
+                <div>
+                  <p className="text-sm text-slate-300">
+                    <span className="font-bold text-white">Cross-Chain Architecture:</span> All non-BNB chains use Axelar representations. BNB Chain remains the sole governance chain through 2026. Cross-chain governance is optional for late 2026 consideration.
+                  </p>
+                </div>
               </div>
             </div>
           </div>
@@ -121,28 +454,28 @@ export default function Tokenomics() {
 
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
               <VestingCard
-                title="Founding Team (10%)"
-                items={['12-month cliff', 'Linear vesting over 36 months', 'Total lock: 48 months']}
+                title="Team (16%)"
+                items={['36 months linear vesting', 'No cliff', 'Total: 16,000,000 AAIC']}
               />
               <VestingCard
-                title="Contributors (5%)"
-                items={['6-month cliff', 'Linear vesting over 24 months', 'Total lock: 30 months']}
+                title="Advisors (3%)"
+                items={['12 months linear vesting', 'No cliff', 'Total: 3,000,000 AAIC']}
               />
               <VestingCard
-                title="Treasury (20%)"
-                items={['Fully locked', 'Usage only via governance vote', 'No team access']}
+                title="Early / Private Investors (8%)"
+                items={['No vesting - Immediate unlocking', 'Public wallet labeling for transparency', 'Total: 8,000,000 AAIC']}
               />
               <VestingCard
-                title="Strategic Reserve (10%)"
-                items={['Fully locked', 'Released only via governance', 'Partnership allocation']}
+                title="Treasury (15%)"
+                items={['Fully locked', 'Usage only via governance vote', 'Total: 15,000,000 AAIC']}
               />
               <VestingCard
-                title="Community (30%)"
-                items={['No lockup', 'Airdrop + usage rewards', 'Immediate circulation']}
+                title="Airdrop (8%)"
+                items={['No lockup', '100% unlocked at claim', 'Total: 8,000,000 AAIC']}
               />
               <VestingCard
-                title="Staking Pool (20%)"
-                items={['Emissions over 4 years', 'Smart contract controlled', 'Automatic distribution']}
+                title="U2E + Staking Pools (37%)"
+                items={['Emissions over 4 years', 'Smart contract controlled', 'Total: 37,000,000 AAIC']}
               />
             </div>
           </div>
@@ -151,81 +484,150 @@ export default function Tokenomics() {
         <section className="bg-gradient-to-br from-cyan-500/10 to-blue-500/10 border border-cyan-500/30 rounded-2xl p-8 lg:p-12">
           <h2 className="text-3xl font-bold text-white mb-6 text-center flex items-center justify-center gap-3">
             <Zap className="w-8 h-8 text-cyan-400" />
-            Use-to-Earn (U2E) Distribution
+            Points-Based Use-to-Earn Distribution
           </h2>
 
-          <p className="text-center text-slate-300 mb-10 max-w-2xl mx-auto">
-            Part of the community allocation rewards genuine ecosystem usage through our innovative U2E system
+          <p className="text-center text-slate-300 mb-10 max-w-3xl mx-auto">
+            Users earn points for actions across ecosystem platforms. Monthly AAIC distribution is based on your share of total points earned.
           </p>
 
-          <div className="grid md:grid-cols-2 gap-8 mb-8">
-            <div className="bg-slate-800/50 border border-slate-700 rounded-xl p-6">
-              <h3 className="text-xl font-bold text-white mb-4">What is Use-to-Earn?</h3>
-              <p className="text-slate-300 mb-4">
-                U2E distributes AAIC tokens to users based on their actual usage of ecosystem products:
-                AI Traders, AI Business Factory, and AI Web Dev.
-              </p>
-              <div className="space-y-2">
-                <div className="flex items-start gap-2">
-                  <CheckCircle2 className="w-5 h-5 text-cyan-400 flex-shrink-0 mt-0.5" />
-                  <span className="text-sm text-slate-300">Earn by trading with AI Traders</span>
+          <div className="bg-slate-800/50 border border-slate-700 rounded-xl p-8 mb-8">
+            <h3 className="text-xl font-bold text-white mb-6 text-center">Core Formula</h3>
+            <div className="bg-slate-900/50 rounded-lg p-6 mb-6">
+              <div className="text-center space-y-4">
+                <div className="text-2xl font-mono text-cyan-400">
+                  User Reward = (User Points / Total Points) × Monthly U2E Budget
                 </div>
-                <div className="flex items-start gap-2">
-                  <CheckCircle2 className="w-5 h-5 text-cyan-400 flex-shrink-0 mt-0.5" />
-                  <span className="text-sm text-slate-300">Earn by creating businesses</span>
-                </div>
-                <div className="flex items-start gap-2">
-                  <CheckCircle2 className="w-5 h-5 text-cyan-400 flex-shrink-0 mt-0.5" />
-                  <span className="text-sm text-slate-300">Earn by building with AI Web Dev</span>
+                <div className="text-lg text-slate-400">
+                  Monthly U2E Budget: <span className="text-white font-bold">458,333 AAIC</span> (22M over 48 months)
                 </div>
               </div>
             </div>
 
-            <div className="bg-slate-800/50 border border-slate-700 rounded-xl p-6">
-              <h3 className="text-xl font-bold text-white mb-4">Three-Phase Model</h3>
-              <div className="space-y-4">
-                <div>
-                  <div className="flex items-center gap-2 mb-2">
-                    <div className="px-2 py-1 bg-cyan-500/20 text-cyan-400 rounded text-xs font-bold">PHASE 1</div>
-                    <span className="text-sm font-medium text-white">Years 0-2</span>
+            <div className="bg-gradient-to-r from-cyan-500/10 to-blue-500/10 border border-cyan-500/30 rounded-lg p-6">
+              <h4 className="font-bold text-white mb-4">Example Calculation</h4>
+              <div className="grid md:grid-cols-2 gap-6 text-sm">
+                <div className="space-y-2">
+                  <div className="flex justify-between text-slate-300">
+                    <span>Monthly budget:</span>
+                    <span className="font-mono text-white">458,333 AAIC</span>
                   </div>
-                  <p className="text-sm text-slate-400">Fixed token supply rewards</p>
+                  <div className="flex justify-between text-slate-300">
+                    <span>Total points issued:</span>
+                    <span className="font-mono text-white">1,000,000,000</span>
+                  </div>
+                  <div className="flex justify-between text-slate-300">
+                    <span>Your points earned:</span>
+                    <span className="font-mono text-cyan-400">10,000,000</span>
+                  </div>
                 </div>
-                <div>
-                  <div className="flex items-center gap-2 mb-2">
-                    <div className="px-2 py-1 bg-blue-500/20 text-blue-400 rounded text-xs font-bold">PHASE 2</div>
-                    <span className="text-sm font-medium text-white">Years 2-4</span>
+                <div className="space-y-2">
+                  <div className="flex justify-between text-slate-300">
+                    <span>Your share:</span>
+                    <span className="font-mono text-cyan-400">1% of total</span>
                   </div>
-                  <p className="text-sm text-slate-400">Hybrid transition model</p>
-                </div>
-                <div>
-                  <div className="flex items-center gap-2 mb-2">
-                    <div className="px-2 py-1 bg-green-500/20 text-green-400 rounded text-xs font-bold">PHASE 3</div>
-                    <span className="text-sm font-medium text-white">Year 4+</span>
+                  <div className="flex justify-between items-center text-slate-300 pt-2 border-t border-slate-700">
+                    <span className="font-bold text-white">Your reward:</span>
+                    <span className="font-mono text-2xl text-green-400">4,583 AAIC</span>
                   </div>
-                  <p className="text-sm text-slate-400">100% revenue-backed rewards</p>
                 </div>
               </div>
             </div>
           </div>
 
-          <div className="bg-slate-800/50 border border-slate-700 rounded-xl p-6 mb-6">
-            <h3 className="text-xl font-bold text-white mb-4">How It Works</h3>
-            <div className="grid md:grid-cols-3 gap-6">
-              <div>
-                <div className="w-10 h-10 bg-cyan-600 rounded-full flex items-center justify-center text-white font-bold mb-3">1</div>
-                <h4 className="font-bold text-white mb-2">Use Products</h4>
-                <p className="text-sm text-slate-400">Use any ecosystem platform for legitimate purposes</p>
+          <div className="grid md:grid-cols-2 gap-8 mb-8">
+            <div className="bg-slate-800/50 border border-slate-700 rounded-xl p-6">
+              <h3 className="text-xl font-bold text-white mb-4">Why Points vs Fixed Rates?</h3>
+              <div className="space-y-3">
+                <div className="flex items-start gap-2">
+                  <CheckCircle2 className="w-5 h-5 text-green-400 flex-shrink-0 mt-0.5" />
+                  <div>
+                    <div className="font-semibold text-white text-sm">Scales Infinitely</div>
+                    <p className="text-xs text-slate-400">Works even with 10M users</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-2">
+                  <CheckCircle2 className="w-5 h-5 text-green-400 flex-shrink-0 mt-0.5" />
+                  <div>
+                    <div className="font-semibold text-white text-sm">Fair Relative Rewards</div>
+                    <p className="text-xs text-slate-400">Regardless of participation level</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-2">
+                  <CheckCircle2 className="w-5 h-5 text-green-400 flex-shrink-0 mt-0.5" />
+                  <div>
+                    <div className="font-semibold text-white text-sm">Flexible Action Weighting</div>
+                    <p className="text-xs text-slate-400">Adjusted by governance</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-2">
+                  <CheckCircle2 className="w-5 h-5 text-green-400 flex-shrink-0 mt-0.5" />
+                  <div>
+                    <div className="font-semibold text-white text-sm">Anti-Farm Protections</div>
+                    <p className="text-xs text-slate-400">Dynamic caps prevent abuse</p>
+                  </div>
+                </div>
               </div>
-              <div>
-                <div className="w-10 h-10 bg-cyan-600 rounded-full flex items-center justify-center text-white font-bold mb-3">2</div>
-                <h4 className="font-bold text-white mb-2">Earn Automatically</h4>
-                <p className="text-sm text-slate-400">Rewards accrue in real-time based on your actions</p>
+            </div>
+
+            <div className="bg-slate-800/50 border border-slate-700 rounded-xl p-6">
+              <h3 className="text-xl font-bold text-white mb-4">Action Categories (Examples)</h3>
+              <div className="space-y-3 text-sm">
+                <div className="flex justify-between items-center">
+                  <span className="text-slate-300">Trading on AI Traders</span>
+                  <span className="font-mono text-cyan-400">100 pts/trade</span>
+                </div>
+                <div className="flex justify-between items-center">
+                  <span className="text-slate-300">Business creation</span>
+                  <span className="font-mono text-cyan-400">5,000 pts</span>
+                </div>
+                <div className="flex justify-between items-center">
+                  <span className="text-slate-300">Governance voting</span>
+                  <span className="font-mono text-cyan-400">500 pts/vote</span>
+                </div>
+                <div className="flex justify-between items-center">
+                  <span className="text-slate-300">Platform usage</span>
+                  <span className="font-mono text-cyan-400">Variable</span>
+                </div>
               </div>
-              <div>
-                <div className="w-10 h-10 bg-cyan-600 rounded-full flex items-center justify-center text-white font-bold mb-3">3</div>
-                <h4 className="font-bold text-white mb-2">Claim Rewards</h4>
-                <p className="text-sm text-slate-400">Claim accumulated tokens when system goes live</p>
+
+              <div className="mt-4 p-3 bg-yellow-500/10 border border-yellow-500/30 rounded-lg">
+                <p className="text-xs text-slate-300">
+                  <span className="font-bold text-yellow-400">Note:</span> Point values are subject to governance adjustment to maintain balance.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div className="bg-slate-800/50 border border-slate-700 rounded-xl p-6 mb-8">
+            <h3 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
+              <Shield className="w-6 h-6 text-orange-400" />
+              Anti-Abuse Protections
+            </h3>
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+              <div className="p-3 bg-slate-900/50 rounded-lg">
+                <div className="font-semibold text-white text-sm mb-1">Hard Caps</div>
+                <p className="text-xs text-slate-400">Per action category limits</p>
+              </div>
+              <div className="p-3 bg-slate-900/50 rounded-lg">
+                <div className="font-semibold text-white text-sm mb-1">Point Decay</div>
+                <p className="text-xs text-slate-400">On repetitive actions</p>
+              </div>
+              <div className="p-3 bg-slate-900/50 rounded-lg">
+                <div className="font-semibold text-white text-sm mb-1">Daily Maximums</div>
+                <p className="text-xs text-slate-400">Per-wallet point caps</p>
+              </div>
+              <div className="p-3 bg-slate-900/50 rounded-lg">
+                <div className="font-semibold text-white text-sm mb-1">Idempotency Keys</div>
+                <p className="text-xs text-slate-400">Prevent duplicate claims</p>
+              </div>
+              <div className="p-3 bg-slate-900/50 rounded-lg">
+                <div className="font-semibold text-white text-sm mb-1">Rate Limiting</div>
+                <p className="text-xs text-slate-400">Action frequency controls</p>
+              </div>
+              <div className="p-3 bg-slate-900/50 rounded-lg">
+                <div className="font-semibold text-white text-sm mb-1">Anomaly Detection</div>
+                <p className="text-xs text-slate-400">AI-powered review system</p>
               </div>
             </div>
           </div>
@@ -242,67 +644,148 @@ export default function Tokenomics() {
         </section>
 
         <section>
-          <h2 className="text-3xl font-bold text-white mb-8 text-center">Emissions & Staking</h2>
+          <h2 className="text-3xl font-bold text-white mb-8 text-center">Staking Rewards - Full Math & Emissions</h2>
 
           <div className="space-y-8">
             <div className="bg-gradient-to-r from-green-500/10 to-cyan-500/10 border border-green-500/30 rounded-2xl p-8 lg:p-12">
               <div className="flex items-center gap-3 mb-6">
-                <div className="px-4 py-2 bg-green-500/20 text-green-400 rounded-full text-sm font-bold">
-                  PHASE 1
+                <Coins className="w-8 h-8 text-green-400" />
+                <div>
+                  <h3 className="text-2xl font-bold text-white">Staking Pool: 15,000,000 AAIC over 48 months</h3>
+                  <p className="text-slate-400 text-sm">Tapered emission schedule for sustainable rewards</p>
                 </div>
-                <h3 className="text-2xl font-bold text-white">Bootstrap Phase (Years 1–4)</h3>
               </div>
 
-              <div className="grid md:grid-cols-2 gap-8 mb-6">
-                <div>
-                  <h4 className="text-lg font-bold text-white mb-4">Staking Rewards Pool</h4>
+              <div className="grid md:grid-cols-2 gap-8 mb-8">
+                <div className="bg-slate-800/50 border border-slate-700 rounded-lg p-6">
+                  <h4 className="text-lg font-bold text-white mb-4">Tapered Emission Schedule</h4>
                   <div className="space-y-3">
-                    <div className="flex justify-between text-slate-300">
-                      <span>Total Pool:</span>
-                      <span className="font-bold text-white">200,000,000 AAIC</span>
+                    <div className="flex justify-between items-center p-3 bg-slate-900/50 rounded">
+                      <div>
+                        <div className="text-white font-semibold">Year 1</div>
+                        <div className="text-xs text-slate-400">30% of pool</div>
+                      </div>
+                      <div className="text-right">
+                        <div className="text-green-400 font-bold">4,500,000</div>
+                        <div className="text-xs text-slate-500">375k/month</div>
+                      </div>
                     </div>
-                    <div className="flex justify-between text-slate-300">
-                      <span>Distribution Period:</span>
-                      <span className="font-bold text-white">4 Years</span>
+                    <div className="flex justify-between items-center p-3 bg-slate-900/50 rounded">
+                      <div>
+                        <div className="text-white font-semibold">Year 2</div>
+                        <div className="text-xs text-slate-400">25% of pool</div>
+                      </div>
+                      <div className="text-right">
+                        <div className="text-cyan-400 font-bold">3,750,000</div>
+                        <div className="text-xs text-slate-500">312.5k/month</div>
+                      </div>
                     </div>
-                    <div className="flex justify-between text-slate-300">
-                      <span>Average Yearly Emission:</span>
-                      <span className="font-bold text-white">50,000,000 AAIC</span>
+                    <div className="flex justify-between items-center p-3 bg-slate-900/50 rounded">
+                      <div>
+                        <div className="text-white font-semibold">Year 3</div>
+                        <div className="text-xs text-slate-400">25% of pool</div>
+                      </div>
+                      <div className="text-right">
+                        <div className="text-cyan-400 font-bold">3,750,000</div>
+                        <div className="text-xs text-slate-500">312.5k/month</div>
+                      </div>
+                    </div>
+                    <div className="flex justify-between items-center p-3 bg-slate-900/50 rounded">
+                      <div>
+                        <div className="text-white font-semibold">Year 4</div>
+                        <div className="text-xs text-slate-400">20% of pool</div>
+                      </div>
+                      <div className="text-right">
+                        <div className="text-blue-400 font-bold">3,000,000</div>
+                        <div className="text-xs text-slate-500">250k/month</div>
+                      </div>
                     </div>
                   </div>
                 </div>
 
                 <div className="bg-slate-800/50 border border-slate-700 rounded-lg p-6">
-                  <div className="flex items-start gap-3 mb-4">
-                    <AlertTriangle className="w-5 h-5 text-yellow-400 flex-shrink-0 mt-1" />
-                    <div>
-                      <h4 className="font-bold text-white mb-2">APY Is NOT Fixed</h4>
-                      <p className="text-sm text-slate-300">
-                        APY depends on total tokens staked, remaining emissions, and time elapsed.
-                        Early APY will be high and naturally decreases.
-                      </p>
+                  <h4 className="text-lg font-bold text-white mb-4">Combined User Rewards Outflow</h4>
+                  <p className="text-sm text-slate-400 mb-4">U2E + Staking combined distribution per month:</p>
+                  <div className="space-y-3">
+                    <div className="p-3 bg-green-500/10 border border-green-500/30 rounded">
+                      <div className="text-sm text-slate-300 mb-1">Year 1</div>
+                      <div className="text-2xl font-bold text-green-400">833,333 AAIC/month</div>
+                      <div className="text-xs text-slate-500">458k U2E + 375k Staking</div>
+                    </div>
+                    <div className="p-3 bg-blue-500/10 border border-blue-500/30 rounded">
+                      <div className="text-sm text-slate-300 mb-1">Year 4</div>
+                      <div className="text-2xl font-bold text-blue-400">708,333 AAIC/month</div>
+                      <div className="text-xs text-slate-500">458k U2E + 250k Staking</div>
                     </div>
                   </div>
                 </div>
               </div>
 
               <div className="bg-slate-800/50 border border-slate-700 rounded-lg p-6">
-                <h4 className="font-bold text-white mb-4">APY Examples (Illustrative)</h4>
-                <div className="grid sm:grid-cols-2 gap-4">
+                <h4 className="font-bold text-white mb-4 flex items-center gap-2">
+                  <BarChart3 className="w-5 h-5 text-cyan-400" />
+                  APY Mathematics (Market-Based)
+                </h4>
+                <p className="text-sm text-slate-400 mb-4">
+                  Annual staking rewards in Year 1 = 4,500,000 AAIC
+                </p>
+                <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
                   <div className="bg-slate-900/50 rounded-lg p-4">
-                    <div className="text-sm text-slate-400 mb-2">If 200M tokens staked</div>
-                    <div className="text-2xl font-bold text-green-400">~25% APY</div>
-                    <div className="text-xs text-slate-500 mt-1">Year 1 estimate</div>
+                    <div className="text-xs text-slate-400 mb-1">10M staked</div>
+                    <div className="text-xl font-bold text-green-400">≈45% APY</div>
                   </div>
                   <div className="bg-slate-900/50 rounded-lg p-4">
-                    <div className="text-sm text-slate-400 mb-2">If 400M tokens staked</div>
-                    <div className="text-2xl font-bold text-cyan-400">~12.5% APY</div>
-                    <div className="text-xs text-slate-500 mt-1">Year 1 estimate</div>
+                    <div className="text-xs text-slate-400 mb-1">20M staked</div>
+                    <div className="text-xl font-bold text-cyan-400">≈22.5% APY</div>
+                  </div>
+                  <div className="bg-slate-900/50 rounded-lg p-4">
+                    <div className="text-xs text-slate-400 mb-1">30M staked</div>
+                    <div className="text-xl font-bold text-blue-400">≈15% APY</div>
+                  </div>
+                  <div className="bg-slate-900/50 rounded-lg p-4">
+                    <div className="text-xs text-slate-400 mb-1">45M staked</div>
+                    <div className="text-xl font-bold text-purple-400">≈10% APY</div>
                   </div>
                 </div>
-                <p className="text-sm text-slate-400 mt-4 italic">
-                  No magic. No lies. APY is purely mathematical based on supply and demand.
-                </p>
+
+                <div className="p-4 bg-cyan-500/10 border border-cyan-500/30 rounded-lg mb-4">
+                  <p className="text-sm text-white font-semibold mb-2">Target APY Band: 10-15% with healthy staking participation</p>
+                  <p className="text-xs text-slate-400">Market will naturally find equilibrium based on supply and demand</p>
+                </div>
+
+                <div className="p-4 bg-yellow-500/10 border border-yellow-500/30 rounded-lg">
+                  <div className="flex items-start gap-2">
+                    <AlertTriangle className="w-5 h-5 text-yellow-400 flex-shrink-0 mt-0.5" />
+                    <div>
+                      <p className="text-sm font-bold text-yellow-400 mb-1">APY is NOT fixed</p>
+                      <p className="text-xs text-slate-300">
+                        Actual yields depend on: Total tokens staked • Remaining emissions in pool • Time elapsed in emission schedule • Market conditions
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="bg-gradient-to-r from-cyan-500/10 to-blue-500/10 border border-cyan-500/30 rounded-lg p-6 mt-6">
+                <h4 className="font-bold text-white mb-3">Why This Works</h4>
+                <div className="grid md:grid-cols-2 gap-4 text-sm">
+                  <div className="flex items-start gap-2">
+                    <CheckCircle2 className="w-5 h-5 text-green-400 flex-shrink-0 mt-0.5" />
+                    <span className="text-slate-300">Honest math - no promises we can't keep</span>
+                  </div>
+                  <div className="flex items-start gap-2">
+                    <CheckCircle2 className="w-5 h-5 text-green-400 flex-shrink-0 mt-0.5" />
+                    <span className="text-slate-300">Decreases naturally as intended</span>
+                  </div>
+                  <div className="flex items-start gap-2">
+                    <CheckCircle2 className="w-5 h-5 text-green-400 flex-shrink-0 mt-0.5" />
+                    <span className="text-slate-300">Market finds equilibrium APY</span>
+                  </div>
+                  <div className="flex items-start gap-2">
+                    <CheckCircle2 className="w-5 h-5 text-green-400 flex-shrink-0 mt-0.5" />
+                    <span className="text-slate-300">Sustainable through emissions period</span>
+                  </div>
+                </div>
               </div>
             </div>
 
@@ -387,74 +870,131 @@ export default function Tokenomics() {
         </section>
 
         <section className="bg-slate-800/30 backdrop-blur border border-slate-700 rounded-2xl p-8 lg:p-12">
-          <h2 className="text-3xl font-bold text-white mb-8 text-center">Revenue Distribution Model</h2>
+          <h2 className="text-3xl font-bold text-white mb-8 text-center">Revenue Distribution Model (Post-Business Costs)</h2>
 
-          <p className="text-center text-slate-300 mb-8 max-w-2xl mx-auto">
-            Monthly net revenue is distributed according to this target model, ensuring balanced
-            growth, sustainability, and value accrual.
+          <p className="text-center text-slate-300 mb-8 max-w-3xl mx-auto">
+            After operational expenses are paid, net profit is allocated according to this model. Simple, strong, and marketable.
           </p>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-            <RevenueCard
-              icon={<Users className="w-8 h-8 text-cyan-400" />}
-              label="Stakers"
-              percent={35}
-              description="Direct rewards to token stakers"
-            />
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
             <RevenueCard
               icon={<Coins className="w-8 h-8 text-blue-400" />}
-              label="Ecosystem Treasury"
+              label="Treasury"
               percent={25}
               description="Long-term sustainability fund"
             />
             <RevenueCard
               icon={<TrendingUp className="w-8 h-8 text-green-400" />}
-              label="Token Buybacks"
-              percent={20}
+              label="Buyback"
+              percent={15}
               description="Market support and demand creation"
             />
             <RevenueCard
               icon={<Flame className="w-8 h-8 text-orange-400" />}
-              label="Burns"
-              percent={10}
-              description="Deflationary mechanism"
+              label="Burn"
+              percent={15}
+              description="Until 21M target, then redirected"
+            />
+            <RevenueCard
+              icon={<Users className="w-8 h-8 text-cyan-400" />}
+              label="Staking Support"
+              percent={15}
+              description="Buyback for staking rewards"
+            />
+            <RevenueCard
+              icon={<Zap className="w-8 h-8 text-yellow-400" />}
+              label="Use-to-Earn Support"
+              percent={15}
+              description="Buyback for U2E rewards"
             />
             <RevenueCard
               icon={<Target className="w-8 h-8 text-purple-400" />}
-              label="Proposers + Voters"
-              percent={10}
-              description="Governance participation rewards"
+              label="Variable Bucket"
+              percent={15}
+              description="Governance-adjustable initiatives"
             />
-            <div className="bg-slate-700/30 border border-slate-600 rounded-xl p-6 flex items-center justify-center">
-              <div className="text-center">
-                <div className="text-3xl font-bold text-white mb-2">100%</div>
-                <div className="text-sm text-slate-400">Total Distribution</div>
+          </div>
+
+          <div className="bg-gradient-to-r from-cyan-500/10 to-blue-500/10 border border-cyan-500/30 rounded-xl p-6 mb-6">
+            <h4 className="font-bold text-white mb-4 flex items-center gap-2">
+              <DollarSign className="w-5 h-5 text-green-400" />
+              Revenue Flow
+            </h4>
+            <div className="flex items-center gap-2 text-sm text-slate-300 flex-wrap justify-center">
+              <span className="px-3 py-1 bg-slate-800 rounded font-semibold">Business Revenue</span>
+              <ArrowRight className="w-4 h-4 text-cyan-400" />
+              <span className="px-3 py-1 bg-slate-800 rounded font-semibold">Operational Costs</span>
+              <ArrowRight className="w-4 h-4 text-cyan-400" />
+              <span className="px-3 py-1 bg-green-500/20 text-green-400 rounded font-bold">Net Profit</span>
+              <ArrowRight className="w-4 h-4 text-cyan-400" />
+              <span className="px-3 py-1 bg-cyan-500/20 text-cyan-400 rounded font-bold">6 Allocation Buckets</span>
+              <ArrowRight className="w-4 h-4 text-cyan-400" />
+              <span className="px-3 py-1 bg-blue-500/20 text-blue-400 rounded font-bold">Token Economy</span>
+            </div>
+          </div>
+
+          <div className="bg-yellow-500/10 border border-yellow-500/30 rounded-lg p-6 mb-6">
+            <h4 className="font-bold text-yellow-400 mb-3 flex items-center gap-2">
+              <AlertTriangle className="w-5 h-5" />
+              Fixed Base Allocations (85%)
+            </h4>
+            <p className="text-sm text-slate-300 mb-3">
+              85% of revenue split is fixed to prevent over-allocation to any single bucket:
+            </p>
+            <div className="grid sm:grid-cols-2 gap-2 text-sm">
+              <div className="flex justify-between p-2 bg-slate-900/50 rounded">
+                <span className="text-slate-300">Buyback</span>
+                <span className="font-mono text-white">15%</span>
+              </div>
+              <div className="flex justify-between p-2 bg-slate-900/50 rounded">
+                <span className="text-slate-300">Burn</span>
+                <span className="font-mono text-white">15%</span>
+              </div>
+              <div className="flex justify-between p-2 bg-slate-900/50 rounded">
+                <span className="text-slate-300">Staking Support</span>
+                <span className="font-mono text-white">15%</span>
+              </div>
+              <div className="flex justify-between p-2 bg-slate-900/50 rounded">
+                <span className="text-slate-300">U2E Support</span>
+                <span className="font-mono text-white">15%</span>
+              </div>
+              <div className="flex justify-between p-2 bg-slate-900/50 rounded col-span-2">
+                <span className="text-slate-300">Treasury</span>
+                <span className="font-mono text-white">25%</span>
               </div>
             </div>
           </div>
 
           <div className="bg-cyan-500/10 border border-cyan-500/30 rounded-lg p-6">
-            <h4 className="font-bold text-white mb-3">Why This Works</h4>
+            <h4 className="font-bold text-white mb-3">Why This Model Works</h4>
             <div className="grid sm:grid-cols-2 gap-4 text-sm text-slate-300">
               <div className="flex items-start gap-2">
-                <CheckCircle2 className="w-4 h-4 text-cyan-400 flex-shrink-0 mt-0.5" />
-                <span>Buybacks + burns create deflation</span>
+                <CheckCircle2 className="w-4 h-4 text-green-400 flex-shrink-0 mt-0.5" />
+                <span>Simple, strong, marketable structure</span>
               </div>
               <div className="flex items-start gap-2">
-                <CheckCircle2 className="w-4 h-4 text-cyan-400 flex-shrink-0 mt-0.5" />
-                <span>Treasury ensures long-term longevity</span>
+                <CheckCircle2 className="w-4 h-4 text-green-400 flex-shrink-0 mt-0.5" />
+                <span>Fixed minimums prevent over-allocation</span>
               </div>
               <div className="flex items-start gap-2">
-                <CheckCircle2 className="w-4 h-4 text-cyan-400 flex-shrink-0 mt-0.5" />
-                <span>Rewards stay proportional to success</span>
+                <CheckCircle2 className="w-4 h-4 text-green-400 flex-shrink-0 mt-0.5" />
+                <span>Burn budget continues until 21M target</span>
               </div>
               <div className="flex items-start gap-2">
-                <CheckCircle2 className="w-4 h-4 text-cyan-400 flex-shrink-0 mt-0.5" />
-                <span>No insane 70% burn rate</span>
+                <CheckCircle2 className="w-4 h-4 text-green-400 flex-shrink-0 mt-0.5" />
+                <span>After burn target: 15% redirected by governance</span>
+              </div>
+              <div className="flex items-start gap-2">
+                <CheckCircle2 className="w-4 h-4 text-green-400 flex-shrink-0 mt-0.5" />
+                <span>Variable bucket allows adaptation</span>
+              </div>
+              <div className="flex items-start gap-2">
+                <CheckCircle2 className="w-4 h-4 text-green-400 flex-shrink-0 mt-0.5" />
+                <span>Staking + U2E = 30% for perpetual rewards</span>
               </div>
             </div>
             <p className="mt-4 text-sm text-slate-400 italic">
-              Governance can fine-tune percentages within safe bounds to adapt to market conditions.
+              After burn target is reached, the 15% burn allocation will likely be redirected to additional staking/U2E rewards via governance vote.
             </p>
           </div>
         </section>
@@ -477,7 +1017,7 @@ export default function Tokenomics() {
                 <ProcessStep
                   number="2"
                   title="Allocation"
-                  description="20% allocated to buyback program"
+                  description="15% allocated to buyback program"
                 />
                 <ProcessStep
                   number="3"
@@ -501,9 +1041,9 @@ export default function Tokenomics() {
                 <div className="flex items-start gap-3">
                   <CheckCircle2 className="w-5 h-5 text-cyan-400 flex-shrink-0 mt-1" />
                   <div>
-                    <div className="font-bold text-white mb-1">10% Direct Burns</div>
+                    <div className="font-bold text-white mb-1">15% Direct Burns</div>
                     <div className="text-sm text-slate-300">
-                      10% of revenue goes to immediate token burns
+                      15% of net profit used to buy AAIC and burn until 21M target
                     </div>
                   </div>
                 </div>
@@ -531,22 +1071,238 @@ export default function Tokenomics() {
                 <h4 className="text-sm font-bold text-slate-400 mb-3">Tracked Metrics</h4>
                 <div className="space-y-2 text-sm">
                   <div className="flex justify-between text-slate-300">
-                    <span>Total Supply</span>
-                    <span className="font-mono text-white">1,000,000,000</span>
+                    <span>Max Supply</span>
+                    <span className="font-mono text-white">100,000,000</span>
                   </div>
                   <div className="flex justify-between text-slate-300">
-                    <span>Circulating Supply</span>
-                    <span className="font-mono text-cyan-400">Live Data</span>
+                    <span>Burn Target</span>
+                    <span className="font-mono text-orange-400">21,000,000</span>
                   </div>
                   <div className="flex justify-between text-slate-300">
                     <span>Total Burned</span>
                     <span className="font-mono text-orange-400">Live Data</span>
                   </div>
                   <div className="flex justify-between text-slate-300">
-                    <span>Revenue Backing/Token</span>
-                    <span className="font-mono text-green-400">Live Data</span>
+                    <span>Circulating Supply</span>
+                    <span className="font-mono text-cyan-400">Live Data</span>
                   </div>
                 </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section className="bg-gradient-to-r from-green-500/10 to-cyan-500/10 border border-green-500/30 rounded-2xl p-8 lg:p-12">
+          <h2 className="text-3xl font-bold text-white mb-8 text-center flex items-center justify-center gap-3">
+            <DollarSign className="w-8 h-8 text-green-400" />
+            Revenue Requirements for Perpetual Rewards (After Year 4)
+          </h2>
+
+          <p className="text-center text-slate-300 mb-8 max-w-3xl mx-auto">
+            After 4 years, emissions end. Rewards are funded entirely by revenue buybacks. Here's the transparent, honest math.
+          </p>
+
+          <div className="bg-slate-800/50 border border-slate-700 rounded-xl p-8 mb-8">
+            <div className="text-center mb-6">
+              <p className="text-lg text-slate-300 mb-4">
+                In revenue split: <span className="font-bold text-cyan-400">Staking (15%) + U2E (15%) = 30%</span> of net profit
+              </p>
+              <div className="bg-slate-900/50 rounded-lg p-6 mb-4">
+                <div className="text-xl font-mono text-cyan-400 mb-2">
+                  Required Profit = (Desired Monthly Token Distribution × Token Price) / 0.30
+                </div>
+              </div>
+            </div>
+
+            <h3 className="font-bold text-white mb-4 text-center">
+              To maintain Year-4 level distribution (708,333 AAIC/month):
+            </h3>
+
+            <div className="grid sm:grid-cols-2 gap-4 mb-6">
+              <div className="bg-gradient-to-br from-cyan-500/10 to-blue-500/10 border border-cyan-500/30 rounded-lg p-6">
+                <div className="text-center">
+                  <div className="text-sm text-slate-400 mb-2">If AAIC price is</div>
+                  <div className="text-3xl font-bold text-white mb-3">$0.25</div>
+                  <div className="text-sm text-slate-400 mb-1">Required monthly profit:</div>
+                  <div className="text-2xl font-bold text-green-400">$590,278</div>
+                </div>
+              </div>
+
+              <div className="bg-gradient-to-br from-cyan-500/10 to-blue-500/10 border border-cyan-500/30 rounded-lg p-6">
+                <div className="text-center">
+                  <div className="text-sm text-slate-400 mb-2">If AAIC price is</div>
+                  <div className="text-3xl font-bold text-white mb-3">$0.50</div>
+                  <div className="text-sm text-slate-400 mb-1">Required monthly profit:</div>
+                  <div className="text-2xl font-bold text-green-400">$1,180,556</div>
+                </div>
+              </div>
+
+              <div className="bg-gradient-to-br from-green-500/10 to-cyan-500/10 border border-green-500/30 rounded-lg p-6">
+                <div className="text-center">
+                  <div className="text-sm text-slate-400 mb-2">If AAIC price is</div>
+                  <div className="text-3xl font-bold text-white mb-3">$1.00</div>
+                  <div className="text-sm text-slate-400 mb-1">Required monthly profit:</div>
+                  <div className="text-2xl font-bold text-green-400">$2,361,111</div>
+                </div>
+              </div>
+
+              <div className="bg-gradient-to-br from-green-500/10 to-cyan-500/10 border border-green-500/30 rounded-lg p-6">
+                <div className="text-center">
+                  <div className="text-sm text-slate-400 mb-2">If AAIC price is</div>
+                  <div className="text-3xl font-bold text-white mb-3">$2.00</div>
+                  <div className="text-sm text-slate-400 mb-1">Required monthly profit:</div>
+                  <div className="text-2xl font-bold text-green-400">$4,722,222</div>
+                </div>
+              </div>
+            </div>
+
+            <div className="bg-cyan-500/10 border border-cyan-500/30 rounded-lg p-6">
+              <h4 className="font-bold text-white mb-3">Transparent, Honest Math</h4>
+              <div className="space-y-2 text-sm text-slate-300">
+                <div className="flex items-start gap-2">
+                  <CheckCircle2 className="w-5 h-5 text-green-400 flex-shrink-0 mt-0.5" />
+                  <span>Scales with token price: Higher price = more profit needed OR distribute fewer tokens</span>
+                </div>
+                <div className="flex items-start gap-2">
+                  <CheckCircle2 className="w-5 h-5 text-green-400 flex-shrink-0 mt-0.5" />
+                  <span>Always sustainable because backed by real revenue</span>
+                </div>
+                <div className="flex items-start gap-2">
+                  <CheckCircle2 className="w-5 h-5 text-green-400 flex-shrink-0 mt-0.5" />
+                  <span>Anyone can calculate and verify the economics</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="bg-slate-800/50 border border-slate-700 rounded-xl p-6">
+            <h3 className="font-bold text-white mb-4 flex items-center gap-2">
+              <Target className="w-6 h-6 text-cyan-400" />
+              Governance Flexibility
+            </h3>
+            <div className="grid md:grid-cols-2 gap-4 text-sm">
+              <div className="flex items-start gap-2">
+                <ArrowRight className="w-5 h-5 text-cyan-400 flex-shrink-0 mt-0.5" />
+                <span className="text-slate-300">Can adjust % of profit to rewards (currently 30%)</span>
+              </div>
+              <div className="flex items-start gap-2">
+                <ArrowRight className="w-5 h-5 text-cyan-400 flex-shrink-0 mt-0.5" />
+                <span className="text-slate-300">Can reduce token distribution if profit insufficient</span>
+              </div>
+              <div className="flex items-start gap-2">
+                <ArrowRight className="w-5 h-5 text-cyan-400 flex-shrink-0 mt-0.5" />
+                <span className="text-slate-300">Can increase if highly profitable</span>
+              </div>
+              <div className="flex items-start gap-2">
+                <ArrowRight className="w-5 h-5 text-cyan-400 flex-shrink-0 mt-0.5" />
+                <span className="text-slate-300">Always sustainable - no death spirals</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section className="bg-gradient-to-r from-orange-500/10 to-red-500/10 border border-orange-500/30 rounded-2xl p-8 lg:p-12">
+          <h2 className="text-3xl font-bold text-white mb-8 text-center flex items-center justify-center gap-3">
+            <Flame className="w-8 h-8 text-orange-400" />
+            Burn Target Timeline (21M AAIC)
+          </h2>
+
+          <p className="text-center text-slate-300 mb-8 max-w-3xl mx-auto">
+            Burn allocation: 15% of net profit used to buy AAIC and burn until 21M target is reached.
+          </p>
+
+          <div className="bg-slate-800/50 border border-slate-700 rounded-xl p-8 mb-8">
+            <h3 className="font-bold text-white mb-6 text-center">Core Formula</h3>
+            <div className="bg-slate-900/50 rounded-lg p-6 mb-6">
+              <div className="text-center space-y-3">
+                <div className="text-lg font-mono text-orange-400">
+                  Burn tokens per month = (0.15 × Monthly Profit) / AAIC Price
+                </div>
+                <div className="text-lg font-mono text-orange-400">
+                  Time to reach 21M = 21,000,000 / Monthly Burn Rate
+                </div>
+              </div>
+            </div>
+
+            <h3 className="font-bold text-white mb-4">Example Scenarios:</h3>
+
+            <div className="space-y-6">
+              <div className="bg-gradient-to-r from-cyan-500/10 to-blue-500/10 border border-cyan-500/30 rounded-lg p-6">
+                <div className="font-bold text-cyan-400 mb-3">If Monthly Profit = $1,000,000:</div>
+                <div className="grid sm:grid-cols-3 gap-4">
+                  <div className="text-center p-3 bg-slate-900/50 rounded">
+                    <div className="text-xs text-slate-400 mb-1">At $1.00/AAIC</div>
+                    <div className="text-sm font-bold text-white">150,000 burned/month</div>
+                    <div className="text-xs text-orange-400 mt-1">140 months (11.7 years)</div>
+                  </div>
+                  <div className="text-center p-3 bg-slate-900/50 rounded">
+                    <div className="text-xs text-slate-400 mb-1">At $0.50/AAIC</div>
+                    <div className="text-sm font-bold text-white">300,000 burned/month</div>
+                    <div className="text-xs text-orange-400 mt-1">70 months (5.8 years)</div>
+                  </div>
+                  <div className="text-center p-3 bg-slate-900/50 rounded">
+                    <div className="text-xs text-slate-400 mb-1">At $2.00/AAIC</div>
+                    <div className="text-sm font-bold text-white">75,000 burned/month</div>
+                    <div className="text-xs text-orange-400 mt-1">280 months (23.3 years)</div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="bg-gradient-to-r from-green-500/10 to-cyan-500/10 border border-green-500/30 rounded-lg p-6">
+                <div className="font-bold text-green-400 mb-3">If Monthly Profit = $2,000,000:</div>
+                <div className="grid sm:grid-cols-3 gap-4">
+                  <div className="text-center p-3 bg-slate-900/50 rounded">
+                    <div className="text-xs text-slate-400 mb-1">At $1.00/AAIC</div>
+                    <div className="text-sm font-bold text-white">300,000 burned/month</div>
+                    <div className="text-xs text-orange-400 mt-1">70 months (5.8 years)</div>
+                  </div>
+                  <div className="text-center p-3 bg-slate-900/50 rounded">
+                    <div className="text-xs text-slate-400 mb-1">At $0.50/AAIC</div>
+                    <div className="text-sm font-bold text-white">600,000 burned/month</div>
+                    <div className="text-xs text-orange-400 mt-1">35 months (2.9 years)</div>
+                  </div>
+                  <div className="text-center p-3 bg-slate-900/50 rounded">
+                    <div className="text-xs text-slate-400 mb-1">At $2.00/AAIC</div>
+                    <div className="text-sm font-bold text-white">150,000 burned/month</div>
+                    <div className="text-xs text-orange-400 mt-1">140 months (11.7 years)</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-6">
+            <div className="bg-slate-800/50 border border-slate-700 rounded-xl p-6">
+              <h3 className="font-bold text-white mb-4">Why Profit-Linked Burn Works</h3>
+              <div className="space-y-3 text-sm">
+                <div className="flex items-start gap-2">
+                  <CheckCircle2 className="w-5 h-5 text-green-400 flex-shrink-0 mt-0.5" />
+                  <span className="text-slate-300">Credible - tied to real revenue</span>
+                </div>
+                <div className="flex items-start gap-2">
+                  <CheckCircle2 className="w-5 h-5 text-green-400 flex-shrink-0 mt-0.5" />
+                  <span className="text-slate-300">Sustainable - doesn't promise unrealistic timelines</span>
+                </div>
+                <div className="flex items-start gap-2">
+                  <CheckCircle2 className="w-5 h-5 text-green-400 flex-shrink-0 mt-0.5" />
+                  <span className="text-slate-300">Transparent - anyone can calculate</span>
+                </div>
+                <div className="flex items-start gap-2">
+                  <CheckCircle2 className="w-5 h-5 text-green-400 flex-shrink-0 mt-0.5" />
+                  <span className="text-slate-300">No hype - honest about 5-15 year realistic timeline</span>
+                </div>
+              </div>
+            </div>
+
+            <div className="bg-gradient-to-r from-cyan-500/10 to-blue-500/10 border border-cyan-500/30 rounded-xl p-6">
+              <h3 className="font-bold text-white mb-4">After 21M Burned</h3>
+              <p className="text-sm text-slate-300 mb-4">
+                The 15% burn allocation redirects to governance-voted purposes.
+              </p>
+              <div className="p-3 bg-green-500/10 border border-green-500/30 rounded">
+                <p className="text-sm text-green-400 font-semibold">
+                  Most likely outcome: Additional staking/U2E rewards, increasing long-term APY and user rewards.
+                </p>
               </div>
             </div>
           </div>
@@ -634,11 +1390,11 @@ export default function Tokenomics() {
               <ul className="space-y-3">
                 <li className="flex items-start gap-2 text-slate-300">
                   <div className="w-1.5 h-1.5 bg-red-400 rounded-full mt-2 flex-shrink-0" />
-                  <span className="font-bold">Max supply of 1,000,000,000 tokens</span>
+                  <span className="font-bold">Max supply of 100,000,000 AAIC</span>
                 </li>
                 <li className="flex items-start gap-2 text-slate-300">
                   <div className="w-1.5 h-1.5 bg-red-400 rounded-full mt-2 flex-shrink-0" />
-                  <span className="font-bold">Mint new tokens beyond cap</span>
+                  <span className="font-bold">Mint any new tokens (minting permanently disabled at deployment)</span>
                 </li>
                 <li className="flex items-start gap-2 text-slate-300">
                   <div className="w-1.5 h-1.5 bg-red-400 rounded-full mt-2 flex-shrink-0" />

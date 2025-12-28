@@ -137,7 +137,10 @@ export function Navigation({ onConnectWallet }: NavigationProps) {
           <div className="flex items-center gap-8">
             <Link to="/" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
               <Sparkles className="w-8 h-8 text-cyan-400" />
-              <span className="text-xl font-bold text-white hidden sm:block">AAIC</span>
+              <div className="hidden sm:flex flex-col">
+                <span className="text-xl font-bold text-white leading-tight">AAIC</span>
+                <span className="text-xs text-slate-400 leading-tight">by Aizura</span>
+              </div>
             </Link>
 
             <div className="hidden lg:flex items-center gap-1">

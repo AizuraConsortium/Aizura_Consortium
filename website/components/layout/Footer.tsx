@@ -166,9 +166,12 @@ export function Footer() {
         </div>
 
         <div className="border-t border-slate-800 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
-          <div className="flex items-center gap-2">
-            <Sparkles className="w-5 h-5 text-cyan-400" />
-            <span className="text-sm text-slate-400">© {currentYear} Aizura AI Consortium</span>
+          <div className="flex flex-col items-center md:items-start gap-2">
+            <div className="flex items-center gap-2">
+              <Sparkles className="w-5 h-5 text-cyan-400" />
+              <span className="text-sm font-semibold text-white">Autonomous AI Consortium (AAIC)</span>
+            </div>
+            <span className="text-xs text-slate-500">AAIC by Aizura | © {currentYear}</span>
           </div>
 
           <div className="flex flex-wrap items-center justify-center gap-4 text-xs text-slate-500">
