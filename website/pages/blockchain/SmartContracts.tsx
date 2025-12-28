@@ -29,14 +29,17 @@ export default function SmartContracts() {
       name: 'AAIC Token Contract',
       icon: <Coins className="w-8 h-8 text-cyan-400" />,
       address: '0x0000000000000000000000000000000000000000',
-      purpose: 'Core ERC-20 token with governance extensions enabling voting rights and delegation mechanisms.',
+      purpose: 'Core BEP-20 token on BNB Chain with governance extensions and cross-chain compatibility via Axelar.',
       functionality: [
-        'Standard ERC-20 transfer and approval functions',
+        'Standard BEP-20 transfer and approval functions',
         'Vote delegation (EIP-712 signatures supported)',
         'Snapshot-based voting power calculation',
         'Permit functionality for gasless approvals',
-        'Burn mechanism for token deflationary pressure',
-        'Maximum supply cap enforcement (1B tokens)',
+        'Burn mechanism for deflationary pressure',
+        'Maximum supply cap enforcement (100,000,000 tokens)',
+        'Minting permanently disabled after deployment',
+        'Axelar ITS integration for cross-chain bridging',
+        'BNB Chain canonical, other chains are representations',
       ],
       security: [
         'Non-upgradable contract for immutability',
@@ -112,15 +115,16 @@ export default function SmartContracts() {
       name: 'Staking Contract',
       icon: <Lock className="w-8 h-8 text-purple-400" />,
       address: '0x0000000000000000000000000000000000000000',
-      purpose: 'Token locking mechanism with tiered APY rewards and governance power multiplication.',
+      purpose: 'Token locking mechanism with market-based APY rewards and governance power multiplication.',
       functionality: [
         'Multiple lock period options (30, 90, 180, 365 days)',
-        'Variable APY based on lock duration (5-25%)',
+        'Market-based APY (15M pool Y1-4, then revenue-backed)',
         'Auto-compound option for maximizing returns',
-        'Early withdrawal with penalty mechanism',
+        'Tapered emissions schedule from 15M pool',
         'Boosted voting power during staking period',
-        'Reward distribution from ecosystem revenue',
+        'Dual reward model: fixed pool then 15% of monthly profit',
         'Claim rewards without unstaking',
+        'APY varies inversely with total staked amount',
       ],
       security: [
         'Lock period enforcement with timestamp validation',
@@ -168,12 +172,13 @@ export default function SmartContracts() {
       name: 'Vesting Contract',
       icon: <Lock className="w-8 h-8 text-indigo-400" />,
       address: '0x0000000000000000000000000000000000000000',
-      purpose: 'Time-locked token release for team, contributors, and proposal creators with cliff and linear vesting schedules.',
+      purpose: 'Time-locked token release for team and advisors with flexible linear vesting schedules.',
       functionality: [
         'Customizable vesting schedules per beneficiary',
-        'Cliff period before first release (6-12 months typical)',
+        'Team: 36 months linear vesting, NO CLIFF',
+        'Advisors: 12 months linear vesting, NO CLIFF',
+        'Investors: NO VESTING (immediate unlock, publicly labeled wallets)',
         'Linear vesting over specified duration',
-        'Early termination with unvested token return',
         'Multiple beneficiary support',
         'Vesting status query for transparency',
         'Partial release claims as tokens vest',
@@ -424,6 +429,106 @@ export default function SmartContracts() {
               </div>
             </div>
           ))}
+        </section>
+
+        <section className="bg-slate-800/30 backdrop-blur border border-slate-700 rounded-2xl p-8 lg:p-10">
+          <h2 className="text-3xl font-bold text-white mb-8 text-center">Cross-Chain Architecture</h2>
+
+          <p className="text-lg text-slate-300 mb-8 max-w-3xl mx-auto text-center">
+            AAIC operates across multiple blockchains using Axelar's Interchain Token Service (ITS) while maintaining a single canonical source of truth.
+          </p>
+
+          <div className="grid md:grid-cols-2 gap-6 mb-8">
+            <div className="bg-gradient-to-br from-cyan-900/20 to-blue-900/20 border border-cyan-500/30 rounded-xl p-6">
+              <h3 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
+                <Coins className="w-6 h-6 text-cyan-400" />
+                Canonical Token (BNB Chain)
+              </h3>
+              <ul className="space-y-2 text-sm text-slate-300">
+                <li className="flex items-start gap-2">
+                  <span className="text-cyan-400 mt-1">•</span>
+                  <span>Source of truth for all supply</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-cyan-400 mt-1">•</span>
+                  <span>Governance execution happens here ONLY</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-cyan-400 mt-1">•</span>
+                  <span>Treasury managed on BNB Chain</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-cyan-400 mt-1">•</span>
+                  <span>Minting done once at deployment, then disabled forever</span>
+                </li>
+              </ul>
+            </div>
+
+            <div className="bg-slate-700/30 border border-slate-600 rounded-xl p-6">
+              <h3 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
+                <Code className="w-6 h-6 text-blue-400" />
+                Bridge Mechanism
+              </h3>
+              <ul className="space-y-2 text-sm text-slate-300">
+                <li className="flex items-start gap-2">
+                  <span className="text-blue-400 mt-1">•</span>
+                  <span>Axelar Interchain Token Service (ITS)</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-blue-400 mt-1">•</span>
+                  <span>Lock on BNB → Mint representation on destination</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-blue-400 mt-1">•</span>
+                  <span>Burn on destination → Unlock on BNB</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-blue-400 mt-1">•</span>
+                  <span>All supply always = 100M total (across all chains)</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-blue-400 mt-1">•</span>
+                  <span>No chain can inflate supply independently</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div className="space-y-4">
+            <div className="bg-slate-700/30 border border-slate-600 rounded-xl p-6">
+              <h3 className="text-lg font-bold text-white mb-4">V1 Chains (Pre-Airdrop Launch)</h3>
+              <div className="flex flex-wrap gap-3">
+                <span className="px-4 py-2 bg-cyan-500/20 text-cyan-400 rounded-lg font-medium">BNB Chain (Canonical)</span>
+                <span className="px-4 py-2 bg-slate-600/50 text-slate-300 rounded-lg">Base</span>
+                <span className="px-4 py-2 bg-slate-600/50 text-slate-300 rounded-lg">Avalanche</span>
+                <span className="px-4 py-2 bg-slate-600/50 text-slate-300 rounded-lg">Sui</span>
+                <span className="px-4 py-2 bg-slate-600/50 text-slate-300 rounded-lg">Hyperliquid</span>
+              </div>
+            </div>
+
+            <div className="bg-slate-700/30 border border-slate-600 rounded-xl p-6">
+              <h3 className="text-lg font-bold text-white mb-4">V2 Chains (Late 2026)</h3>
+              <div className="flex flex-wrap gap-3">
+                <span className="px-4 py-2 bg-slate-600/50 text-slate-300 rounded-lg">Optimism</span>
+                <span className="px-4 py-2 bg-slate-600/50 text-slate-300 rounded-lg">Fantom</span>
+                <span className="px-4 py-2 bg-slate-600/50 text-slate-300 rounded-lg">Solana</span>
+              </div>
+            </div>
+          </div>
+
+          <div className="mt-6 bg-blue-500/10 border border-blue-500/30 rounded-xl p-6">
+            <div className="flex items-start gap-3">
+              <Shield className="w-6 h-6 text-blue-400 flex-shrink-0 mt-1" />
+              <div>
+                <h4 className="font-bold text-white mb-2">Security by Design</h4>
+                <p className="text-sm text-slate-300">
+                  The cross-chain architecture prevents supply inflation by design. All bridges are symmetric (lock/unlock),
+                  ensuring that the total circulating supply across all chains never exceeds 100M tokens. BNB Chain acts as
+                  the canonical source, and all governance decisions are executed there.
+                </p>
+              </div>
+            </div>
+          </div>
         </section>
 
         <section className="bg-slate-800/30 backdrop-blur border border-slate-700 rounded-2xl p-8 lg:p-10">

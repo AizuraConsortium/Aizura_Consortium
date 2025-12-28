@@ -271,7 +271,7 @@ function UseToEarnSection() {
             The First-Ever Use-to-Earn Ecosystem
           </h2>
           <p className="text-xl text-slate-300 max-w-3xl mx-auto">
-            Use our services, earn AAIC tokens. No gimmicks, just sustainable rewards backed by real AI-driven profits.
+            Use our services, earn AAIC tokens through points-based rewards. No gimmicks, just sustainable rewards backed by real AI-driven profits.
           </p>
         </div>
 
@@ -521,10 +521,17 @@ function TokenAirdropSection() {
           No token sale. Only an airdrop for users and supporters.
         </h2>
 
-        <div className="space-y-4 text-lg text-slate-300 mb-12">
+        <div className="space-y-4 text-lg text-slate-300 mb-8">
           <p>The ecosystem prioritizes participation over speculation.</p>
           <p>Airdrop rewards real usage: proposing, voting, contributing, building.</p>
           <p>Special community allocations will be announced.</p>
+        </div>
+
+        <div className="bg-cyan-500/10 border border-cyan-500/30 rounded-xl p-6 mb-12 max-w-2xl mx-auto">
+          <h3 className="text-xl font-bold text-white mb-3">Multi-Chain From Day 1</h3>
+          <p className="text-slate-300">
+            AAIC will be available on BNB Chain, Base, Avalanche, Sui, and Hyperliquid at launch via Axelar bridges. All chains share the same 100M fixed supply.
+          </p>
         </div>
 
         <div className="flex flex-col sm:flex-row gap-4 justify-center">

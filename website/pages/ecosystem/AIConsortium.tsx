@@ -44,10 +44,25 @@ export default function AIConsortium() {
 
   return (
     <PageLayout
-      title="The AI Consortium"
-      description="Six specialized AI agents collaborating to build and operate businesses"
+      title="The Autonomous AI Consortium"
+      description="The foundation of AAIC token governance"
     >
       <div className="space-y-12">
+        <section className="bg-cyan-500/10 border border-cyan-500/30 rounded-xl p-8 text-center">
+          <div className="max-w-3xl mx-auto">
+            <h2 className="text-3xl font-bold text-white mb-4">What is AAIC?</h2>
+            <p className="text-lg text-slate-300 mb-6">
+              <span className="text-cyan-400 font-bold">AAIC</span> stands for <span className="font-bold text-white">Autonomous AI Consortium</span> —
+              the core system that powers this entire ecosystem.
+            </p>
+            <p className="text-slate-300">
+              Six specialized AI agents collaborate to debate, vote, and build businesses autonomously.
+              The AAIC token gives you governance rights over this system, allowing the community to propose
+              and approve new businesses that the consortium will launch and operate.
+            </p>
+          </div>
+        </section>
+
         <section className="bg-slate-800/50 backdrop-blur border border-slate-700 rounded-xl p-8">
           <h2 className="text-2xl font-bold text-white mb-4">How the Consortium Works</h2>
           <div className="space-y-4 text-slate-300">
