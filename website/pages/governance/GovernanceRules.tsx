@@ -1,7 +1,8 @@
 import { PageLayout } from '../../components/layout/PageLayout';
 import { Link } from 'react-router-dom';
 import {
-  Vote, ArrowRight, CheckCircle2, Shield, Users, Scale, Clock, AlertCircle, FileText, Target
+  Vote, ArrowRight, CheckCircle2, Shield, Users, Scale, Clock, AlertCircle, FileText, Target,
+  Info, Eye, XCircle, AlertTriangle
 } from 'lucide-react';
 
 export default function GovernanceRules() {
@@ -236,6 +237,216 @@ export default function GovernanceRules() {
                 'Security hotfixes'
               ]}
             />
+          </div>
+        </section>
+
+        <section className="bg-gradient-to-r from-red-500/10 to-orange-500/10 border border-red-500/30 rounded-2xl p-8 lg:p-12">
+          <h2 className="text-3xl font-bold text-white mb-8 text-center flex items-center justify-center gap-3">
+            <Shield className="w-8 h-8 text-red-400" />
+            Guardian System
+          </h2>
+
+          <p className="text-center text-slate-300 mb-10 max-w-3xl mx-auto">
+            Multi-signature guardian system provides emergency safeguards during early ecosystem phases,
+            transitioning to fully decentralized governance over time.
+          </p>
+
+          <div className="max-w-5xl mx-auto space-y-8">
+            <div className="bg-slate-800/50 border border-slate-700 rounded-xl p-8">
+              <h3 className="text-xl font-bold text-white mb-6">Guardian Powers & Limitations</h3>
+
+              <div className="grid md:grid-cols-2 gap-8 mb-8">
+                <div className="space-y-4">
+                  <h4 className="font-bold text-green-400 flex items-center gap-2">
+                    <CheckCircle2 className="w-5 h-5" />
+                    What Guardians CAN Do
+                  </h4>
+                  <ul className="space-y-3 text-sm text-slate-300">
+                    <li className="flex items-start gap-2">
+                      <span className="text-green-400 font-bold">•</span>
+                      <span><strong className="text-white">Emergency Pause:</strong> Halt critical contracts during active exploits or attacks</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-green-400 font-bold">•</span>
+                      <span><strong className="text-white">Timelock Veto:</strong> Cancel malicious proposals within 48-hour execution delay</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-green-400 font-bold">•</span>
+                      <span><strong className="text-white">Parameter Adjustments:</strong> Modify guardrail ranges in emergency situations</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-green-400 font-bold">•</span>
+                      <span><strong className="text-white">Security Responses:</strong> Execute pre-approved emergency procedures</span>
+                    </li>
+                  </ul>
+                </div>
+
+                <div className="space-y-4">
+                  <h4 className="font-bold text-red-400 flex items-center gap-2">
+                    <XCircle className="w-5 h-5" />
+                    What Guardians CANNOT Do
+                  </h4>
+                  <ul className="space-y-3 text-sm text-slate-300">
+                    <li className="flex items-start gap-2">
+                      <span className="text-red-400 font-bold">•</span>
+                      <span>Change tokenomics or supply schedule</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-red-400 font-bold">•</span>
+                      <span>Mint additional tokens beyond the 100M cap</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-red-400 font-bold">•</span>
+                      <span>Access treasury funds without governance approval</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-red-400 font-bold">•</span>
+                      <span>Override completed governance proposals</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-red-400 font-bold">•</span>
+                      <span>Change core immutable guardrails</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+
+              <div className="bg-yellow-500/10 border border-yellow-500/30 rounded-lg p-4">
+                <div className="flex items-start gap-3">
+                  <AlertTriangle className="w-6 h-6 text-yellow-400 flex-shrink-0 mt-1" />
+                  <div>
+                    <h4 className="font-bold text-yellow-400 mb-2">Emergency Powers Only</h4>
+                    <p className="text-sm text-slate-300">
+                      Guardian powers are strictly limited to emergency situations. All guardian actions are logged publicly on-chain
+                      and must be justified to the community. Abuse of guardian powers can result in removal via governance vote.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="bg-slate-800/50 border border-slate-700 rounded-xl p-8">
+              <h3 className="text-xl font-bold text-white mb-6">Guardian Structure & Timeline</h3>
+
+              <div className="space-y-6">
+                <div className="bg-gradient-to-r from-blue-500/10 to-cyan-500/10 border border-blue-500/30 rounded-lg p-6">
+                  <div className="flex items-center justify-between mb-4">
+                    <h4 className="font-bold text-blue-400 text-lg">Year 1: Launch Phase</h4>
+                    <span className="px-3 py-1 bg-blue-500/20 text-blue-400 text-xs font-bold rounded-full border border-blue-500/30">
+                      2-of-3 Multisig
+                    </span>
+                  </div>
+                  <div className="space-y-3 text-sm text-slate-300">
+                    <div className="flex items-start gap-2">
+                      <CheckCircle2 className="w-4 h-4 text-blue-400 flex-shrink-0 mt-0.5" />
+                      <span><strong className="text-white">Structure:</strong> 2-of-3 multisig guardian wallet</span>
+                    </div>
+                    <div className="flex items-start gap-2">
+                      <CheckCircle2 className="w-4 h-4 text-blue-400 flex-shrink-0 mt-0.5" />
+                      <span><strong className="text-white">Composition:</strong> Core team members with proven track records</span>
+                    </div>
+                    <div className="flex items-start gap-2">
+                      <CheckCircle2 className="w-4 h-4 text-blue-400 flex-shrink-0 mt-0.5" />
+                      <span><strong className="text-white">Purpose:</strong> Rapid response to early-stage security threats</span>
+                    </div>
+                    <div className="flex items-start gap-2">
+                      <CheckCircle2 className="w-4 h-4 text-blue-400 flex-shrink-0 mt-0.5" />
+                      <span><strong className="text-white">Timeline:</strong> Genesis through end of Year 1</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="bg-gradient-to-r from-purple-500/10 to-pink-500/10 border border-purple-500/30 rounded-lg p-6">
+                  <div className="flex items-center justify-between mb-4">
+                    <h4 className="font-bold text-purple-400 text-lg">Year 2+: Mature Phase</h4>
+                    <span className="px-3 py-1 bg-purple-500/20 text-purple-400 text-xs font-bold rounded-full border border-purple-500/30">
+                      3-of-5 Multisig
+                    </span>
+                  </div>
+                  <div className="space-y-3 text-sm text-slate-300">
+                    <div className="flex items-start gap-2">
+                      <CheckCircle2 className="w-4 h-4 text-purple-400 flex-shrink-0 mt-0.5" />
+                      <span><strong className="text-white">Structure:</strong> 3-of-5 multisig guardian wallet</span>
+                    </div>
+                    <div className="flex items-start gap-2">
+                      <CheckCircle2 className="w-4 h-4 text-purple-400 flex-shrink-0 mt-0.5" />
+                      <span><strong className="text-white">Composition:</strong> Mix of core team and elected community guardians</span>
+                    </div>
+                    <div className="flex items-start gap-2">
+                      <CheckCircle2 className="w-4 h-4 text-purple-400 flex-shrink-0 mt-0.5" />
+                      <span><strong className="text-white">Selection:</strong> Community nominees approved by governance vote</span>
+                    </div>
+                    <div className="flex items-start gap-2">
+                      <CheckCircle2 className="w-4 h-4 text-purple-400 flex-shrink-0 mt-0.5" />
+                      <span><strong className="text-white">Timeline:</strong> Year 2 onward, with annual guardian elections</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="bg-gradient-to-r from-green-500/10 to-cyan-500/10 border border-green-500/30 rounded-lg p-6">
+                  <div className="flex items-center justify-between mb-4">
+                    <h4 className="font-bold text-green-400 text-lg">Year 3+: Decentralization Path</h4>
+                    <span className="px-3 py-1 bg-green-500/20 text-green-400 text-xs font-bold rounded-full border border-green-500/30">
+                      Progressive Transfer
+                    </span>
+                  </div>
+                  <div className="space-y-3 text-sm text-slate-300">
+                    <div className="flex items-start gap-2">
+                      <CheckCircle2 className="w-4 h-4 text-green-400 flex-shrink-0 mt-0.5" />
+                      <span><strong className="text-white">Goal:</strong> Transition to fully elected, community-controlled guardian system</span>
+                    </div>
+                    <div className="flex items-start gap-2">
+                      <CheckCircle2 className="w-4 h-4 text-green-400 flex-shrink-0 mt-0.5" />
+                      <span><strong className="text-white">Process:</strong> Gradual reduction of founding team guardian slots</span>
+                    </div>
+                    <div className="flex items-start gap-2">
+                      <CheckCircle2 className="w-4 h-4 text-green-400 flex-shrink-0 mt-0.5" />
+                      <span><strong className="text-white">End State:</strong> All guardian positions filled by governance-elected community members</span>
+                    </div>
+                    <div className="flex items-start gap-2">
+                      <CheckCircle2 className="w-4 h-4 text-green-400 flex-shrink-0 mt-0.5" />
+                      <span><strong className="text-white">Sunset:</strong> Guardian system may be fully deprecated when ecosystem matures</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="bg-slate-800/50 border border-slate-700 rounded-xl p-8">
+              <h3 className="text-xl font-bold text-white mb-6">Transparency Requirements</h3>
+              <div className="grid md:grid-cols-3 gap-6">
+                <div className="bg-slate-900/50 rounded-lg p-6 text-center">
+                  <Eye className="w-8 h-8 text-cyan-400 mx-auto mb-4" />
+                  <h4 className="font-bold text-white mb-2">Public Logging</h4>
+                  <p className="text-sm text-slate-300">
+                    All guardian actions are logged on-chain and visible to the entire community
+                  </p>
+                </div>
+                <div className="bg-slate-900/50 rounded-lg p-6 text-center">
+                  <Users className="w-8 h-8 text-purple-400 mx-auto mb-4" />
+                  <h4 className="font-bold text-white mb-2">Justification Reports</h4>
+                  <p className="text-sm text-slate-300">
+                    Guardians must publish detailed reports explaining every action taken
+                  </p>
+                </div>
+                <div className="bg-slate-900/50 rounded-lg p-6 text-center">
+                  <Target className="w-8 h-8 text-green-400 mx-auto mb-4" />
+                  <h4 className="font-bold text-white mb-2">Community Review</h4>
+                  <p className="text-sm text-slate-300">
+                    Guardian actions subject to community review and potential removal vote
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div className="bg-cyan-500/10 border border-cyan-500/30 rounded-xl p-6 text-center">
+              <Info className="w-8 h-8 text-cyan-400 mx-auto mb-4" />
+              <p className="text-slate-300">
+                <strong className="text-white">Guardian Philosophy:</strong> Guardians are emergency backstops, not rulers.
+                Their power is narrow, temporary, and designed to transition to full community control. Any guardian action
+                can be challenged and reversed by governance vote.
+              </p>
+            </div>
           </div>
         </section>
 

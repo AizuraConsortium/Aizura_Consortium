@@ -447,6 +447,13 @@ export default function GovernanceOverview() {
               View Active Proposals
             </Link>
             <Link
+              to="/governance/treasury-guardrails"
+              className="inline-flex items-center gap-2 px-8 py-4 bg-green-600 hover:bg-green-700 text-white font-bold rounded-lg text-lg transition-colors"
+            >
+              <Shield className="w-5 h-5" />
+              Treasury Guardrails
+            </Link>
+            <Link
               to="/auth/sign-in"
               className="px-8 py-4 bg-slate-700 hover:bg-slate-600 text-white font-bold rounded-lg text-lg transition-colors"
             >

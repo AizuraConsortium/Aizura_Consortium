@@ -44,6 +44,7 @@ import GovernanceOverview from './pages/governance/GovernanceOverview';
 import GovernanceRules from './pages/governance/GovernanceRules';
 import LiveGovernance from './pages/governance/LiveGovernance';
 import Treasury from './pages/governance/Treasury';
+import TreasuryGuardrails from './pages/governance/TreasuryGuardrails';
 
 import CommunityHub from './pages/community/CommunityHub';
 import FAQ from './pages/community/FAQ';
@@ -119,6 +120,7 @@ export default function App() {
             <Route path="/governance/rules" element={<GovernanceRules />} />
             <Route path="/governance/live" element={<LiveGovernance />} />
             <Route path="/governance/treasury" element={<Treasury />} />
+            <Route path="/governance/treasury-guardrails" element={<TreasuryGuardrails />} />
 
             <Route path="/community" element={<CommunityHub />} />
             <Route path="/community/social" element={<Social />} />

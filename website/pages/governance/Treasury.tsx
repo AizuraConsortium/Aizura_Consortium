@@ -662,6 +662,13 @@ export default function TreasuryDistributions() {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
+              to="/governance/treasury-guardrails"
+              className="inline-flex items-center gap-2 px-8 py-4 bg-green-600 hover:bg-green-700 text-white font-bold rounded-lg text-lg transition-colors"
+            >
+              <Shield className="w-5 h-5" />
+              Treasury Guardrails
+            </Link>
+            <Link
               to="/token/staking"
               className="px-8 py-4 bg-cyan-600 hover:bg-cyan-700 text-white font-bold rounded-lg text-lg transition-colors"
             >

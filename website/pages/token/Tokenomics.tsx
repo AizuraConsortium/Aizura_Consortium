@@ -936,10 +936,10 @@ export default function Tokenomics() {
           <div className="bg-yellow-500/10 border border-yellow-500/30 rounded-lg p-6 mb-6">
             <h4 className="font-bold text-yellow-400 mb-3 flex items-center gap-2">
               <AlertTriangle className="w-5 h-5" />
-              Fixed Base Allocations (85%)
+              Revenue Allocation Breakdown
             </h4>
             <p className="text-sm text-slate-300 mb-3">
-              85% of revenue split is fixed to prevent over-allocation to any single bucket:
+              85% fixed allocation + 15% variable allocation (governance-controlled):
             </p>
             <div className="grid sm:grid-cols-2 gap-2 text-sm">
               <div className="flex justify-between p-2 bg-slate-900/50 rounded">
@@ -958,9 +958,13 @@ export default function Tokenomics() {
                 <span className="text-slate-300">U2E Support</span>
                 <span className="font-mono text-white">15%</span>
               </div>
-              <div className="flex justify-between p-2 bg-slate-900/50 rounded col-span-2">
+              <div className="flex justify-between p-2 bg-slate-900/50 rounded">
                 <span className="text-slate-300">Treasury</span>
-                <span className="font-mono text-white">25%</span>
+                <span className="font-mono text-white">20%</span>
+              </div>
+              <div className="flex justify-between p-2 bg-blue-500/20 rounded border border-blue-500/30">
+                <span className="text-slate-300">Variable (Governance)</span>
+                <span className="font-mono text-white">15%</span>
               </div>
             </div>
           </div>
@@ -982,7 +986,7 @@ export default function Tokenomics() {
               </div>
               <div className="flex items-start gap-2">
                 <CheckCircle2 className="w-4 h-4 text-green-400 flex-shrink-0 mt-0.5" />
-                <span>After burn target: 15% redirected by governance</span>
+                <span>After burn target: Variable 15% redirected by governance</span>
               </div>
               <div className="flex items-start gap-2">
                 <CheckCircle2 className="w-4 h-4 text-green-400 flex-shrink-0 mt-0.5" />
@@ -994,7 +998,7 @@ export default function Tokenomics() {
               </div>
             </div>
             <p className="mt-4 text-sm text-slate-400 italic">
-              After burn target is reached, the 15% burn allocation will likely be redirected to additional staking/U2E rewards via governance vote.
+              After burn target is reached, the 15% burn allocation becomes part of the variable bucket, which governance can direct to staking/U2E rewards or other approved purposes.
             </p>
           </div>
         </section>
