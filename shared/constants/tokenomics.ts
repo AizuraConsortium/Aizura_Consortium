@@ -97,13 +97,17 @@ export const TOKENOMICS = {
   GOVERNANCE: {
     DAO: {
       minTokens: 50_000,
+      votingDelayDays: 1,
       votingDays: 14,
       quorumPercentage: 20,
+      approvalThreshold: 60,
+      timelockDelayHours: 48,
     },
     LAUNCHPAD: {
       depositAmount: 1_000,
       votingDays: 7,
       quorumPercentage: 5,
+      approvalThreshold: 60,
     },
   },
 

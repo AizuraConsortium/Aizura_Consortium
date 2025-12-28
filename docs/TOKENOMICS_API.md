@@ -133,13 +133,17 @@ Returns governance parameters.
 {
   "DAO": {
     "minTokens": 50000,
+    "votingDelayDays": 1,
     "votingDays": 14,
-    "quorumPercentage": 20
+    "quorumPercentage": 20,
+    "approvalThreshold": 60,
+    "timelockDelayHours": 48
   },
   "LAUNCHPAD": {
     "depositAmount": 1000,
     "votingDays": 7,
-    "quorumPercentage": 5
+    "quorumPercentage": 5,
+    "approvalThreshold": 60
   }
 }
 ```

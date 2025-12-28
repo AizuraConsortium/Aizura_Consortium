@@ -51,7 +51,7 @@ export function GovernanceTree() {
                     </div>
                     <div className="flex items-start gap-2">
                       <Zap className="w-4 h-4 text-cyan-400 mt-1 flex-shrink-0" />
-                      <span><strong className="text-white">Simple majority</strong> to pass</span>
+                      <span><strong className="text-white">≥ 60% FOR</strong> required to pass</span>
                     </div>
                   </div>
                 </div>
@@ -123,7 +123,7 @@ export function GovernanceTree() {
                     </div>
                     <div className="flex items-start gap-2">
                       <Zap className="w-4 h-4 text-green-400 mt-1 flex-shrink-0" />
-                      <span><strong className="text-white">Simple majority</strong> to pass</span>
+                      <span><strong className="text-white">≥ 60% FOR</strong> required to pass</span>
                     </div>
                   </div>
                 </div>
