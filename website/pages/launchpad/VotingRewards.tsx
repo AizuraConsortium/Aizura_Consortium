@@ -16,7 +16,7 @@ export default function VotingRewards() {
               the more influence your vote carries.
             </p>
             <p>
-              Voting is simple: FOR or AGAINST. Proposals need 60% approval to pass (with minimum 20% quorum).
+              Voting is simple: FOR or AGAINST. Proposals need 60% approval to pass (with minimum 5% quorum).
             </p>
             <p className="text-cyan-400 font-medium">
               All votes are recorded on-chain and publicly visible.

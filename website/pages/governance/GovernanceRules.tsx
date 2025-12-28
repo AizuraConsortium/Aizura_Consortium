@@ -4,6 +4,7 @@ import {
   Vote, ArrowRight, CheckCircle2, Shield, Users, Scale, Clock, AlertCircle, FileText, Target,
   Info, Eye, XCircle, AlertTriangle
 } from 'lucide-react';
+import { TOKENOMICS } from '../../../shared/constants/tokenomics';
 
 export default function GovernanceRules() {
   return (
@@ -92,10 +93,10 @@ export default function GovernanceRules() {
                 Launchpad Rules
               </h3>
               <div className="space-y-3 text-sm">
-                <LaunchpadParameter label="Deposit to Submit" value="1,000 AAIC" sublabel="(refundable if quorum reached)" />
-                <LaunchpadParameter label="Voting Period" value="7 days" />
-                <LaunchpadParameter label="Quorum" value="5% of circulating supply" />
-                <LaunchpadParameter label="Approval Threshold" value="≥ 60% FOR" />
+                <LaunchpadParameter label="Deposit to Submit" value={`${TOKENOMICS.GOVERNANCE.LAUNCHPAD.depositAmount.toLocaleString()} AAIC`} sublabel="(refundable if quorum reached)" />
+                <LaunchpadParameter label="Voting Period" value={`${TOKENOMICS.GOVERNANCE.LAUNCHPAD.votingDays} days`} />
+                <LaunchpadParameter label="Quorum" value={`${TOKENOMICS.GOVERNANCE.LAUNCHPAD.quorumPercentage}% of circulating supply`} />
+                <LaunchpadParameter label="Approval Threshold" value={`≥ ${TOKENOMICS.GOVERNANCE.LAUNCHPAD.approvalThreshold}% FOR`} />
               </div>
             </div>
 
@@ -116,7 +117,7 @@ export default function GovernanceRules() {
                   <AlertCircle className="w-5 h-5 text-yellow-400 flex-shrink-0 mt-0.5" />
                   <div>
                     <div className="text-white font-medium">If spam/low participation</div>
-                    <div className="text-slate-400">Up to 20% slashed (adjustable by governance)</div>
+                    <div className="text-slate-400">Up to {TOKENOMICS.GOVERNANCE.LAUNCHPAD.slashPercentageMax}% slashed (adjustable by governance)</div>
                   </div>
                 </div>
                 <div className="bg-cyan-500/10 border border-cyan-500/30 rounded-lg p-3 mt-2">

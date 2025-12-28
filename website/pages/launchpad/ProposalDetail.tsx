@@ -471,9 +471,9 @@ export default function ProposalDetail() {
           <h2 className="text-2xl font-bold text-white mb-6">Governance Rules</h2>
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-            <RuleCard icon={<Clock className="w-5 h-5 text-cyan-400" />} label="Voting Duration" value="14 days" />
+            <RuleCard icon={<Clock className="w-5 h-5 text-cyan-400" />} label="Voting Duration" value="7 days" />
             <RuleCard icon={<Target className="w-5 h-5 text-green-400" />} label="Approval Threshold" value="≥ 60% FOR" />
-            <RuleCard icon={<Users className="w-5 h-5 text-blue-400" />} label="Quorum" value="≥ 20% supply" />
+            <RuleCard icon={<Users className="w-5 h-5 text-blue-400" />} label="Quorum" value="≥ 5% supply" />
             <RuleCard icon={<Vote className="w-5 h-5 text-purple-400" />} label="Voting Method" value="Snapshot-based" />
           </div>
 

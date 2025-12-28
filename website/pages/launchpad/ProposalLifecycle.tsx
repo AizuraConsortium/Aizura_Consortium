@@ -6,8 +6,8 @@ export default function ProposalLifecycle() {
     {
       phase: 'Proposed',
       icon: <FileText className="w-10 h-10 text-cyan-400" />,
-      duration: '7-14 days',
-      description: 'Community votes on the proposal. 60% approval required with 20% quorum.',
+      duration: '7 days',
+      description: 'Community votes on the proposal. 60% approval required with 5% quorum.',
       actions: ['Vote FOR or AGAINST', 'Discuss in community channels', 'Earn voting rewards'],
     },
     {

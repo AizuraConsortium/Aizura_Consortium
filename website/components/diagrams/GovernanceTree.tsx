@@ -1,4 +1,5 @@
 import { GitBranch, Users, Clock, Shield, Zap } from 'lucide-react';
+import { TOKENOMICS } from '../../../shared/constants/tokenomics';
 
 export function GovernanceTree() {
   return (
@@ -39,19 +40,19 @@ export function GovernanceTree() {
                   <div className="space-y-2 text-sm text-slate-300">
                     <div className="flex items-start gap-2">
                       <Shield className="w-4 h-4 text-cyan-400 mt-1 flex-shrink-0" />
-                      <span><strong className="text-white">50,000 AAIC</strong> minimum to propose</span>
+                      <span><strong className="text-white">{TOKENOMICS.GOVERNANCE.DAO.minTokens.toLocaleString()} AAIC</strong> minimum to propose</span>
                     </div>
                     <div className="flex items-start gap-2">
                       <Clock className="w-4 h-4 text-cyan-400 mt-1 flex-shrink-0" />
-                      <span><strong className="text-white">14 days</strong> voting period</span>
+                      <span><strong className="text-white">{TOKENOMICS.GOVERNANCE.DAO.votingDays} days</strong> voting period</span>
                     </div>
                     <div className="flex items-start gap-2">
                       <Users className="w-4 h-4 text-cyan-400 mt-1 flex-shrink-0" />
-                      <span><strong className="text-white">20% quorum</strong> required</span>
+                      <span><strong className="text-white">{TOKENOMICS.GOVERNANCE.DAO.quorumPercentage}% quorum</strong> required</span>
                     </div>
                     <div className="flex items-start gap-2">
                       <Zap className="w-4 h-4 text-cyan-400 mt-1 flex-shrink-0" />
-                      <span><strong className="text-white">≥ 60% FOR</strong> required to pass</span>
+                      <span><strong className="text-white">≥ {TOKENOMICS.GOVERNANCE.DAO.approvalThreshold}% FOR</strong> required to pass</span>
                     </div>
                   </div>
                 </div>
@@ -111,19 +112,19 @@ export function GovernanceTree() {
                   <div className="space-y-2 text-sm text-slate-300">
                     <div className="flex items-start gap-2">
                       <Shield className="w-4 h-4 text-green-400 mt-1 flex-shrink-0" />
-                      <span><strong className="text-white">1,000 AAIC</strong> deposit (refundable)</span>
+                      <span><strong className="text-white">{TOKENOMICS.GOVERNANCE.LAUNCHPAD.depositAmount.toLocaleString()} AAIC</strong> deposit (refundable)</span>
                     </div>
                     <div className="flex items-start gap-2">
                       <Clock className="w-4 h-4 text-green-400 mt-1 flex-shrink-0" />
-                      <span><strong className="text-white">7 days</strong> voting period</span>
+                      <span><strong className="text-white">{TOKENOMICS.GOVERNANCE.LAUNCHPAD.votingDays} days</strong> voting period</span>
                     </div>
                     <div className="flex items-start gap-2">
                       <Users className="w-4 h-4 text-green-400 mt-1 flex-shrink-0" />
-                      <span><strong className="text-white">5% quorum</strong> required</span>
+                      <span><strong className="text-white">{TOKENOMICS.GOVERNANCE.LAUNCHPAD.quorumPercentage}% quorum</strong> required</span>
                     </div>
                     <div className="flex items-start gap-2">
                       <Zap className="w-4 h-4 text-green-400 mt-1 flex-shrink-0" />
-                      <span><strong className="text-white">≥ 60% FOR</strong> required to pass</span>
+                      <span><strong className="text-white">≥ {TOKENOMICS.GOVERNANCE.LAUNCHPAD.approvalThreshold}% FOR</strong> required to pass</span>
                     </div>
                   </div>
                 </div>

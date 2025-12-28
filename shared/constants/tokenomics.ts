@@ -108,6 +108,7 @@ export const TOKENOMICS = {
       votingDays: 7,
       quorumPercentage: 5,
       approvalThreshold: 60,
+      slashPercentageMax: 20,
     },
   },
 

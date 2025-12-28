@@ -5,6 +5,7 @@ import {
   ArrowRight, AlertTriangle, Eye, Lock, Unlock, TrendingUp,
   FileText, BarChart3, Target, Zap, Info, BookOpen, Activity
 } from 'lucide-react';
+import { TOKENOMICS } from '../../../shared/constants/tokenomics';
 
 export default function GovernanceOverview() {
   return (
@@ -150,15 +151,15 @@ export default function GovernanceOverview() {
               <div className="space-y-2 text-sm">
                 <div className="flex justify-between">
                   <span className="text-slate-400">Minimum:</span>
-                  <span className="font-medium text-white">50,000 AAIC</span>
+                  <span className="font-medium text-white">{TOKENOMICS.GOVERNANCE.DAO.minTokens.toLocaleString()} AAIC</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-slate-400">Voting:</span>
-                  <span className="font-medium text-white">14 days</span>
+                  <span className="font-medium text-white">{TOKENOMICS.GOVERNANCE.DAO.votingDays} days</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-slate-400">Quorum:</span>
-                  <span className="font-medium text-white">20%</span>
+                  <span className="font-medium text-white">{TOKENOMICS.GOVERNANCE.DAO.quorumPercentage}%</span>
                 </div>
               </div>
               <div className="mt-4 text-xs text-slate-400">
@@ -174,15 +175,15 @@ export default function GovernanceOverview() {
               <div className="space-y-2 text-sm">
                 <div className="flex justify-between">
                   <span className="text-slate-400">Deposit:</span>
-                  <span className="font-medium text-white">1,000 AAIC</span>
+                  <span className="font-medium text-white">{TOKENOMICS.GOVERNANCE.LAUNCHPAD.depositAmount.toLocaleString()} AAIC</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-slate-400">Voting:</span>
-                  <span className="font-medium text-white">7 days</span>
+                  <span className="font-medium text-white">{TOKENOMICS.GOVERNANCE.LAUNCHPAD.votingDays} days</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-slate-400">Quorum:</span>
-                  <span className="font-medium text-white">5%</span>
+                  <span className="font-medium text-white">{TOKENOMICS.GOVERNANCE.LAUNCHPAD.quorumPercentage}%</span>
                 </div>
               </div>
               <div className="mt-4 text-xs text-slate-400">

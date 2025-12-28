@@ -289,12 +289,12 @@ export default function LiveGovernance() {
             <InfoCard
               icon={<Clock className="w-5 h-5 text-blue-400" />}
               title="14-day voting period"
-              description="Standard duration for all governance proposals"
+              description="Standard duration for DAO governance proposals"
             />
             <InfoCard
               icon={<Target className="w-5 h-5 text-green-400" />}
               title="20% quorum required"
-              description="Minimum participation needed for proposals to pass"
+              description="Minimum participation for DAO governance proposals"
             />
             <InfoCard
               icon={<CheckCircle2 className="w-5 h-5 text-purple-400" />}

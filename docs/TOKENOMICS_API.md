@@ -143,7 +143,8 @@ Returns governance parameters.
     "depositAmount": 1000,
     "votingDays": 7,
     "quorumPercentage": 5,
-    "approvalThreshold": 60
+    "approvalThreshold": 60,
+    "slashPercentageMax": 20
   }
 }
 ```
