@@ -89,40 +89,40 @@ export default function Staking() {
                 <div className="bg-gradient-to-r from-green-500/20 to-cyan-500/20 border border-green-500/30 rounded-lg p-4">
                   <div className="flex justify-between items-center mb-2">
                     <span className="text-lg font-bold text-white">Year 1 (Months 1-12)</span>
-                    <span className="text-2xl font-bold text-green-400">4,500,000 AAIC</span>
+                    <span className="text-2xl font-bold text-green-400">5,000,000 AAIC</span>
                   </div>
                   <div className="text-sm text-slate-400">
-                    30% of pool → <span className="text-white font-mono">375,000 AAIC/month</span>
+                    33.3% of pool → <span className="text-white font-mono">416,667 AAIC/month</span>
                   </div>
                 </div>
 
                 <div className="bg-gradient-to-r from-cyan-500/20 to-blue-500/20 border border-cyan-500/30 rounded-lg p-4">
                   <div className="flex justify-between items-center mb-2">
                     <span className="text-lg font-bold text-white">Year 2 (Months 13-24)</span>
-                    <span className="text-2xl font-bold text-cyan-400">3,750,000 AAIC</span>
+                    <span className="text-2xl font-bold text-cyan-400">4,000,000 AAIC</span>
                   </div>
                   <div className="text-sm text-slate-400">
-                    25% of pool → <span className="text-white font-mono">312,500 AAIC/month</span>
+                    26.7% of pool → <span className="text-white font-mono">333,333 AAIC/month</span>
                   </div>
                 </div>
 
                 <div className="bg-gradient-to-r from-cyan-500/20 to-blue-500/20 border border-cyan-500/30 rounded-lg p-4">
                   <div className="flex justify-between items-center mb-2">
                     <span className="text-lg font-bold text-white">Year 3 (Months 25-36)</span>
-                    <span className="text-2xl font-bold text-cyan-400">3,750,000 AAIC</span>
+                    <span className="text-2xl font-bold text-cyan-400">3,500,000 AAIC</span>
                   </div>
                   <div className="text-sm text-slate-400">
-                    25% of pool → <span className="text-white font-mono">312,500 AAIC/month</span>
+                    23.3% of pool → <span className="text-white font-mono">291,667 AAIC/month</span>
                   </div>
                 </div>
 
                 <div className="bg-gradient-to-r from-blue-500/20 to-purple-500/20 border border-blue-500/30 rounded-lg p-4">
                   <div className="flex justify-between items-center mb-2">
                     <span className="text-lg font-bold text-white">Year 4 (Months 37-48)</span>
-                    <span className="text-2xl font-bold text-blue-400">3,000,000 AAIC</span>
+                    <span className="text-2xl font-bold text-blue-400">2,500,000 AAIC</span>
                   </div>
                   <div className="text-sm text-slate-400">
-                    20% of pool → <span className="text-white font-mono">250,000 AAIC/month</span>
+                    16.7% of pool → <span className="text-white font-mono">208,333 AAIC/month</span>
                   </div>
                 </div>
               </div>
@@ -152,13 +152,13 @@ export default function Staking() {
               <div className="grid md:grid-cols-2 gap-4">
                 <div className="bg-green-500/10 border border-green-500/30 rounded-lg p-4">
                   <div className="text-sm text-slate-400 mb-2">Year 1 Monthly</div>
-                  <div className="text-3xl font-bold text-green-400">833,333 AAIC</div>
-                  <div className="text-xs text-slate-500 mt-1">458k U2E + 375k Staking</div>
+                  <div className="text-3xl font-bold text-green-400">875,000 AAIC</div>
+                  <div className="text-xs text-slate-500 mt-1">458k U2E + 417k Staking</div>
                 </div>
                 <div className="bg-blue-500/10 border border-blue-500/30 rounded-lg p-4">
                   <div className="text-sm text-slate-400 mb-2">Year 4 Monthly</div>
-                  <div className="text-3xl font-bold text-blue-400">708,333 AAIC</div>
-                  <div className="text-xs text-slate-500 mt-1">458k U2E + 250k Staking</div>
+                  <div className="text-3xl font-bold text-blue-400">666,667 AAIC</div>
+                  <div className="text-xs text-slate-500 mt-1">458k U2E + 208k Staking</div>
                 </div>
               </div>
             </div>
@@ -197,7 +197,7 @@ export default function Staking() {
               <div className="space-y-6">
                 <div>
                   <h4 className="font-bold text-white mb-4">Year 1 Example Calculations</h4>
-                  <p className="text-sm text-slate-400 mb-4">Annual rewards = 4,500,000 AAIC</p>
+                  <p className="text-sm text-slate-400 mb-4">Annual rewards = 5,000,000 AAIC</p>
 
                   <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
                     <div className="bg-green-500/10 border border-green-500/30 rounded-lg p-4 text-center">
@@ -230,7 +230,7 @@ export default function Staking() {
 
                 <div>
                   <h4 className="font-bold text-white mb-4">Year 4 Example (Lower Emissions)</h4>
-                  <p className="text-sm text-slate-400 mb-4">Annual rewards = 3,000,000 AAIC</p>
+                  <p className="text-sm text-slate-400 mb-4">Annual rewards = 2,500,000 AAIC</p>
 
                   <div className="grid sm:grid-cols-2 gap-4">
                     <div className="bg-blue-500/10 border border-blue-500/30 rounded-lg p-4 text-center">
