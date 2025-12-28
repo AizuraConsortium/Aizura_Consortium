@@ -2,7 +2,7 @@ import { PageLayout } from '../../components/layout/PageLayout';
 import { Link } from 'react-router-dom';
 import {
   Wallet, ArrowRight, TrendingUp, PieChart, Users, Shield, Eye, DollarSign,
-  Coins, Target, CheckCircle2, BarChart3, RefreshCw
+  Coins, Target, CheckCircle2, BarChart3, RefreshCw, XCircle
 } from 'lucide-react';
 
 export default function TreasuryDistributions() {
@@ -82,55 +82,313 @@ export default function TreasuryDistributions() {
         </section>
 
         <section className="bg-slate-800/30 backdrop-blur border border-slate-700 rounded-2xl p-8 lg:p-12">
-          <h2 className="text-3xl font-bold text-white mb-8 text-center">Revenue Distribution</h2>
+          <h2 className="text-3xl font-bold text-white mb-8 text-center flex items-center justify-center gap-3">
+            <PieChart className="w-8 h-8 text-cyan-400" />
+            Revenue Distribution Model
+          </h2>
 
           <p className="text-lg text-slate-300 mb-8 max-w-3xl mx-auto text-center">
-            Revenue flows are allocated according to governance-approved parameters.
+            After business operational costs, net profit is allocated according to this transparent model.
           </p>
 
           <div className="max-w-4xl mx-auto">
-            <div className="space-y-4">
-              <AllocationBar
-                category="Token Buybacks & Burns"
-                percentage={30}
-                color="bg-cyan-500"
-                description="Direct value return to token holders through market buybacks and permanent burns"
-              />
-              <AllocationBar
-                category="Staking Rewards"
-                percentage={20}
-                color="bg-green-500"
-                description="Distributed to stakers as yield for locking tokens and securing governance"
-              />
-              <AllocationBar
-                category="Development Fund"
-                percentage={25}
-                color="bg-blue-500"
-                description="Funds new business development, AI infrastructure, and technical improvements"
-              />
-              <AllocationBar
-                category="Operations & Security"
-                percentage={15}
-                color="bg-purple-500"
-                description="Infrastructure costs, security audits, and ongoing operational expenses"
-              />
-              <AllocationBar
-                category="Governance Reserve"
-                percentage={10}
-                color="bg-yellow-500"
-                description="Emergency fund and reserve for governance-approved initiatives"
-              />
+            <div className="bg-slate-700/30 border border-slate-600 rounded-xl p-6 mb-8">
+              <h3 className="text-xl font-bold text-white mb-4">Fixed Base (85% total)</h3>
+              <div className="space-y-3">
+                <AllocationBar
+                  category="Buyback"
+                  percentage={15}
+                  color="bg-cyan-500"
+                  description="Buy AAIC from market using stablecoin revenue"
+                />
+                <AllocationBar
+                  category="Burn"
+                  percentage={15}
+                  color="bg-orange-500"
+                  description="Until 21M AAIC burned, then redirected by governance"
+                />
+                <AllocationBar
+                  category="Staking Support"
+                  percentage={15}
+                  color="bg-green-500"
+                  description="Funds staking rewards post-Year 4"
+                />
+                <AllocationBar
+                  category="Use-to-Earn Support"
+                  percentage={15}
+                  color="bg-blue-500"
+                  description="Funds U2E rewards post-48 months"
+                />
+                <AllocationBar
+                  category="Treasury"
+                  percentage={25}
+                  color="bg-purple-500"
+                  description="Long-term growth, operations, development"
+                />
+              </div>
             </div>
 
-            <div className="mt-8 p-6 bg-cyan-500/10 border border-cyan-500/30 rounded-xl">
-              <div className="flex items-start gap-3">
-                <Eye className="w-6 h-6 text-cyan-400 flex-shrink-0 mt-1" />
-                <div>
-                  <h3 className="text-lg font-bold text-white mb-2">Adjustable by Governance</h3>
-                  <p className="text-slate-300">
-                    These allocations can be adjusted through governance proposals. Token holders vote on
-                    changes to ensure distributions align with ecosystem needs as conditions evolve.
+            <div className="bg-slate-700/30 border border-slate-600 rounded-xl p-6 mb-8">
+              <h3 className="text-xl font-bold text-white mb-4">Variable Bucket (15% total)</h3>
+              <div className="text-slate-300 text-sm space-y-2">
+                <p>Governance-adjustable bucket for experiments, liquidity, and special initiatives</p>
+                <div className="bg-cyan-500/10 border border-cyan-500/30 rounded-lg p-3 mt-3">
+                  <p className="text-xs text-slate-300">
+                    Can be allocated to any combination: additional buybacks, LP incentives, partnerships, marketing, or emergency reserves
                   </p>
+                </div>
+              </div>
+            </div>
+
+            <div className="bg-gradient-to-br from-green-900/20 to-cyan-900/20 border border-green-500/30 rounded-xl p-6">
+              <h3 className="text-lg font-bold text-white mb-4">Why This Works</h3>
+              <div className="grid sm:grid-cols-2 gap-3">
+                <div className="flex items-start gap-2">
+                  <CheckCircle2 className="w-5 h-5 text-green-400 flex-shrink-0 mt-0.5" />
+                  <span className="text-sm text-slate-300">Simple, transparent percentages</span>
+                </div>
+                <div className="flex items-start gap-2">
+                  <CheckCircle2 className="w-5 h-5 text-green-400 flex-shrink-0 mt-0.5" />
+                  <span className="text-sm text-slate-300">Fixed minimums prevent over-allocation</span>
+                </div>
+                <div className="flex items-start gap-2">
+                  <CheckCircle2 className="w-5 h-5 text-green-400 flex-shrink-0 mt-0.5" />
+                  <span className="text-sm text-slate-300">Burn stops at 21M target (12-year timeline)</span>
+                </div>
+                <div className="flex items-start gap-2">
+                  <CheckCircle2 className="w-5 h-5 text-green-400 flex-shrink-0 mt-0.5" />
+                  <span className="text-sm text-slate-300">Revenue-backs post-emissions rewards</span>
+                </div>
+                <div className="flex items-start gap-2">
+                  <CheckCircle2 className="w-5 h-5 text-green-400 flex-shrink-0 mt-0.5" />
+                  <span className="text-sm text-slate-300">Treasury stays healthy for growth</span>
+                </div>
+                <div className="flex items-start gap-2">
+                  <CheckCircle2 className="w-5 h-5 text-green-400 flex-shrink-0 mt-0.5" />
+                  <span className="text-sm text-slate-300">Variable bucket allows adaptation</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section className="bg-slate-800/30 backdrop-blur border border-slate-700 rounded-2xl p-8 lg:p-12">
+          <h2 className="text-3xl font-bold text-white mb-8 text-center flex items-center justify-center gap-3">
+            <Shield className="w-8 h-8 text-red-400" />
+            Treasury Guardrails (Protocol-Enforced)
+          </h2>
+
+          <p className="text-lg text-slate-300 mb-8 max-w-3xl mx-auto text-center">
+            The TreasuryVault smart contract has HARD-CODED limits that governance cannot bypass.
+          </p>
+
+          <div className="max-w-4xl mx-auto space-y-6">
+            <div className="bg-slate-700/30 border border-slate-600 rounded-xl p-6">
+              <h3 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
+                <Target className="w-6 h-6 text-cyan-400" />
+                Weekly Spend Caps
+              </h3>
+              <div className="space-y-3 text-sm">
+                <div className="bg-slate-800/50 rounded-lg p-4">
+                  <div className="font-bold text-white mb-1">Stablecoin Cap</div>
+                  <div className="text-slate-300">max($50,000, 3% of treasury stablecoin balance) per week</div>
+                </div>
+                <div className="bg-slate-800/50 rounded-lg p-4">
+                  <div className="font-bold text-white mb-1">AAIC Token Cap</div>
+                  <div className="text-slate-300">max(250,000 AAIC, 2% of treasury AAIC balance) per week</div>
+                </div>
+              </div>
+            </div>
+
+            <div className="bg-slate-700/30 border border-slate-600 rounded-xl p-6">
+              <h3 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
+                <CheckCircle2 className="w-6 h-6 text-green-400" />
+                Allowlist Only
+              </h3>
+              <p className="text-slate-300 mb-4">Treasury can ONLY interact with pre-approved contracts:</p>
+              <div className="grid sm:grid-cols-2 gap-3 text-sm">
+                <div className="flex items-start gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-green-400 flex-shrink-0 mt-0.5" />
+                  <span className="text-slate-300">Approved DEX routers (buybacks)</span>
+                </div>
+                <div className="flex items-start gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-green-400 flex-shrink-0 mt-0.5" />
+                  <span className="text-slate-300">Approved buyback executor</span>
+                </div>
+                <div className="flex items-start gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-green-400 flex-shrink-0 mt-0.5" />
+                  <span className="text-slate-300">Approved staking/U2E vaults</span>
+                </div>
+                <div className="flex items-start gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-green-400 flex-shrink-0 mt-0.5" />
+                  <span className="text-slate-300">Approved liquidity manager</span>
+                </div>
+                <div className="flex items-start gap-2">
+                  <XCircle className="w-4 h-4 text-red-400 flex-shrink-0 mt-0.5" />
+                  <span className="text-slate-300">NO arbitrary external calls</span>
+                </div>
+                <div className="flex items-start gap-2">
+                  <XCircle className="w-4 h-4 text-red-400 flex-shrink-0 mt-0.5" />
+                  <span className="text-slate-300">NO unapproved addresses</span>
+                </div>
+              </div>
+            </div>
+
+            <div className="bg-slate-700/30 border border-slate-600 rounded-xl p-6">
+              <h3 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
+                <RefreshCw className="w-6 h-6 text-blue-400" />
+                Buyback Guardrails
+              </h3>
+              <div className="space-y-2 text-sm text-slate-300">
+                <div className="flex justify-between items-center p-3 bg-slate-800/50 rounded">
+                  <span>Max frequency</span>
+                  <span className="font-medium text-white">1 per week (or 2 per month)</span>
+                </div>
+                <div className="flex justify-between items-center p-3 bg-slate-800/50 rounded">
+                  <span>Slippage cap</span>
+                  <span className="font-medium text-white">≤ 2.5% (governance can adjust up to 5% max)</span>
+                </div>
+                <div className="flex justify-between items-center p-3 bg-slate-800/50 rounded">
+                  <span>Daily buyback spend cap</span>
+                  <span className="font-medium text-white">≤ 0.5% of treasury stablecoin balance</span>
+                </div>
+              </div>
+            </div>
+
+            <div className="bg-slate-700/30 border border-slate-600 rounded-xl p-6">
+              <h3 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
+                <TrendingUp className="w-6 h-6 text-purple-400" />
+                LP (Liquidity Pool) Guardrails
+              </h3>
+              <div className="space-y-2 text-sm text-slate-300">
+                <div className="flex items-start gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-cyan-400 flex-shrink-0 mt-0.5" />
+                  <span>LP withdrawals limited to max 25% of position per month</span>
+                </div>
+                <div className="flex items-start gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-cyan-400 flex-shrink-0 mt-0.5" />
+                  <span>Emergency vote required for larger withdrawals</span>
+                </div>
+                <div className="flex items-start gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-cyan-400 flex-shrink-0 mt-0.5" />
+                  <span>Prevents "liquidity rug" optics</span>
+                </div>
+              </div>
+            </div>
+
+            <div className="bg-red-500/10 border border-red-500/30 rounded-xl p-6">
+              <div className="flex items-start gap-3">
+                <Shield className="w-6 h-6 text-red-400 flex-shrink-0 mt-1" />
+                <div>
+                  <h4 className="font-bold text-white mb-2">Immutable Smart Contract Rules</h4>
+                  <p className="text-sm text-slate-300">
+                    These rules are IMMUTABLE at the smart contract level. Governance cannot bypass them.
+                    This ensures absolute protection of treasury funds and prevents abuse.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section className="bg-slate-800/30 backdrop-blur border border-slate-700 rounded-2xl p-8 lg:p-12">
+          <h2 className="text-3xl font-bold text-white mb-8 text-center flex items-center justify-center gap-3">
+            <Users className="w-8 h-8 text-yellow-400" />
+            Emergency Pause Mechanism (3 Guardians)
+          </h2>
+
+          <p className="text-lg text-slate-300 mb-8 max-w-3xl mx-auto text-center">
+            For the first year: 3 FIXED guardians. After Year 1: DAO feature allows rotation to trusted crypto industry actors.
+          </p>
+
+          <div className="max-w-4xl mx-auto space-y-6">
+            <div className="bg-slate-700/30 border border-slate-600 rounded-xl p-6">
+              <h3 className="text-xl font-bold text-white mb-4">Current Guardian Setup (First Year)</h3>
+              <div className="grid md:grid-cols-2 gap-6">
+                <div>
+                  <h4 className="font-bold text-cyan-400 mb-3">Guardian Powers (Limited)</h4>
+                  <div className="space-y-2 text-sm">
+                    <div className="flex items-start gap-2">
+                      <CheckCircle2 className="w-4 h-4 text-green-400 flex-shrink-0 mt-0.5" />
+                      <span className="text-slate-300">Emergency pause on security exploits</span>
+                    </div>
+                    <div className="flex items-start gap-2">
+                      <CheckCircle2 className="w-4 h-4 text-green-400 flex-shrink-0 mt-0.5" />
+                      <span className="text-slate-300">Pause interchain transfers</span>
+                    </div>
+                    <div className="flex items-start gap-2">
+                      <CheckCircle2 className="w-4 h-4 text-green-400 flex-shrink-0 mt-0.5" />
+                      <span className="text-slate-300">Pause staking</span>
+                    </div>
+                    <div className="flex items-start gap-2">
+                      <CheckCircle2 className="w-4 h-4 text-green-400 flex-shrink-0 mt-0.5" />
+                      <span className="text-slate-300">Pause U2E claims</span>
+                    </div>
+                    <div className="flex items-start gap-2">
+                      <CheckCircle2 className="w-4 h-4 text-green-400 flex-shrink-0 mt-0.5" />
+                      <span className="text-slate-300">Pause specific contracts</span>
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  <h4 className="font-bold text-red-400 mb-3">What Guardians CANNOT Do</h4>
+                  <div className="space-y-2 text-sm">
+                    <div className="flex items-start gap-2">
+                      <XCircle className="w-4 h-4 text-red-400 flex-shrink-0 mt-0.5" />
+                      <span className="text-slate-300">Cannot move treasury funds</span>
+                    </div>
+                    <div className="flex items-start gap-2">
+                      <XCircle className="w-4 h-4 text-red-400 flex-shrink-0 mt-0.5" />
+                      <span className="text-slate-300">Cannot change allocations</span>
+                    </div>
+                    <div className="flex items-start gap-2">
+                      <XCircle className="w-4 h-4 text-red-400 flex-shrink-0 mt-0.5" />
+                      <span className="text-slate-300">Cannot mint tokens</span>
+                    </div>
+                    <div className="flex items-start gap-2">
+                      <XCircle className="w-4 h-4 text-red-400 flex-shrink-0 mt-0.5" />
+                      <span className="text-slate-300">Cannot access treasury</span>
+                    </div>
+                    <div className="flex items-start gap-2">
+                      <XCircle className="w-4 h-4 text-red-400 flex-shrink-0 mt-0.5" />
+                      <span className="text-slate-300">Cannot override governance</span>
+                    </div>
+                    <div className="flex items-start gap-2">
+                      <XCircle className="w-4 h-4 text-red-400 flex-shrink-0 mt-0.5" />
+                      <span className="text-slate-300">Cannot change token supply</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="mt-4 bg-yellow-500/10 border border-yellow-500/30 rounded-lg p-4">
+                <p className="text-sm text-slate-300">
+                  <span className="font-bold text-white">2-of-3 multisig:</span> Requires 2 guardians to agree on any emergency pause action
+                </p>
+              </div>
+            </div>
+
+            <div className="bg-slate-700/30 border border-slate-600 rounded-xl p-6">
+              <h3 className="text-xl font-bold text-white mb-4">Future Guardian Rotation (After Year 1)</h3>
+              <div className="space-y-3 text-sm text-slate-300">
+                <div className="flex items-start gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-cyan-400 flex-shrink-0 mt-0.5" />
+                  <span>DAO votes on guardian candidates</span>
+                </div>
+                <div className="flex items-start gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-cyan-400 flex-shrink-0 mt-0.5" />
+                  <span>Trusted actors from crypto industry</span>
+                </div>
+                <div className="flex items-start gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-cyan-400 flex-shrink-0 mt-0.5" />
+                  <span>Vetted reputation requirements</span>
+                </div>
+                <div className="flex items-start gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-cyan-400 flex-shrink-0 mt-0.5" />
+                  <span>3-of-5 multisig (upgrade from 2-of-3)</span>
+                </div>
+                <div className="flex items-start gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-cyan-400 flex-shrink-0 mt-0.5" />
+                  <span>Transparent selection process</span>
                 </div>
               </div>
             </div>
@@ -174,56 +432,80 @@ export default function TreasuryDistributions() {
 
           <div className="max-w-3xl mx-auto">
             <p className="text-lg text-slate-300 mb-8 text-center">
-              Token holders can stake tokens to earn yield from ecosystem revenue.
+              Token holders can stake tokens to earn yield. APY is market-based and varies by total amount staked.
             </p>
+
+            <div className="bg-cyan-500/10 border border-cyan-500/30 rounded-xl p-6 mb-8">
+              <h3 className="text-lg font-bold text-white mb-3">Market-Based APY Formula</h3>
+              <div className="text-center text-xl font-mono text-cyan-400 mb-4">
+                APY = (Annual Staking Rewards / Total Staked) × 100
+              </div>
+              <p className="text-sm text-slate-300 text-center">
+                Years 1-4: Fixed emissions from 15M pool. Post-Year-4: Revenue-backed from 15% of monthly net profit.
+                Lower staking = higher APY, higher staking = lower APY.
+              </p>
+            </div>
 
             <div className="grid md:grid-cols-2 gap-6 mb-8">
               <StakingMetricCard
-                label="Base APY"
-                value="12-18%"
-                description="Variable yield based on treasury revenue and staking participation"
+                label="Launch Timeframe"
+                value="Q3/Q4 2026"
+                description="Staking launches aligned with revenue generation"
               />
               <StakingMetricCard
                 label="Lock Period"
                 value="Flexible"
-                description="Longer locks earn higher yields (1 month, 3 months, 6 months, 12 months)"
+                description="Multiple lock options with multipliers (30d, 90d, 180d, 365d)"
+              />
+              <StakingMetricCard
+                label="Rewards Source"
+                value="Dual Model"
+                description="Y1-4: 15M emissions pool. Post-Y4: 15% of monthly profit"
               />
               <StakingMetricCard
                 label="Distribution"
-                value="Weekly"
-                description="Rewards distributed every week to active stakers"
-              />
-              <StakingMetricCard
-                label="Early Unstake"
-                value="5% Penalty"
-                description="Penalty fee redistributed to remaining stakers"
+                value="Continuous"
+                description="Rewards accrue in real-time, claim anytime"
               />
             </div>
 
             <div className="bg-slate-700/30 backdrop-blur border border-slate-600 rounded-xl p-6">
-              <h3 className="text-xl font-bold text-white mb-4">Lock Period Multipliers</h3>
+              <h3 className="text-xl font-bold text-white mb-4">Lock Period Multipliers (Proposed)</h3>
               <ul className="space-y-3">
                 <li className="flex items-center justify-between text-slate-300">
-                  <span>No Lock (Flexible)</span>
-                  <span className="font-semibold text-white">1.0x Base APY</span>
+                  <span>Flexible (no lock)</span>
+                  <span className="font-semibold text-white">1.0x</span>
                 </li>
                 <li className="flex items-center justify-between text-slate-300">
-                  <span>1 Month Lock</span>
-                  <span className="font-semibold text-cyan-400">1.2x Base APY</span>
+                  <span>30 Days</span>
+                  <span className="font-semibold text-cyan-400">1.2x</span>
                 </li>
                 <li className="flex items-center justify-between text-slate-300">
-                  <span>3 Months Lock</span>
-                  <span className="font-semibold text-cyan-400">1.5x Base APY</span>
+                  <span>90 Days</span>
+                  <span className="font-semibold text-cyan-400">1.5x</span>
                 </li>
                 <li className="flex items-center justify-between text-slate-300">
-                  <span>6 Months Lock</span>
-                  <span className="font-semibold text-cyan-400">2.0x Base APY</span>
+                  <span>180 Days</span>
+                  <span className="font-semibold text-cyan-400">2.0x</span>
                 </li>
                 <li className="flex items-center justify-between text-slate-300">
-                  <span>12 Months Lock</span>
-                  <span className="font-semibold text-green-400">3.0x Base APY</span>
+                  <span>365 Days</span>
+                  <span className="font-semibold text-green-400">2.5x</span>
                 </li>
               </ul>
+              <div className="mt-4 text-xs text-slate-400 text-center">
+                Final parameters subject to governance approval at launch
+              </div>
+            </div>
+
+            <div className="mt-6 text-center">
+              <Link
+                to="/token/staking"
+                className="inline-flex items-center gap-2 px-6 py-3 bg-cyan-600 hover:bg-cyan-700 text-white font-medium rounded-lg transition-colors"
+              >
+                Learn More About Staking
+                <ArrowRight className="w-4 h-4" />
+              </Link>
             </div>
           </div>
         </section>
@@ -353,7 +635,7 @@ export default function TreasuryDistributions() {
             />
             <MetricCard
               icon={<Users className="w-8 h-8 text-blue-400" />}
-              label="Staking APY"
+              label="Staking Info"
               value="View Dashboard"
               valueColor="text-blue-400"
             />

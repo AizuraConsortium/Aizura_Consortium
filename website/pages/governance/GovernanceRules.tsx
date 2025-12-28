@@ -56,7 +56,7 @@ export default function GovernanceRules() {
             <ParameterCard
               icon={<Target className="w-8 h-8 text-green-400" />}
               label="Approval Threshold"
-              value="66%"
+              value="60%"
               description="of votes cast must be 'yes'"
             />
             <ParameterCard
@@ -74,6 +74,114 @@ export default function GovernanceRules() {
           </div>
         </section>
 
+        <section className="bg-gradient-to-br from-cyan-900/20 to-blue-900/20 border border-cyan-500/30 rounded-2xl p-8 lg:p-12">
+          <h2 className="text-3xl font-bold text-white mb-6 text-center flex items-center justify-center gap-3">
+            <Vote className="w-8 h-8 text-cyan-400" />
+            Business Launchpad Proposals (Different from DAO Governance)
+          </h2>
+
+          <p className="text-lg text-slate-300 mb-8 max-w-3xl mx-auto text-center">
+            The Launchpad has SEPARATE voting rules for business proposals
+          </p>
+
+          <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto mb-8">
+            <div className="bg-slate-800/50 border border-slate-700 rounded-xl p-6">
+              <h3 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
+                <Target className="w-6 h-6 text-cyan-400" />
+                Launchpad Rules
+              </h3>
+              <div className="space-y-3 text-sm">
+                <LaunchpadParameter label="Deposit to Submit" value="1,000 AAIC" sublabel="(refundable if quorum reached)" />
+                <LaunchpadParameter label="Voting Period" value="7 days" />
+                <LaunchpadParameter label="Quorum" value="5% of circulating supply" />
+                <LaunchpadParameter label="Approval Threshold" value="≥ 60% FOR" />
+              </div>
+            </div>
+
+            <div className="bg-slate-800/50 border border-slate-700 rounded-xl p-6">
+              <h3 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
+                <Shield className="w-6 h-6 text-blue-400" />
+                Deposit Outcome
+              </h3>
+              <div className="space-y-3 text-sm">
+                <div className="flex items-start gap-2">
+                  <CheckCircle2 className="w-5 h-5 text-green-400 flex-shrink-0 mt-0.5" />
+                  <div>
+                    <div className="text-white font-medium">If quorum reached</div>
+                    <div className="text-slate-400">Deposit returned in full</div>
+                  </div>
+                </div>
+                <div className="flex items-start gap-2">
+                  <AlertCircle className="w-5 h-5 text-yellow-400 flex-shrink-0 mt-0.5" />
+                  <div>
+                    <div className="text-white font-medium">If spam/low participation</div>
+                    <div className="text-slate-400">Up to 20% slashed (adjustable by governance)</div>
+                  </div>
+                </div>
+                <div className="bg-cyan-500/10 border border-cyan-500/30 rounded-lg p-3 mt-2">
+                  <p className="text-xs text-slate-300">
+                    Slashed funds go to treasury
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="bg-slate-800/50 border border-slate-700 rounded-xl p-6 max-w-5xl mx-auto mb-8">
+            <h3 className="text-xl font-bold text-white mb-4">Why Different Rules?</h3>
+            <ul className="grid sm:grid-cols-2 gap-3">
+              <li className="flex items-start gap-2 text-slate-300">
+                <CheckCircle2 className="w-5 h-5 text-cyan-400 flex-shrink-0 mt-0.5" />
+                <span className="text-sm">Lower barrier for business experimentation</span>
+              </li>
+              <li className="flex items-start gap-2 text-slate-300">
+                <CheckCircle2 className="w-5 h-5 text-cyan-400 flex-shrink-0 mt-0.5" />
+                <span className="text-sm">Deposit prevents spam without blocking innovation</span>
+              </li>
+              <li className="flex items-start gap-2 text-slate-300">
+                <CheckCircle2 className="w-5 h-5 text-cyan-400 flex-shrink-0 mt-0.5" />
+                <span className="text-sm">Lower quorum acknowledges specialized interest</span>
+              </li>
+              <li className="flex items-start gap-2 text-slate-300">
+                <CheckCircle2 className="w-5 h-5 text-cyan-400 flex-shrink-0 mt-0.5" />
+                <span className="text-sm">Slash mechanism protects against low-effort proposals</span>
+              </li>
+            </ul>
+          </div>
+
+          <div className="bg-slate-800/50 border border-slate-700 rounded-xl p-6 max-w-5xl mx-auto">
+            <h3 className="text-xl font-bold text-white mb-4">DAO Governance (Protocol-Level) Rules</h3>
+            <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-4 text-sm">
+              <div className="bg-slate-900/50 rounded-lg p-3">
+                <div className="text-slate-400 mb-1">Proposal Threshold</div>
+                <div className="font-bold text-white">50,000 AAIC</div>
+                <div className="text-xs text-slate-500">No deposit, just minimum holding</div>
+              </div>
+              <div className="bg-slate-900/50 rounded-lg p-3">
+                <div className="text-slate-400 mb-1">Voting Delay</div>
+                <div className="font-bold text-white">1 day</div>
+              </div>
+              <div className="bg-slate-900/50 rounded-lg p-3">
+                <div className="text-slate-400 mb-1">Voting Period</div>
+                <div className="font-bold text-white">14 days</div>
+              </div>
+              <div className="bg-slate-900/50 rounded-lg p-3">
+                <div className="text-slate-400 mb-1">Quorum</div>
+                <div className="font-bold text-white">20% of circulating</div>
+              </div>
+              <div className="bg-slate-900/50 rounded-lg p-3">
+                <div className="text-slate-400 mb-1">Approval</div>
+                <div className="font-bold text-white">≥ 60% FOR</div>
+              </div>
+              <div className="bg-slate-900/50 rounded-lg p-3">
+                <div className="text-slate-400 mb-1">Timelock Delay</div>
+                <div className="font-bold text-white">48 hours</div>
+                <div className="text-xs text-slate-500">After passage</div>
+              </div>
+            </div>
+          </div>
+        </section>
+
         <section>
           <h2 className="text-3xl font-bold text-white mb-8 text-center">Proposal Types & Requirements</h2>
 
@@ -83,7 +191,7 @@ export default function GovernanceRules() {
               icon={<FileText className="w-6 h-6 text-blue-400" />}
               requirements={[
                 { label: 'Quorum', value: '20% of supply' },
-                { label: 'Approval', value: '66% yes votes' },
+                { label: 'Approval', value: '60% yes votes' },
                 { label: 'Voting Period', value: '7 days' },
                 { label: 'Execution Delay', value: '48 hours after passage' }
               ]}
@@ -100,7 +208,7 @@ export default function GovernanceRules() {
               icon={<AlertCircle className="w-6 h-6 text-red-400" />}
               requirements={[
                 { label: 'Quorum', value: '30% of supply' },
-                { label: 'Approval', value: '75% yes votes' },
+                { label: 'Approval', value: '60% yes votes' },
                 { label: 'Voting Period', value: '14 days' },
                 { label: 'Execution Delay', value: '7 days after passage' }
               ]}
@@ -445,6 +553,18 @@ function BestPracticeCard({ icon, title, description }: { icon: React.ReactNode;
         <h3 className="text-lg font-bold text-white">{title}</h3>
       </div>
       <p className="text-sm text-slate-300">{description}</p>
+    </div>
+  );
+}
+
+function LaunchpadParameter({ label, value, sublabel }: { label: string; value: string; sublabel?: string }) {
+  return (
+    <div className="flex justify-between items-center">
+      <span className="text-slate-400">{label}:</span>
+      <div className="text-right">
+        <div className="font-bold text-white">{value}</div>
+        {sublabel && <div className="text-xs text-slate-500">{sublabel}</div>}
+      </div>
     </div>
   );
 }

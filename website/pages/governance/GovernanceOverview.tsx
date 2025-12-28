@@ -133,6 +133,65 @@ export default function GovernanceOverview() {
           </div>
         </section>
 
+        <section className="bg-gradient-to-br from-cyan-900/20 to-blue-900/20 border border-cyan-500/30 rounded-2xl p-8 lg:p-12">
+          <div className="flex items-start gap-4 mb-6">
+            <Info className="w-8 h-8 text-cyan-400 flex-shrink-0 mt-1" />
+            <div>
+              <h3 className="text-2xl font-bold text-white mb-4">Two Types of Proposals</h3>
+            </div>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-6">
+            <div className="bg-slate-800/50 border border-slate-700 rounded-xl p-6">
+              <div className="flex items-center gap-2 mb-4">
+                <Shield className="w-6 h-6 text-blue-400" />
+                <h4 className="text-xl font-bold text-white">1. DAO Governance (Protocol Changes)</h4>
+              </div>
+              <div className="space-y-2 text-sm">
+                <div className="flex justify-between">
+                  <span className="text-slate-400">Minimum:</span>
+                  <span className="font-medium text-white">50,000 AAIC</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-slate-400">Voting:</span>
+                  <span className="font-medium text-white">14 days</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-slate-400">Quorum:</span>
+                  <span className="font-medium text-white">20%</span>
+                </div>
+              </div>
+              <div className="mt-4 text-xs text-slate-400">
+                For protocol-level changes, treasury rules, revenue distribution
+              </div>
+            </div>
+
+            <div className="bg-slate-800/50 border border-slate-700 rounded-xl p-6">
+              <div className="flex items-center gap-2 mb-4">
+                <Target className="w-6 h-6 text-cyan-400" />
+                <h4 className="text-xl font-bold text-white">2. Launchpad (Business Proposals)</h4>
+              </div>
+              <div className="space-y-2 text-sm">
+                <div className="flex justify-between">
+                  <span className="text-slate-400">Deposit:</span>
+                  <span className="font-medium text-white">1,000 AAIC</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-slate-400">Voting:</span>
+                  <span className="font-medium text-white">7 days</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-slate-400">Quorum:</span>
+                  <span className="font-medium text-white">5%</span>
+                </div>
+              </div>
+              <div className="mt-4 text-xs text-slate-400">
+                For new AI business proposals (deposit refundable if quorum reached)
+              </div>
+            </div>
+          </div>
+        </section>
+
         <section id="governance-rules" className="bg-slate-800/30 backdrop-blur border border-slate-700 rounded-2xl p-8 lg:p-12">
           <h2 className="text-3xl font-bold text-white mb-8 text-center">Governance Proposal Rules</h2>
 
