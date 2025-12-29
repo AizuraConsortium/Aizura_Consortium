@@ -28,28 +28,46 @@ export function BurnCalculator() {
 
   const scenarios = [
     {
-      profit: 50000,
-      price: 0.25,
+      profit: 40080,
+      price: 0.20,
       label: 'Conservative',
+      description: '~219 years',
       color: 'from-yellow-500 to-orange-500',
     },
     {
-      profit: 100000,
+      profit: 80730,
       price: 0.50,
       label: 'Base Case',
+      description: '~109 years',
       color: 'from-orange-500 to-red-500',
     },
     {
-      profit: 200000,
+      profit: 163100,
       price: 1.00,
       label: 'Growth',
+      description: '~54 years',
       color: 'from-red-500 to-pink-500',
     },
     {
-      profit: 500000,
-      price: 2.00,
+      profit: 255800,
+      price: 1.50,
       label: 'Aggressive',
-      color: 'from-pink-500 to-purple-500',
+      description: '~43 years',
+      color: 'from-pink-500 to-violet-500',
+    },
+    {
+      profit: 600700,
+      price: 2.00,
+      label: 'Hyperscale',
+      description: '~14.6 years',
+      color: 'from-violet-500 to-blue-500',
+    },
+    {
+      profit: 1252800,
+      price: 2.50,
+      label: 'Ultra-Aggressive',
+      description: '~8.8 years',
+      color: 'from-blue-500 to-cyan-500',
     },
   ];
 
@@ -219,7 +237,10 @@ export function BurnCalculator() {
                   <td className="py-3 px-4">
                     <div className="flex items-center gap-2">
                       <div className={`w-3 h-3 rounded bg-gradient-to-r ${scenario.color}`} />
-                      <span className="font-semibold text-white">{scenario.label}</span>
+                      <div>
+                        <div className="font-semibold text-white">{scenario.label}</div>
+                        <div className="text-xs text-slate-500">{scenario.description}</div>
+                      </div>
                     </div>
                   </td>
                   <td className="text-right py-3 px-4 text-slate-300">
@@ -248,6 +269,7 @@ export function BurnCalculator() {
           <li>• Market price affects burn rate (higher price = slower burn)</li>
           <li>• Accelerates as supply decreases if demand remains constant</li>
           <li>• Creates deflationary pressure on circulating supply</li>
+          <li>• <strong className="text-cyan-400">Reaching 21M supply (Bitcoin parity) requires significant sustained profitability</strong></li>
         </ul>
       </div>
     </div>
