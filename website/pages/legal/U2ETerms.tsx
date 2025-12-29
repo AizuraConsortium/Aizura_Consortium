@@ -166,7 +166,7 @@ export default function U2ETerms() {
             </p>
             <ul className="space-y-2 text-slate-300 list-disc list-inside ml-4">
               <li>Claims available after U2E system activation</li>
-              <li>Historical usage credited retroactively</li>
+              <li>Rewards accrue only after system activation (no retroactive rewards)</li>
               <li>Claims subject to verification and approval</li>
               <li>Gas fees and transaction costs paid by claimant</li>
             </ul>

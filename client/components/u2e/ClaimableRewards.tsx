@@ -73,8 +73,7 @@ export function ClaimableRewards({ claimableAmount, isSystemActive }: ClaimableR
       {!isSystemActive && (
         <div className="mt-4 p-3 bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-lg">
           <p className="text-xs text-yellow-800 dark:text-yellow-200">
-            The U2E system will activate after the airdrop concludes. Your usage is being
-            tracked and rewards will be calculated retroactively.
+            The U2E system will activate after the airdrop concludes. Usage tracking before activation is for analytics only. Rewards begin accruing after system activation.
           </p>
         </div>
       )}

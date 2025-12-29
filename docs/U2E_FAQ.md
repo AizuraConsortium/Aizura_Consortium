@@ -16,7 +16,7 @@ Unlike traditional staking or yield farming:
 
 ### When does the U2E system go live?
 
-The U2E system will be activated after the airdrop campaign concludes. However, all eligible actions are being tracked from day one, so you'll be credited for your historical usage when the system activates.
+The U2E system will be activated after the airdrop campaign concludes. Usage tracking before activation is for analytics purposes only. Rewards begin accruing only after the system is officially activated.
 
 ### Is U2E available to everyone?
 
@@ -83,7 +83,7 @@ There are no hard limits on earnings, but:
 
 ### When can I claim my rewards?
 
-Rewards are tracked immediately but can only be claimed once the U2E system is officially activated (post-airdrop). All your historical usage will be credited retroactively.
+Rewards accrue only after the U2E system is officially activated (post-airdrop). Once activated, you can claim rewards monthly based on your point accumulation. There are no retroactive rewards for usage before system activation.
 
 ---
 
@@ -91,18 +91,19 @@ Rewards are tracked immediately but can only be claimed once the U2E system is o
 
 ### What are the three phases of U2E?
 
-**Phase 1: Fixed Token Supply (Years 0-2)**
-- Rewards come from pre-allocated 300M AAIC tokens
-- Fixed reward rates per action
+**Phase 1: Fixed Token Supply (48 months)**
+- Rewards come from pre-allocated 22M AAIC tokens
+- Monthly pool of 458,333 AAIC distributed based on points
+- Points-based formula: (User Points / Total Points) × Monthly Pool
 - Predictable and transparent
 
-**Phase 2: Hybrid Transition (Years 2-4)**
+**Phase 2: Hybrid Transition (Future)**
 - Mix of fixed supply + revenue-backed rewards
-- Gradual reduction of fixed rewards
+- Gradual transition model
 - Tests revenue sustainability
 
-**Phase 3: 100% Revenue-Backed (Year 4+)**
-- All rewards funded by ecosystem business revenue
+**Phase 3: 100% Revenue-Backed (Post-Phase 1)**
+- All rewards funded by ecosystem business revenue (15% of net profit)
 - Completely sustainable model
 - Scales with ecosystem success
 
