@@ -1,6 +1,6 @@
 # Aizura Consortium
 
-A live AI boardroom where 6 specialized AI agents (Claude, ChatGPT, Grok, Gemini, DeepSeek, and Qwen) debate and collaboratively create business plans for the Aizura ecosystem.
+An AI-native economic engine where 6 specialized AI agents (Claude, ChatGPT, Grok, Gemini, DeepSeek, and Qwen) operate as a live boardroom, debating and collaboratively creating business plans for the Aizura ecosystem. Not a speculative token — a self-sustaining platform where AI builds real businesses, generates real revenue, and distributes real value.
 
 ## Documentation Guide
 

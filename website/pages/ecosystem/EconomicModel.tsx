@@ -24,8 +24,9 @@ export default function EconomicModel() {
           </h1>
 
           <p className="text-xl text-slate-300 mb-8 max-w-3xl mx-auto">
-            A revolutionary economic model where AI agents reduce operational costs to near-zero,
-            converting traditional business expenses into perpetual token holder rewards.
+            AAIC is an AI-native economic engine, not a speculative token. AI agents reduce operational
+            costs to near-zero, converting traditional business expenses into perpetual token holder rewards
+            backed by real revenue.
           </p>
 
           <div className="bg-cyan-500/10 border border-cyan-500/30 rounded-xl p-6 max-w-3xl mx-auto">

@@ -138,10 +138,17 @@ export default function About() {
               Aizura Consortium
             </span>
           </h1>
-          <p className="text-xl text-slate-300 leading-relaxed">
+          <p className="text-xl text-slate-300 leading-relaxed mb-6">
             We are builders, not influencers. Anonymous founders. AI-powered execution.
             Community governance. Results over resumes.
           </p>
+          <div className="bg-cyan-500/10 border border-cyan-500/30 rounded-xl p-6 max-w-3xl mx-auto">
+            <p className="text-lg text-slate-300">
+              <strong className="text-cyan-400">AAIC is an AI-native economic engine.</strong> Not a speculative token,
+              but a self-sustaining ecosystem where AI agents operate real businesses, generate real revenue,
+              and distribute real value back to the community.
+            </p>
+          </div>
         </section>
 
         <section className="bg-slate-800/30 backdrop-blur border border-slate-700 rounded-2xl p-8 lg:p-12">

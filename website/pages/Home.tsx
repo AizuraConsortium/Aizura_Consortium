@@ -59,6 +59,9 @@ function HeroSection() {
     <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-32">
       <div className="grid lg:grid-cols-2 gap-12 items-center">
         <div>
+          <p className="text-xl sm:text-2xl text-cyan-400 font-semibold mb-4">
+            Autonomous AI Consortium is not a speculative token — it is an AI-native economic engine.
+          </p>
           <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold text-white mb-6 leading-tight">
             Autonomous AI launches businesses.{' '}
             <span className="bg-linear-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
