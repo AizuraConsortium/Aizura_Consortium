@@ -17,6 +17,7 @@ import { ComparisonTable } from '../../components/u2e/ComparisonTable';
 import { RealExamplesCarousel } from '../../components/u2e/RealExamplesCarousel';
 import { SustainabilityDiagram } from '../../components/u2e/SustainabilityDiagram';
 import { U2EPointsCalculator } from '../../components/calculators/U2EPointsCalculator';
+import { U2EPointsWarning } from '../../components/warnings/U2EPointsWarning';
 
 interface U2EStats {
   total_rewards_distributed: number;
@@ -156,6 +157,8 @@ export default function UseToEarn() {
               Simple, transparent, and automatic. Use services, earn tokens.
             </p>
           </div>
+
+          <U2EPointsWarning />
 
           <div className="grid md:grid-cols-4 gap-6">
             <div className="bg-slate-800/50 border border-slate-700 rounded-xl p-6 text-center">

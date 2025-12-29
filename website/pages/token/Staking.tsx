@@ -4,6 +4,7 @@ import {
   Lock, TrendingUp, Award, Shield, Clock, Info, ArrowRight, Zap, Target,
   AlertTriangle, Coins, BarChart3, DollarSign, CheckCircle2, Calculator
 } from 'lucide-react';
+import { StakingMultiplierWarning } from '../../components/warnings/StakingMultiplierWarning';
 
 export default function Staking() {
   return (
@@ -265,6 +266,8 @@ export default function Staking() {
           <p className="text-center text-slate-300 mb-8 max-w-3xl mx-auto">
             Instead of fixed APY tiers, staking offers TIME-BASED MULTIPLIERS on the base market APY.
           </p>
+
+          <StakingMultiplierWarning />
 
           <div className="max-w-4xl mx-auto space-y-8">
             <div className="bg-slate-800/50 border border-slate-700 rounded-xl p-6">

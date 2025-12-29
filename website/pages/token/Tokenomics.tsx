@@ -4,6 +4,7 @@ import {
   Shield, TrendingUp, Lock, Coins, Users, BarChart3, Flame, DollarSign,
   CheckCircle2, AlertTriangle, Eye, Target, Zap, ArrowRight, Clock, Sparkles
 } from 'lucide-react';
+import { BurnTimelineWarning } from '../../components/warnings/BurnTimelineWarning';
 
 export default function Tokenomics() {
   return (
@@ -1068,6 +1069,8 @@ export default function Tokenomics() {
 
         <section>
           <h2 className="text-3xl font-bold text-white mb-8 text-center">Buyback & Burn Mechanism</h2>
+
+          <BurnTimelineWarning />
 
           <div className="grid md:grid-cols-2 gap-8">
             <div className="bg-slate-800/50 backdrop-blur border border-slate-700 rounded-xl p-8">
