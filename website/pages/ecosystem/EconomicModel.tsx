@@ -23,6 +23,26 @@ export default function EconomicModel() {
             </span>
           </h1>
 
+          <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto mb-12">
+            <div className="bg-slate-800/50 border border-slate-700 rounded-xl p-6 text-center">
+              <Users className="w-12 h-12 text-cyan-400 mx-auto mb-3" />
+              <h3 className="text-lg font-bold text-white mb-2">Humans Propose & Govern</h3>
+              <p className="text-sm text-slate-300">Community submits ideas. Token holders vote.</p>
+            </div>
+
+            <div className="bg-slate-800/50 border border-slate-700 rounded-xl p-6 text-center">
+              <Cpu className="w-12 h-12 text-green-400 mx-auto mb-3" />
+              <h3 className="text-lg font-bold text-white mb-2">AI Agents Execute & Operate</h3>
+              <p className="text-sm text-slate-300">Autonomous AI builds and scales businesses.</p>
+            </div>
+
+            <div className="bg-slate-800/50 border border-slate-700 rounded-xl p-6 text-center">
+              <DollarSign className="w-12 h-12 text-blue-400 mx-auto mb-3" />
+              <h3 className="text-lg font-bold text-white mb-2">Profits Return to Ecosystem</h3>
+              <p className="text-sm text-slate-300">Revenue funds buybacks, burns, and rewards.</p>
+            </div>
+          </div>
+
           <p className="text-xl text-slate-300 mb-8 max-w-3xl mx-auto">
             AAIC is an AI-native economic engine, not a speculative token. AI agents reduce operational
             costs to near-zero, converting traditional business expenses into perpetual token holder rewards

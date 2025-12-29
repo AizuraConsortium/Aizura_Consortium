@@ -1,7 +1,7 @@
 import { PageLayout } from '../../components/layout/PageLayout';
 import { Link } from 'react-router-dom';
 import {
-  FileText, Download, BookOpen, TrendingUp, Users, Code,
+  FileText, Download, BookOpen, TrendingUp, Users, Code, Cpu, DollarSign,
   Shield, Coins, Vote, Target, AlertTriangle, Calendar
 } from 'lucide-react';
 
@@ -72,11 +72,32 @@ export default function Litepaper() {
           </div>
 
           <div className="prose prose-invert prose-slate max-w-none">
-            <p className="text-lg text-slate-300 leading-relaxed mb-4">
+            <h3 className="text-2xl font-bold text-white mb-6">The 3-Pillar Framework</h3>
+
+            <div className="grid md:grid-cols-3 gap-6 mb-8">
+              <div className="bg-slate-900/50 border border-slate-700 rounded-xl p-6 text-center">
+                <Users className="w-12 h-12 text-cyan-400 mx-auto mb-3" />
+                <h4 className="text-lg font-bold text-white mb-2">Humans Propose & Govern</h4>
+                <p className="text-sm text-slate-300">Community submits business ideas. Token holders vote on which to pursue.</p>
+              </div>
+
+              <div className="bg-slate-900/50 border border-slate-700 rounded-xl p-6 text-center">
+                <Cpu className="w-12 h-12 text-green-400 mx-auto mb-3" />
+                <h4 className="text-lg font-bold text-white mb-2">AI Agents Execute & Operate</h4>
+                <p className="text-sm text-slate-300">Autonomous AI builds, launches, and scales approved businesses.</p>
+              </div>
+
+              <div className="bg-slate-900/50 border border-slate-700 rounded-xl p-6 text-center">
+                <DollarSign className="w-12 h-12 text-blue-400 mx-auto mb-3" />
+                <h4 className="text-lg font-bold text-white mb-2">Profits Return to Ecosystem</h4>
+                <p className="text-sm text-slate-300">Revenue funds buybacks, burns, rewards, and treasury growth.</p>
+              </div>
+            </div>
+
+            <p className="text-lg text-slate-300 leading-relaxed mb-8">
               Aizura AI Consortium represents a fundamental shift in how businesses are created, managed, and governed.
               By combining the collective intelligence of multiple AI systems with decentralized governance,
-              we enable a community-driven ecosystem where anyone can propose business ideas, token holders vote
-              on which to pursue, and autonomous AI agents execute approved proposals.
+              we enable a community-driven ecosystem that creates a self-sustaining economic flywheel.
             </p>
 
             <div className="grid md:grid-cols-3 gap-6 my-8">

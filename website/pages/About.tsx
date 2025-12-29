@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ChevronDown, ChevronUp, Users, Scale, FileText, Vote, Edit3, Zap, Shield, Code, Twitter } from 'lucide-react';
+import { ChevronDown, ChevronUp, Users, Cpu, DollarSign, Scale, FileText, Vote, Edit3, Zap, Shield, Code, Twitter } from 'lucide-react';
 import { Navigation } from '../components/layout/Navigation';
 import { WebsiteHealthBadge } from '../components/WebsiteHealthBadge';
 import { PageLayout } from '../components/layout/PageLayout';
@@ -251,6 +251,53 @@ export default function About() {
                 </div>
               </div>
             </div>
+          </div>
+        </section>
+
+        <section className="bg-slate-800/30 backdrop-blur border border-slate-700 rounded-2xl p-8 lg:p-12">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">
+              Our Core Philosophy: The 3-Pillar Model
+            </h2>
+            <p className="text-lg text-slate-300">
+              A simple framework that powers everything we do
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto mb-10">
+            <div className="bg-slate-900/50 border border-slate-700 rounded-xl p-8 text-center">
+              <Users className="w-16 h-16 text-cyan-400 mx-auto mb-4" />
+              <h3 className="text-2xl font-bold text-white mb-3">Humans Propose & Govern</h3>
+              <p className="text-slate-300 leading-relaxed">
+                The community identifies opportunities and sets strategic direction. Token holders vote on which
+                business ideas to pursue. Humans provide vision, judgment, and governance oversight.
+              </p>
+            </div>
+
+            <div className="bg-slate-900/50 border border-slate-700 rounded-xl p-8 text-center">
+              <Cpu className="w-16 h-16 text-green-400 mx-auto mb-4" />
+              <h3 className="text-2xl font-bold text-white mb-3">AI Agents Execute & Operate</h3>
+              <p className="text-slate-300 leading-relaxed">
+                Once approved, our 6-agent consortium takes over. AI handles product development, engineering,
+                marketing, operations, finance, and compliance—autonomously and at scale.
+              </p>
+            </div>
+
+            <div className="bg-slate-900/50 border border-slate-700 rounded-xl p-8 text-center">
+              <DollarSign className="w-16 h-16 text-blue-400 mx-auto mb-4" />
+              <h3 className="text-2xl font-bold text-white mb-3">Profits Return to Ecosystem</h3>
+              <p className="text-slate-300 leading-relaxed">
+                Revenue from successful businesses flows back to token holders through buybacks, burns,
+                staking rewards, and treasury growth—creating a self-sustaining flywheel.
+              </p>
+            </div>
+          </div>
+
+          <div className="bg-cyan-500/10 border border-cyan-500/30 rounded-xl p-8 text-center max-w-3xl mx-auto">
+            <p className="text-lg text-slate-300 leading-relaxed">
+              This model combines human strategic intelligence with AI operational efficiency,
+              creating a system that's smarter than pure AI and more scalable than pure humans.
+            </p>
           </div>
         </section>
 

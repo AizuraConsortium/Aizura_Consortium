@@ -19,6 +19,7 @@ export default function NewHome() {
 
         <main id="main-content">
           <HeroSection />
+          <ThreePillarSection />
           <FivePhaseSection />
           <TraditionalVsAICosts />
           <WhyAIWinsSection />
@@ -117,6 +118,42 @@ function StatCard({ label, value }: { label: string; value: string }) {
       <div className="text-2xl font-bold text-white mb-1">{value}</div>
       <div className="text-xs text-slate-400">{label}</div>
     </div>
+  );
+}
+
+function ThreePillarSection() {
+  return (
+    <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+      <h2 className="text-4xl font-bold text-white text-center mb-12">
+        The Autonomous AI Consortium Economic Flywheel
+      </h2>
+
+      <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+        <div className="bg-slate-800/50 border border-slate-700 rounded-xl p-8 text-center">
+          <Users className="w-16 h-16 text-cyan-400 mx-auto mb-4" />
+          <h3 className="text-2xl font-bold text-white mb-3">Humans propose and govern</h3>
+          <p className="text-slate-300">Community submits business ideas. Token holders vote on which to pursue.</p>
+        </div>
+
+        <div className="bg-slate-800/50 border border-slate-700 rounded-xl p-8 text-center">
+          <Cpu className="w-16 h-16 text-green-400 mx-auto mb-4" />
+          <h3 className="text-2xl font-bold text-white mb-3">AI agents execute and operate</h3>
+          <p className="text-slate-300">Autonomous AI builds, launches, and scales approved businesses.</p>
+        </div>
+
+        <div className="bg-slate-800/50 border border-slate-700 rounded-xl p-8 text-center">
+          <DollarSign className="w-16 h-16 text-blue-400 mx-auto mb-4" />
+          <h3 className="text-2xl font-bold text-white mb-3">Profits return to ecosystem</h3>
+          <p className="text-slate-300">Revenue funds buybacks, burns, rewards, and treasury growth.</p>
+        </div>
+      </div>
+
+      <div className="mt-10 text-center">
+        <p className="text-lg text-cyan-400 font-medium">
+          This creates a self-sustaining flywheel where successful businesses fund the next generation of AI-managed ventures.
+        </p>
+      </div>
+    </section>
   );
 }
 
