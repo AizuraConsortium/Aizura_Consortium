@@ -70,6 +70,11 @@ export default function FAQ() {
       answer: 'A portion of ecosystem revenue is used to buy AAIC tokens from the open market. Some bought-back tokens are burned (permanently destroyed), reducing circulating supply and creating deflationary pressure.'
     },
     {
+      category: 'Revenue',
+      question: 'What if most businesses fail?',
+      answer: 'That\'s the point. Even if you have 100 failed businesses, one scaled winner can cover them — because AI reduces the cost of failure to $18K-$65K (vs $500K-$900K traditional), while successful businesses scale with near-zero marginal costs.'
+    },
+    {
       category: 'Portfolio',
       question: 'What are Foundation Businesses?',
       answer: 'Foundation businesses were created before DAO governance launched to validate that AI agents can successfully build and manage profitable businesses. They serve as proof-of-concept that community-voted businesses will work. All businesses created after Q2 2025 go through full DAO governance.'

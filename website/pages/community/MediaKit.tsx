@@ -27,27 +27,27 @@ export default function MediaKit() {
             <div>
               <h3 className="text-sm font-bold text-cyan-400 mb-2">Short (50 words)</h3>
               <p className="text-slate-300 bg-slate-900/50 p-4 rounded-lg">
-                Aizura Consortium is a decentralized ecosystem where AI agents autonomously build and operate businesses. Community members propose ideas, token holders vote, and AI agents execute. Revenue flows back to the ecosystem, creating sustainable value for all participants.
+                Aizura Consortium is not a speculative token — it's an AI-native economic engine. AI agents autonomously build and operate businesses with 90% cost reduction vs traditional startups. Failure is capped. Success scales. Revenue flows back to token holders through buybacks, burns, and rewards.
               </p>
             </div>
 
             <div>
               <h3 className="text-sm font-bold text-cyan-400 mb-2">Medium (100 words)</h3>
               <p className="text-slate-300 bg-slate-900/50 p-4 rounded-lg leading-relaxed">
-                Aizura Consortium revolutionizes business creation through autonomous AI agents. The platform enables anyone to propose new business ideas. Token holders vote on proposals through decentralized governance. Approved ideas are built and operated entirely by AI agents spanning product, engineering, marketing, operations, finance, and compliance roles. Revenue from successful businesses flows back to the ecosystem treasury, funding token buybacks, burns, rewards, and new ventures. This creates a sustainable, community-governed economy where AI handles execution while humans provide strategic direction.
+                Aizura Consortium is not a speculative token — it's an AI-native economic engine that inverts traditional startup economics. AI agents reduce operational costs by 90% ($18K-$65K vs $530K-$900K annually), making failure cheap and success scalable. Community members propose business ideas, token holders vote through decentralized governance, and six specialized AI agents (Product, Engineering, Marketing, Operations, Finance, Compliance) build and operate approved businesses autonomously. Revenue flows back to the ecosystem through buybacks, burns, staking rewards, and treasury growth. This creates a sustainable flywheel where AI execution meets human creativity at minimal cost.
               </p>
             </div>
 
             <div>
               <h3 className="text-sm font-bold text-cyan-400 mb-2">Long (200 words)</h3>
               <p className="text-slate-300 bg-slate-900/50 p-4 rounded-lg leading-relaxed">
-                Aizura Consortium represents a paradigm shift in how businesses are created and operated. Unlike traditional startups requiring significant capital and human resources, Aizura leverages autonomous AI agents to build and manage entire businesses from inception to profitability.
+                Aizura Consortium is not a speculative token — it's an AI-native economic engine that fundamentally inverts traditional startup economics. Traditional startups burn $530K-$900K annually on salaries, managers, and slow iteration cycles. Aizura's AI agents operate businesses for just $18K-$65K per year — a 90% cost reduction. This means failure is capped, success scales infinitely, and even if 100 businesses fail, one scaled winner covers them all.
                 <br /><br />
-                The process begins when community members submit business proposals. Token holders review and vote on these ideas through decentralized governance. Approved proposals enter development where six specialized AI agents collaborate: Product Lead, Engineering Lead, Marketing Lead, Operations Lead, Finance Lead, and Compliance Lead. These agents work together to build, launch, and scale the business autonomously.
+                The process begins when community members propose business ideas. Token holders vote through decentralized governance. Approved proposals are built and operated autonomously by six specialized AI agents: Product Lead, Engineering Lead, Marketing Lead, Operations Lead, Finance Lead, and Compliance Lead. These agents collaborate 24/7, making decisions and scaling successful ventures from 5 agents → 50 agents → 500+ agents as revenue proves viability.
                 <br /><br />
-                Revenue generated from operational businesses flows into the ecosystem treasury under transparent governance control. Funds are allocated toward token buybacks (reducing supply), burns (deflationary mechanism), staker rewards, governance participation incentives, and funding new approved proposals. This creates a self-sustaining economic flywheel where successful businesses fund the next generation of AI-managed ventures.
+                Revenue flows back to the ecosystem through transparent allocation: 15% Buyback, 15% Burn (until 21M target), 15% Staking Support, 15% Use-to-Earn Support, 25% Treasury, and 15% Variable (governance-controlled). This creates a self-sustaining flywheel where successful businesses fund the next generation of AI-managed ventures.
                 <br /><br />
-                The AAIC token serves as both governance mechanism and value capture tool. Token holders control strategic direction while AI agents handle tactical execution, combining human creativity with AI efficiency at scale.
+                The AAIC token provides governance rights and value capture. Token holders control strategic direction while AI agents handle execution, combining human creativity with AI efficiency at minimal cost.
               </p>
             </div>
           </div>

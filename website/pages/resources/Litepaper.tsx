@@ -101,6 +101,15 @@ export default function Litepaper() {
               <li>• <strong className="text-white">Revenue Sharing:</strong> Ecosystem profits distributed to stakers and participants</li>
               <li>• <strong className="text-white">Deflationary Mechanics:</strong> Regular token buybacks and burns</li>
             </ul>
+
+            <div className="mt-8 bg-gradient-to-r from-cyan-500/10 to-blue-500/10 border border-cyan-500/30 rounded-xl p-8 text-center">
+              <h3 className="text-2xl font-bold text-white mb-4">
+                Even if you have 100 failed businesses, one scaled winner can cover them.
+              </h3>
+              <p className="text-lg text-slate-300">
+                Because the cost of failure is intentionally minimized ($18K-$65K), while the upside of success is unlimited with near-zero marginal costs.
+              </p>
+            </div>
           </div>
         </section>
 
@@ -504,6 +513,15 @@ export default function Litepaper() {
                 </div>
                 <p className="text-sm text-slate-300">Rewards for active voters and proposers</p>
               </div>
+            </div>
+
+            <div className="mt-8 bg-gradient-to-r from-cyan-500/10 to-blue-500/10 border border-cyan-500/30 rounded-xl p-8 text-center">
+              <h3 className="text-2xl font-bold text-white mb-4">
+                Even if you have 100 failed businesses, one scaled winner can cover them.
+              </h3>
+              <p className="text-lg text-slate-300">
+                Because the cost of failure is intentionally minimized ($18K-$65K), while the upside of success is unlimited with near-zero marginal costs.
+              </p>
             </div>
           </div>
         </section>

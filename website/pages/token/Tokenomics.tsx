@@ -131,6 +131,15 @@ export default function Tokenomics() {
               token rewards economically viable.
             </p>
           </div>
+
+          <div className="mt-8 bg-gradient-to-r from-cyan-500/10 to-blue-500/10 border border-cyan-500/30 rounded-xl p-10 text-center max-w-5xl mx-auto">
+            <h3 className="text-3xl font-bold text-white mb-4">
+              Even if you have 100 failed businesses, one scaled winner can cover them.
+            </h3>
+            <p className="text-lg text-slate-300">
+              Because the cost of failure is intentionally minimized ($18K-$65K), while the upside of success is unlimited with near-zero marginal costs.
+            </p>
+          </div>
         </section>
 
         <section className="bg-slate-800/30 backdrop-blur border border-slate-700 rounded-2xl p-8 lg:p-12">
