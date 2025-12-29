@@ -59,9 +59,10 @@ export const TOKENOMICS = {
   },
 
   BURN: {
-    targetAmount: 21_000_000,
-    finalSupply: 79_000_000,
+    targetAmount: 79_000_000,
+    finalSupply: 21_000_000,
     revenuePercentage: 30,
+    symbolicReason: 'Match Bitcoin supply for symbolic alignment',
   },
 
   REVENUE_DISTRIBUTION: {

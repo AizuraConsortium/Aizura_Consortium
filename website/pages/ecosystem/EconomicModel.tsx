@@ -264,7 +264,7 @@ export default function EconomicModel() {
                   />
                   <ScenarioItem
                     label="Deflationary Pressure"
-                    value="Continuous buyback + burn to 21M"
+                    value="Continuous buyback + burn to 21M supply (79M burned)"
                     description="Supply shrinks as revenue grows"
                   />
                   <ScenarioItem
@@ -323,7 +323,7 @@ export default function EconomicModel() {
               details={[
                 'Scale successful models, sunset underperformers',
                 'Launch Q4 2026 flagship business (major revenue driver)',
-                'Accelerate buyback/burn toward 21M supply target',
+                'Accelerate buyback/burn toward 21M supply target (79M burned, Bitcoin parity)',
                 'Staking and U2E rewards become significant income streams',
               ]}
             />
@@ -557,7 +557,7 @@ export default function EconomicModel() {
                   </li>
                   <li className="flex items-start gap-2">
                     <CheckCircle2 className="w-4 h-4 text-green-400 flex-shrink-0 mt-0.5" />
-                    <span>Supply becomes deflationary (burns toward 21M cap)</span>
+                    <span>Supply becomes deflationary (burns 79M → 21M final supply, Bitcoin parity)</span>
                   </li>
                 </ul>
               </div>

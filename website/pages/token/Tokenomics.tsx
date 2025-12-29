@@ -184,7 +184,7 @@ export default function Tokenomics() {
                     <CheckCircle2 className="w-5 h-5 text-green-400 flex-shrink-0 mt-0.5" />
                     <div>
                       <div className="font-bold text-white mb-1">Burning</div>
-                      Enabled (irreversible, target: 21M AAIC burned)
+                      Enabled (irreversible, target: 79M AAIC burned → 21M final supply)
                     </div>
                   </li>
                 </ul>
@@ -956,7 +956,7 @@ export default function Tokenomics() {
               icon={<Flame className="w-8 h-8 text-orange-400" />}
               label="Burn"
               percent={15}
-              description="Until 21M target, then redirected"
+              description="Until 79M burned (21M final), then redirected"
             />
             <RevenueCard
               icon={<Users className="w-8 h-8 text-cyan-400" />}
@@ -1045,7 +1045,7 @@ export default function Tokenomics() {
               </div>
               <div className="flex items-start gap-2">
                 <CheckCircle2 className="w-4 h-4 text-green-400 flex-shrink-0 mt-0.5" />
-                <span>Burn budget continues until 21M target</span>
+                <span>Burn budget continues until 79M burned (21M final supply)</span>
               </div>
               <div className="flex items-start gap-2">
                 <CheckCircle2 className="w-4 h-4 text-green-400 flex-shrink-0 mt-0.5" />
@@ -1110,7 +1110,7 @@ export default function Tokenomics() {
                   <div>
                     <div className="font-bold text-white mb-1">15% Direct Burns</div>
                     <div className="text-sm text-slate-300">
-                      15% of net profit used to buy AAIC and burn until 21M target
+                      15% of net profit used to buy AAIC and burn until 79M burned (21M final supply, Bitcoin parity)
                     </div>
                   </div>
                 </div>
@@ -1271,11 +1271,11 @@ export default function Tokenomics() {
         <section className="bg-gradient-to-r from-orange-500/10 to-red-500/10 border border-orange-500/30 rounded-2xl p-8 lg:p-12">
           <h2 className="text-3xl font-bold text-white mb-8 text-center flex items-center justify-center gap-3">
             <Flame className="w-8 h-8 text-orange-400" />
-            Burn Target Timeline (21M AAIC)
+            Burn Target Timeline (79M AAIC → 21M Final Supply)
           </h2>
 
           <p className="text-center text-slate-300 mb-8 max-w-3xl mx-auto">
-            Burn allocation: 15% of net profit used to buy AAIC and burn until 21M target is reached.
+            Burn allocation: 15% of net profit used to buy AAIC and burn until 79M burned, reducing supply to 21M (Bitcoin parity).
           </p>
 
           <div className="bg-slate-800/50 border border-slate-700 rounded-xl p-8 mb-8">
@@ -1286,7 +1286,7 @@ export default function Tokenomics() {
                   Burn tokens per month = (0.15 × Monthly Profit) / AAIC Price
                 </div>
                 <div className="text-lg font-mono text-orange-400">
-                  Time to reach 21M = 21,000,000 / Monthly Burn Rate
+                  Time to reach 21M supply = 79,000,000 / Monthly Burn Rate
                 </div>
               </div>
             </div>
@@ -1300,17 +1300,17 @@ export default function Tokenomics() {
                   <div className="text-center p-3 bg-slate-900/50 rounded">
                     <div className="text-xs text-slate-400 mb-1">At $1.00/AAIC</div>
                     <div className="text-sm font-bold text-white">150,000 burned/month</div>
-                    <div className="text-xs text-orange-400 mt-1">140 months (11.7 years)</div>
+                    <div className="text-xs text-orange-400 mt-1">527 months (43.9 years)</div>
                   </div>
                   <div className="text-center p-3 bg-slate-900/50 rounded">
                     <div className="text-xs text-slate-400 mb-1">At $0.50/AAIC</div>
                     <div className="text-sm font-bold text-white">300,000 burned/month</div>
-                    <div className="text-xs text-orange-400 mt-1">70 months (5.8 years)</div>
+                    <div className="text-xs text-orange-400 mt-1">263 months (21.9 years)</div>
                   </div>
                   <div className="text-center p-3 bg-slate-900/50 rounded">
                     <div className="text-xs text-slate-400 mb-1">At $2.00/AAIC</div>
                     <div className="text-sm font-bold text-white">75,000 burned/month</div>
-                    <div className="text-xs text-orange-400 mt-1">280 months (23.3 years)</div>
+                    <div className="text-xs text-orange-400 mt-1">1,053 months (87.8 years)</div>
                   </div>
                 </div>
               </div>
@@ -1321,17 +1321,17 @@ export default function Tokenomics() {
                   <div className="text-center p-3 bg-slate-900/50 rounded">
                     <div className="text-xs text-slate-400 mb-1">At $1.00/AAIC</div>
                     <div className="text-sm font-bold text-white">300,000 burned/month</div>
-                    <div className="text-xs text-orange-400 mt-1">70 months (5.8 years)</div>
+                    <div className="text-xs text-orange-400 mt-1">263 months (21.9 years)</div>
                   </div>
                   <div className="text-center p-3 bg-slate-900/50 rounded">
                     <div className="text-xs text-slate-400 mb-1">At $0.50/AAIC</div>
                     <div className="text-sm font-bold text-white">600,000 burned/month</div>
-                    <div className="text-xs text-orange-400 mt-1">35 months (2.9 years)</div>
+                    <div className="text-xs text-orange-400 mt-1">132 months (11.0 years)</div>
                   </div>
                   <div className="text-center p-3 bg-slate-900/50 rounded">
                     <div className="text-xs text-slate-400 mb-1">At $2.00/AAIC</div>
                     <div className="text-sm font-bold text-white">150,000 burned/month</div>
-                    <div className="text-xs text-orange-400 mt-1">140 months (11.7 years)</div>
+                    <div className="text-xs text-orange-400 mt-1">527 months (43.9 years)</div>
                   </div>
                 </div>
               </div>
@@ -1362,9 +1362,9 @@ export default function Tokenomics() {
             </div>
 
             <div className="bg-gradient-to-r from-cyan-500/10 to-blue-500/10 border border-cyan-500/30 rounded-xl p-6">
-              <h3 className="font-bold text-white mb-4">After 21M Burned</h3>
+              <h3 className="font-bold text-white mb-4">After 79M Burned (21M Final Supply Reached)</h3>
               <p className="text-sm text-slate-300 mb-4">
-                The 15% burn allocation redirects to governance-voted purposes.
+                Once 79M tokens are burned and supply reaches 21M (Bitcoin parity), the 15% burn allocation redirects to governance-voted purposes.
               </p>
               <div className="p-3 bg-green-500/10 border border-green-500/30 rounded">
                 <p className="text-sm text-green-400 font-semibold">

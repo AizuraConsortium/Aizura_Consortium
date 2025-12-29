@@ -6,7 +6,7 @@ export function BurnCalculator() {
   const [aaicPrice, setAaicPrice] = useState(0.50);
 
   const burnPercentage = 15;
-  const targetBurnedSupply = 21_000_000;
+  const targetBurnedSupply = 79_000_000;
   const currentSupply = 100_000_000;
 
   const calculateBurnRate = () => {
@@ -73,7 +73,7 @@ export function BurnCalculator() {
         <h3 className="text-2xl font-bold text-white">Burn Timeline Calculator</h3>
       </div>
       <p className="text-slate-400 mb-8">
-        Calculate how long it takes to burn 21M tokens (reducing supply to 79M) based on profit and token price
+        Calculate how long it takes to burn 79M tokens (reducing supply to 21M, matching Bitcoin) based on profit and token price
       </p>
 
       <div className="grid lg:grid-cols-2 gap-8 mb-8">
@@ -122,8 +122,8 @@ export function BurnCalculator() {
               <li>• 15% buyback + 15% burn (30% combined for deflationary pressure)</li>
               <li>• Tokens purchased from open market via buyback allocation</li>
               <li>• Burn allocation directly reduces supply permanently</li>
-              <li>• Permanent supply reduction until 21M target reached</li>
-              <li>• Target: 79M final circulating supply</li>
+              <li>• Permanent supply reduction until 79M burned (21M final supply)</li>
+              <li>• Target: 21M final circulating supply (Bitcoin parity)</li>
             </ul>
           </div>
         </div>
@@ -137,7 +137,7 @@ export function BurnCalculator() {
               <div className="text-4xl font-bold text-orange-400 mb-2">
                 {result.yearsToTarget.toFixed(1)} years
               </div>
-              <div className="text-sm text-slate-300">To reach 79M supply target</div>
+              <div className="text-sm text-slate-300">To reach 21M supply target (Bitcoin parity)</div>
             </div>
 
             <div className="grid grid-cols-2 gap-4 pt-4 border-t border-orange-500/20">
@@ -196,7 +196,7 @@ export function BurnCalculator() {
           Scenario Analysis Matrix
         </h4>
         <p className="text-sm text-slate-400 mb-4">
-          Time to reach 79M supply target under different conditions
+          Time to reach 21M supply target (Bitcoin parity) under different conditions
         </p>
 
         <div className="overflow-x-auto">
@@ -207,7 +207,7 @@ export function BurnCalculator() {
                 <th className="text-right py-3 px-4 text-slate-400 font-semibold">Monthly Profit</th>
                 <th className="text-right py-3 px-4 text-slate-400 font-semibold">Token Price</th>
                 <th className="text-right py-3 px-4 text-slate-400 font-semibold">Burn/Month</th>
-                <th className="text-right py-3 px-4 text-slate-400 font-semibold">Years to 79M</th>
+                <th className="text-right py-3 px-4 text-slate-400 font-semibold">Years to 21M</th>
               </tr>
             </thead>
             <tbody>

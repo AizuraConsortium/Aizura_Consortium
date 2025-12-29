@@ -105,7 +105,7 @@ export default function TreasuryDistributions() {
                   category="Burn"
                   percentage={15}
                   color="bg-orange-500"
-                  description="Until 21M AAIC burned, then redirected by governance"
+                  description="Until 79M AAIC burned (21M final supply), then redirected by governance"
                 />
                 <AllocationBar
                   category="Staking Support"
@@ -153,7 +153,7 @@ export default function TreasuryDistributions() {
                 </div>
                 <div className="flex items-start gap-2">
                   <CheckCircle2 className="w-5 h-5 text-green-400 flex-shrink-0 mt-0.5" />
-                  <span className="text-sm text-slate-300">Burn stops at 21M target (12-year timeline)</span>
+                  <span className="text-sm text-slate-300">Burn stops at 79M burned (21M final supply, multi-decade timeline)</span>
                 </div>
                 <div className="flex items-start gap-2">
                   <CheckCircle2 className="w-5 h-5 text-green-400 flex-shrink-0 mt-0.5" />

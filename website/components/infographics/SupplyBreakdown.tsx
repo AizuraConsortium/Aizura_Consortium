@@ -270,7 +270,7 @@ export function SupplyBreakdown() {
             <h5 className="font-bold text-white mb-2">Fixed Supply Forever</h5>
             <p className="text-sm text-slate-300">
               100M tokens minted at deployment, then minting disabled permanently. No inflation, ever. The only
-              supply change is deflationary through burns (target: 21M burned → 79M final supply).
+              supply change is deflationary through burns (target: 79M burned → 21M final supply, Bitcoin parity).
             </p>
           </div>
         </div>

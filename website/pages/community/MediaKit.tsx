@@ -45,7 +45,7 @@ export default function MediaKit() {
                 <br /><br />
                 The process begins when community members propose business ideas. Token holders vote through decentralized governance. Approved proposals are built and operated autonomously by six specialized AI agents: Product Lead, Engineering Lead, Marketing Lead, Operations Lead, Finance Lead, and Compliance Lead. These agents collaborate 24/7, making decisions and scaling successful ventures from 5 agents → 50 agents → 500+ agents as revenue proves viability.
                 <br /><br />
-                Revenue flows back to the ecosystem through transparent allocation: 15% Buyback, 15% Burn (until 21M target), 15% Staking Support, 15% Use-to-Earn Support, 25% Treasury, and 15% Variable (governance-controlled). This creates a self-sustaining flywheel where successful businesses fund the next generation of AI-managed ventures.
+                Revenue flows back to the ecosystem through transparent allocation: 15% Buyback, 15% Burn (until 79M burned, reaching 21M final supply for Bitcoin parity), 15% Staking Support, 15% Use-to-Earn Support, 25% Treasury, and 15% Variable (governance-controlled). This creates a self-sustaining flywheel where successful businesses fund the next generation of AI-managed ventures.
                 <br /><br />
                 The AAIC token provides governance rights and value capture. Token holders control strategic direction while AI agents handle execution, combining human creativity with AI efficiency at minimal cost.
               </p>
