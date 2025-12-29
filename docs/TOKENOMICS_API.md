@@ -372,9 +372,14 @@ Calculate required profit for desired distribution.
 {
   "desiredAAIC": 1000000,
   "aaicPrice": 0.5,
-  "requiredProfit": 333333
+  "requiredProfit": 1666667
 }
 ```
+
+**Calculation:**
+- Total USD needed: 1,000,000 AAIC × $0.50 = $500,000
+- Required monthly profit: $500,000 / 0.30 = $1,666,667
+- (30% of profit allocated to rewards = 15% staking + 15% U2E)
 
 ### Treasury Guardrails
 

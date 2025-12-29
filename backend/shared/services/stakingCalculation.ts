@@ -96,7 +96,7 @@ export class StakingCalculationService {
     const rewardPercentage = TOKENOMICS.REVENUE_DISTRIBUTION.STAKING.percentage +
                              TOKENOMICS.REVENUE_DISTRIBUTION.USE_TO_EARN.percentage;
 
-    const requiredProfit = (totalNeededUSD * 2) / (rewardPercentage / 100);
+    const requiredProfit = totalNeededUSD / (rewardPercentage / 100);
 
     return requiredProfit;
   }
