@@ -260,20 +260,20 @@ export default function Tokenomics() {
                     </div>
                     <div className="text-xs text-slate-400 space-y-1 ml-4">
                       <div className="flex justify-between">
-                        <span>Year 1: 5,000,000</span>
-                        <span className="text-slate-500">(417k/month)</span>
+                        <span>Year 1: 4,500,000</span>
+                        <span className="text-slate-500">(375k/month)</span>
                       </div>
                       <div className="flex justify-between">
-                        <span>Year 2: 4,000,000</span>
-                        <span className="text-slate-500">(333k/month)</span>
+                        <span>Year 2: 3,750,000</span>
+                        <span className="text-slate-500">(313k/month)</span>
                       </div>
                       <div className="flex justify-between">
-                        <span>Year 3: 3,500,000</span>
-                        <span className="text-slate-500">(292k/month)</span>
+                        <span>Year 3: 3,750,000</span>
+                        <span className="text-slate-500">(313k/month)</span>
                       </div>
                       <div className="flex justify-between">
-                        <span>Year 4: 2,500,000</span>
-                        <span className="text-slate-500">(208k/month)</span>
+                        <span>Year 4: 3,000,000</span>
+                        <span className="text-slate-500">(250k/month)</span>
                       </div>
                     </div>
                   </div>
@@ -727,7 +727,7 @@ export default function Tokenomics() {
                   APY Mathematics (Market-Based)
                 </h4>
                 <p className="text-sm text-slate-400 mb-4">
-                  Annual staking rewards in Year 1 = 5,000,000 AAIC
+                  Annual staking rewards in Year 1 = 4,500,000 AAIC
                 </p>
                 <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
                   <div className="bg-slate-900/50 rounded-lg p-4">

@@ -18,10 +18,10 @@ export const TOKENOMICS = {
       percentage: 15,
       description: 'Staking rewards pool (48 months)',
       yearlyEmissions: {
-        1: 5_000_000,
-        2: 4_000_000,
-        3: 3_500_000,
-        4: 2_500_000,
+        1: 4_500_000,
+        2: 3_750_000,
+        3: 3_750_000,
+        4: 3_000_000,
       },
     },
     TREASURY: {

@@ -320,8 +320,23 @@ Get 48-month emission schedule.
   "schedule": [
     {
       "year": 1,
-      "yearlyEmission": 5000000,
-      "monthlyEmission": 416667
+      "yearlyEmission": 4500000,
+      "monthlyEmission": 375000
+    },
+    {
+      "year": 2,
+      "yearlyEmission": 3750000,
+      "monthlyEmission": 312500
+    },
+    {
+      "year": 3,
+      "yearlyEmission": 3750000,
+      "monthlyEmission": 312500
+    },
+    {
+      "year": 4,
+      "yearlyEmission": 3000000,
+      "monthlyEmission": 250000
     }
   ]
 }
