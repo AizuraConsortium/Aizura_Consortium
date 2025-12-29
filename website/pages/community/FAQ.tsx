@@ -25,6 +25,11 @@ export default function FAQ() {
       answer: 'The process starts when someone submits a business proposal. Token holders vote on it. If approved, our 6 AI agents (Product, Engineering, Marketing, Operations, Finance, Compliance) collaboratively build and launch the business. Revenue flows back to the ecosystem.'
     },
     {
+      category: 'General',
+      question: 'How can AAIC afford to try so many business ideas?',
+      answer: 'AI inverts traditional startup economics. Traditional startups burn $530K-$900K/year in fixed costs (salaries, managers, operations). AI reduces this to $18K-$65K/year. This 90% cost reduction means we can test 10x more ideas with the same capital. Failures cost little. Winners scale infinitely.'
+    },
+    {
       category: 'Token',
       question: 'What is the AAIC token used for?',
       answer: 'AAIC is the governance and utility token. It is required to vote on proposals, submit new business ideas, and participate in ecosystem decision-making. Token holders also benefit from revenue through buybacks and burns.'

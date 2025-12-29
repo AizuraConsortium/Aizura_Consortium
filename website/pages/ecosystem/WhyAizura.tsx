@@ -1,7 +1,7 @@
 import { PageLayout } from '../../components/layout/PageLayout';
 import { Link } from 'react-router-dom';
 import {
-  Brain, TrendingUp, DollarSign, Clock, Shield, Zap,
+  Brain, TrendingUp, TrendingDown, DollarSign, Clock, Shield, Zap,
   Target, CheckCircle2, X, BarChart3, Users, Award,
   GitBranch, Lightbulb, MessageSquare, Star, Quote
 } from 'lucide-react';
@@ -318,79 +318,99 @@ export default function WhyAizura() {
         <section className="bg-slate-800/30 backdrop-blur border border-slate-700 rounded-2xl p-8 lg:p-12">
           <div className="text-center mb-12">
             <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">
-              Cost-Benefit Analysis: The ROI is Obvious
+              Traditional vs AI-Native Economics: Complete Breakdown
             </h2>
             <p className="text-lg text-slate-300">
-              Yes, consortium costs more in AI API fees. But it's still 95% cheaper than humans.
+              AI doesn't just reduce costs — it inverts the entire cost structure of starting and scaling businesses.
             </p>
           </div>
 
           <div className="grid lg:grid-cols-2 gap-8 mb-8">
             <div className="bg-red-500/10 border border-red-500/30 rounded-xl p-8">
-              <h3 className="text-2xl font-bold text-white mb-6">Traditional Human Team</h3>
-              <div className="space-y-4">
+              <h3 className="text-2xl font-bold text-white mb-6 flex items-center gap-3">
+                <TrendingDown className="w-8 h-8 text-red-400" />
+                Traditional Startup Fixed Costs
+              </h3>
+              <div className="space-y-3 text-slate-300">
                 <div className="flex justify-between items-center">
-                  <span className="text-slate-300">Business Analyst</span>
-                  <span className="text-white font-bold">$80,000/year</span>
-                </div>
-                <div className="flex justify-between items-center">
-                  <span className="text-slate-300">Developer</span>
-                  <span className="text-white font-bold">$120,000/year</span>
-                </div>
-                <div className="flex justify-between items-center">
-                  <span className="text-slate-300">Marketing Manager</span>
-                  <span className="text-white font-bold">$75,000/year</span>
+                  <span>Engineers (2-3)</span>
+                  <span className="text-white font-semibold">$300K-$450K/year</span>
                 </div>
                 <div className="flex justify-between items-center">
-                  <span className="text-slate-300">Operations Manager</span>
-                  <span className="text-white font-bold">$70,000/year</span>
+                  <span>Marketing/Growth</span>
+                  <span className="text-white font-semibold">$100K-$200K/year</span>
                 </div>
-                <div className="border-t border-slate-700 pt-4 flex justify-between items-center">
-                  <span className="text-white font-bold text-lg">Total Annual Cost</span>
-                  <span className="text-red-400 font-bold text-2xl">$345,000</span>
+                <div className="flex justify-between items-center">
+                  <span>Operations/Support</span>
+                  <span className="text-white font-semibold">$80K-$150K/year</span>
                 </div>
-                <div className="text-sm text-slate-400">
-                  + Benefits, taxes, office space, equipment, training, downtime
+                <div className="flex justify-between items-center">
+                  <span>Infrastructure/Tools</span>
+                  <span className="text-white font-semibold">$50K-$100K/year</span>
+                </div>
+                <div className="border-t border-red-500/30 pt-4 mt-4 flex justify-between items-center">
+                  <span className="text-white font-bold text-lg">Total Annual Burn</span>
+                  <span className="text-red-400 font-bold text-2xl">$530K-$900K/year</span>
                 </div>
               </div>
+              <p className="text-sm text-red-400 mt-6 font-medium">
+                High fixed costs = massive risk. Most startups burn through runway before finding product-market fit.
+              </p>
             </div>
 
             <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-8">
-              <h3 className="text-2xl font-bold text-white mb-6">AI Consortium</h3>
-              <div className="space-y-4">
+              <h3 className="text-2xl font-bold text-white mb-6 flex items-center gap-3">
+                <TrendingUp className="w-8 h-8 text-green-400" />
+                AI Business Cost Inversion
+              </h3>
+              <div className="space-y-3 text-slate-300">
                 <div className="flex justify-between items-center">
-                  <span className="text-slate-300">OpenAI API (GPT-4)</span>
-                  <span className="text-white font-bold">~$1,200/year</span>
-                </div>
-                <div className="flex justify-between items-center">
-                  <span className="text-slate-300">Anthropic API (Claude)</span>
-                  <span className="text-white font-bold">~$1,000/year</span>
-                </div>
-                <div className="flex justify-between items-center">
-                  <span className="text-slate-300">Google Gemini API</span>
-                  <span className="text-white font-bold">~$800/year</span>
+                  <span>AI Agent Operations</span>
+                  <span className="text-white font-semibold">$5K-$20K/year</span>
                 </div>
                 <div className="flex justify-between items-center">
-                  <span className="text-slate-300">Other APIs + Infrastructure</span>
-                  <span className="text-white font-bold">~$2,000/year</span>
+                  <span>Automated Marketing</span>
+                  <span className="text-white font-semibold">$2K-$10K/year</span>
                 </div>
-                <div className="border-t border-slate-700 pt-4 flex justify-between items-center">
-                  <span className="text-white font-bold text-lg">Total Annual Cost</span>
-                  <span className="text-green-400 font-bold text-2xl">$5,000</span>
+                <div className="flex justify-between items-center">
+                  <span>AI Support Systems</span>
+                  <span className="text-white font-semibold">$1K-$5K/year</span>
                 </div>
-                <div className="text-sm text-slate-400">
-                  24/7 availability, no benefits, no downtime, infinite scalability
+                <div className="flex justify-between items-center">
+                  <span>Infrastructure</span>
+                  <span className="text-white font-semibold">$10K-$30K/year</span>
+                </div>
+                <div className="border-t border-green-500/30 pt-4 mt-4 flex justify-between items-center">
+                  <span className="text-white font-bold text-lg">Total Annual Costs</span>
+                  <span className="text-green-400 font-bold text-2xl">$18K-$65K/year</span>
                 </div>
               </div>
+              <p className="text-sm text-green-400 mt-6 font-medium">
+                90% cost reduction = 10x more experiments with the same capital. Risk is minimized. Upside is unlimited.
+              </p>
             </div>
           </div>
 
-          <div className="bg-cyan-500/10 border border-cyan-500/30 rounded-xl p-8 text-center">
-            <div className="text-5xl font-bold text-cyan-400 mb-4">98.5% Cost Reduction</div>
-            <p className="text-xl text-white mb-2">Save $340,000 per year per business</p>
-            <p className="text-slate-300">
-              The efficiency gains and 24/7 availability more than offset the AI costs. Plus, AI quality improves
-              every month while costs decrease. The opposite is true for human teams.
+          <div className="bg-gradient-to-r from-cyan-500/10 to-blue-500/10 border border-cyan-500/30 rounded-2xl p-10 text-center">
+            <h3 className="text-3xl font-bold text-white mb-4">
+              Failure is Capped. Success Scales.
+            </h3>
+            <p className="text-lg text-slate-300 max-w-3xl mx-auto mb-6">
+              With AI, a failed business costs $20K-$65K, not $500K-$900K. But when a business succeeds,
+              it scales with near-zero marginal costs—just like traditional AI businesses except we own the entire stack.
+            </p>
+            <div className="inline-flex items-center gap-3 px-6 py-3 bg-cyan-500/20 border border-cyan-500/30 rounded-lg">
+              <Target className="w-6 h-6 text-cyan-400" />
+              <span className="text-white font-semibold">This asymmetry is the entire economic model</span>
+            </div>
+          </div>
+
+          <div className="mt-8 bg-gradient-to-r from-cyan-500/10 to-blue-500/10 border border-cyan-500/30 rounded-xl p-10 text-center max-w-5xl mx-auto">
+            <h3 className="text-3xl font-bold text-white mb-4">
+              Even if you have 100 failed businesses, one scaled winner can cover them.
+            </h3>
+            <p className="text-lg text-slate-300">
+              Because the cost of failure is intentionally minimized ($18K-$65K), while the upside of success is unlimited with near-zero marginal costs.
             </p>
           </div>
         </section>

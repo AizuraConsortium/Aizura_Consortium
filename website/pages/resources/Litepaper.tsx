@@ -8,11 +8,12 @@ import {
 export default function Litepaper() {
   const sections = [
     { id: 'executive', label: 'Executive Summary', icon: <FileText className="w-4 h-4" /> },
+    { id: 'economics', label: 'AI Economics', icon: <TrendingUp className="w-4 h-4" /> },
     { id: 'problem', label: 'Problem Statement', icon: <AlertTriangle className="w-4 h-4" /> },
     { id: 'solution', label: 'Solution Architecture', icon: <Code className="w-4 h-4" /> },
     { id: 'tokenomics', label: 'Tokenomics', icon: <Coins className="w-4 h-4" /> },
     { id: 'governance', label: 'Governance Model', icon: <Vote className="w-4 h-4" /> },
-    { id: 'revenue', label: 'Revenue Model', icon: <TrendingUp className="w-4 h-4" /> },
+    { id: 'revenue', label: 'Revenue Model', icon: <Target className="w-4 h-4" /> },
     { id: 'risks', label: 'Risk Factors', icon: <Shield className="w-4 h-4" /> },
     { id: 'roadmap', label: 'Roadmap', icon: <Calendar className="w-4 h-4" /> },
   ];
@@ -108,6 +109,90 @@ export default function Litepaper() {
               </h3>
               <p className="text-lg text-slate-300">
                 Because the cost of failure is intentionally minimized ($18K-$65K), while the upside of success is unlimited with near-zero marginal costs.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <section id="economics" className="bg-slate-800/30 backdrop-blur border border-slate-700 rounded-2xl p-8 lg:p-10 scroll-mt-20">
+          <div className="flex items-center gap-3 mb-6">
+            <TrendingUp className="w-8 h-8 text-cyan-400" />
+            <h2 className="text-3xl font-bold text-white">Why AI Changes Business Economics</h2>
+          </div>
+
+          <div className="prose prose-invert prose-slate max-w-none">
+            <p className="text-lg text-slate-300 leading-relaxed mb-8">
+              The economic model is not incremental improvement — it's complete inversion of traditional startup costs.
+            </p>
+
+            <div className="grid md:grid-cols-2 gap-8 mb-8">
+              <div className="bg-red-500/10 border border-red-500/30 rounded-xl p-6">
+                <h3 className="text-2xl font-bold text-white mb-6 flex items-center gap-3">
+                  <span className="text-red-400">Traditional Startup Model (BROKEN)</span>
+                </h3>
+                <ul className="space-y-3 text-slate-300">
+                  <li className="flex justify-between items-center">
+                    <span>Engineers (2-3)</span>
+                    <span className="font-semibold text-white">$300K-$450K/year</span>
+                  </li>
+                  <li className="flex justify-between items-center">
+                    <span>Marketing/Growth</span>
+                    <span className="font-semibold text-white">$100K-$200K/year</span>
+                  </li>
+                  <li className="flex justify-between items-center">
+                    <span>Operations/Support</span>
+                    <span className="font-semibold text-white">$80K-$150K/year</span>
+                  </li>
+                  <li className="flex justify-between items-center">
+                    <span>Infrastructure</span>
+                    <span className="font-semibold text-white">$50K-$100K/year</span>
+                  </li>
+                  <li className="flex justify-between items-center pt-3 border-t border-red-500/30">
+                    <span className="font-bold text-white text-lg">Total Fixed Costs</span>
+                    <span className="font-bold text-red-400 text-lg">$530K-$900K/year</span>
+                  </li>
+                </ul>
+                <p className="text-sm text-red-400 mt-6 font-medium">
+                  High fixed costs = massive risk. Most startups burn through runway before finding product-market fit.
+                </p>
+              </div>
+
+              <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-6">
+                <h3 className="text-2xl font-bold text-white mb-6 flex items-center gap-3">
+                  <span className="text-green-400">AI-Native Model (INVERTED)</span>
+                </h3>
+                <ul className="space-y-3 text-slate-300">
+                  <li className="flex justify-between items-center">
+                    <span>AI Agent Operations</span>
+                    <span className="font-semibold text-white">$5K-$20K/year</span>
+                  </li>
+                  <li className="flex justify-between items-center">
+                    <span>Automated Marketing</span>
+                    <span className="font-semibold text-white">$2K-$10K/year</span>
+                  </li>
+                  <li className="flex justify-between items-center">
+                    <span>AI Support Systems</span>
+                    <span className="font-semibold text-white">$1K-$5K/year</span>
+                  </li>
+                  <li className="flex justify-between items-center">
+                    <span>Infrastructure</span>
+                    <span className="font-semibold text-white">$10K-$30K/year</span>
+                  </li>
+                  <li className="flex justify-between items-center pt-3 border-t border-green-500/30">
+                    <span className="font-bold text-white text-lg">Total Annual Costs</span>
+                    <span className="font-bold text-green-400 text-lg">$18K-$65K/year</span>
+                  </li>
+                </ul>
+                <p className="text-sm text-green-400 mt-6 font-medium">
+                  90% cost reduction = 10x more experiments with the same capital. Risk is minimized. Upside is unlimited.
+                </p>
+              </div>
+            </div>
+
+            <div className="bg-cyan-500/10 border border-cyan-500/30 rounded-xl p-8 text-center">
+              <p className="text-lg text-slate-300 leading-relaxed">
+                <strong className="text-white text-xl">Result:</strong> Failures are capped at $18K-$65K. Success scales with near-zero marginal costs.
+                Even if 100 businesses fail, one scaled winner can cover them all. This asymmetry is the entire economic model.
               </p>
             </div>
           </div>
