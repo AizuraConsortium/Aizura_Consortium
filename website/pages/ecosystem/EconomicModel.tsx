@@ -291,7 +291,7 @@ export default function EconomicModel() {
             <ProfitFlowStep
               step="4"
               title="Automated Allocation"
-              description="Smart contracts automatically split profit: 30% Buyback+Burn, 30% Staking+U2E, 20% Treasury, 15% Variable."
+              description="Smart contracts automatically split profit: 15% Buyback, 15% Burn, 15% Staking, 15% U2E, 25% Treasury, 15% Variable."
               icon={<RefreshCw className="w-6 h-6 text-cyan-400" />}
             />
             <div className="flex justify-center">

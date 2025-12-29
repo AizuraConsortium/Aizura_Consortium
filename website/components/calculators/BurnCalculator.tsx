@@ -5,7 +5,7 @@ export function BurnCalculator() {
   const [monthlyProfit, setMonthlyProfit] = useState(90000);
   const [aaicPrice, setAaicPrice] = useState(0.50);
 
-  const burnPercentage = 30;
+  const burnPercentage = 15;
   const targetBurnedSupply = 21_000_000;
   const currentSupply = 100_000_000;
 
@@ -94,7 +94,7 @@ export function BurnCalculator() {
                 className="w-full px-4 py-2 bg-slate-700 border border-slate-600 rounded-lg text-white focus:outline-none focus:border-orange-500"
               />
               <div className="flex justify-between text-xs text-slate-400 mt-2">
-                <span>${(monthlyProfit * 0.3).toLocaleString()} allocated to buyback & burn</span>
+                <span>${(monthlyProfit * 0.15).toLocaleString()} allocated to burn (15% of profit)</span>
               </div>
             </div>
 
@@ -119,10 +119,10 @@ export function BurnCalculator() {
           <div className="mt-6 bg-orange-500/10 border border-orange-500/30 rounded-lg p-4">
             <h5 className="font-semibold text-white mb-2 text-sm">Burn Mechanism</h5>
             <ul className="space-y-1 text-xs text-slate-300">
-              <li>• 30% of profit used for buyback & burn</li>
-              <li>• Tokens purchased from open market</li>
-              <li>• Immediately sent to burn address</li>
-              <li>• Permanent supply reduction</li>
+              <li>• 15% buyback + 15% burn (30% combined for deflationary pressure)</li>
+              <li>• Tokens purchased from open market via buyback allocation</li>
+              <li>• Burn allocation directly reduces supply permanently</li>
+              <li>• Permanent supply reduction until 21M target reached</li>
               <li>• Target: 79M final circulating supply</li>
             </ul>
           </div>
