@@ -5,7 +5,7 @@ import {
   Users, Activity, Target, Coins, BarChart3, Sparkles, Info,
   AlertTriangle, Brain, Rocket
 } from 'lucide-react';
-import { U2ECalculator } from '../../components/tokenomics/U2ECalculator';
+import { U2EPointsCalculator } from '../../components/calculators/U2EPointsCalculator';
 import { TokenomicsPhaseVisualizer } from '../../components/tokenomics/TokenomicsPhaseVisualizer';
 
 export default function U2EExplained() {
@@ -250,10 +250,28 @@ export default function U2EExplained() {
 
         <section id="calculator">
           <h2 className="text-3xl font-bold text-white mb-8 text-center">Earning Potential Calculator</h2>
+
+          <div className="max-w-4xl mx-auto mb-8 p-6 bg-gradient-to-r from-cyan-500/10 to-blue-500/10 border-2 border-cyan-500/40 rounded-xl">
+            <div className="flex items-start gap-3">
+              <Info className="w-6 h-6 text-cyan-400 flex-shrink-0 mt-0.5" />
+              <div>
+                <h3 className="text-lg font-bold text-white mb-2">IMPORTANT: Points-Based System</h3>
+                <p className="text-sm text-slate-300 mb-3">
+                  U2E uses a <span className="font-bold text-cyan-400">POINTS-BASED system</span>, not fixed token rewards.
+                  This ensures the system never overpays and scales to any user base size.
+                </p>
+                <div className="bg-slate-900/50 rounded p-3 text-sm text-slate-300">
+                  <div className="font-bold text-white mb-1">How It Works:</div>
+                  <div>Your AAIC earned = <span className="text-cyan-400">(Your Points / Total Network Points)</span> × Monthly Pool (458,333 AAIC)</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
           <p className="text-center text-slate-300 mb-10 max-w-2xl mx-auto">
             Estimate how much you could earn based on your expected usage patterns
           </p>
-          <U2ECalculator />
+          <U2EPointsCalculator />
         </section>
 
         <section>

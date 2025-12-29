@@ -16,7 +16,7 @@ import { PhaseTimeline } from '../../components/u2e/PhaseTimeline';
 import { ComparisonTable } from '../../components/u2e/ComparisonTable';
 import { RealExamplesCarousel } from '../../components/u2e/RealExamplesCarousel';
 import { SustainabilityDiagram } from '../../components/u2e/SustainabilityDiagram';
-import { U2ECalculator } from '../../components/tokenomics/U2ECalculator';
+import { U2EPointsCalculator } from '../../components/calculators/U2EPointsCalculator';
 
 interface U2EStats {
   total_rewards_distributed: number;
@@ -583,7 +583,24 @@ export default function UseToEarn() {
             </p>
           </div>
 
-          <U2ECalculator />
+          <div className="max-w-4xl mx-auto mb-8 p-6 bg-gradient-to-r from-cyan-500/10 to-blue-500/10 border-2 border-cyan-500/40 rounded-xl">
+            <div className="flex items-start gap-3">
+              <Shield className="w-6 h-6 text-cyan-400 flex-shrink-0 mt-0.5" />
+              <div>
+                <h3 className="text-lg font-bold text-white mb-2">IMPORTANT: Points-Based System</h3>
+                <p className="text-sm text-slate-300 mb-3">
+                  U2E uses a <span className="font-bold text-cyan-400">POINTS-BASED system</span>, not fixed token rewards.
+                  This ensures the system never overpays and scales to any user base size.
+                </p>
+                <div className="bg-slate-900/50 rounded p-3 text-sm text-slate-300">
+                  <div className="font-bold text-white mb-1">How It Works:</div>
+                  <div>Your AAIC earned = <span className="text-cyan-400">(Your Points / Total Network Points)</span> × Monthly Pool (458,333 AAIC)</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <U2EPointsCalculator />
         </section>
 
         {/* Real Examples */}
