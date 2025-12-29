@@ -275,67 +275,77 @@ export default function Staking() {
               </div>
 
               <div className="space-y-3">
-                <div className="bg-slate-700/50 rounded-lg p-4 flex justify-between items-center">
-                  <div>
-                    <div className="font-bold text-white">Flexible (no lock)</div>
-                    <p className="text-xs text-slate-400">Unstake anytime</p>
-                  </div>
-                  <div className="text-2xl font-bold text-slate-400">1.0x</div>
-                </div>
                 <div className="bg-blue-500/10 border border-blue-500/30 rounded-lg p-4 flex justify-between items-center">
                   <div>
                     <div className="font-bold text-white">30 days</div>
                     <p className="text-xs text-slate-400">Short-term commitment</p>
                   </div>
-                  <div className="text-2xl font-bold text-blue-400">1.2x</div>
+                  <div className="text-2xl font-bold text-blue-400">1.0x</div>
                 </div>
                 <div className="bg-cyan-500/10 border border-cyan-500/30 rounded-lg p-4 flex justify-between items-center">
                   <div>
                     <div className="font-bold text-white">90 days</div>
                     <p className="text-xs text-slate-400">Moderate commitment</p>
                   </div>
-                  <div className="text-2xl font-bold text-cyan-400">1.5x</div>
+                  <div className="text-2xl font-bold text-cyan-400">1.2x</div>
                 </div>
                 <div className="bg-green-500/10 border border-green-500/30 rounded-lg p-4 flex justify-between items-center">
                   <div>
                     <div className="font-bold text-white">180 days</div>
                     <p className="text-xs text-slate-400">Strong commitment</p>
                   </div>
-                  <div className="text-2xl font-bold text-green-400">2.0x</div>
+                  <div className="text-2xl font-bold text-green-400">1.5x</div>
                 </div>
                 <div className="bg-yellow-500/10 border border-yellow-500/30 rounded-lg p-4 flex justify-between items-center">
                   <div>
                     <div className="font-bold text-white">365 days</div>
                     <p className="text-xs text-slate-400">Maximum commitment</p>
                   </div>
-                  <div className="text-2xl font-bold text-yellow-400">2.5x</div>
+                  <div className="text-2xl font-bold text-yellow-400">2.0x</div>
                 </div>
+              </div>
+
+              <div className="mt-6 p-4 bg-cyan-500/10 border border-cyan-500/30 rounded-lg">
+                <h4 className="font-bold text-white mb-2 text-sm">How Lock Multipliers Work</h4>
+                <p className="text-xs text-slate-300 mb-3">
+                  Lock multipliers increase your <span className="font-bold text-cyan-400">staking weight</span>, not your APY directly.
+                </p>
+                <div className="bg-slate-900/50 rounded p-3 text-xs text-slate-300 space-y-2">
+                  <div><span className="font-bold text-white">Example:</span></div>
+                  <div>• Stake 10,000 AAIC with 2.0x lock = 20,000 weight</div>
+                  <div>• Pool has 100,000 total weight</div>
+                  <div>• Your share: 20,000 / 100,000 = <span className="font-bold text-cyan-400">20% of rewards</span></div>
+                  <div>• Monthly rewards distributed based on your weight share</div>
+                </div>
+                <p className="text-xs text-slate-400 mt-3 italic">
+                  The multiplier increases your relative share compared to shorter-lock stakers, but actual APY depends on total staked and how others stake.
+                </p>
               </div>
             </div>
 
             <div className="bg-gradient-to-r from-cyan-500/10 to-blue-500/10 border border-cyan-500/30 rounded-xl p-6">
-              <h3 className="font-bold text-white mb-4">Example:</h3>
-              <p className="text-sm text-slate-300 mb-3">If base APY (flexible) = 12%:</p>
-              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3 text-sm">
+              <h3 className="font-bold text-white mb-4">Example APY Calculation:</h3>
+              <p className="text-sm text-slate-300 mb-3">If base APY (30-day lock) = 12%:</p>
+              <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-3 text-sm">
                 <div className="bg-slate-900/50 rounded p-3">
                   <div className="text-slate-400 mb-1">30-day lock</div>
-                  <div className="text-lg font-bold text-blue-400">14.4% APY</div>
-                  <div className="text-xs text-slate-500">12% × 1.2</div>
+                  <div className="text-lg font-bold text-blue-400">12% APY</div>
+                  <div className="text-xs text-slate-500">12% × 1.0</div>
                 </div>
                 <div className="bg-slate-900/50 rounded p-3">
                   <div className="text-slate-400 mb-1">90-day lock</div>
-                  <div className="text-lg font-bold text-cyan-400">18% APY</div>
-                  <div className="text-xs text-slate-500">12% × 1.5</div>
+                  <div className="text-lg font-bold text-cyan-400">14.4% APY</div>
+                  <div className="text-xs text-slate-500">12% × 1.2</div>
                 </div>
                 <div className="bg-slate-900/50 rounded p-3">
                   <div className="text-slate-400 mb-1">180-day lock</div>
-                  <div className="text-lg font-bold text-green-400">24% APY</div>
-                  <div className="text-xs text-slate-500">12% × 2.0</div>
+                  <div className="text-lg font-bold text-green-400">18% APY</div>
+                  <div className="text-xs text-slate-500">12% × 1.5</div>
                 </div>
                 <div className="bg-slate-900/50 rounded p-3">
                   <div className="text-slate-400 mb-1">365-day lock</div>
-                  <div className="text-lg font-bold text-yellow-400">30% APY</div>
-                  <div className="text-xs text-slate-500">12% × 2.5</div>
+                  <div className="text-lg font-bold text-yellow-400">24% APY</div>
+                  <div className="text-xs text-slate-500">12% × 2.0</div>
                 </div>
               </div>
             </div>
