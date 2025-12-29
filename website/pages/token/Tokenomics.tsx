@@ -79,6 +79,60 @@ export default function Tokenomics() {
           </div>
         </section>
 
+        <section className="bg-gradient-to-r from-green-500/10 to-cyan-500/10 border border-green-500/30 rounded-2xl p-8 lg:p-12">
+          <h2 className="text-3xl font-bold text-white mb-6 text-center">
+            Revenue-Backed Economics: Why AI Changes Everything
+          </h2>
+
+          <p className="text-center text-slate-300 mb-10 max-w-3xl mx-auto text-lg">
+            AAIC token value is backed by real AI business revenues. Here's the economic foundation that makes this possible:
+          </p>
+
+          <div className="grid md:grid-cols-2 gap-6 max-w-5xl mx-auto">
+            <div className="bg-slate-800/50 border border-slate-700 rounded-xl p-6">
+              <h3 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
+                <DollarSign className="w-6 h-6 text-green-400" />
+                Traditional Business Economics
+              </h3>
+              <div className="space-y-3 text-slate-300 text-sm">
+                <p><strong className="text-white">Fixed Costs:</strong> $500K-$900K/year</p>
+                <p><strong className="text-white">Problem:</strong> High burn rate forces rushed decisions and frequent fundraising</p>
+                <p><strong className="text-white">Result:</strong> Most fail before finding product-market fit</p>
+              </div>
+              <div className="mt-4 p-3 bg-red-500/10 border border-red-500/30 rounded-lg">
+                <p className="text-xs text-slate-300">
+                  Token rewards require either dilution or unsustainable spending
+                </p>
+              </div>
+            </div>
+
+            <div className="bg-slate-800/50 border border-slate-700 rounded-xl p-6">
+              <h3 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
+                <Sparkles className="w-6 h-6 text-cyan-400" />
+                AI-Native Business Economics
+              </h3>
+              <div className="space-y-3 text-slate-300 text-sm">
+                <p><strong className="text-white">Fixed Costs:</strong> $18K-$65K/year (90% reduction)</p>
+                <p><strong className="text-white">Advantage:</strong> Minimal burn = extended runway and 10x more experiments</p>
+                <p><strong className="text-white">Result:</strong> Failed businesses cost little. Successful ones scale infinitely.</p>
+              </div>
+              <div className="mt-4 p-3 bg-green-500/10 border border-green-500/30 rounded-lg">
+                <p className="text-xs text-slate-300">
+                  Real profit margins fund sustainable rewards without dilution
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div className="mt-8 bg-cyan-500/10 border border-cyan-500/30 rounded-xl p-6 max-w-4xl mx-auto text-center">
+            <p className="text-lg text-slate-300">
+              <strong className="text-white">This cost advantage is the entire economic model.</strong> AI doesn't just
+              improve margins — it fundamentally inverts the risk/reward profile, making sustainable, revenue-backed
+              token rewards economically viable.
+            </p>
+          </div>
+        </section>
+
         <section className="bg-slate-800/30 backdrop-blur border border-slate-700 rounded-2xl p-8 lg:p-12">
           <h2 className="text-3xl font-bold text-white mb-8 text-center">Token Specifications</h2>
 

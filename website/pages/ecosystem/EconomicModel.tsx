@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import {
   TrendingUp, ArrowRight, DollarSign, RefreshCw, Zap, Shield,
   CheckCircle2, Target, Users, Cpu, BarChart3, AlertTriangle,
-  Sparkles, Lock, TrendingDown, Activity
+  Sparkles, Lock, TrendingDown, Activity, XCircle
 } from 'lucide-react';
 
 export default function EconomicModel() {
@@ -35,6 +35,95 @@ export default function EconomicModel() {
               with 90% lower costs than competitors? The savings become rewards, creating a deflationary,
               revenue-backed token economy.
             </p>
+          </div>
+        </section>
+
+        <section className="bg-slate-800/30 backdrop-blur border border-slate-700 rounded-2xl p-8 lg:p-12">
+          <h2 className="text-3xl font-bold text-white mb-8 text-center">
+            Why AI Businesses Change Economics
+          </h2>
+
+          <p className="text-center text-slate-300 mb-12 max-w-3xl mx-auto text-lg">
+            Traditional businesses have massive fixed costs that create existential risk.
+            AI inverts this model: tiny fixed costs, massive scalability.
+          </p>
+
+          <div className="grid lg:grid-cols-2 gap-8 mb-12">
+            <div className="bg-red-500/10 border border-red-500/30 rounded-xl p-8">
+              <div className="flex items-center gap-3 mb-6">
+                <XCircle className="w-10 h-10 text-red-400" />
+                <h3 className="text-2xl font-bold text-white">Traditional Model</h3>
+              </div>
+
+              <div className="space-y-6">
+                <div>
+                  <h4 className="font-semibold text-white mb-3">Fixed Costs (Annual)</h4>
+                  <div className="space-y-2 text-slate-300">
+                    <CostBreakdown item="Engineers (2-3 FTE)" cost="$300K-$450K" />
+                    <CostBreakdown item="Marketing/Growth" cost="$100K-$200K" />
+                    <CostBreakdown item="Operations/Support" cost="$80K-$150K" />
+                    <CostBreakdown item="SaaS Tools & Infrastructure" cost="$50K-$100K" />
+                    <div className="border-t border-red-500/30 pt-3 mt-3">
+                      <CostBreakdown item="Total Burn Rate" cost="$530K-$900K/year" highlight />
+                    </div>
+                  </div>
+                </div>
+
+                <div className="bg-red-500/10 border border-red-500/20 rounded-lg p-4">
+                  <p className="text-sm text-slate-300">
+                    <strong className="text-red-400">The Problem:</strong> You need product-market fit
+                    BEFORE running out of runway. Most startups fail because they burn capital
+                    faster than they find customers.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-8">
+              <div className="flex items-center gap-3 mb-6">
+                <CheckCircle2 className="w-10 h-10 text-green-400" />
+                <h3 className="text-2xl font-bold text-white">AI-Native Model</h3>
+              </div>
+
+              <div className="space-y-6">
+                <div>
+                  <h4 className="font-semibold text-white mb-3">Fixed Costs (Annual)</h4>
+                  <div className="space-y-2 text-slate-300">
+                    <CostBreakdown item="AI Agent Operations" cost="$5K-$20K" />
+                    <CostBreakdown item="Automated Marketing" cost="$2K-$10K" />
+                    <CostBreakdown item="AI Support & QA" cost="$1K-$5K" />
+                    <CostBreakdown item="Infrastructure & APIs" cost="$10K-$30K" />
+                    <div className="border-t border-green-500/30 pt-3 mt-3">
+                      <CostBreakdown item="Total Burn Rate" cost="$18K-$65K/year" highlight />
+                    </div>
+                  </div>
+                </div>
+
+                <div className="bg-green-500/10 border border-green-500/20 rounded-lg p-4">
+                  <p className="text-sm text-slate-300">
+                    <strong className="text-green-400">The Advantage:</strong> 90% cost reduction means
+                    you can test 10x more business ideas with the same capital. Runway extends from
+                    months to years.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="bg-gradient-to-r from-cyan-500/10 to-blue-500/10 border border-cyan-500/30 rounded-xl p-8 text-center">
+            <h3 className="text-2xl font-bold text-white mb-4">
+              The Core Economic Insight
+            </h3>
+            <p className="text-lg text-slate-300 max-w-3xl mx-auto mb-6">
+              With traditional costs, a failed business burns $500K-$900K. With AI, it burns $18K-$65K.
+              <strong className="text-cyan-400"> Even if you have 100 failed businesses, one scaled winner
+              can cover them</strong> — because the cost of failure is intentionally minimized while the
+              upside of success is unlimited.
+            </p>
+            <div className="inline-flex items-center gap-3 px-6 py-3 bg-cyan-500/20 border border-cyan-500/30 rounded-lg">
+              <Sparkles className="w-6 h-6 text-cyan-400" />
+              <span className="text-white font-semibold">This is the asymmetric bet that makes AAIC possible</span>
+            </div>
           </div>
         </section>
 
@@ -188,7 +277,7 @@ export default function EconomicModel() {
               phase="Year 1"
               agents="5-10 agents"
               projects="3-5 businesses"
-              revenue="$100K-$500K annual revenue"
+              revenue="$10K/month → $100K/month"
               status="Validation Phase"
               statusColor="text-blue-400"
               bgColor="from-blue-500/10 to-cyan-500/10"
@@ -196,6 +285,7 @@ export default function EconomicModel() {
               details={[
                 'Prove the AI consortium model works in production',
                 'Establish foundation businesses (AI Traders, Web Dev, Coinfusion)',
+                'Start: $10K/month. Target by end of year: $100K/month',
                 'Begin modest buyback/burn and reward distribution',
                 'Focus on product-market fit over revenue maximization',
               ]}
@@ -236,7 +326,22 @@ export default function EconomicModel() {
             />
           </div>
 
-          <div className="mt-10 bg-yellow-500/10 border border-yellow-500/30 rounded-xl p-6">
+          <div className="mt-10 bg-cyan-500/10 border border-cyan-500/30 rounded-xl p-8">
+            <h3 className="text-xl font-bold text-white mb-4 text-center">
+              The Asymmetric Risk Model in Action
+            </h3>
+            <p className="text-lg text-slate-300 text-center max-w-3xl mx-auto mb-4">
+              <strong className="text-cyan-400">Even if you have 100 failed businesses, one scaled winner can cover them</strong> —
+              because the cost of failure is intentionally minimized.
+            </p>
+            <p className="text-slate-300 text-center">
+              Example: 100 failed businesses at $50K each = $5M loss. One successful business scaling from $10K/month
+              to $100K/month generates $1.2M annually with 70% margins = $840K/year profit. Break even in 6 years,
+              then pure profit forever with near-zero marginal costs.
+            </p>
+          </div>
+
+          <div className="mt-6 bg-yellow-500/10 border border-yellow-500/30 rounded-xl p-6">
             <div className="flex items-start gap-3">
               <AlertTriangle className="w-6 h-6 text-yellow-400 flex-shrink-0 mt-1" />
               <div>
@@ -574,6 +679,15 @@ function LongTermAdvantage({ icon, title, points }: {
           </li>
         ))}
       </ul>
+    </div>
+  );
+}
+
+function CostBreakdown({ item, cost, highlight }: { item: string; cost: string; highlight?: boolean }) {
+  return (
+    <div className={`flex justify-between items-center ${highlight ? 'text-white font-bold' : ''}`}>
+      <span>{item}</span>
+      <span className={highlight ? 'text-cyan-400' : ''}>{cost}</span>
     </div>
   );
 }

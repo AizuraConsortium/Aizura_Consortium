@@ -4,7 +4,7 @@ import { Navigation } from '../components/layout/Navigation';
 import { Footer } from '../components/layout/Footer';
 import {
   Sparkles, TrendingUp, Zap, Users, Clock, Rocket, FileText, Vote, Cpu, DollarSign,
-  MessageSquare, BarChart3, Shield, ArrowRight, CheckCircle2
+  MessageSquare, BarChart3, Shield, ArrowRight, CheckCircle2, TrendingDown, Target
 } from 'lucide-react';
 
 export default function NewHome() {
@@ -20,6 +20,7 @@ export default function NewHome() {
         <main id="main-content">
           <HeroSection />
           <FivePhaseSection />
+          <TraditionalVsAICosts />
           <WhyAIWinsSection />
           <UseToEarnSection />
           <PortfolioPreviewSection />
@@ -189,6 +190,84 @@ function FivePhaseSection() {
   );
 }
 
+function TraditionalVsAICosts() {
+  return (
+    <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+      <div className="text-center mb-16">
+        <h2 className="text-4xl sm:text-5xl font-bold text-white mb-6">
+          Traditional Costs vs. AI Economics
+        </h2>
+        <p className="text-xl text-slate-300 max-w-3xl mx-auto">
+          AI doesn't just reduce costs — it inverts the entire cost structure of starting and scaling businesses.
+        </p>
+      </div>
+
+      <div className="grid md:grid-cols-2 gap-8 mb-12">
+        <div className="bg-red-500/10 border border-red-500/30 rounded-2xl p-8">
+          <h3 className="text-2xl font-bold text-white mb-6 flex items-center gap-3">
+            <TrendingDown className="w-8 h-8 text-red-400" />
+            Traditional Startup Fixed Costs
+          </h3>
+          <div className="space-y-4 text-slate-300">
+            <CostItem label="Engineers (2-3)" cost="$300K-$450K/year" />
+            <CostItem label="Marketing/Growth" cost="$100K-$200K/year" />
+            <CostItem label="Operations/Support" cost="$80K-$150K/year" />
+            <CostItem label="Infrastructure/Tools" cost="$50K-$100K/year" />
+            <div className="border-t border-red-500/30 pt-4 mt-4">
+              <CostItem label="Total Annual Burn" cost="$530K-$900K/year" highlight />
+            </div>
+          </div>
+          <p className="text-sm text-red-400 mt-6 font-medium">
+            High fixed costs = massive risk. Most startups burn through runway before finding product-market fit.
+          </p>
+        </div>
+
+        <div className="bg-green-500/10 border border-green-500/30 rounded-2xl p-8">
+          <h3 className="text-2xl font-bold text-white mb-6 flex items-center gap-3">
+            <TrendingUp className="w-8 h-8 text-green-400" />
+            AI Business Cost Inversion
+          </h3>
+          <div className="space-y-4 text-slate-300">
+            <CostItem label="AI Agent Operations" cost="$5K-$20K/year" />
+            <CostItem label="Automated Marketing" cost="$2K-$10K/year" />
+            <CostItem label="AI Support Systems" cost="$1K-$5K/year" />
+            <CostItem label="Infrastructure" cost="$10K-$30K/year" />
+            <div className="border-t border-green-500/30 pt-4 mt-4">
+              <CostItem label="Total Annual Costs" cost="$18K-$65K/year" highlight />
+            </div>
+          </div>
+          <p className="text-sm text-green-400 mt-6 font-medium">
+            90% cost reduction = 10x more experiments with the same capital. Risk is minimized. Upside is unlimited.
+          </p>
+        </div>
+      </div>
+
+      <div className="bg-gradient-to-r from-cyan-500/10 to-blue-500/10 border border-cyan-500/30 rounded-2xl p-10 text-center">
+        <h3 className="text-3xl font-bold text-white mb-4">
+          Failure is Capped. Success Scales.
+        </h3>
+        <p className="text-lg text-slate-300 max-w-3xl mx-auto mb-6">
+          With AI, a failed business costs $20K-$65K, not $500K-$900K. But when a business succeeds,
+          it scales with near-zero marginal costs—just like traditional AI businesses except we own the entire stack.
+        </p>
+        <div className="inline-flex items-center gap-3 px-6 py-3 bg-cyan-500/20 border border-cyan-500/30 rounded-lg">
+          <Target className="w-6 h-6 text-cyan-400" />
+          <span className="text-white font-semibold">This asymmetry is the entire economic model</span>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function CostItem({ label, cost, highlight }: { label: string; cost: string; highlight?: boolean }) {
+  return (
+    <div className={`flex justify-between items-center ${highlight ? 'text-white font-bold text-lg' : ''}`}>
+      <span>{label}</span>
+      <span className={highlight ? 'text-cyan-400' : ''}>{cost}</span>
+    </div>
+  );
+}
+
 function WhyAIWinsSection() {
   const reasons = [
     {
@@ -278,29 +357,66 @@ function UseToEarnSection() {
           </p>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-8 mb-12">
-          <div className="bg-slate-800/50 backdrop-blur border border-slate-700 rounded-xl p-8 text-center hover:border-green-500/50 transition-colors">
-            <DollarSign className="w-12 h-12 text-green-400 mx-auto mb-4" />
-            <h3 className="text-xl font-bold text-white mb-3">Real Usage = Real Rewards</h3>
-            <p className="text-slate-300">
-              Earn tokens for actual platform usage, not speculation. Every action you take generates rewards.
-            </p>
+        <div className="grid md:grid-cols-2 gap-8 mb-12">
+          <div className="bg-slate-800/50 backdrop-blur border border-slate-700 rounded-xl p-8">
+            <h3 className="text-xl font-bold text-white mb-6 text-center">How to Earn AAIC Tokens</h3>
+            <ul className="space-y-4">
+              <li className="flex items-start gap-3">
+                <div className="w-8 h-8 bg-cyan-600 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                  <Cpu className="w-5 h-5 text-white" />
+                </div>
+                <div>
+                  <div className="font-bold text-white mb-1">Using AI Traders</div>
+                  <p className="text-sm text-slate-300">Execute trades, deploy strategies, achieve profitable outcomes</p>
+                </div>
+              </li>
+              <li className="flex items-start gap-3">
+                <div className="w-8 h-8 bg-green-600 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                  <Vote className="w-5 h-5 text-white" />
+                </div>
+                <div>
+                  <div className="font-bold text-white mb-1">Participating in proposal voting</div>
+                  <p className="text-sm text-slate-300">Vote on business proposals, contribute to governance decisions</p>
+                </div>
+              </li>
+              <li className="flex items-start gap-3">
+                <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                  <MessageSquare className="w-5 h-5 text-white" />
+                </div>
+                <div>
+                  <div className="font-bold text-white mb-1">Reviewing & commenting on proposals</div>
+                  <p className="text-sm text-slate-300">Provide feedback, engage in discussions, improve proposal quality</p>
+                </div>
+              </li>
+              <li className="flex items-start gap-3">
+                <div className="w-8 h-8 bg-purple-600 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                  <Users className="w-5 h-5 text-white" />
+                </div>
+                <div>
+                  <div className="font-bold text-white mb-1">Contributing to ecosystem operations</div>
+                  <p className="text-sm text-slate-300">Use AI Business Factory, AI Web Dev, and other ecosystem services</p>
+                </div>
+              </li>
+            </ul>
           </div>
 
-          <div className="bg-slate-800/50 backdrop-blur border border-slate-700 rounded-xl p-8 text-center hover:border-green-500/50 transition-colors">
-            <Cpu className="w-12 h-12 text-cyan-400 mx-auto mb-4" />
-            <h3 className="text-xl font-bold text-white mb-3">AI-Powered Sustainability</h3>
-            <p className="text-slate-300">
-              90% cost reduction through AI automation enables genuine reward sharing from business profits.
-            </p>
-          </div>
-
-          <div className="bg-slate-800/50 backdrop-blur border border-slate-700 rounded-xl p-8 text-center hover:border-green-500/50 transition-colors">
-            <TrendingUp className="w-12 h-12 text-emerald-400 mx-auto mb-4" />
-            <h3 className="text-xl font-bold text-white mb-3">Transparent Rates</h3>
-            <p className="text-slate-300">
-              Live reward rates adjusted dynamically based on business performance. Full transparency, always.
-            </p>
+          <div className="bg-slate-800/50 backdrop-blur border border-slate-700 rounded-xl p-8 flex flex-col justify-center">
+            <DollarSign className="w-16 h-16 text-green-400 mx-auto mb-6" />
+            <h3 className="text-2xl font-bold text-white mb-4 text-center">How Distribution Works</h3>
+            <div className="space-y-4">
+              <p className="text-slate-300 text-center">
+                <strong className="text-white">Each month, a fixed amount of AAIC is distributed.</strong>
+              </p>
+              <p className="text-slate-300 text-center">
+                Your share depends on your share of total ecosystem activity. More participation = bigger slice of the monthly pool.
+              </p>
+              <div className="bg-cyan-500/10 border border-cyan-500/30 rounded-lg p-4 mt-4">
+                <p className="text-sm text-slate-300 text-center">
+                  <strong className="text-cyan-400">Fair & Transparent:</strong> All rates are published openly.
+                  No hidden mechanisms or preferential treatment.
+                </p>
+              </div>
+            </div>
           </div>
         </div>
 

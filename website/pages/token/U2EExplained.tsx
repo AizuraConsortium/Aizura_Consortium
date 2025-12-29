@@ -66,6 +66,67 @@ export default function U2EExplained() {
             </p>
           </div>
 
+          <div className="bg-gradient-to-r from-cyan-500/10 to-blue-500/10 border border-cyan-500/30 rounded-xl p-8 mb-10">
+            <h3 className="text-2xl font-bold text-white mb-6 text-center">How Monthly Distribution Works</h3>
+            <div className="max-w-3xl mx-auto space-y-4 text-slate-300">
+              <p className="text-center">
+                <strong className="text-white">Each month, a fixed amount of AAIC is distributed from the U2E pool.</strong>
+              </p>
+              <p className="text-center">
+                Your share of the monthly distribution depends on your share of total ecosystem activity.
+                If you contribute 5% of all ecosystem usage that month, you receive 5% of the distribution pool.
+              </p>
+              <div className="bg-cyan-500/10 border border-cyan-500/30 rounded-lg p-4 mt-6">
+                <p className="text-sm text-center">
+                  <strong className="text-cyan-400">Example:</strong> If 10,000 AAIC is distributed monthly and you
+                  contribute 2% of ecosystem activity, you earn 200 AAIC that month. More participation = bigger share.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div className="bg-slate-700/30 border border-slate-600 rounded-xl p-8 mb-10">
+            <h3 className="text-2xl font-bold text-white mb-6 text-center">4 Ways to Earn AAIC Tokens</h3>
+            <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+              <div className="flex items-start gap-4">
+                <div className="w-10 h-10 bg-cyan-600 rounded-full flex items-center justify-center flex-shrink-0">
+                  <Cpu className="w-6 h-6 text-white" />
+                </div>
+                <div>
+                  <div className="font-bold text-white mb-2">Using AI Traders</div>
+                  <p className="text-sm text-slate-300">Execute trades, deploy strategies, achieve profitable outcomes on the AI trading platform</p>
+                </div>
+              </div>
+              <div className="flex items-start gap-4">
+                <div className="w-10 h-10 bg-green-600 rounded-full flex items-center justify-center flex-shrink-0">
+                  <Users className="w-6 h-6 text-white" />
+                </div>
+                <div>
+                  <div className="font-bold text-white mb-2">Participating in proposal voting</div>
+                  <p className="text-sm text-slate-300">Vote on business proposals and contribute to governance decisions</p>
+                </div>
+              </div>
+              <div className="flex items-start gap-4">
+                <div className="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center flex-shrink-0">
+                  <Activity className="w-6 h-6 text-white" />
+                </div>
+                <div>
+                  <div className="font-bold text-white mb-2">Reviewing & commenting on proposals</div>
+                  <p className="text-sm text-slate-300">Provide feedback, engage in discussions, and improve proposal quality</p>
+                </div>
+              </div>
+              <div className="flex items-start gap-4">
+                <div className="w-10 h-10 bg-purple-600 rounded-full flex items-center justify-center flex-shrink-0">
+                  <Sparkles className="w-6 h-6 text-white" />
+                </div>
+                <div>
+                  <div className="font-bold text-white mb-2">Contributing to ecosystem operations</div>
+                  <p className="text-sm text-slate-300">Use AI Business Factory, AI Web Dev, and other ecosystem services</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
           <div className="grid md:grid-cols-3 gap-6">
             <PrincipleCard
               icon={<Activity className="w-8 h-8 text-cyan-400" />}
