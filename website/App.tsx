@@ -58,6 +58,7 @@ import Privacy from './pages/legal/Privacy';
 import Disclaimer from './pages/legal/Disclaimer';
 import Cookies from './pages/legal/Cookies';
 import RiskDisclosure from './pages/legal/RiskDisclosure';
+import U2ETerms from './pages/legal/U2ETerms';
 
 import SmartContracts from './pages/blockchain/SmartContracts';
 import Security from './pages/blockchain/Security';
@@ -138,6 +139,7 @@ export default function App() {
             <Route path="/legal/disclaimer" element={<Disclaimer />} />
             <Route path="/legal/cookies" element={<Cookies />} />
             <Route path="/legal/risk-disclosure" element={<RiskDisclosure />} />
+            <Route path="/legal/u2e-terms" element={<U2ETerms />} />
 
             <Route path="/blockchain/smart-contracts" element={<SmartContracts />} />
             <Route path="/blockchain/security" element={<Security />} />
