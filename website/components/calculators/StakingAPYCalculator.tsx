@@ -20,8 +20,9 @@ export function StakingAPYCalculator() {
   ];
 
   const calculateAPY = (lockMultiplier: number) => {
+    const safeStaked = Math.max(1, totalStaked);
     const yearEmissions = yearlyEmissions[selectedYear as keyof typeof yearlyEmissions];
-    const baseAPY = (yearEmissions / totalStaked) * 100;
+    const baseAPY = (yearEmissions / safeStaked) * 100;
     return baseAPY * lockMultiplier;
   };
 
@@ -38,7 +39,7 @@ export function StakingAPYCalculator() {
     const stepSize = (maxStaked - minStaked) / steps;
 
     for (let i = 0; i <= steps; i++) {
-      const staked = minStaked + (stepSize * i);
+      const staked = Math.max(1, minStaked + (stepSize * i));
       const yearEmissions = yearlyEmissions[selectedYear as keyof typeof yearlyEmissions];
       const baseAPY = (yearEmissions / staked) * 100;
       const maxAPY = baseAPY * 2.0;

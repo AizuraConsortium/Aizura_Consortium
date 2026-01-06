@@ -19,6 +19,14 @@ export class StakingCalculationService {
     year: 1 | 2 | 3 | 4,
     lockPeriodDays: number
   ): number {
+    if (totalStaked <= 0) {
+      return 0;
+    }
+
+    if (lockPeriodDays < 0) {
+      lockPeriodDays = 0;
+    }
+
     const yearlyEmissions = TOKENOMICS.ALLOCATION.STAKING.yearlyEmissions;
     const emission = yearlyEmissions[year];
 
@@ -39,6 +47,15 @@ export class StakingCalculationService {
   }
 
   getAllAPYs(totalStaked: number, year: 1 | 2 | 3 | 4): StakingAPY[] {
+    if (totalStaked <= 0) {
+      return [
+        { lockPeriodDays: 30, baseAPY: 0, multiplier: TOKENOMICS.STAKING_MULTIPLIERS.LOCK_30, finalAPY: 0 },
+        { lockPeriodDays: 90, baseAPY: 0, multiplier: TOKENOMICS.STAKING_MULTIPLIERS.LOCK_90, finalAPY: 0 },
+        { lockPeriodDays: 180, baseAPY: 0, multiplier: TOKENOMICS.STAKING_MULTIPLIERS.LOCK_180, finalAPY: 0 },
+        { lockPeriodDays: 365, baseAPY: 0, multiplier: TOKENOMICS.STAKING_MULTIPLIERS.LOCK_365, finalAPY: 0 },
+      ];
+    }
+
     const lockPeriods = [
       { days: 30, multiplier: TOKENOMICS.STAKING_MULTIPLIERS.LOCK_30 },
       { days: 90, multiplier: TOKENOMICS.STAKING_MULTIPLIERS.LOCK_90 },
@@ -73,6 +90,14 @@ export class StakingCalculationService {
     stakingShareUSD: number;
     stakingShareAAIC: number;
   } {
+    if (monthlyProfit < 0) {
+      monthlyProfit = 0;
+    }
+
+    if (aaicPrice <= 0) {
+      aaicPrice = 0.01;
+    }
+
     const rewardPercentage = TOKENOMICS.REVENUE_DISTRIBUTION.STAKING.percentage +
                              TOKENOMICS.REVENUE_DISTRIBUTION.USE_TO_EARN.percentage;
 
@@ -91,6 +116,14 @@ export class StakingCalculationService {
     desiredAAICDistribution: number,
     aaicPrice: number
   ): number {
+    if (desiredAAICDistribution < 0) {
+      desiredAAICDistribution = 0;
+    }
+
+    if (aaicPrice <= 0) {
+      aaicPrice = 0.01;
+    }
+
     const totalNeededUSD = desiredAAICDistribution * aaicPrice;
 
     const rewardPercentage = TOKENOMICS.REVENUE_DISTRIBUTION.STAKING.percentage +

@@ -10,9 +10,12 @@ export function BurnCalculator() {
   const currentSupply = 100_000_000;
 
   const calculateBurnRate = () => {
-    const monthlyBurnUSD = monthlyProfit * (burnPercentage / 100);
-    const monthlyBurnAAIC = monthlyBurnUSD / aaicPrice;
-    const monthsToTarget = targetBurnedSupply / monthlyBurnAAIC;
+    const safeProfit = Math.max(0, monthlyProfit);
+    const safePrice = Math.max(0.01, aaicPrice);
+
+    const monthlyBurnUSD = safeProfit * (burnPercentage / 100);
+    const monthlyBurnAAIC = monthlyBurnUSD / safePrice;
+    const monthsToTarget = monthlyBurnAAIC > 0 ? targetBurnedSupply / monthlyBurnAAIC : 0;
     const yearsToTarget = monthsToTarget / 12;
 
     return {
@@ -38,43 +41,46 @@ export function BurnCalculator() {
       profit: 80730,
       price: 0.50,
       label: 'Base Case',
-      description: '~109 years',
+      description: '~272 years',
       color: 'from-orange-500 to-red-500',
     },
     {
       profit: 163100,
       price: 1.00,
       label: 'Growth',
-      description: '~54 years',
+      description: '~269 years',
       color: 'from-red-500 to-pink-500',
     },
     {
       profit: 255800,
       price: 1.50,
       label: 'Aggressive',
-      description: '~43 years',
+      description: '~257 years',
       color: 'from-pink-500 to-violet-500',
     },
     {
       profit: 600700,
       price: 2.00,
       label: 'Hyperscale',
-      description: '~14.6 years',
+      description: '~146 years',
       color: 'from-violet-500 to-blue-500',
     },
     {
       profit: 1252800,
       price: 2.50,
       label: 'Ultra-Aggressive',
-      description: '~8.8 years',
+      description: '~88 years',
       color: 'from-blue-500 to-cyan-500',
     },
   ];
 
   const scenarioResults = scenarios.map(scenario => {
-    const burnUSD = scenario.profit * (burnPercentage / 100);
-    const burnAAIC = burnUSD / scenario.price;
-    const months = targetBurnedSupply / burnAAIC;
+    const safeProfit = Math.max(0, scenario.profit);
+    const safePrice = Math.max(0.01, scenario.price);
+
+    const burnUSD = safeProfit * (burnPercentage / 100);
+    const burnAAIC = burnUSD / safePrice;
+    const months = burnAAIC > 0 ? targetBurnedSupply / burnAAIC : 0;
     const years = months / 12;
 
     return {

@@ -10,8 +10,11 @@ export function PostYear4Calculator() {
   const rewardPercentage = 30;
 
   const calculateForward = () => {
-    const rewardBudgetUSD = monthlyProfit * (rewardPercentage / 100);
-    const maxDistributableAAIC = rewardBudgetUSD / aaicPrice;
+    const safeProfit = Math.max(0, monthlyProfit);
+    const safePrice = Math.max(0.01, aaicPrice);
+
+    const rewardBudgetUSD = safeProfit * (rewardPercentage / 100);
+    const maxDistributableAAIC = rewardBudgetUSD / safePrice;
 
     return {
       rewardBudgetUSD,
@@ -22,15 +25,19 @@ export function PostYear4Calculator() {
   };
 
   const calculateReverse = () => {
-    const totalNeededAAIC = desiredDistribution;
-    const totalNeededUSD = totalNeededAAIC * aaicPrice;
+    const safeDistribution = Math.max(0, desiredDistribution);
+    const safePrice = Math.max(0.01, aaicPrice);
+    const safeProfit = Math.max(0, monthlyProfit);
+
+    const totalNeededAAIC = safeDistribution;
+    const totalNeededUSD = totalNeededAAIC * safePrice;
     const requiredProfit = totalNeededUSD / (rewardPercentage / 100);
 
     return {
       totalNeededUSD,
       requiredProfit,
-      currentProfit: monthlyProfit,
-      profitGap: requiredProfit - monthlyProfit,
+      currentProfit: safeProfit,
+      profitGap: requiredProfit - safeProfit,
     };
   };
 

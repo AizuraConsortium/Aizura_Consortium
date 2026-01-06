@@ -330,6 +330,14 @@ export class PointsCalculationEngine {
       aaic: number;
     }>;
   }> {
+    if (month < 1 || month > 12) {
+      throw new Error('Invalid month: must be between 1 and 12');
+    }
+
+    if (year < 2024) {
+      throw new Error('Invalid year: must be 2024 or later');
+    }
+
     const { data, error } = await supabase.rpc('calculate_u2e_monthly_distribution', {
       p_month: month,
       p_year: year,
@@ -337,7 +345,14 @@ export class PointsCalculationEngine {
 
     if (error) throw error;
 
-    const totalPoints = data?.reduce((sum: number, d: { total_points: number }) => sum + d.total_points, 0) || 0;
+    const totalPoints = data?.reduce((sum: number, d: { total_points: number }) => {
+      const points = Number(d.total_points);
+      if (!Number.isSafeInteger(sum + points)) {
+        return sum;
+      }
+      return sum + points;
+    }, 0) || 0;
+
     const aaicPool = 458333;
 
     return {
@@ -346,9 +361,9 @@ export class PointsCalculationEngine {
       aaic_pool: aaicPool,
       distributions: data?.map((d: { user_id: string; total_points: number; pool_share: number; aaic_amount: number }) => ({
         user_id: d.user_id,
-        points: d.total_points,
-        share: d.pool_share,
-        aaic: d.aaic_amount,
+        points: Number(d.total_points),
+        share: Number(d.pool_share),
+        aaic: Number(d.aaic_amount),
       })) || [],
     };
   }

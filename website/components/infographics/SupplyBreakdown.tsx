@@ -255,7 +255,7 @@ export function SupplyBreakdown() {
               <h5 className="font-bold text-white mb-2">Emission Schedule</h5>
               <ul className="space-y-2 text-sm text-slate-300">
                 <li><strong className="text-white">U2E:</strong> 458,333/month flat (48 months)</li>
-                <li><strong className="text-white">Staking:</strong> Tapered Y1-4 (5M, 4M, 3.5M, 2.5M)</li>
+                <li><strong className="text-white">Staking:</strong> Tapered Y1-4 (4.5M, 3.75M, 3.75M, 3M)</li>
                 <li><strong className="text-white">Post-Y4:</strong> Transition to profit-backed rewards</li>
               </ul>
             </div>
