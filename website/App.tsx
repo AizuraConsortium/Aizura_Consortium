@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { ErrorBoundary } from '@shared/components/ErrorBoundary';
 import { SkipNavigation } from '@shared/components/SkipNavigation';
+import { ScrollToTop } from '@shared/components/ScrollToTop';
 import { ToastProvider } from '@shared/components/ToastProvider';
 
 import Home from './pages/Home';
@@ -81,6 +82,7 @@ export default function App() {
       <ToastProvider>
         <BrowserRouter>
           <SkipNavigation />
+          <ScrollToTop />
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/room" element={<Room />} />

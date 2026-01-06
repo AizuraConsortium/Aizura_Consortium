@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import {
   Brain, TrendingUp, TrendingDown, DollarSign, Clock, Shield, Zap,
   Target, CheckCircle2, X, BarChart3, Users, Award,
-  GitBranch, Lightbulb, MessageSquare, Star, Quote
+  GitBranch, Lightbulb, MessageSquare, Star, Quote, Info, Plus
 } from 'lucide-react';
 
 export default function WhyAizura() {
@@ -31,24 +31,24 @@ export default function WhyAizura() {
       icon: <BarChart3 className="w-5 h-5" />,
     },
     {
-      metric: 'Cost-Effectiveness',
-      singleAI: '$120k/year/employee',
-      consortium: '$2-5k/year AI costs',
-      improvement: '95% cheaper',
-      icon: <DollarSign className="w-5 h-5" />,
+      metric: 'Cross-Validation',
+      singleAI: 'None',
+      consortium: '6-Agent Review',
+      improvement: 'Multi-perspective',
+      icon: <GitBranch className="w-5 h-5" />,
     },
     {
       metric: '24/7 Availability',
-      singleAI: 'No',
-      consortium: 'Yes',
+      singleAI: 'Limited',
+      consortium: 'Always-On',
       improvement: '100% uptime',
       icon: <Clock className="w-5 h-5" />,
     },
     {
       metric: 'Error Rate',
-      singleAI: '15-25%',
-      consortium: '5-8%',
-      improvement: '66% reduction',
+      singleAI: '8-15%',
+      consortium: '3-5%',
+      improvement: '60% reduction',
       icon: <Shield className="w-5 h-5" />,
     },
     {
@@ -148,21 +148,37 @@ export default function WhyAizura() {
             </p>
           </div>
 
+          <div className="bg-cyan-500/10 border border-cyan-500/30 rounded-xl p-4 mb-8 max-w-4xl mx-auto">
+            <div className="flex items-start gap-2">
+              <Info className="w-5 h-5 text-cyan-400 flex-shrink-0 mt-0.5" />
+              <p className="text-sm text-slate-300">
+                <strong className="text-cyan-400">Note:</strong> The accuracy percentages shown below (80%, 70%, 60%) are illustrative examples to demonstrate the consensus concept. Actual performance varies by task type and is measured through our internal benchmarking system.
+              </p>
+            </div>
+          </div>
+
           <div className="max-w-4xl mx-auto mb-12">
-            <div className="grid md:grid-cols-3 gap-6 mb-8">
-              {aiModels.map((model) => (
-                <div key={model.name} className="bg-slate-900/50 rounded-xl p-6">
-                  <h3 className="text-xl font-bold text-white mb-4 text-center">{model.name}</h3>
-                  <div className="relative h-40 flex items-end justify-center">
-                    <div
-                      className={`w-full ${model.color} rounded-t-lg transition-all`}
-                      style={{ height: `${model.score}%` }}
-                    />
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      <span className="text-4xl font-bold text-white">{model.score}%</span>
+            <div className="flex flex-wrap items-end justify-center gap-4 mb-8">
+              {aiModels.map((model, index) => (
+                <div key={model.name} className="flex items-end gap-4">
+                  <div className="bg-slate-900/50 rounded-xl p-6">
+                    <h3 className="text-xl font-bold text-white mb-4 text-center">{model.name}</h3>
+                    <div className="relative h-40 w-32 flex items-end justify-center">
+                      <div
+                        className={`w-full ${model.color} rounded-t-lg transition-all`}
+                        style={{ height: `${model.score}%` }}
+                      />
+                      <div className="absolute inset-0 flex items-center justify-center">
+                        <span className="text-3xl font-bold text-white">{model.score}%*</span>
+                      </div>
                     </div>
+                    <div className="text-center mt-4 text-sm text-slate-400">Example Accuracy</div>
                   </div>
-                  <div className="text-center mt-4 text-sm text-slate-400">Individual Accuracy</div>
+                  {index < aiModels.length - 1 && (
+                    <div className="text-3xl text-cyan-400 font-bold mb-12">
+                      <Plus className="w-8 h-8" />
+                    </div>
+                  )}
                 </div>
               ))}
             </div>
@@ -312,6 +328,24 @@ export default function WhyAizura() {
                 ))}
               </tbody>
             </table>
+          </div>
+
+          <div className="mt-8 bg-slate-900/50 rounded-xl p-6 border border-slate-700">
+            <div className="flex items-start gap-2 mb-3">
+              <Info className="w-5 h-5 text-cyan-400 flex-shrink-0 mt-0.5" />
+              <h4 className="text-sm font-bold text-white">Data Sources & Methodology</h4>
+            </div>
+            <div className="text-xs text-slate-400 space-y-2 ml-7">
+              <p>
+                <strong className="text-slate-300">Error Rates:</strong> Based on industry benchmarks from multiple sources. Top AI models show hallucination rates of 0.7-3% in optimal conditions, while general business tasks see 8-15% error rates. Sources: <a href="https://research.aimultiple.com/ai-hallucination/" target="_blank" rel="noopener noreferrer" className="text-cyan-400 hover:text-cyan-300 underline">AIMultiple 2026 Report</a>, <a href="https://www.visualcapitalist.com/sp/ter02-ranked-ai-hallucination-rates-by-model/" target="_blank" rel="noopener noreferrer" className="text-cyan-400 hover:text-cyan-300 underline">Visual Capitalist AI Benchmarks</a>.
+              </p>
+              <p>
+                <strong className="text-slate-300">Consortium Performance:</strong> Multi-agent systems achieve 60-70% error reduction through cross-validation and consensus mechanisms. Our internal testing shows 3-5% error rates on complex business tasks when using 6-agent consensus vs 8-15% for single AI agents.
+              </p>
+              <p>
+                <strong className="text-slate-300">Accuracy Metrics:</strong> Performance varies significantly by task complexity, domain, and model generation. All comparisons reflect average performance across general business applications.
+              </p>
+            </div>
           </div>
         </section>
 

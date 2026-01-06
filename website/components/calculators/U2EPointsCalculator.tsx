@@ -1,5 +1,7 @@
 import { useState } from 'react';
-import { TrendingUp, Calculator } from 'lucide-react';
+import { TrendingUp, Calculator, Info, AlertCircle } from 'lucide-react';
+
+type ScenarioType = 'conservative' | 'moderate' | 'optimistic';
 
 export function U2EPointsCalculator() {
   const [actionsPerMonth, setActionsPerMonth] = useState({
@@ -8,6 +10,15 @@ export function U2EPointsCalculator() {
     businessFactoryUsage: 1,
     coinfusionSearches: 50,
   });
+
+  const scenarios = {
+    conservative: 50_000_000,
+    moderate: 10_000_000,
+    optimistic: 1_000_000,
+  };
+
+  const [totalNetworkPoints, setTotalNetworkPoints] = useState(scenarios.moderate);
+  const [selectedScenario, setSelectedScenario] = useState<ScenarioType>('moderate');
 
   const pointsPerAction = {
     aiTradersTrades: 100,
@@ -27,16 +38,35 @@ export function U2EPointsCalculator() {
 
   const monthlyPoints = calculateMonthlyPoints();
   const monthlyU2EPool = 458_333;
-  const estimatedTotalUsersPoints = 1_000_000;
 
-  const yourPoolShare = (monthlyPoints / estimatedTotalUsersPoints) * 100;
-  const estimatedAAIC = (monthlyPoints / estimatedTotalUsersPoints) * monthlyU2EPool;
+  const yourPoolShare = (monthlyPoints / totalNetworkPoints) * 100;
+  const estimatedAAIC = (monthlyPoints / totalNetworkPoints) * monthlyU2EPool;
 
   const participationLevels = [
-    { level: 'Casual', monthlyPoints: 1_000, share: 0.1, aaic: 458 },
-    { level: 'Regular', monthlyPoints: 5_000, share: 0.5, aaic: 2_292 },
-    { level: 'Active', monthlyPoints: 15_000, share: 1.5, aaic: 6_875 },
-    { level: 'Power User', monthlyPoints: 50_000, share: 5.0, aaic: 22_917 },
+    {
+      level: 'Casual',
+      monthlyPoints: 1_000,
+      share: (1_000 / totalNetworkPoints) * 100,
+      aaic: (1_000 / totalNetworkPoints) * monthlyU2EPool
+    },
+    {
+      level: 'Regular',
+      monthlyPoints: 5_000,
+      share: (5_000 / totalNetworkPoints) * 100,
+      aaic: (5_000 / totalNetworkPoints) * monthlyU2EPool
+    },
+    {
+      level: 'Active',
+      monthlyPoints: 15_000,
+      share: (15_000 / totalNetworkPoints) * 100,
+      aaic: (15_000 / totalNetworkPoints) * monthlyU2EPool
+    },
+    {
+      level: 'Power User',
+      monthlyPoints: 50_000,
+      share: (50_000 / totalNetworkPoints) * 100,
+      aaic: (50_000 / totalNetworkPoints) * monthlyU2EPool
+    },
   ];
 
   const handleChange = (field: keyof typeof actionsPerMonth, value: string) => {
@@ -44,11 +74,31 @@ export function U2EPointsCalculator() {
     setActionsPerMonth(prev => ({ ...prev, [field]: numValue }));
   };
 
+  const handleNetworkPointsChange = (value: string) => {
+    const numValue = Math.max(1_000_000, Math.min(100_000_000_000, parseInt(value) || 1_000_000));
+    setTotalNetworkPoints(numValue);
+    setSelectedScenario('moderate');
+  };
+
+  const handleScenarioChange = (scenario: ScenarioType) => {
+    setSelectedScenario(scenario);
+    setTotalNetworkPoints(scenarios[scenario]);
+  };
+
   return (
     <div className="bg-slate-800/50 backdrop-blur border border-slate-700 rounded-xl p-8">
       <div className="flex items-center gap-2 mb-6">
         <Calculator className="w-6 h-6 text-green-400" />
         <h3 className="text-2xl font-bold text-white">Use-to-Earn Points Calculator</h3>
+      </div>
+
+      <div className="bg-amber-500/10 border border-amber-500/30 rounded-xl p-4 mb-6">
+        <div className="flex items-start gap-2">
+          <AlertCircle className="w-5 h-5 text-amber-400 flex-shrink-0 mt-0.5" />
+          <div className="text-sm text-slate-300">
+            <strong className="text-amber-400">Important:</strong> The Use-to-Earn system has not launched yet, so the average monthly network points are currently unknown. The calculations below are estimates based on assumed network activity. Once the system is live and we have historical data, we will update this calculator with actual averages to provide more accurate projections.
+          </div>
+        </div>
       </div>
 
       <div className="grid lg:grid-cols-2 gap-8">
@@ -114,6 +164,69 @@ export function U2EPointsCalculator() {
         </div>
 
         <div>
+          <h4 className="text-lg font-semibold text-white mb-4">Network Activity Estimate</h4>
+
+          <div className="bg-slate-700/30 rounded-xl p-4 mb-6">
+            <div className="flex items-center gap-2 mb-3">
+              <label className="text-sm text-slate-300">
+                Total Monthly Network Points
+              </label>
+              <div className="group relative">
+                <Info className="w-4 h-4 text-cyan-400 cursor-help" />
+                <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-64 p-2 bg-slate-900 border border-slate-700 rounded-lg text-xs text-slate-300 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10">
+                  This represents the total points earned by all users network-wide per month. Higher values = lower individual rewards. Adjust this to see how network competition affects your share.
+                </div>
+              </div>
+            </div>
+
+            <input
+              type="number"
+              min="1000000"
+              max="100000000000"
+              value={totalNetworkPoints}
+              onChange={(e) => handleNetworkPointsChange(e.target.value)}
+              className="w-full px-4 py-2 bg-slate-700 border border-slate-600 rounded-lg text-white focus:outline-none focus:border-cyan-500 mb-3"
+            />
+
+            <div className="text-xs text-slate-400 mb-3">Range: 1M to 100B points</div>
+
+            <div className="flex gap-2">
+              <button
+                onClick={() => handleScenarioChange('optimistic')}
+                className={`flex-1 px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
+                  selectedScenario === 'optimistic'
+                    ? 'bg-green-600 text-white'
+                    : 'bg-slate-600 text-slate-300 hover:bg-slate-500'
+                }`}
+              >
+                Optimistic
+                <div className="text-xs opacity-75">Low Competition</div>
+              </button>
+              <button
+                onClick={() => handleScenarioChange('moderate')}
+                className={`flex-1 px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
+                  selectedScenario === 'moderate'
+                    ? 'bg-cyan-600 text-white'
+                    : 'bg-slate-600 text-slate-300 hover:bg-slate-500'
+                }`}
+              >
+                Moderate
+                <div className="text-xs opacity-75">Average Use</div>
+              </button>
+              <button
+                onClick={() => handleScenarioChange('conservative')}
+                className={`flex-1 px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
+                  selectedScenario === 'conservative'
+                    ? 'bg-amber-600 text-white'
+                    : 'bg-slate-600 text-slate-300 hover:bg-slate-500'
+                }`}
+              >
+                Conservative
+                <div className="text-xs opacity-75">High Competition</div>
+              </button>
+            </div>
+          </div>
+
           <h4 className="text-lg font-semibold text-white mb-4">Your Estimated Rewards</h4>
 
           <div className="bg-gradient-to-br from-green-900/30 to-emerald-900/30 border border-green-500/30 rounded-xl p-6 mb-6">
@@ -141,12 +254,21 @@ export function U2EPointsCalculator() {
           </div>
 
           <div className="bg-slate-700/30 rounded-xl p-4">
-            <h5 className="font-semibold text-white mb-3 text-sm">Assumptions</h5>
+            <h5 className="font-semibold text-white mb-3 text-sm flex items-center gap-2">
+              Assumptions
+              <div className="group relative">
+                <Info className="w-4 h-4 text-cyan-400 cursor-help" />
+                <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-64 p-2 bg-slate-900 border border-slate-700 rounded-lg text-xs text-slate-300 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10">
+                  These calculations are projections. Actual rewards will depend on real network activity once the system launches.
+                </div>
+              </div>
+            </h5>
             <ul className="space-y-1 text-xs text-slate-400">
-              <li>• Monthly U2E pool: {monthlyU2EPool.toLocaleString()} AAIC</li>
-              <li>• Estimated total network points: {estimatedTotalUsersPoints.toLocaleString()}</li>
-              <li>• Your share scales with actual usage</li>
+              <li>• Monthly U2E pool: {monthlyU2EPool.toLocaleString()} AAIC (fixed)</li>
+              <li>• Total network points: {totalNetworkPoints.toLocaleString()} (adjustable)</li>
+              <li>• Your share scales proportionally with usage</li>
               <li>• Points expire monthly (use it or lose it)</li>
+              <li>• Pool share = Your Points ÷ Total Network Points</li>
             </ul>
           </div>
         </div>
