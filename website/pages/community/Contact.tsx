@@ -11,11 +11,46 @@ export default function Contact() {
   });
 
   const [submitted, setSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSubmitted(true);
-    setTimeout(() => setSubmitted(false), 3000);
+    setSubmitting(true);
+    setError(null);
+
+    try {
+      const response = await fetch(
+        `${import.meta.env.VITE_SUPABASE_URL}/rest/v1/contact_forms`,
+        {
+          method: 'POST',
+          headers: {
+            'apikey': import.meta.env.VITE_SUPABASE_ANON_KEY,
+            'Content-Type': 'application/json',
+            'Prefer': 'return=minimal'
+          },
+          body: JSON.stringify({
+            name: formData.name,
+            email: formData.email,
+            category: formData.category,
+            message: formData.message
+          })
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error('Failed to submit form');
+      }
+
+      setSubmitted(true);
+      setFormData({ name: '', email: '', category: '', message: '' });
+      setTimeout(() => setSubmitted(false), 5000);
+    } catch (err) {
+      console.error('Error submitting contact form:', err);
+      setError('Failed to send message. Please try again or contact us via Discord.');
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -44,6 +79,12 @@ export default function Contact() {
             {submitted && (
               <div className="mb-6 p-4 bg-green-500/10 border border-green-500/30 rounded-lg text-green-400 text-sm">
                 Thank you! Your message has been received. We'll get back to you soon.
+              </div>
+            )}
+
+            {error && (
+              <div className="mb-6 p-4 bg-red-500/10 border border-red-500/30 rounded-lg text-red-400 text-sm">
+                {error}
               </div>
             )}
 
@@ -87,12 +128,13 @@ export default function Contact() {
                   className="w-full px-4 py-3 bg-slate-900/50 border border-slate-600 rounded-lg text-white focus:outline-none focus:border-cyan-500"
                 >
                   <option value="">Select a category</option>
-                  <option value="general">General Inquiry</option>
-                  <option value="support">Technical Support</option>
-                  <option value="partnership">Partnership Opportunity</option>
-                  <option value="media">Media / Press</option>
-                  <option value="proposal">Proposal Question</option>
-                  <option value="other">Other</option>
+                  <option value="General Inquiry">General Inquiry</option>
+                  <option value="Technical Support">Technical Support</option>
+                  <option value="Partnership Opportunity">Partnership Opportunity</option>
+                  <option value="Media / Press">Media / Press</option>
+                  <option value="Proposal Question">Proposal Question</option>
+                  <option value="Bug Bounty">Bug Bounty</option>
+                  <option value="Other">Other</option>
                 </select>
               </div>
 
@@ -112,10 +154,11 @@ export default function Contact() {
 
               <button
                 type="submit"
-                className="w-full px-6 py-4 bg-cyan-600 hover:bg-cyan-700 text-white font-bold rounded-lg transition-colors inline-flex items-center justify-center gap-2"
+                disabled={submitting}
+                className="w-full px-6 py-4 bg-cyan-600 hover:bg-cyan-700 disabled:bg-slate-600 disabled:cursor-not-allowed text-white font-bold rounded-lg transition-colors inline-flex items-center justify-center gap-2"
               >
                 <Send className="w-5 h-5" />
-                Send Message
+                {submitting ? 'Sending...' : 'Send Message'}
               </button>
             </form>
           </div>

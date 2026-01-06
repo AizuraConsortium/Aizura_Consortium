@@ -132,12 +132,12 @@ export default function UseToEarn() {
           )}
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <a
-              href="/login"
+            <Link
+              to="/auth/sign-in"
               className="px-8 py-4 bg-green-600 hover:bg-green-700 text-white font-bold rounded-lg text-lg transition-colors"
             >
               Start Earning Today
-            </a>
+            </Link>
             <Link
               to="#calculator"
               className="px-8 py-4 bg-slate-700 hover:bg-slate-600 text-white font-bold rounded-lg text-lg transition-colors"
@@ -736,12 +736,12 @@ export default function UseToEarn() {
               No investment required—just use the platforms and watch rewards accumulate.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <a
-                href="/login"
+              <Link
+                to="/auth/sign-in"
                 className="px-8 py-4 bg-green-600 hover:bg-green-700 text-white font-bold rounded-lg text-lg transition-colors inline-block"
               >
                 Create Account
-              </a>
+              </Link>
               <Link
                 to="/portfolio"
                 className="px-8 py-4 bg-slate-700 hover:bg-slate-600 text-white font-bold rounded-lg text-lg transition-colors inline-block"

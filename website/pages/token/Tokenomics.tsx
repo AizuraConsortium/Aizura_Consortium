@@ -698,7 +698,7 @@ export default function Tokenomics() {
 
           <div className="text-center">
             <Link
-              to="/token/u2e-explained"
+              to="/token/use-to-earn"
               className="inline-flex items-center gap-2 px-8 py-4 bg-cyan-600 hover:bg-cyan-700 text-white font-bold rounded-lg transition-colors"
             >
               Learn More About U2E
