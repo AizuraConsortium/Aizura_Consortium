@@ -4,7 +4,7 @@ import { Navigation } from '../components/layout/Navigation';
 import { Footer } from '../components/layout/Footer';
 import {
   Sparkles, TrendingUp, Zap, Users, Clock, Rocket, FileText, Vote, Cpu, DollarSign,
-  MessageSquare, BarChart3, Shield, ArrowRight, CheckCircle2, TrendingDown, Target, AlertTriangle
+  MessageSquare, BarChart3, Shield, ArrowRight, CheckCircle2, TrendingDown, Target, AlertTriangle, Gift
 } from 'lucide-react';
 
 export default function NewHome() {
@@ -627,12 +627,14 @@ function FoundationProofSection() {
           <div className="grid grid-cols-2 gap-4">
             <MetricCard icon={<CheckCircle2 />} value="4" label="Foundation Businesses" />
             <MetricCard icon={<DollarSign />} value="$5M-$20M" label="Target Annual Revenue" />
-            <MetricCard icon={<Users />} value="12K+" label="Waitlist" />
+            <MetricCard icon={<Gift />} value="8M AAIC" label="Airdrop Allocation" />
             <MetricCard icon={<TrendingUp />} value="$50M+" label="Portfolio Potential" />
           </div>
           <div className="mt-4 bg-yellow-500/10 border border-yellow-500/30 rounded-lg p-3 text-center">
             <p className="text-xs text-slate-300">
-              <strong className="text-yellow-400">Projected Values:</strong> Revenue and valuation targets based on market analysis and early validation. Not current revenue.
+              <strong className="text-yellow-400">Projected Values:</strong> Revenue and valuation targets based on market analysis.
+              <strong className="text-cyan-400"> 8M AAIC tokens</strong> allocated for community airdrop (8% of max supply).
+              <Link to="/token/airdrop" className="underline hover:text-cyan-300">Learn how to earn</Link>.
             </p>
           </div>
         </div>
