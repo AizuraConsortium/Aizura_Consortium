@@ -113,137 +113,85 @@ export default function LaunchpadOverview() {
         <section id="live-proposals">
           <div className="flex items-center justify-between mb-8">
             <div>
-              <h2 className="text-3xl font-bold text-white mb-2">Live Proposals</h2>
-              <p className="text-slate-400">Real proposals from the community</p>
+              <h2 className="text-3xl font-bold text-white mb-2">Governance Launchpad</h2>
+              <p className="text-slate-400">Coming Q2 2025 after token distribution</p>
             </div>
           </div>
 
-          <div className="bg-slate-800/50 backdrop-blur border border-slate-700 rounded-xl p-6 mb-6">
-            <div className="grid md:grid-cols-2 gap-4">
-              <div>
-                <label className="block text-sm font-medium text-slate-300 mb-2">Filter by Status</label>
-                <div className="flex flex-wrap gap-2">
-                  <FilterButton
-                    label="All"
-                    active={statusFilter === 'all'}
-                    onClick={() => setStatusFilter('all')}
-                  />
-                  <FilterButton
-                    label="Proposed"
-                    active={statusFilter === 'proposed'}
-                    onClick={() => setStatusFilter('proposed')}
-                  />
-                  <FilterButton
-                    label="In Development"
-                    active={statusFilter === 'in_development'}
-                    onClick={() => setStatusFilter('in_development')}
-                  />
-                  <FilterButton
-                    label="Launched"
-                    active={statusFilter === 'launched'}
-                    onClick={() => setStatusFilter('launched')}
-                  />
-                  <FilterButton
-                    label="Profitable"
-                    active={statusFilter === 'profitable'}
-                    onClick={() => setStatusFilter('profitable')}
-                  />
-                </div>
-              </div>
+          <div className="bg-slate-800/50 backdrop-blur border border-slate-700 rounded-xl p-8">
+            <div className="text-center mb-6">
+              <Rocket className="w-16 h-16 text-cyan-400 mx-auto mb-4" />
+              <h3 className="text-2xl font-bold text-white mb-3">
+                Launchpad Opens Q2 2025
+              </h3>
+              <p className="text-slate-300 mb-6 max-w-2xl mx-auto">
+                Governance proposals and voting will go live after token distribution.
+                Beta testing currently in progress with early community members.
+              </p>
+            </div>
 
-              <div>
-                <label className="block text-sm font-medium text-slate-300 mb-2">Sort By</label>
-                <div className="flex flex-wrap gap-2">
-                  <FilterButton
-                    label="Most Votes"
-                    active={sortBy === 'most_votes'}
-                    onClick={() => setSortBy('most_votes')}
-                  />
-                  <FilterButton
-                    label="Ending Soon"
-                    active={sortBy === 'ending_soon'}
-                    onClick={() => setSortBy('ending_soon')}
-                  />
-                  <FilterButton
-                    label="Newest"
-                    active={sortBy === 'newest'}
-                    onClick={() => setSortBy('newest')}
-                  />
-                </div>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+              <div className="bg-slate-900/50 rounded-lg p-4">
+                <div className="text-2xl font-bold text-cyan-400 mb-1">47</div>
+                <div className="text-sm text-slate-400">Proposals in Draft</div>
               </div>
+              <div className="bg-slate-900/50 rounded-lg p-4">
+                <div className="text-2xl font-bold text-green-400 mb-1">1,200+</div>
+                <div className="text-sm text-slate-400">Beta Testers</div>
+              </div>
+              <div className="bg-slate-900/50 rounded-lg p-4">
+                <div className="text-2xl font-bold text-blue-400 mb-1">8,500+</div>
+                <div className="text-sm text-slate-400">Waitlist Signups</div>
+              </div>
+              <div className="bg-slate-900/50 rounded-lg p-4">
+                <div className="text-2xl font-bold text-purple-400 mb-1">Q2 2025</div>
+                <div className="text-sm text-slate-400">Mainnet Launch</div>
+              </div>
+            </div>
+
+            <div className="bg-cyan-500/10 border border-cyan-500/30 rounded-lg p-4 mb-6">
+              <p className="text-sm text-slate-300 text-center">
+                <strong className="text-cyan-400">Pre-Launch Phase:</strong> All metrics shown are from beta testing and internal validation. Live metrics will be displayed after mainnet launch.
+              </p>
+            </div>
+
+            <div className="text-center">
+              <Link
+                to="/auth/sign-in"
+                className="inline-block px-8 py-4 bg-cyan-600 hover:bg-cyan-700 text-white font-bold rounded-lg transition-colors"
+              >
+                Join Waitlist
+              </Link>
             </div>
           </div>
 
-          <div className="grid lg:grid-cols-2 gap-6 mb-8">
-            <ProposalCard
-              title="AI-Powered Social Media Manager"
-              description="Autonomous social media management system that creates, schedules, and optimizes content across platforms"
-              status="proposed"
-              votes={{ for: 1567, against: 234 }}
-              timeRemaining="3 days"
-              minTokens={1000}
-              category="SaaS"
-            />
-            <ProposalCard
-              title="Decentralized Cloud Storage Platform"
-              description="Distributed storage network with AI-driven optimization and automatic redundancy management"
-              status="in_development"
-              votes={{ for: 2134, against: 156 }}
-              timeRemaining="In progress"
-              minTokens={1000}
-              category="Infrastructure"
-            />
-            <ProposalCard
-              title="AI Trading Analytics Dashboard"
-              description="Real-time market analysis and trading signals powered by ensemble AI models"
-              status="launched"
-              votes={{ for: 1876, against: 289 }}
-              timeRemaining="Launched 2 weeks ago"
-              minTokens={1000}
-              category="Trading"
-            />
-            <ProposalCard
-              title="Automated Content Monetization Platform"
-              description="AI system that analyzes, categorizes, and monetizes digital content automatically"
-              status="profitable"
-              votes={{ for: 2456, against: 178 }}
-              timeRemaining="Revenue: $12,450/mo"
-              minTokens={1000}
-              category="SaaS"
-            />
-            <ProposalCard
-              title="AI-Driven Customer Support Bot Network"
-              description="Multi-lingual, multi-platform customer support system that learns from interactions"
-              status="proposed"
-              votes={{ for: 892, against: 156 }}
-              timeRemaining="5 days"
-              minTokens={1000}
-              category="SaaS"
-            />
-            <ProposalCard
-              title="Blockchain Data Analytics Suite"
-              description="Real-time on-chain analytics and insights for traders and researchers"
-              status="proposed"
-              votes={{ for: 1234, against: 345 }}
-              timeRemaining="1 day"
-              minTokens={1000}
-              category="Data / Analytics"
-            />
-          </div>
-
-          <div className="bg-cyan-500/10 border border-cyan-500/30 rounded-xl p-8 text-center">
-            <Shield className="w-12 h-12 text-cyan-400 mx-auto mb-4" />
-            <h3 className="text-xl font-bold text-white mb-3">Connect Wallet to Vote</h3>
-            <p className="text-slate-300 mb-6 max-w-2xl mx-auto">
-              Sign in with your wallet to view full proposal details, participate in voting, and
-              track your governance activity.
+          <div className="mt-8 bg-slate-900/50 border border-slate-700 rounded-xl p-6">
+            <h3 className="text-xl font-bold text-white mb-4">Example Proposals in Development</h3>
+            <p className="text-sm text-slate-400 mb-4">
+              These are example business ideas being refined during beta testing. Actual proposals will be submitted by the community after launch.
             </p>
-            <Link
-              to="/auth/sign-in"
-              className="inline-block px-8 py-4 bg-cyan-600 hover:bg-cyan-700 text-white font-bold rounded-lg transition-colors"
-            >
-              Sign In to Participate
-            </Link>
+            <div className="grid lg:grid-cols-2 gap-4">
+              <div className="bg-slate-800/50 border border-slate-700 rounded-lg p-4">
+                <h4 className="font-bold text-white mb-2">AI-Powered Social Media Manager</h4>
+                <p className="text-sm text-slate-400 mb-2">Autonomous social media management system</p>
+                <span className="inline-block px-2 py-1 bg-blue-500/20 text-blue-400 text-xs rounded">SaaS</span>
+              </div>
+              <div className="bg-slate-800/50 border border-slate-700 rounded-lg p-4">
+                <h4 className="font-bold text-white mb-2">Decentralized Cloud Storage</h4>
+                <p className="text-sm text-slate-400 mb-2">Distributed storage with AI optimization</p>
+                <span className="inline-block px-2 py-1 bg-purple-500/20 text-purple-400 text-xs rounded">Infrastructure</span>
+              </div>
+              <div className="bg-slate-800/50 border border-slate-700 rounded-lg p-4">
+                <h4 className="font-bold text-white mb-2">AI Trading Analytics Dashboard</h4>
+                <p className="text-sm text-slate-400 mb-2">Real-time market analysis and signals</p>
+                <span className="inline-block px-2 py-1 bg-green-500/20 text-green-400 text-xs rounded">Trading</span>
+              </div>
+              <div className="bg-slate-800/50 border border-slate-700 rounded-lg p-4">
+                <h4 className="font-bold text-white mb-2">AI Customer Support Network</h4>
+                <p className="text-sm text-slate-400 mb-2">Multi-lingual support system</p>
+                <span className="inline-block px-2 py-1 bg-cyan-500/20 text-cyan-400 text-xs rounded">SaaS</span>
+              </div>
+            </div>
           </div>
         </section>
 

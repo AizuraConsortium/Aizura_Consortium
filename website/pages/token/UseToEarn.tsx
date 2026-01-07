@@ -606,18 +606,95 @@ export default function UseToEarn() {
           <U2EPointsCalculator />
         </section>
 
-        {/* Real Examples */}
+        {/* Earning Potential Examples */}
         <section>
           <div className="text-center mb-12">
             <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">
-              Real User Examples
+              Earning Potential Scenarios
             </h2>
             <p className="text-slate-300 max-w-2xl mx-auto">
-              See what actual users are earning (anonymized data)
+              Illustrative examples based on current reward rates and participation levels
             </p>
           </div>
 
-          <RealExamplesCarousel />
+          <div className="bg-slate-800/50 backdrop-blur border border-slate-700 rounded-xl p-8">
+            <div className="grid md:grid-cols-3 gap-6 mb-6">
+              <div className="bg-gradient-to-br from-blue-900/20 to-cyan-900/20 border border-blue-500/30 rounded-xl p-6">
+                <div className="inline-flex items-center gap-2 px-3 py-1 bg-blue-500/20 text-blue-400 rounded-full text-sm font-medium mb-4">
+                  Casual User
+                </div>
+                <div className="text-3xl font-bold text-white mb-2">150-300</div>
+                <div className="text-sm text-slate-400 mb-4">AAIC / month</div>
+                <div className="space-y-2 text-sm text-slate-300">
+                  <div className="flex items-center gap-2">
+                    <div className="w-1.5 h-1.5 bg-blue-400 rounded-full" />
+                    <span>5-10 hours/month activity</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <div className="w-1.5 h-1.5 bg-blue-400 rounded-full" />
+                    <span>Light service usage</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <div className="w-1.5 h-1.5 bg-blue-400 rounded-full" />
+                    <span>~$15-$30 value at $0.10/token</span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="bg-gradient-to-br from-cyan-900/20 to-green-900/20 border border-cyan-500/30 rounded-xl p-6">
+                <div className="inline-flex items-center gap-2 px-3 py-1 bg-cyan-500/20 text-cyan-400 rounded-full text-sm font-medium mb-4">
+                  Active User
+                </div>
+                <div className="text-3xl font-bold text-white mb-2">450-900</div>
+                <div className="text-sm text-slate-400 mb-4">AAIC / month</div>
+                <div className="space-y-2 text-sm text-slate-300">
+                  <div className="flex items-center gap-2">
+                    <div className="w-1.5 h-1.5 bg-cyan-400 rounded-full" />
+                    <span>20-40 hours/month activity</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <div className="w-1.5 h-1.5 bg-cyan-400 rounded-full" />
+                    <span>Regular service usage</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <div className="w-1.5 h-1.5 bg-cyan-400 rounded-full" />
+                    <span>~$45-$90 value at $0.10/token</span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="bg-gradient-to-br from-green-900/20 to-emerald-900/20 border border-green-500/30 rounded-xl p-6">
+                <div className="inline-flex items-center gap-2 px-3 py-1 bg-green-500/20 text-green-400 rounded-full text-sm font-medium mb-4">
+                  Power User
+                </div>
+                <div className="text-3xl font-bold text-white mb-2">1,200-2,000</div>
+                <div className="text-sm text-slate-400 mb-4">AAIC / month</div>
+                <div className="space-y-2 text-sm text-slate-300">
+                  <div className="flex items-center gap-2">
+                    <div className="w-1.5 h-1.5 bg-green-400 rounded-full" />
+                    <span>40+ hours/month activity</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <div className="w-1.5 h-1.5 bg-green-400 rounded-full" />
+                    <span>Heavy service usage</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <div className="w-1.5 h-1.5 bg-green-400 rounded-full" />
+                    <span>~$120-$200 value at $0.10/token</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="bg-cyan-500/10 border border-cyan-500/30 rounded-lg p-4">
+              <p className="text-xs text-slate-300 text-center mb-2">
+                <strong className="text-cyan-400">Illustrative Examples:</strong> These scenarios assume 458,333 AAIC monthly distribution pool, average 5,000 active participants, and typical usage patterns for each tier.
+              </p>
+              <p className="text-xs text-slate-400 text-center">
+                Actual earnings depend on: total network activity, your participation level, point values set by governance, and monthly competition. Real user data will be shown after mainnet launch in Q2 2025.
+              </p>
+            </div>
+          </div>
         </section>
 
         {/* Retroactive Rewards */}

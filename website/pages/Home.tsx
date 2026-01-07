@@ -96,17 +96,22 @@ function HeroSection() {
         <div className="bg-slate-800/50 backdrop-blur border border-slate-700 rounded-xl p-8">
           <h3 className="text-2xl font-bold text-white mb-6 flex items-center gap-2">
             <BarChart3 className="w-6 h-6 text-cyan-400" />
-            Ecosystem Pipeline
+            Ecosystem Target Metrics
           </h3>
           <div className="grid grid-cols-2 gap-4">
             <StatCard label="Businesses in Pipeline" value="12" />
             <StatCard label="In Development" value="5" />
-            <StatCard label="Target Annual Revenue" value="$5M-$20M" />
+            <StatCard label="Target Annual Revenue (Year 2-3)" value="$5M-$20M" />
             <StatCard label="Portfolio Value Potential" value="$50M+" />
-            <StatCard label="Tokens Distributed" value="2.4M" />
+            <StatCard label="Projected Tokens Distributed" value="~16M" />
             <StatCard label="Market Opportunity" value="$2.3B" />
           </div>
-          <div className="mt-4 bg-yellow-500/10 border border-yellow-500/30 rounded-lg p-3">
+          <div className="mt-4 bg-cyan-500/10 border border-cyan-500/30 rounded-lg p-3 mb-3">
+            <p className="text-xs text-slate-300 text-center">
+              <strong className="text-cyan-400">Pre-Launch Phase:</strong> These are target metrics and projections. Live metrics will be displayed after mainnet launch in Q2 2025.
+            </p>
+          </div>
+          <div className="bg-yellow-500/10 border border-yellow-500/30 rounded-lg p-3">
             <div className="flex items-start gap-2">
               <AlertTriangle className="w-4 h-4 text-yellow-400 flex-shrink-0 mt-0.5" />
               <p className="text-xs text-slate-300">
