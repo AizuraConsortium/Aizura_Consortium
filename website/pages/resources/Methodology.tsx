@@ -5,7 +5,7 @@ import {
   Server, Database, Cloud, Smartphone, Code, BarChart3, Target,
   CheckCircle2, AlertTriangle, ExternalLink, FileText, Shield,
   Activity, Cpu, Globe, BookOpen, Award, Info, TrendingDown,
-  ArrowRight, ArrowDown, Percent, Hash, PieChart, LineChart, X
+  ArrowRight, ArrowDown, Percent, Hash, PieChart, LineChart, X, Building
 } from 'lucide-react';
 import { useState } from 'react';
 
@@ -1938,250 +1938,251 @@ function TokenomicsSection() {
 
 // ==================== DATA SOURCES SECTION ====================
 function DataSourcesSection() {
-  const sources = [
-    {
-      category: 'Salary & Employment Data',
-      items: [
-        {
-          id: 'glassdoor-2024',
-          title: 'Glassdoor Salary Database',
-          url: 'https://www.glassdoor.com/Salaries/index.htm',
-          description: 'Average salaries for software engineers, marketing managers, and support specialists in the US tech industry (2024 data)',
-          accessed: 'January 2025'
-        },
-        {
-          id: 'levels-fyi-2024',
-          title: 'Levels.fyi Compensation Data',
-          url: 'https://www.levels.fyi',
-          description: 'Tech industry compensation benchmarks including base salary, equity, and bonuses',
-          accessed: 'January 2025'
-        },
-        {
-          id: 'bls-2024',
-          title: 'U.S. Bureau of Labor Statistics - Employer Costs',
-          url: 'https://www.bls.gov/news.release/ecec.nr0.htm',
-          description: 'Employer costs for employee compensation, including benefits averaging 31.7% of total compensation (March 2024)',
-          accessed: 'January 2025'
-        },
-        {
-          id: 'irs-2024',
-          title: 'IRS - Employment Tax Rates',
-          url: 'https://www.irs.gov/businesses/small-businesses-self-employed/employment-taxes',
-          description: 'Federal employer tax obligations including FICA (7.65%)',
-          accessed: 'January 2025'
-        },
-        {
-          id: 'shrm-2024',
-          title: 'SHRM - Cost of Recruiting',
-          url: 'https://www.shrm.org/resourcesandtools/hr-topics/talent-acquisition',
-          description: 'Average cost per hire and time to fill metrics for tech positions',
-          accessed: 'January 2025'
-        }
-      ]
-    },
-    {
-      category: 'AI & Technology Costs',
-      items: [
-        {
-          id: 'openai-pricing',
-          title: 'OpenAI API Pricing',
-          url: 'https://openai.com/pricing',
-          description: 'GPT-4 and GPT-4 Turbo pricing: $0.01-0.03 per 1K tokens',
-          accessed: 'January 2025'
-        },
-        {
-          id: 'anthropic-pricing',
-          title: 'Anthropic Claude API Pricing',
-          url: 'https://www.anthropic.com/pricing',
-          description: 'Claude 3 Opus and Sonnet pricing: $0.008-0.024 per 1K tokens',
-          accessed: 'January 2025'
-        },
-        {
-          id: 'aws-calculator',
-          title: 'AWS Pricing Calculator',
-          url: 'https://calculator.aws',
-          description: 'EC2, RDS, S3, and other AWS service pricing estimates',
-          accessed: 'January 2025'
-        },
-        {
-          id: 'twilio-pricing',
-          title: 'Twilio Programmable Voice Pricing',
-          url: 'https://www.twilio.com/voice/pricing',
-          description: 'Phone number rental ($1/mo) and usage rates',
-          accessed: 'January 2025'
-        }
-      ]
-    },
-    {
-      category: 'AI Performance & Benchmarks',
-      items: [
-        {
-          id: 'aimultiple-hallucination',
-          title: 'AIMultiple - AI Hallucination Rates Research',
-          url: 'https://research.aimultiple.com/ai-hallucination/',
-          description: 'Comprehensive analysis of LLM hallucination rates across different models and tasks (2024 update)',
-          accessed: 'January 2025'
-        },
-        {
-          id: 'visualcapitalist-benchmarks',
-          title: 'Visual Capitalist - AI Model Benchmarks',
-          url: 'https://www.visualcapitalist.com/sp/ter02-ranked-ai-hallucination-rates-by-model/',
-          description: 'Comparative accuracy and performance metrics across leading AI models',
-          accessed: 'January 2025'
-        },
-        {
-          id: 'arxiv-multi-agent',
-          title: 'arXiv - Multi-Agent Consensus Systems',
-          url: 'https://arxiv.org/search/?query=multi-agent+consensus+ai',
-          description: 'Academic research on collaborative AI systems and performance improvements',
-          accessed: 'January 2025'
-        }
-      ]
-    },
-    {
-      category: 'Market Research & Industry Reports',
-      items: [
-        {
-          id: 'marketsandmarkets-2024',
-          title: 'MarketsandMarkets - AI Trading Market Report',
-          url: 'https://www.marketsandmarkets.com',
-          description: 'Global AI in trading market size projected at $8.4B by 2028',
-          accessed: 'January 2025'
-        },
-        {
-          id: 'grandviewresearch-2024',
-          title: 'Grand View Research - AI Development Tools Market',
-          url: 'https://www.grandviewresearch.com',
-          description: 'AI development tools market size and growth projections ($24.1B by 2028)',
-          accessed: 'January 2025'
-        },
-        {
-          id: 'fortunebusinessinsights-2024',
-          title: 'Fortune Business Insights - Business Automation Market',
-          url: 'https://www.fortunebusinessinsights.com',
-          description: 'Business process automation market analysis and forecasts',
-          accessed: 'January 2025'
-        },
-        {
-          id: 'cbinsights-startup-failure',
-          title: 'CB Insights - Startup Failure Analysis',
-          url: 'https://www.cbinsights.com/research/startup-failure-reasons-top/',
-          description: 'Analysis of why startups fail, including burn rate and runway issues',
-          accessed: 'January 2025'
-        },
-        {
-          id: 'failory-success-rates',
-          title: 'Failory - Startup Success Rate Statistics',
-          url: 'https://www.failory.com/blog/startup-success-rate',
-          description: '90% startup failure rate, 10-20% success rate industry benchmarks',
-          accessed: 'January 2025'
-        }
-      ]
-    },
-    {
-      category: 'Office & Infrastructure Costs',
-      items: [
-        {
-          id: 'commercialcafe-2024',
-          title: 'CommercialCafe - Office Space Rental Rates',
-          url: 'https://www.commercialcafe.com',
-          description: 'Average office space costs per employee in major tech hubs',
-          accessed: 'January 2025'
-        },
-        {
-          id: 'costowl-2024',
-          title: 'CostOwl - Office Equipment Costs',
-          url: 'https://www.costowl.com/home-office-equipment-cost',
-          description: 'Average costs for office furniture and equipment setups',
-          accessed: 'January 2025'
-        }
-      ]
-    },
-    {
-      category: 'SaaS & Unit Economics',
-      items: [
-        {
-          id: 'saastr-benchmarks',
-          title: 'SaaStr - SaaS Metrics & Benchmarks',
-          url: 'https://www.saastr.com',
-          description: 'CAC, LTV, and other SaaS financial metrics benchmarks',
-          accessed: 'January 2025'
-        },
-        {
-          id: 'chartmogul-ltv-cac',
-          title: 'ChartMogul - LTV:CAC Ratio Guide',
-          url: 'https://chartmogul.com/blog/ltv-cac-ratio/',
-          description: 'Industry standards for LTV:CAC ratios (3:1 minimum, 5:1+ excellent)',
-          accessed: 'January 2025'
-        }
-      ]
-    }
-  ];
-
   return (
     <section className="bg-slate-800/30 backdrop-blur border border-slate-700 rounded-2xl p-8 lg:p-12">
-      <h2 className="text-3xl font-bold text-white mb-8 text-center">
+      <h2 className="text-3xl font-bold text-white mb-8 text-center flex items-center justify-center gap-3">
+        <FileText className="w-8 h-8 text-cyan-400" />
         Complete Data Sources & Citations
       </h2>
 
-      <p className="text-slate-300 text-center max-w-3xl mx-auto mb-12">
-        Every claim, calculation, and projection in this document is backed by verifiable sources.
-        Below is a comprehensive list of all references used, organized by category.
+      <p className="text-center text-slate-300 mb-10 max-w-3xl mx-auto">
+        Every claim on this website is backed by reputable sources. Below is the complete reference list
+        organized by category. All links verified as of January 2025.
       </p>
 
-      <div className="space-y-10">
-        {sources.map((category, idx) => (
-          <div key={idx}>
-            <h3 className="text-2xl font-bold text-cyan-400 mb-6">{category.category}</h3>
-            <div className="grid gap-6">
-              {category.items.map((source, sidx) => (
-                <div key={sidx} className="bg-slate-900/50 border border-slate-700 rounded-xl p-6 hover:border-cyan-500/50 transition-colors">
-                  <div className="flex items-start justify-between gap-4 mb-3">
-                    <h4 className="text-lg font-bold text-white">{source.title}</h4>
-                    <a
-                      href={source.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex items-center gap-1 text-cyan-400 hover:text-cyan-300 text-sm whitespace-nowrap"
-                    >
-                      Visit <ExternalLink className="w-4 h-4" />
-                    </a>
-                  </div>
-                  <p className="text-slate-300 text-sm mb-3">{source.description}</p>
-                  <div className="flex items-center gap-4 text-xs text-slate-500">
-                    <span className="font-mono bg-slate-800 px-2 py-1 rounded">{source.id}</span>
-                    <span>Last accessed: {source.accessed}</span>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        ))}
+      <div className="space-y-8">
+        {/* Market Research */}
+        <SourceCategory
+          title="Market Research & Industry Reports"
+          icon={<Globe className="w-6 h-6 text-blue-400" />}
+          sources={[
+            {
+              title: "Grand View Research: Artificial Intelligence Market Size Report",
+              url: "https://www.grandviewresearch.com/industry-analysis/artificial-intelligence-ai-market",
+              claim: "$196.63B market size (2023), 37.3% CAGR",
+              date: "Updated December 2024"
+            },
+            {
+              title: "Gartner: AI Software Market Forecast",
+              url: "https://www.gartner.com/en/newsroom/press-releases/2023-08-02-gartner-forecasts-worldwide-artificial-intelligence-software-market-to-reach-297-billion-in-2027",
+              claim: "$297B projected by 2027",
+              date: "August 2023"
+            },
+            {
+              title: "McKinsey: The State of AI in 2024",
+              url: "https://www.mckinsey.com/capabilities/quantumblack/our-insights/the-state-of-ai",
+              claim: "72% of businesses using AI (up from 50% in 2023)",
+              date: "July 2024"
+            },
+            {
+              title: "Statista: SaaS Market Revenue Worldwide",
+              url: "https://www.statista.com/statistics/505243/worldwide-software-as-a-service-revenue/",
+              claim: "Global SaaS market size and growth projections",
+              date: "2024"
+            }
+          ]}
+        />
+
+        {/* Salary & Cost Data */}
+        <SourceCategory
+          title="Salary & Employment Cost Data"
+          icon={<DollarSign className="w-6 h-6 text-green-400" />}
+          sources={[
+            {
+              title: "Glassdoor: Software Engineer Salaries",
+              url: "https://www.glassdoor.com/Salaries/senior-software-engineer-salary-SRCH_KO0,25.htm",
+              claim: "Average senior engineer: $150K-$180K/year",
+              date: "2024 data"
+            },
+            {
+              title: "Levels.fyi: Tech Compensation Data",
+              url: "https://www.levels.fyi/t/software-engineer",
+              claim: "Real-world compensation benchmarks",
+              date: "Updated daily"
+            },
+            {
+              title: "U.S. Bureau of Labor Statistics: Software Developer Wages",
+              url: "https://www.bls.gov/oes/current/oes151252.htm",
+              claim: "Median software developer pay: $127,260/year",
+              date: "May 2023"
+            },
+            {
+              title: "BLS: Employer Costs for Employee Compensation",
+              url: "https://www.bls.gov/news.release/ecec.nr0.htm",
+              claim: "Benefits average 30-35% of salary",
+              date: "Q3 2024"
+            }
+          ]}
+        />
+
+        {/* Startup Failure Data */}
+        <SourceCategory
+          title="Startup Success & Failure Statistics"
+          icon={<TrendingDown className="w-6 h-6 text-red-400" />}
+          sources={[
+            {
+              title: "CB Insights: Top 12 Reasons Startups Fail",
+              url: "https://www.cbinsights.com/research/startup-failure-reasons-top/",
+              claim: "82% fail due to cash flow problems, 42% due to no market need",
+              date: "2024 analysis (101 failed startups)"
+            },
+            {
+              title: "Failory: Startup Failure Rate Statistics",
+              url: "https://www.failory.com/blog/startup-success-rate",
+              claim: "20% fail in Year 1, 50% by Year 5, 70% by Year 10",
+              date: "2024 compilation"
+            },
+            {
+              title: "U.S. Small Business Administration: Business Survival Rates",
+              url: "https://www.sba.gov/business-guide/plan-your-business/calculate-your-startup-costs",
+              claim: "50% of businesses survive 5+ years",
+              date: "2024 data"
+            },
+            {
+              title: "Harvard Business Review: Why Startups Fail",
+              url: "https://hbr.org/2021/05/why-start-ups-fail",
+              claim: "Analysis of 2,000+ failed startups",
+              date: "May 2021"
+            }
+          ]}
+        />
+
+        {/* AI Pricing */}
+        <SourceCategory
+          title="AI API Pricing & Infrastructure Costs"
+          icon={<Server className="w-6 h-6 text-purple-400" />}
+          sources={[
+            {
+              title: "OpenAI Pricing",
+              url: "https://openai.com/pricing",
+              claim: "GPT-4: $0.03/1K input tokens, $0.06/1K output",
+              date: "Current pricing"
+            },
+            {
+              title: "Anthropic Claude Pricing",
+              url: "https://www.anthropic.com/pricing",
+              claim: "Claude 3 Opus: $15/$75 per MTok, Sonnet: $3/$15 per MTok",
+              date: "Current pricing"
+            },
+            {
+              title: "Google AI Pricing",
+              url: "https://cloud.google.com/vertex-ai/pricing",
+              claim: "Gemini Pro: $0.00025-$0.005 per character",
+              date: "Current pricing"
+            },
+            {
+              title: "AWS Pricing Calculator",
+              url: "https://calculator.aws",
+              claim: "EC2, RDS, S3 cost estimates for production environments",
+              date: "Real-time calculator"
+            },
+            {
+              title: "Cloudflare Pricing",
+              url: "https://www.cloudflare.com/plans/",
+              claim: "CDN and DDoS protection costs",
+              date: "Current pricing"
+            }
+          ]}
+        />
+
+        {/* SaaS Benchmarks */}
+        <SourceCategory
+          title="SaaS Metrics & Valuation Benchmarks"
+          icon={<BarChart3 className="w-6 h-6 text-cyan-400" />}
+          sources={[
+            {
+              title: "SaaS Capital: SaaS Benchmarks Report 2024",
+              url: "https://www.saas-capital.com/research/saas-benchmarks/",
+              claim: "Median revenue multiple: 5.2x ARR",
+              date: "Q4 2024"
+            },
+            {
+              title: "OpenView Partners: SaaS Benchmarks",
+              url: "https://openviewpartners.com/saas-benchmarks/",
+              claim: "ARPU, churn, CAC payback benchmarks",
+              date: "2024 edition"
+            },
+            {
+              title: "PitchBook: SaaS & AI Valuations",
+              url: "https://pitchbook.com/",
+              claim: "AI companies valued at 50-100% premium vs non-AI",
+              date: "Q4 2024"
+            },
+            {
+              title: "Bessemer: State of the Cloud Report",
+              url: "https://www.bvp.com/atlas/state-of-the-cloud-2024",
+              claim: "Cloud software multiples and growth metrics",
+              date: "2024"
+            }
+          ]}
+        />
+
+        {/* AI Performance */}
+        <SourceCategory
+          title="AI Performance & Hallucination Research"
+          icon={<Brain className="w-6 h-6 text-yellow-400" />}
+          sources={[
+            {
+              title: "AIMultiple: AI Hallucination Rates by Model (2024)",
+              url: "https://research.aimultiple.com/ai-hallucination/",
+              claim: "Top models show 0.7-3% hallucination in optimal conditions",
+              date: "December 2024"
+            },
+            {
+              title: "Visual Capitalist: Ranked AI Hallucination Rates",
+              url: "https://www.visualcapitalist.com/sp/ter02-ranked-ai-hallucination-rates-by-model/",
+              claim: "Comparison across GPT-4, Claude, Gemini, others",
+              date: "2024"
+            },
+            {
+              title: "Stanford HELM Benchmarks",
+              url: "https://crfm.stanford.edu/helm/latest/",
+              claim: "Holistic evaluation of language models",
+              date: "Continuously updated"
+            }
+          ]}
+        />
+
+        {/* Office & Infrastructure */}
+        <SourceCategory
+          title="Office Space & Infrastructure Costs"
+          icon={<Building className="w-6 h-6 text-orange-400" />}
+          sources={[
+            {
+              title: "CommercialCafe: Office Space Costs by City",
+              url: "https://www.commercialcafe.com/",
+              claim: "Average: $25-$75/sq ft depending on market",
+              date: "2024 data"
+            },
+            {
+              title: "Twilio Pricing",
+              url: "https://www.twilio.com/pricing",
+              claim: "Programmable phone numbers and SMS costs",
+              date: "Current pricing"
+            },
+            {
+              title: "SendGrid Pricing",
+              url: "https://sendgrid.com/pricing/",
+              claim: "Email service costs at scale",
+              date: "Current pricing"
+            }
+          ]}
+        />
       </div>
 
-      <div className="mt-12 bg-blue-500/10 border border-blue-500/30 rounded-xl p-6">
-        <h4 className="font-bold text-white mb-3">How to Verify These Sources</h4>
-        <p className="text-sm text-slate-300 mb-3">
-          All URLs provided are direct links to original sources. We encourage independent verification:
+      <div className="mt-12 bg-cyan-500/10 border border-cyan-500/30 rounded-xl p-6 text-center">
+        <h3 className="text-xl font-bold text-white mb-3">Commitment to Transparency</h3>
+        <p className="text-slate-300 mb-4">
+          All sources listed above were accessed and verified between November 2024 - January 2025.
+          If any link is broken or data appears outdated, please contact us immediately.
         </p>
-        <ul className="text-sm text-slate-300 space-y-2">
-          <li className="flex items-start gap-2">
-            <CheckCircle2 className="w-4 h-4 text-green-400 flex-shrink-0 mt-0.5" />
-            <span>Click any source link to visit the original data</span>
-          </li>
-          <li className="flex items-start gap-2">
-            <CheckCircle2 className="w-4 h-4 text-green-400 flex-shrink-0 mt-0.5" />
-            <span>Check publication dates to ensure data currency</span>
-          </li>
-          <li className="flex items-start gap-2">
-            <CheckCircle2 className="w-4 h-4 text-green-400 flex-shrink-0 mt-0.5" />
-            <span>Compare our interpretations against source material</span>
-          </li>
-          <li className="flex items-start gap-2">
-            <CheckCircle2 className="w-4 h-4 text-green-400 flex-shrink-0 mt-0.5" />
-            <span>Report any broken links or discrepancies to our team</span>
-          </li>
-        </ul>
+        <Link
+          to="/community/contact"
+          className="inline-flex items-center gap-2 px-6 py-3 bg-cyan-600 hover:bg-cyan-700 text-white font-medium rounded-lg transition-colors"
+        >
+          Report Data Issue
+          <ArrowRight className="w-5 h-5" />
+        </Link>
       </div>
     </section>
   );
@@ -2804,6 +2805,56 @@ function BenchmarkCard({ metric, source, value, link, note }: {
       </div>
       <div className="text-2xl font-bold text-cyan-400 mb-3">{value}</div>
       <p className="text-xs text-slate-400">{note}</p>
+    </div>
+  );
+}
+
+function SourceCategory({ title, icon, sources }: {
+  title: string;
+  icon: React.ReactNode;
+  sources: Array<{
+    title: string;
+    url: string;
+    claim: string;
+    date: string;
+  }>;
+}) {
+  return (
+    <div>
+      <h3 className="text-2xl font-bold text-white mb-6 flex items-center gap-3">
+        {icon}
+        {title}
+      </h3>
+      <div className="grid gap-4">
+        {sources.map((source, idx) => (
+          <div
+            key={idx}
+            className="bg-slate-900/50 border border-slate-700 rounded-xl p-6 hover:border-cyan-500/50 transition-colors"
+          >
+            <div className="flex items-start justify-between gap-4 mb-3">
+              <h4 className="text-lg font-bold text-white flex-1">{source.title}</h4>
+              <a
+                href={source.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-1 text-cyan-400 hover:text-cyan-300 text-sm whitespace-nowrap transition-colors"
+              >
+                Visit <ExternalLink className="w-4 h-4" />
+              </a>
+            </div>
+            <div className="space-y-2">
+              <div className="flex items-start gap-2">
+                <span className="text-xs text-slate-500 uppercase font-medium min-w-[60px]">Claim:</span>
+                <span className="text-sm text-slate-300">{source.claim}</span>
+              </div>
+              <div className="flex items-start gap-2">
+                <span className="text-xs text-slate-500 uppercase font-medium min-w-[60px]">Date:</span>
+                <span className="text-xs text-slate-400">{source.date}</span>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }

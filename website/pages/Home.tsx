@@ -289,6 +289,13 @@ function TraditionalVsAICosts() {
           <p className="text-sm text-green-400 mt-6 font-medium">
             90% cost reduction = 10x more experiments with the same capital. Risk is minimized. Upside is unlimited.
           </p>
+          <Link
+            to="/resources/methodology"
+            className="inline-flex items-center gap-1 text-xs text-cyan-400 hover:text-cyan-300 transition-colors mt-3"
+          >
+            <FileText className="w-3 h-3" />
+            View Complete Methodology & Sources
+          </Link>
         </div>
       </div>
 
@@ -300,9 +307,18 @@ function TraditionalVsAICosts() {
           With AI, a failed business costs $20K-$65K, not $500K-$900K. But when a business succeeds,
           it scales with near-zero marginal costs—just like traditional AI businesses except we own the entire stack.
         </p>
-        <div className="inline-flex items-center gap-3 px-6 py-3 bg-cyan-500/20 border border-cyan-500/30 rounded-lg">
-          <Target className="w-6 h-6 text-cyan-400" />
-          <span className="text-white font-semibold">This asymmetry is the entire economic model</span>
+        <div className="inline-flex flex-col items-center gap-3">
+          <div className="inline-flex items-center gap-3 px-6 py-3 bg-cyan-500/20 border border-cyan-500/30 rounded-lg">
+            <Target className="w-6 h-6 text-cyan-400" />
+            <span className="text-white font-semibold">This asymmetry is the entire economic model</span>
+          </div>
+          <Link
+            to="/resources/methodology"
+            className="inline-flex items-center gap-1 text-sm text-cyan-400 hover:text-cyan-300 transition-colors"
+          >
+            <FileText className="w-4 h-4" />
+            See Complete Data & Calculations
+          </Link>
         </div>
       </div>
 

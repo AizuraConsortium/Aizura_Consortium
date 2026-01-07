@@ -161,6 +161,16 @@ export default function FoundationBusinesses() {
             />
           </div>
 
+          <div className="text-center mb-6">
+            <Link
+              to="/resources/methodology"
+              className="inline-flex items-center gap-2 text-sm text-cyan-400 hover:text-cyan-300 transition-colors"
+            >
+              <FileText className="w-4 h-4" />
+              View Complete Revenue & Valuation Methodology
+            </Link>
+          </div>
+
           <div className="mt-6 bg-cyan-500/10 border border-cyan-500/30 rounded-xl p-6">
             <div className="flex items-start gap-3">
               <Info className="w-5 h-5 text-cyan-400 flex-shrink-0 mt-0.5" />
