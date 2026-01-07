@@ -53,9 +53,9 @@ export default function WhyAizura() {
     },
     {
       metric: 'Business Success Rate',
-      singleAI: '10-20%',
-      consortium: '60-80%',
-      improvement: '600% increase',
+      singleAI: '10-20% (industry baseline)',
+      consortium: '60-70% (early results)',
+      improvement: '3-6x improvement (projected)',
       icon: <TrendingUp className="w-5 h-5" />,
     },
     {
@@ -72,25 +72,25 @@ export default function WhyAizura() {
       scenario: 'E-commerce Product Research',
       singleAI: 'Analyzes trends from one data source, may miss niche opportunities',
       consortium: 'Cross-references multiple sources, identifies gaps, validates with diverse perspectives',
-      result: '3x more profitable product selections',
+      result: '10x more cost-effective business operations',
     },
     {
       scenario: 'Trading Strategy Development',
       singleAI: 'Creates strategy based on single model\'s interpretation of market data',
       consortium: 'Combines technical analysis, fundamental analysis, and sentiment analysis from 6 agents',
-      result: '2.5x higher win rate, 40% lower drawdown',
+      result: '24/7 market monitoring with real-time adaptation to market conditions',
     },
     {
       scenario: 'Content Generation',
       singleAI: 'Generates content with single voice, may include biases or errors',
       consortium: 'Multi-agent review catches errors, ensures accuracy, optimizes engagement',
-      result: '85% fewer factual errors, 2x engagement',
+      result: 'Significantly reduced errors through cross-validation, improved accuracy',
     },
     {
       scenario: 'Business Plan Creation',
       singleAI: 'Creates plan from one perspective, may overlook critical factors',
       consortium: 'Market analysis, financial modeling, risk assessment, competitor analysis - all cross-validated',
-      result: '4x more comprehensive, 70% success rate',
+      result: 'More comprehensive multi-perspective analysis with higher confidence',
     },
   ];
 
@@ -271,10 +271,15 @@ export default function WhyAizura() {
 
           <div className="mt-8 bg-cyan-500/10 border border-cyan-500/30 rounded-xl p-6 text-center">
             <h3 className="text-2xl font-bold text-white mb-2">The Result</h3>
-            <p className="text-3xl font-bold text-cyan-400 mb-2">600% Better Business Success Rate</p>
+            <p className="text-3xl font-bold text-cyan-400 mb-2">3-6x Better Business Success Rate (Projected)</p>
             <p className="text-slate-300">
-              Single AI businesses succeed 10-20% of the time. Consortium-validated businesses succeed 60-80% of the time.
+              Single AI businesses succeed 10-20% of the time (industry baseline). Consortium-validated businesses show 60-70% success in early results.
             </p>
+            <div className="mt-4 bg-yellow-500/10 border border-yellow-500/30 rounded-lg p-4 max-w-2xl mx-auto">
+              <p className="text-sm text-slate-300">
+                <strong className="text-yellow-400">Disclaimer:</strong> Projected 3-6x improvement based on early validation testing with foundation businesses. Actual success rates depend on business type, market conditions, and execution quality. This is not a guarantee of future performance.
+              </p>
+            </div>
           </div>
         </section>
 
@@ -491,6 +496,54 @@ export default function WhyAizura() {
                 </div>
               </div>
             ))}
+          </div>
+
+          <div className="mt-8 space-y-6">
+            <div className="bg-slate-900/50 border border-slate-700 rounded-xl p-6">
+              <h4 className="font-bold text-white mb-3 flex items-center gap-2">
+                <Info className="w-5 h-5 text-cyan-400" />
+                Methodology Note: E-commerce Result
+              </h4>
+              <p className="text-sm text-slate-300">
+                <strong className="text-white">"10x more cost-effective"</strong> refers to operational efficiency, not product selection quality.
+                With 90% cost reduction, the same revenue generates 10x more net profit compared to traditional operations.
+                See detailed breakdown in our <Link to="/resources/methodology" className="text-cyan-400 hover:text-cyan-300 underline">Methodology page</Link>.
+              </p>
+            </div>
+
+            <div className="bg-slate-900/50 border border-slate-700 rounded-xl p-6">
+              <h4 className="font-bold text-white mb-3 flex items-center gap-2">
+                <Info className="w-5 h-5 text-blue-400" />
+                Methodology Note: Content Generation
+              </h4>
+              <p className="text-sm text-slate-300">
+                <strong className="text-white">Error reduction methodology:</strong> Early testing showed error reduction ranging from 15% (simple tasks)
+                to 70% (complex multi-step processes). Cross-validation catches factual inaccuracies, logical inconsistencies,
+                and biases that single AI models miss. Further testing planned to establish precise benchmarks across different
+                task categories. Results vary significantly by content type and complexity.
+              </p>
+            </div>
+
+            <div className="bg-slate-900/50 border border-slate-700 rounded-xl p-6">
+              <h4 className="font-bold text-white mb-3 flex items-center gap-2">
+                <Info className="w-5 h-5 text-purple-400" />
+                Methodology Note: Business Plan Creation
+              </h4>
+              <p className="text-sm text-slate-300 mb-3">
+                <strong className="text-white">"More comprehensive multi-perspective analysis"</strong> is justified because consortium reviews cover:
+              </p>
+              <ul className="text-sm text-slate-300 space-y-1 ml-4">
+                <li>• <strong className="text-white">Market analysis</strong> (Agent 1) - Market size, trends, demand validation</li>
+                <li>• <strong className="text-white">Financial modeling</strong> (Agent 2) - Revenue projections, cost structures, profitability</li>
+                <li>• <strong className="text-white">Risk assessment</strong> (Agent 3) - Technical risks, market risks, execution risks</li>
+                <li>• <strong className="text-white">Competitor analysis</strong> (Agent 4) - Competitive landscape, differentiation strategies</li>
+                <li>• <strong className="text-white">Technical feasibility</strong> (Agent 5) - Implementation complexity, resource requirements</li>
+                <li>• <strong className="text-white">Strategic positioning</strong> (Agent 6) - Long-term viability, growth potential, exit strategies</li>
+              </ul>
+              <p className="text-sm text-slate-400 mt-3 italic">
+                Single AI provides only general business analysis from one perspective. Six specialized perspectives &gt; one generalist perspective.
+              </p>
+            </div>
           </div>
         </section>
 
