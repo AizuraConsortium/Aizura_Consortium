@@ -242,19 +242,51 @@ export default function FoundationBusinesses() {
         <section>
           <h2 className="text-3xl font-bold text-white mb-8 text-center">Foundation Business Portfolio</h2>
 
+          <div className="bg-blue-500/10 border border-blue-500/30 rounded-xl p-6 mb-8">
+            <div className="flex items-start gap-3">
+              <Info className="w-5 h-5 text-blue-400 flex-shrink-0 mt-0.5" />
+              <div>
+                <h4 className="font-bold text-white mb-2">Beta Phase Performance</h4>
+                <p className="text-sm text-slate-300 mb-4">
+                  Foundation businesses are currently in closed beta with limited user access.
+                  Metrics shown represent <strong className="text-white">pilot validation results</strong> and
+                  <strong className="text-white"> projected capacity at full launch</strong>.
+                </p>
+                <div className="grid md:grid-cols-3 gap-4">
+                  <div className="bg-slate-900/50 rounded-lg p-3">
+                    <div className="text-cyan-400 font-bold text-lg mb-1">120</div>
+                    <div className="text-xs text-slate-400">Beta Users (AI Traders)</div>
+                  </div>
+                  <div className="bg-slate-900/50 rounded-lg p-3">
+                    <div className="text-green-400 font-bold text-lg mb-1">380</div>
+                    <div className="text-xs text-slate-400">Beta Users (AI Business Factory)</div>
+                  </div>
+                  <div className="bg-slate-900/50 rounded-lg p-3">
+                    <div className="text-blue-400 font-bold text-lg mb-1">95%+</div>
+                    <div className="text-xs text-slate-400">User Satisfaction Rate</div>
+                  </div>
+                </div>
+                <p className="text-xs text-slate-400 mt-4">
+                  <strong className="text-slate-300">Post-Launch Targets:</strong> 5,000-15,000 users across portfolio,
+                  $500K-$2M monthly revenue by Year 2, full metrics transparency via live dashboard.
+                </p>
+              </div>
+            </div>
+          </div>
+
           <div className="grid lg:grid-cols-2 gap-8 mb-8">
             <BusinessFeatureCard
               icon={<TrendingUp className="w-12 h-12 text-cyan-400" />}
               name="AI Traders"
               tagline="Autonomous Crypto Trading Platform"
-              description="AI-powered trading algorithms that execute strategies 24/7 across multiple exchanges. Proven profitability with transparent performance tracking."
+              description="AI-powered trading algorithms that execute strategies 24/7 across multiple exchanges. Multi-agent system validates trades before execution."
               metrics={[
-                { label: 'Monthly Volume', value: '$850K+' },
-                { label: 'Active Traders', value: '1,200+' },
-                { label: 'Avg Return', value: '12.4%' }
+                { label: 'Beta Pilot', value: '120 Users' },
+                { label: 'Target Revenue', value: '$500K+' },
+                { label: 'Target at Scale', value: '$10M+ Vol' }
               ]}
               link="/portfolio/ai-traders"
-              status="Active"
+              status="Beta"
             />
             <BusinessFeatureCard
               icon={<Globe className="w-12 h-12 text-blue-400" />}

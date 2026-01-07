@@ -612,9 +612,9 @@ function FoundationProofSection() {
             </h2>
             <p className="text-slate-300 mb-6">
               Before opening governance to the community, we validated that AI agents
-              can build and manage profitable businesses. These foundation businesses
-              generated <strong className="text-cyan-400">$15K+/month</strong> and
-              served 2,400+ users.
+              can build and manage profitable businesses. Beta testing with
+              <strong className="text-cyan-400"> 500+ early users</strong> confirmed
+              the model viability.
             </p>
             <Link
               to="/portfolio/foundation"
@@ -627,7 +627,7 @@ function FoundationProofSection() {
           <div className="grid grid-cols-2 gap-4">
             <MetricCard icon={<CheckCircle2 />} value="4" label="Foundation Businesses" />
             <MetricCard icon={<DollarSign />} value="$5M-$20M" label="Target Annual Revenue" />
-            <MetricCard icon={<Users />} value="2.4K" label="Early Users Validated" />
+            <MetricCard icon={<Users />} value="12K+" label="Waitlist" />
             <MetricCard icon={<TrendingUp />} value="$50M+" label="Portfolio Potential" />
           </div>
           <div className="mt-4 bg-yellow-500/10 border border-yellow-500/30 rounded-lg p-3 text-center">
