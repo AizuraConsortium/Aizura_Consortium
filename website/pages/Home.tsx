@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Navigation } from '../components/layout/Navigation';
 import { Footer } from '../components/layout/Footer';
+import { MethodologyLink } from '../components/shared/MethodologyLink';
 import {
   Sparkles, TrendingUp, Zap, Users, Clock, Rocket, FileText, Vote, Cpu, DollarSign,
   MessageSquare, BarChart3, Shield, ArrowRight, CheckCircle2, TrendingDown, Target, AlertTriangle, Gift
@@ -118,6 +119,15 @@ function HeroSection() {
                 <strong className="text-yellow-400">Forward-Looking Statements:</strong> Revenue targets and market valuations are projections based on market research and foundation business performance. Actual results will vary significantly based on execution, market conditions, and adoption rates. This is not financial advice.
               </p>
             </div>
+          </div>
+          <div className="text-center mt-4 flex flex-wrap justify-center items-center gap-2">
+            <MethodologyLink claim="Target Metrics" section="revenue" />
+            <span className="text-slate-600">•</span>
+            <MethodologyLink claim="Cost Reduction" section="costs" />
+            <span className="text-slate-600">•</span>
+            <Link to="/token/transparency" className="text-xs text-cyan-400 hover:text-cyan-300 transition-colors">
+              View Live Metrics Dashboard
+            </Link>
           </div>
         </div>
       </div>

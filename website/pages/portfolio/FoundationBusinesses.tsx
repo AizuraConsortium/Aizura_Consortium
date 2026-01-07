@@ -1,9 +1,10 @@
 import { PageLayout } from '../../components/layout/PageLayout';
 import { Link } from 'react-router-dom';
+import { MethodologyLink } from '../../components/shared/MethodologyLink';
 import {
   Shield, CheckCircle2, TrendingUp, Users, DollarSign, Activity,
   ArrowRight, Clock, Target, Zap, BarChart3, AlertCircle, Brain,
-  Code, Briefcase, Globe, Info, X
+  Code, Briefcase, Globe, Info, X, FileText
 } from 'lucide-react';
 
 export default function FoundationBusinesses() {
@@ -162,13 +163,7 @@ export default function FoundationBusinesses() {
           </div>
 
           <div className="text-center mb-6">
-            <Link
-              to="/resources/methodology"
-              className="inline-flex items-center gap-2 text-sm text-cyan-400 hover:text-cyan-300 transition-colors"
-            >
-              <FileText className="w-4 h-4" />
-              View Complete Revenue & Valuation Methodology
-            </Link>
+            <MethodologyLink claim="Revenue & Valuation" section="revenue" />
           </div>
 
           <div className="mt-6 bg-cyan-500/10 border border-cyan-500/30 rounded-xl p-6">

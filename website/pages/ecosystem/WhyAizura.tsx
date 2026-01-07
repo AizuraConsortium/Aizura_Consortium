@@ -1,5 +1,6 @@
 import { PageLayout } from '../../components/layout/PageLayout';
 import { Link } from 'react-router-dom';
+import { MethodologyLink } from '../../components/shared/MethodologyLink';
 import { useState, useEffect } from 'react';
 import {
   Brain, TrendingUp, TrendingDown, DollarSign, Clock, Shield, Zap,
@@ -644,6 +645,9 @@ export default function WhyAizura() {
                 <strong className="text-slate-300">Infrastructure:</strong>{' '}
                 <a href="https://calculator.aws" target="_blank" rel="noopener noreferrer" className="text-cyan-400 hover:text-cyan-300 underline">AWS Pricing Calculator</a>
               </div>
+              <div className="mt-4 text-center">
+                <MethodologyLink claim="Cost Analysis" section="costs" />
+              </div>
             </div>
           </div>
 
@@ -912,6 +916,10 @@ export default function WhyAizura() {
                 open-source research paper after mainnet launch. Community members will be able to verify
                 results independently.
               </p>
+            </div>
+
+            <div className="text-center mt-6">
+              <MethodologyLink claim="Testing Methodology" section="performance" />
             </div>
           </div>
         </section>

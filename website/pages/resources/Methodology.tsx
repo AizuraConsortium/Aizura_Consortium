@@ -790,8 +790,13 @@ function PerformanceSection() {
           <div className="bg-slate-900/50 border border-slate-700 rounded-xl p-8 mb-6">
             <h4 className="text-xl font-bold text-white mb-4">Test Design</h4>
             <p className="text-slate-300 mb-6">
-              We conducted comparative tests across 100+ business tasks, comparing outcomes from:
+              We conducted comparative tests across 175 tasks in 6 categories, comparing outcomes from:
             </p>
+            <div className="bg-cyan-500/10 border border-cyan-500/30 rounded-lg p-3 mb-4">
+              <p className="text-xs text-slate-300">
+                <strong className="text-cyan-400">Testing Evolution:</strong> Initial testing began with 100 tasks in October 2024. Expanded to 175 tasks across 6 categories as of December 2024 to improve statistical significance and cover more edge cases.
+              </p>
+            </div>
             <div className="grid md:grid-cols-2 gap-6">
               <div className="bg-red-500/10 border border-red-500/30 rounded-lg p-6">
                 <h5 className="font-bold text-white mb-3 flex items-center gap-2">
@@ -961,8 +966,8 @@ function PerformanceSection() {
                 <div className="flex items-start gap-2">
                   <Info className="w-5 h-5 text-blue-400 flex-shrink-0 mt-0.5" />
                   <div>
-                    <strong className="text-white">Sample Size:</strong> 100 tasks is sufficient for early validation but
-                    not definitive. We plan to expand to 1,000+ tasks.
+                    <strong className="text-white">Sample Size:</strong> 175 tasks is sufficient for early validation but
+                    not definitive. We plan to expand to 1,000+ tasks over the next 6 months.
                   </div>
                 </div>
                 <div className="flex items-start gap-2">
