@@ -164,7 +164,7 @@ export default function UseCases() {
       ],
       metrics: {
         accuracy: '92%',
-        uptime: '99.8%',
+        uptime: '98%+',
         users: '156',
       },
       link: '/portfolio/ai-web-dev',
@@ -470,8 +470,8 @@ export default function UseCases() {
 
             <div className="bg-slate-900/50 rounded-xl p-6 text-center">
               <Shield className="w-12 h-12 text-purple-400 mx-auto mb-4" />
-              <div className="text-4xl font-bold text-white mb-2">99.8%</div>
-              <div className="text-sm text-slate-400">Average Uptime</div>
+              <div className="text-4xl font-bold text-white mb-2">98%+</div>
+              <div className="text-sm text-slate-400">Target Uptime</div>
             </div>
           </div>
 
