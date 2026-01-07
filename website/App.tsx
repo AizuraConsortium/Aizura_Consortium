@@ -70,6 +70,7 @@ import BugBounty from './pages/security/BugBounty';
 import Documentation from './pages/developers/Documentation';
 
 import Litepaper from './pages/resources/Litepaper';
+import Methodology from './pages/resources/Methodology';
 
 import SignIn from './pages/auth/SignIn';
 
@@ -152,6 +153,7 @@ export default function App() {
             <Route path="/developers/documentation" element={<Documentation />} />
 
             <Route path="/resources/litepaper" element={<Litepaper />} />
+            <Route path="/resources/methodology" element={<Methodology />} />
 
             <Route path="/auth/sign-in" element={<SignIn />} />
             <Route path="/app" element={<div className="min-h-screen bg-slate-900 text-white flex items-center justify-center"><p>Dashboard coming soon</p></div>} />
