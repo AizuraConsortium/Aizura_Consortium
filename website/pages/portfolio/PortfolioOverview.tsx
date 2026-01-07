@@ -43,7 +43,7 @@ export default function PortfolioOverview() {
       category: 'trading',
       path: '/portfolio/ai-traders',
       version: 'V1 Live',
-      revenue: '$45k/mo',
+      revenue: '$100K-$500K target',
       timeline: 'live',
       icon: <TrendingUp className="w-6 h-6" />,
       revenueContributing: true,
@@ -57,7 +57,7 @@ export default function PortfolioOverview() {
       category: 'saas',
       path: '/portfolio/ai-web-dev',
       version: 'V1 Live',
-      revenue: '$32k/mo',
+      revenue: '$50K-$300K target',
       timeline: 'live',
       icon: <Code className="w-6 h-6" />,
       revenueContributing: true,
@@ -172,29 +172,37 @@ export default function PortfolioOverview() {
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-6">
             <StatCard
               icon={<DollarSign className="w-10 h-10 text-green-400" />}
-              value="$77k"
-              label="Monthly Revenue"
-              sublabel="Live (Estimated)"
-              badge="Live"
+              value="$5M-$20M"
+              label="Target Annual Revenue"
+              sublabel="Year 2-3 Projection"
+              badge="Projected"
             />
             <StatCard
               icon={<TrendingUp className="w-10 h-10 text-cyan-400" />}
-              value="12"
-              label="Proposals Approved"
-              sublabel="By Governance"
+              value="$50M+"
+              label="Portfolio Value Potential"
+              sublabel="Long-term Target"
             />
             <StatCard
               icon={<Users className="w-10 h-10 text-purple-400" />}
-              value="6"
-              label="AI Agents Deployed"
-              sublabel="Autonomous Systems"
+              value="$2.3B"
+              label="Market Opportunity"
+              sublabel="AI Services TAM"
             />
             <StatCard
               icon={<Zap className="w-10 h-10 text-yellow-400" />}
-              value="+21%"
-              label="Avg Growth Rate"
-              sublabel="Month over Month"
+              value="50-500"
+              label="Agent Scale Target"
+              sublabel="Year 4+ Vision"
             />
+          </div>
+          <div className="mt-6 bg-yellow-500/10 border border-yellow-500/30 rounded-xl p-4">
+            <div className="flex items-start gap-2">
+              <Info className="w-5 h-5 text-yellow-400 flex-shrink-0 mt-0.5" />
+              <p className="text-sm text-slate-300">
+                <strong className="text-yellow-400">Forward-Looking Statements:</strong> All revenue targets, valuations, and growth projections are estimates based on market research, competitive analysis, and foundation business performance. Actual results may vary significantly based on execution quality, market conditions, technological developments, regulatory changes, and adoption rates. These projections do not constitute financial advice or guarantees of future performance.
+              </p>
+            </div>
           </div>
         </section>
 

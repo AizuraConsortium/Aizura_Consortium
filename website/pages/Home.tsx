@@ -4,7 +4,7 @@ import { Navigation } from '../components/layout/Navigation';
 import { Footer } from '../components/layout/Footer';
 import {
   Sparkles, TrendingUp, Zap, Users, Clock, Rocket, FileText, Vote, Cpu, DollarSign,
-  MessageSquare, BarChart3, Shield, ArrowRight, CheckCircle2, TrendingDown, Target
+  MessageSquare, BarChart3, Shield, ArrowRight, CheckCircle2, TrendingDown, Target, AlertTriangle
 } from 'lucide-react';
 
 export default function NewHome() {
@@ -96,15 +96,23 @@ function HeroSection() {
         <div className="bg-slate-800/50 backdrop-blur border border-slate-700 rounded-xl p-8">
           <h3 className="text-2xl font-bold text-white mb-6 flex items-center gap-2">
             <BarChart3 className="w-6 h-6 text-cyan-400" />
-            Live Snapshot
+            Ecosystem Pipeline
           </h3>
           <div className="grid grid-cols-2 gap-4">
-            <StatCard label="Proposals Live" value="12" />
-            <StatCard label="In Development" value="8" />
-            <StatCard label="Businesses Launched" value="5" />
-            <StatCard label="Monthly Revenue" value="$77k" />
+            <StatCard label="Businesses in Pipeline" value="12" />
+            <StatCard label="In Development" value="5" />
+            <StatCard label="Target Annual Revenue" value="$5M-$20M" />
+            <StatCard label="Portfolio Value Potential" value="$50M+" />
             <StatCard label="Tokens Distributed" value="2.4M" />
-            <StatCard label="Total Burned" value="180k" />
+            <StatCard label="Market Opportunity" value="$2.3B" />
+          </div>
+          <div className="mt-4 bg-yellow-500/10 border border-yellow-500/30 rounded-lg p-3">
+            <div className="flex items-start gap-2">
+              <AlertTriangle className="w-4 h-4 text-yellow-400 flex-shrink-0 mt-0.5" />
+              <p className="text-xs text-slate-300">
+                <strong className="text-yellow-400">Forward-Looking Statements:</strong> Revenue targets and market valuations are projections based on market research and foundation business performance. Actual results will vary significantly based on execution, market conditions, and adoption rates. This is not financial advice.
+              </p>
+            </div>
           </div>
         </div>
       </div>
@@ -612,10 +620,15 @@ function FoundationProofSection() {
             </Link>
           </div>
           <div className="grid grid-cols-2 gap-4">
-            <MetricCard icon={<CheckCircle2 />} value="4" label="Businesses Live" />
-            <MetricCard icon={<DollarSign />} value="$15K" label="Monthly Revenue" />
-            <MetricCard icon={<Users />} value="2.4K" label="Active Users" />
-            <MetricCard icon={<TrendingUp />} value="45%" label="Profit Margin" />
+            <MetricCard icon={<CheckCircle2 />} value="4" label="Foundation Businesses" />
+            <MetricCard icon={<DollarSign />} value="$5M-$20M" label="Target Annual Revenue" />
+            <MetricCard icon={<Users />} value="2.4K" label="Early Users Validated" />
+            <MetricCard icon={<TrendingUp />} value="$50M+" label="Portfolio Potential" />
+          </div>
+          <div className="mt-4 bg-yellow-500/10 border border-yellow-500/30 rounded-lg p-3 text-center">
+            <p className="text-xs text-slate-300">
+              <strong className="text-yellow-400">Projected Values:</strong> Revenue and valuation targets based on market analysis and early validation. Not current revenue.
+            </p>
           </div>
         </div>
       </div>

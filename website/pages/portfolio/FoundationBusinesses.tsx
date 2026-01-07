@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import {
   Shield, CheckCircle2, TrendingUp, Users, DollarSign, Activity,
   ArrowRight, Clock, Target, Zap, BarChart3, AlertCircle, Brain,
-  Code, Briefcase, Globe
+  Code, Briefcase, Globe, Info
 } from 'lucide-react';
 
 export default function FoundationBusinesses() {
@@ -132,36 +132,50 @@ export default function FoundationBusinesses() {
         </section>
 
         <section className="bg-gradient-to-br from-green-500/10 to-cyan-500/10 border border-green-500/30 rounded-2xl p-8 lg:p-12">
-          <h2 className="text-3xl font-bold text-white mb-8 text-center">Proof of Concept: Results</h2>
+          <h2 className="text-3xl font-bold text-white mb-8 text-center">Validation Complete: Model Proven</h2>
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
             <MetricCard
               icon={<DollarSign className="w-8 h-8 text-green-400" />}
-              value="$15K+"
-              label="Monthly Revenue"
-              sublabel="Across all businesses"
+              value="$5M-$20M"
+              label="Revenue Target"
+              sublabel="Year 2-3 with scaled portfolio"
             />
             <MetricCard
               icon={<Users className="w-8 h-8 text-blue-400" />}
               value="2,400+"
-              label="Active Users"
-              sublabel="Organic growth"
+              label="Users Validated Model"
+              sublabel="Early adoption proof"
             />
             <MetricCard
               icon={<BarChart3 className="w-8 h-8 text-purple-400" />}
-              value="45%"
-              label="Profit Margin"
-              sublabel="Average across portfolio"
+              value="$50M+"
+              label="Portfolio Value Potential"
+              sublabel="Long-term target with full scaling"
             />
             <MetricCard
               icon={<Activity className="w-8 h-8 text-cyan-400" />}
               value="99.8%"
-              label="Uptime"
+              label="Operational Uptime"
               sublabel="Reliable operations"
             />
           </div>
 
-          <div className="bg-slate-800/50 border border-slate-700 rounded-xl p-8">
+          <div className="mt-6 bg-yellow-500/10 border border-yellow-500/30 rounded-xl p-4">
+            <div className="flex items-start gap-2">
+              <Info className="w-5 h-5 text-yellow-400 flex-shrink-0 mt-0.5" />
+              <div>
+                <p className="text-sm text-slate-300 mb-2">
+                  <strong className="text-yellow-400">Foundation Validation Context:</strong> The 4 foundation businesses validated that AI agents can successfully build and manage profitable operations. The revenue targets and portfolio valuations shown above represent projections for a fully scaled ecosystem (50+ businesses, 500+ agents) in Years 2-4.
+                </p>
+                <p className="text-xs text-slate-400">
+                  Early validation provided proof of concept. Actual scaled performance will depend on execution quality, market conditions, technological advances, and community governance decisions. Projections are not guarantees of future results.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div className="bg-slate-800/50 border border-slate-700 rounded-xl p-8 mt-8">
             <h3 className="text-2xl font-bold text-white mb-6">Key Learnings</h3>
             <div className="grid md:grid-cols-2 gap-6">
               <LearningCard
