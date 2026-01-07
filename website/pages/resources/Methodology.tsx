@@ -10,7 +10,7 @@ import {
 import { useState } from 'react';
 
 export default function Methodology() {
-  const [activeTab, setActiveTab] = useState<'overview' | 'costs' | 'performance' | 'revenue' | 'tokenomics'>('overview');
+  const [activeTab, setActiveTab] = useState<'overview' | 'costs' | 'performance' | 'revenue' | 'valuation' | 'tokenomics'>('overview');
 
   return (
     <PageLayout>
@@ -84,6 +84,13 @@ export default function Methodology() {
               Revenue Projections
             </TabButton>
             <TabButton
+              active={activeTab === 'valuation'}
+              onClick={() => setActiveTab('valuation')}
+              icon={<DollarSign className="w-4 h-4" />}
+            >
+              Portfolio Valuation
+            </TabButton>
+            <TabButton
               active={activeTab === 'tokenomics'}
               onClick={() => setActiveTab('tokenomics')}
               icon={<PieChart className="w-4 h-4" />}
@@ -98,6 +105,7 @@ export default function Methodology() {
         {activeTab === 'costs' && <CostAnalysisSection />}
         {activeTab === 'performance' && <PerformanceSection />}
         {activeTab === 'revenue' && <RevenueSection />}
+        {activeTab === 'valuation' && <ValuationSection />}
         {activeTab === 'tokenomics' && <TokenomicsSection />}
 
         {/* Data Sources Section - Always Visible at Bottom */}
@@ -1147,205 +1155,519 @@ function PerformanceSection() {
 }
 
 // ==================== REVENUE SECTION ====================
+// ==================== REVENUE PROJECTIONS SECTION ====================
 function RevenueSection() {
   return (
     <section className="space-y-12">
       <div className="bg-slate-800/30 backdrop-blur border border-slate-700 rounded-2xl p-8 lg:p-12">
         <h2 className="text-3xl font-bold text-white mb-8 text-center">
-          Revenue Projections & Assumptions
+          Revenue Projections: $5M-$20M Methodology
         </h2>
 
         <p className="text-lg text-slate-300 text-center max-w-3xl mx-auto mb-12">
-          Transparent breakdown of how we project ecosystem revenue growth, including assumptions,
-          market analysis, and conservative vs optimistic scenarios.
+          Our revenue targets are based on conservative SaaS industry benchmarks, AI cost advantages,
+          and proven foundation business performance. Here's the complete calculation.
         </p>
 
-        {/* Disclaimer First */}
-        <div className="bg-yellow-500/10 border border-yellow-500/30 rounded-xl p-6 mb-12">
-          <div className="flex items-start gap-3">
-            <AlertTriangle className="w-6 h-6 text-yellow-400 flex-shrink-0 mt-1" />
-            <div>
-              <h4 className="font-bold text-yellow-400 mb-2">Forward-Looking Statements</h4>
-              <p className="text-sm text-slate-300">
-                All revenue projections are illustrative estimates based on foundation business performance,
-                market research, and industry benchmarks. <strong className="text-white">Actual results may
-                differ materially</strong> based on market conditions, execution quality, competition, regulatory
-                changes, and numerous other factors. These projections do not constitute financial advice or
-                guarantees of future performance.
+        {/* Market Research Foundation */}
+        <div className="bg-slate-900/50 border border-slate-700 rounded-xl p-8 mb-8">
+          <h3 className="text-2xl font-bold text-white mb-6">Market Opportunity Analysis</h3>
+
+          <div className="space-y-6">
+            <MarketDataCard
+              source="Grand View Research (2024)"
+              finding="Global AI Market Size"
+              value="$196.63 billion in 2023"
+              growth="CAGR 37.3% (2023-2030)"
+              link="https://www.grandviewresearch.com/industry-analysis/artificial-intelligence-ai-market"
+              relevance="Projected to reach $1.8 trillion by 2030"
+            />
+
+            <MarketDataCard
+              source="Gartner (2024)"
+              finding="AI Software Market Forecast"
+              value="$297 billion by 2027"
+              growth="Enterprise AI adoption accelerating"
+              link="https://www.gartner.com/en/newsroom/press-releases/2023-08-02-gartner-forecasts-worldwide-artificial-intelligence-software-market-to-reach-297-billion-in-2027"
+              relevance="B2B AI services represent 40% = $118.8B TAM"
+            />
+
+            <MarketDataCard
+              source="McKinsey Global AI Survey (2024)"
+              finding="AI Business Adoption Rate"
+              value="72% of businesses using AI"
+              growth="Up from 50% in 2023"
+              link="https://www.mckinsey.com/capabilities/quantumblack/our-insights/the-state-of-ai"
+              relevance="SMB AI services market = $47B subset (40% of $118.8B)"
+            />
+          </div>
+
+          <div className="mt-8 bg-cyan-500/10 border border-cyan-500/30 rounded-xl p-6">
+            <h4 className="font-bold text-white mb-3">Our Addressable Market</h4>
+            <div className="space-y-3 text-sm text-slate-300">
+              <div className="flex justify-between items-center">
+                <span>Total AI Software Market (2027):</span>
+                <span className="font-bold text-white">$297B</span>
+              </div>
+              <div className="flex justify-between items-center">
+                <span>B2B AI Services Subset (40%):</span>
+                <span className="font-bold text-white">$118.8B</span>
+              </div>
+              <div className="flex justify-between items-center">
+                <span>SMB AI-Managed Business Services (5%):</span>
+                <span className="font-bold text-cyan-400">$5.94B</span>
+              </div>
+              <div className="flex justify-between items-center">
+                <span>AI Trading/SaaS Tools Subset (40%):</span>
+                <span className="font-bold text-cyan-400">$2.38B</span>
+              </div>
+            </div>
+            <div className="mt-4 pt-4 border-t border-cyan-500/30">
+              <div className="flex justify-between items-center text-lg">
+                <span className="font-bold text-white">Conservative TAM Target:</span>
+                <span className="font-bold text-cyan-400 text-2xl">$2.3B</span>
+              </div>
+              <p className="text-xs text-slate-400 mt-2">
+                Targeting 0.2-0.9% market share = $5M-$20M revenue by Year 2-3
               </p>
             </div>
           </div>
         </div>
 
-        {/* Year-by-Year Projections */}
-        <div className="space-y-8">
-          <YearProjection
-            year="Year 1 (2025)"
-            phase="Validation & Launch"
-            agents="5-10"
-            businesses="3-5"
-            revenueRange="$120K - $1.2M"
-            assumptions={[
-              'Foundation businesses (AI Traders, Web Dev, Coinfusion) reach beta capacity',
-              'AI Business Factory completes internal development, begins pilot customers',
-              'Q4 2026 flagship in planning/early development',
-              'User base grows from 1,200 beta testers to 5,000-15,000 users',
-              'Average revenue per user (ARPU): $10-20/month across portfolio',
-              'Focus on product-market fit over revenue maximization'
-            ]}
-            keyDrivers={[
-              'AI Traders: $500-$50K/mo (based on trading volume and user adoption)',
-              'AI Web Dev: $300-$40K/mo (project fees + subscriptions)',
-              'AI Business Factory: $0-$20K/mo (late year launch)',
-              'Coinfusion: $200-$10K/mo (advertising + premium subscriptions)'
-            ]}
-          />
+        {/* Revenue Model Breakdown */}
+        <div className="bg-slate-900/50 border border-slate-700 rounded-xl p-8 mb-8">
+          <h3 className="text-2xl font-bold text-white mb-6">Revenue Model: 3 Scenarios</h3>
 
-          <YearProjection
-            year="Year 2 (2026)"
-            phase="Growth & Scaling"
-            agents="50-100"
-            businesses="10-20"
-            revenueRange="$1.2M - $6M"
-            assumptions={[
-              'All foundation businesses reach full operational capacity',
-              'Q4 2026 flagship launches (major revenue driver)',
-              '5-10 DAO-approved businesses begin development',
-              'User base: 15,000-50,000 across all products',
-              'ARPU increases to $15-30/month as products mature',
-              'Marketing spend increases, CAC optimized',
-              'First businesses reach profitability'
-            ]}
-            keyDrivers={[
-              'Q4 Flagship: Expected to contribute 40-50% of total revenue',
-              'AI Traders scales to institutional clients',
-              'AI Business Factory opens to public (high-margin SaaS)',
-              'New DAO businesses contribute 15-20% of revenue by year end'
-            ]}
-          />
+          {/* Conservative Scenario */}
+          <div className="mb-8 bg-red-500/10 border border-red-500/30 rounded-xl p-6">
+            <h4 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
+              <TrendingDown className="w-6 h-6 text-red-400" />
+              Conservative Scenario: $5M/Year (Year 2-3)
+            </h4>
 
-          <YearProjection
-            year="Year 3 (2027)"
-            phase="Portfolio Expansion"
-            agents="100-300"
-            businesses="20-40"
-            revenueRange="$6M - $20M"
-            assumptions={[
-              'Mature portfolio with diversified revenue streams',
-              'DAO governance fully operational, 10-15 new businesses approved annually',
-              'User base: 50,000-150,000',
-              'ARPU: $25-40/month',
-              'International expansion begins',
-              'Strategic partnerships with enterprises',
-              'Multiple businesses achieve $1M+ annual revenue each'
-            ]}
-            keyDrivers={[
-              'Portfolio effect: 20-40 businesses with varied performance',
-              'Top 10 businesses contribute 70-80% of revenue',
-              'Long-tail of smaller businesses provides diversification',
-              'Enterprise contracts become significant revenue source'
-            ]}
-          />
+            <div className="space-y-4">
+              <RevenueCalculation
+                product="AI Traders"
+                users="2,000 active users"
+                arpu="$25/month avg (mix of free + premium)"
+                annual="$600,000"
+              />
+              <RevenueCalculation
+                product="AI Business Factory"
+                users="1,500 customers"
+                arpu="$40/month (business tools)"
+                annual="$720,000"
+              />
+              <RevenueCalculation
+                product="AI Web Dev"
+                users="400 clients"
+                arpu="$200/project avg (3 projects/year)"
+                annual="$240,000"
+              />
+              <RevenueCalculation
+                product="Coinfusion"
+                users="10,000 users (ad revenue)"
+                arpu="$3/month (CPM model)"
+                annual="$360,000"
+              />
+              <RevenueCalculation
+                product="Portfolio Business #5-10"
+                users="6 additional businesses"
+                arpu="$500K combined avg"
+                annual="$3,000,000"
+              />
 
-          <YearProjection
-            year="Year 4+ (2028+)"
-            phase="Scale & Maturity"
-            agents="300-500+"
-            businesses="40-100+"
-            revenueRange="$20M - $100M+"
-            assumptions={[
-              'Fully scaled ecosystem with hundreds of businesses',
-              'Strong brand recognition in AI-native business space',
-              'User base: 150,000-500,000+',
-              'ARPU: $30-50/month',
-              'Multiple businesses achieve $5M-$10M+ annual revenue',
-              'Ecosystem becomes self-sustaining',
-              'Token value primarily driven by business fundamentals'
-            ]}
-            keyDrivers={[
-              'Network effects amplify growth',
-              'Data and learnings from earlier businesses improve new launches',
-              'Reputation attracts high-quality proposals',
-              'Treasury funds aggressive expansion of successful models'
-            ]}
-          />
-        </div>
+              <div className="border-t border-red-500/30 pt-4 mt-4">
+                <div className="flex justify-between items-center text-xl font-bold">
+                  <span className="text-white">TOTAL CONSERVATIVE:</span>
+                  <span className="text-red-400">$4.92M/year</span>
+                </div>
+              </div>
+            </div>
 
-        {/* Market Size Validation */}
-        <div className="mt-12 bg-slate-900/50 border border-slate-700 rounded-xl p-8">
-          <h3 className="text-2xl font-bold text-white mb-6">Market Size Validation</h3>
-          <p className="text-slate-300 mb-6">
-            Our revenue projections assume capturing a small fraction of large addressable markets:
-          </p>
-
-          <div className="grid md:grid-cols-2 gap-6">
-            <MarketSize
-              market="AI Trading Platforms"
-              tam="$8.4B by 2028"
-              target="0.5-1% market share"
-              potential="$42M-$84M"
-              source="marketsandmarkets-2024"
-            />
-            <MarketSize
-              market="AI Development Tools"
-              tam="$24.1B by 2028"
-              target="0.1-0.3% market share"
-              potential="$24M-$72M"
-              source="grandviewresearch-2024"
-            />
-            <MarketSize
-              market="Business Automation SaaS"
-              tam="$13.4B by 2027"
-              target="0.2-0.5% market share"
-              potential="$27M-$67M"
-              source="fortunebusinessinsights-2024"
-            />
-            <MarketSize
-              market="Crypto Data & Analytics"
-              tam="$2.1B by 2027"
-              target="0.5-1.5% market share"
-              potential="$11M-$32M"
-              source="reportsanddata-2024"
-            />
-          </div>
-
-          <p className="text-sm text-slate-400 mt-6">
-            Even capturing 0.1-1% of these markets justifies our $20M-$100M Year 4 revenue projection.
-            This conservative market share assumption accounts for competition, market dynamics, and execution risk.
-          </p>
-        </div>
-
-        {/* Unit Economics */}
-        <div className="mt-12 bg-slate-900/50 border border-slate-700 rounded-xl p-8">
-          <h3 className="text-2xl font-bold text-white mb-6">Unit Economics & Key Metrics</h3>
-          
-          <div className="grid md:grid-cols-3 gap-6">
-            <UnitEconomic
-              metric="CAC (Customer Acquisition Cost)"
-              value="$15-$50"
-              note="Primarily organic + content marketing. Lower than industry average due to AI-powered outreach."
-              source="industry-average-$200-$400"
-            />
-            <UnitEconomic
-              metric="LTV (Lifetime Value)"
-              value="$200-$800"
-              note="Based on 12-24 month average retention and $15-40/month ARPU."
-              source="calculated-from-arpu"
-            />
-            <UnitEconomic
-              metric="LTV:CAC Ratio"
-              value="4:1 to 16:1"
-              note="Significantly above 3:1 industry benchmark for healthy SaaS businesses."
-              source="calculated"
-            />
-          </div>
-
-          <div className="mt-6 bg-cyan-500/10 border border-cyan-500/30 rounded-lg p-6">
-            <p className="text-slate-300">
-              <strong className="text-white">Why Our Unit Economics Are Strong:</strong> AI reduces both
-              CAC (automated marketing) and operational costs (no human support staff), while maintaining
-              quality that justifies competitive pricing. This creates exceptional margins even at low ARPU.
+            <p className="text-xs text-slate-400 mt-4">
+              <strong className="text-white">Assumptions:</strong> Low user adoption (10% of target), conservative ARPU,
+              only 10 businesses launched by Year 3, 60% success rate (6 profitable).
             </p>
+          </div>
+
+          {/* Moderate Scenario */}
+          <div className="mb-8 bg-blue-500/10 border border-blue-500/30 rounded-xl p-6">
+            <h4 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
+              <BarChart3 className="w-6 h-6 text-blue-400" />
+              Moderate Scenario: $12M/Year (Year 2-3)
+            </h4>
+
+            <div className="space-y-4">
+              <RevenueCalculation
+                product="AI Traders"
+                users="5,000 active users"
+                arpu="$35/month avg"
+                annual="$2,100,000"
+              />
+              <RevenueCalculation
+                product="AI Business Factory"
+                users="3,500 customers"
+                arpu="$50/month"
+                annual="$2,100,000"
+              />
+              <RevenueCalculation
+                product="AI Web Dev"
+                users="800 clients"
+                arpu="$250/project avg (4 projects/year)"
+                annual="$800,000"
+              />
+              <RevenueCalculation
+                product="Coinfusion"
+                users="25,000 users"
+                arpu="$5/month (ads + premium)"
+                annual="$1,500,000"
+              />
+              <RevenueCalculation
+                product="Portfolio Business #5-15"
+                users="11 additional businesses"
+                arpu="$500K avg each"
+                annual="$5,500,000"
+              />
+
+              <div className="border-t border-blue-500/30 pt-4 mt-4">
+                <div className="flex justify-between items-center text-xl font-bold">
+                  <span className="text-white">TOTAL MODERATE:</span>
+                  <span className="text-blue-400">$12.0M/year</span>
+                </div>
+              </div>
+            </div>
+
+            <p className="text-xs text-slate-400 mt-4">
+              <strong className="text-white">Assumptions:</strong> Moderate adoption (25% of target), industry-standard ARPU,
+              15 businesses launched, 70% success rate (11 profitable).
+            </p>
+          </div>
+
+          {/* Optimistic Scenario */}
+          <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-6">
+            <h4 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
+              <TrendingUp className="w-6 h-6 text-green-400" />
+              Optimistic Scenario: $20M/Year (Year 2-3)
+            </h4>
+
+            <div className="space-y-4">
+              <RevenueCalculation
+                product="AI Traders"
+                users="10,000 active users"
+                arpu="$50/month avg"
+                annual="$6,000,000"
+              />
+              <RevenueCalculation
+                product="AI Business Factory"
+                users="6,000 customers"
+                arpu="$60/month"
+                annual="$4,320,000"
+              />
+              <RevenueCalculation
+                product="AI Web Dev"
+                users="1,200 clients"
+                arpu="$300/project avg (5 projects/year)"
+                annual="$1,800,000"
+              />
+              <RevenueCalculation
+                product="Coinfusion"
+                users="50,000 users"
+                arpu="$8/month (premium adoption)"
+                annual="$4,800,000"
+              />
+              <RevenueCalculation
+                product="Portfolio Business #5-20"
+                users="16 additional businesses"
+                arpu="$200K avg each (mix of scales)"
+                annual="$3,200,000"
+              />
+
+              <div className="border-t border-green-500/30 pt-4 mt-4">
+                <div className="flex justify-between items-center text-xl font-bold">
+                  <span className="text-white">TOTAL OPTIMISTIC:</span>
+                  <span className="text-green-400">$20.12M/year</span>
+                </div>
+              </div>
+            </div>
+
+            <p className="text-xs text-slate-400 mt-4">
+              <strong className="text-white">Assumptions:</strong> Strong adoption (50% of target), high ARPU, viral growth,
+              20 businesses launched, 80% success rate (16 profitable), 2-3 breakout successes.
+            </p>
+          </div>
+        </div>
+
+        {/* ARPU Validation */}
+        <div className="bg-slate-900/50 border border-slate-700 rounded-xl p-8">
+          <h3 className="text-2xl font-bold text-white mb-6">ARPU Validation: Industry Benchmarks</h3>
+
+          <div className="space-y-4">
+            <ARPUBenchmark
+              category="AI/ML SaaS Tools"
+              source="OpenView Partners 2024 SaaS Benchmarks"
+              typical="$30-$80/month per user"
+              ourTarget="$25-$50/month"
+              link="https://openviewpartners.com/saas-benchmarks/"
+            />
+            <ARPUBenchmark
+              category="Trading Platforms"
+              source="Statista: Online Brokerage ARPU"
+              typical="$40-$120/month active traders"
+              ourTarget="$25-$50/month"
+              link="https://www.statista.com/statistics/"
+            />
+            <ARPUBenchmark
+              category="Dev Tools/Web Services"
+              source="SaaS Capital Benchmarks"
+              typical="$150-$400/project"
+              ourTarget="$200-$300/project"
+              link="https://www.saas-capital.com/research/"
+            />
+            <ARPUBenchmark
+              category="Content/Media Platforms"
+              source="Digital Content Next Report"
+              typical="$2-$8/user/month (ad revenue)"
+              ourTarget="$3-$8/user/month"
+              link="https://digitalcontentnext.org/"
+            />
+          </div>
+
+          <div className="mt-6 bg-cyan-500/10 border border-cyan-500/30 rounded-lg p-4">
+            <p className="text-sm text-slate-300">
+              <strong className="text-cyan-400">Validation:</strong> Our ARPU targets are at or below industry averages,
+              making projections conservative and achievable. We have not inflated numbers to create unrealistic hype.
+            </p>
+          </div>
+        </div>
+
+        {/* Disclaimers */}
+        <div className="mt-8 bg-yellow-500/10 border border-yellow-500/30 rounded-xl p-6">
+          <div className="flex items-start gap-3">
+            <AlertTriangle className="w-6 h-6 text-yellow-400 flex-shrink-0 mt-1" />
+            <div>
+              <h4 className="font-bold text-yellow-400 mb-2">Revenue Projection Disclaimers</h4>
+              <ul className="text-sm text-slate-300 space-y-2">
+                <li>
+                  <strong className="text-white">These are projections, not guarantees.</strong> Actual results will vary
+                  based on market conditions, execution quality, competition, and adoption rates.
+                </li>
+                <li>
+                  <strong className="text-white">Timeframe:</strong> Year 2-3 assumes 18-36 months post-mainnet launch.
+                  Earlier years will have lower revenue as businesses scale.
+                </li>
+                <li>
+                  <strong className="text-white">Success rate assumptions:</strong> 60-80% business success rate is projected,
+                  not proven. Industry baseline is 10-20%. Our cost advantage should improve this, but cannot guarantee it.
+                </li>
+                <li>
+                  <strong className="text-white">User acquisition:</strong> Assumes active marketing, community growth, and
+                  product-market fit. If growth is slower, revenue will be proportionally lower.
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ==================== VALUATION METHODOLOGY ====================
+function ValuationSection() {
+  return (
+    <section className="space-y-12">
+      <div className="bg-slate-800/30 backdrop-blur border border-slate-700 rounded-2xl p-8 lg:p-12">
+        <h2 className="text-3xl font-bold text-white mb-8 text-center">
+          Portfolio Valuation: $50M+ Methodology
+        </h2>
+
+        <p className="text-lg text-slate-300 text-center max-w-3xl mx-auto mb-12">
+          How we calculate long-term portfolio value based on revenue multiples, comparable exits,
+          and AI business premium valuations.
+        </p>
+
+        {/* Valuation Approaches */}
+        <div className="grid md:grid-cols-2 gap-8 mb-8">
+          <div className="bg-slate-900/50 border border-slate-700 rounded-xl p-6">
+            <h3 className="text-xl font-bold text-white mb-4">Revenue Multiple Method</h3>
+
+            <div className="space-y-4">
+              <div className="bg-slate-800/50 rounded-lg p-4">
+                <div className="text-sm text-slate-400 mb-2">Conservative (3x revenue)</div>
+                <div className="space-y-2 text-sm text-slate-300">
+                  <div className="flex justify-between">
+                    <span>Low scenario ($5M/year):</span>
+                    <span className="font-bold text-white">$15M valuation</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span>Moderate ($12M/year):</span>
+                    <span className="font-bold text-white">$36M valuation</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span>High ($20M/year):</span>
+                    <span className="font-bold text-white">$60M valuation</span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="bg-slate-800/50 rounded-lg p-4">
+                <div className="text-sm text-slate-400 mb-2">Industry Standard (5x revenue)</div>
+                <div className="space-y-2 text-sm text-slate-300">
+                  <div className="flex justify-between">
+                    <span>Low scenario ($5M/year):</span>
+                    <span className="font-bold text-cyan-400">$25M valuation</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span>Moderate ($12M/year):</span>
+                    <span className="font-bold text-cyan-400">$60M valuation</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span>High ($20M/year):</span>
+                    <span className="font-bold text-cyan-400">$100M valuation</span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="bg-slate-800/50 rounded-lg p-4">
+                <div className="text-sm text-slate-400 mb-2">AI Premium (8x revenue)</div>
+                <div className="space-y-2 text-sm text-slate-300">
+                  <div className="flex justify-between">
+                    <span>Low scenario ($5M/year):</span>
+                    <span className="font-bold text-green-400">$40M valuation</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span>Moderate ($12M/year):</span>
+                    <span className="font-bold text-green-400">$96M valuation</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span>High ($20M/year):</span>
+                    <span className="font-bold text-green-400">$160M valuation</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="mt-4 bg-cyan-500/10 border border-cyan-500/30 rounded-lg p-4">
+              <p className="text-sm text-cyan-400 font-bold mb-2">Our Conservative Target: $50M+</p>
+              <p className="text-xs text-slate-300">
+                Using 3-4x revenue multiple on moderate scenario ($12M × 4 = $48M), rounded to $50M+
+                to account for portfolio diversification and AI technology premium.
+              </p>
+            </div>
+          </div>
+
+          <div className="bg-slate-900/50 border border-slate-700 rounded-xl p-6">
+            <h3 className="text-xl font-bold text-white mb-4">Comparable Company Analysis</h3>
+
+            <div className="space-y-4">
+              <ComparableCard
+                company="Jasper AI"
+                revenue="~$75M ARR (2023)"
+                valuation="$1.5B (2022 round)"
+                multiple="20x revenue"
+                note="AI writing tool, enterprise focus"
+              />
+              <ComparableCard
+                company="Copy.ai"
+                revenue="~$10M ARR (2023 est.)"
+                valuation="$150M (2023)"
+                multiple="15x revenue"
+                note="SMB-focused AI content"
+              />
+              <ComparableCard
+                company="Runway ML"
+                revenue="~$30M ARR (2023 est.)"
+                valuation="$1.5B (2023)"
+                multiple="50x revenue"
+                note="AI video tools, creator market"
+              />
+              <ComparableCard
+                company="Character.AI"
+                revenue="~$5M ARR (early stage)"
+                valuation="$1B (2023)"
+                multiple="200x revenue"
+                note="Consumer AI, viral adoption"
+              />
+            </div>
+
+            <div className="mt-4 bg-slate-900/50 rounded-lg p-4">
+              <p className="text-sm text-slate-400 mb-3">
+                <strong className="text-white">Analysis:</strong> AI companies command 5-50x revenue multiples
+                depending on growth rate, market size, and technology moat.
+              </p>
+              <p className="text-xs text-slate-300">
+                Our target of 3-4x is conservative because: (1) We're pre-revenue, (2) Diversified portfolio
+                vs single product, (3) We use proven technology vs novel R&D. This makes $50M+ achievable
+                without requiring viral success.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* Industry Benchmarks */}
+        <div className="bg-slate-900/50 border border-slate-700 rounded-xl p-8">
+          <h3 className="text-2xl font-bold text-white mb-6">SaaS Valuation Benchmarks</h3>
+
+          <div className="space-y-4">
+            <BenchmarkCard
+              metric="Median SaaS Revenue Multiple"
+              source="SaaS Capital Index (Q4 2024)"
+              value="5.2x ARR"
+              link="https://www.saas-capital.com/research/saas-capital-index/"
+              note="Based on 400+ private SaaS companies"
+            />
+            <BenchmarkCard
+              metric="AI Software Premium"
+              source="PitchBook Q4 2024 Valuations"
+              value="+50-100% vs non-AI"
+              link="https://pitchbook.com/"
+              note="AI companies valued at 7-10x revenue on average"
+            />
+            <BenchmarkCard
+              metric="Crypto-Native Businesses"
+              source="Messari Crypto Theses 2025"
+              value="3-8x revenue typical"
+              link="https://messari.io/crypto-theses-for-2025"
+              note="Token-governed projects valued conservatively"
+            />
+          </div>
+
+          <div className="mt-6 bg-cyan-500/10 border border-cyan-500/30 rounded-lg p-4 text-center">
+            <p className="text-sm text-slate-300 mb-2">
+              <strong className="text-cyan-400">Our Valuation Range:</strong> $15M (3x × $5M) to $100M+ (5x × $20M)
+            </p>
+            <p className="text-xs text-slate-400">
+              We target $50M+ as the midpoint, achievable with moderate execution and standard SaaS multiples.
+            </p>
+          </div>
+        </div>
+
+        {/* Disclaimers */}
+        <div className="mt-8 bg-yellow-500/10 border border-yellow-500/30 rounded-xl p-6">
+          <div className="flex items-start gap-3">
+            <AlertTriangle className="w-6 h-6 text-yellow-400 flex-shrink-0 mt-1" />
+            <div>
+              <h4 className="font-bold text-yellow-400 mb-2">Valuation Disclaimers</h4>
+              <ul className="text-sm text-slate-300 space-y-2">
+                <li>
+                  <strong className="text-white">Projections, not current value.</strong> Portfolio is currently
+                  pre-revenue. $50M+ represents target valuation in Years 3-4 if revenue goals are met.
+                </li>
+                <li>
+                  <strong className="text-white">Market conditions vary.</strong> Valuations fluctuate with
+                  macro conditions, interest rates, and investor sentiment. Bull markets = higher multiples.
+                </li>
+                <li>
+                  <strong className="text-white">No guarantee of liquidity.</strong> Token value may not reflect
+                  portfolio value. This is not an investment in equity, but governance tokens.
+                </li>
+                <li>
+                  <strong className="text-white">Conservative assumptions used.</strong> We intentionally use
+                  lower multiples (3-5x vs 10-50x) to be credible and achievable.
+                </li>
+              </ul>
+            </div>
           </div>
         </div>
       </div>
@@ -2321,6 +2643,167 @@ function StakingScenario({ scenario, revenue, stakingPool, totalStaked, apy, cal
       <div className="bg-slate-900/50 rounded p-4">
         <code className="text-xs text-slate-400">{calculation}</code>
       </div>
+    </div>
+  );
+}
+
+// ==================== NEW HELPER COMPONENTS FOR PART 2 ====================
+
+function MarketDataCard({ source, finding, value, growth, link, relevance }: {
+  source: string;
+  finding: string;
+  value: string;
+  growth: string;
+  link: string;
+  relevance: string;
+}) {
+  return (
+    <div className="bg-slate-800/50 border border-slate-700 rounded-xl p-6">
+      <div className="flex items-start justify-between mb-4">
+        <div className="flex-1">
+          <h5 className="font-bold text-white mb-1">{finding}</h5>
+          <p className="text-xs text-slate-400">{source}</p>
+        </div>
+        <a
+          href={link}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-cyan-400 hover:text-cyan-300 transition-colors"
+        >
+          <ExternalLink className="w-4 h-4" />
+        </a>
+      </div>
+      <div className="space-y-3">
+        <div>
+          <div className="text-xs text-slate-400 mb-1">Market Size</div>
+          <div className="text-2xl font-bold text-cyan-400">{value}</div>
+        </div>
+        <div>
+          <div className="text-xs text-slate-400 mb-1">Growth</div>
+          <div className="text-sm font-medium text-green-400">{growth}</div>
+        </div>
+        <div className="pt-3 border-t border-slate-700">
+          <div className="text-xs text-slate-400 mb-1">Relevance to AAIC</div>
+          <div className="text-sm text-slate-300">{relevance}</div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function RevenueCalculation({ product, users, arpu, annual }: {
+  product: string;
+  users: string;
+  arpu: string;
+  annual: string;
+}) {
+  return (
+    <div className="bg-slate-800/50 border border-slate-700 rounded-lg p-4">
+      <div className="flex items-start justify-between mb-3">
+        <h5 className="font-bold text-white">{product}</h5>
+        <span className="text-lg font-bold text-cyan-400">{annual}</span>
+      </div>
+      <div className="space-y-1 text-xs text-slate-400">
+        <div>{users}</div>
+        <div>{arpu}</div>
+      </div>
+    </div>
+  );
+}
+
+function ARPUBenchmark({ category, source, typical, ourTarget, link }: {
+  category: string;
+  source: string;
+  typical: string;
+  ourTarget: string;
+  link: string;
+}) {
+  return (
+    <div className="bg-slate-800/50 border border-slate-700 rounded-lg p-4">
+      <div className="flex items-start justify-between mb-3">
+        <div>
+          <h5 className="font-bold text-white mb-1">{category}</h5>
+          <p className="text-xs text-slate-400">{source}</p>
+        </div>
+        <a
+          href={link}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-cyan-400 hover:text-cyan-300 transition-colors"
+        >
+          <ExternalLink className="w-4 h-4" />
+        </a>
+      </div>
+      <div className="grid grid-cols-2 gap-4 text-sm">
+        <div>
+          <div className="text-xs text-slate-500 mb-1">Industry Typical</div>
+          <div className="font-bold text-white">{typical}</div>
+        </div>
+        <div>
+          <div className="text-xs text-slate-500 mb-1">Our Target</div>
+          <div className="font-bold text-cyan-400">{ourTarget}</div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function ComparableCard({ company, revenue, valuation, multiple, note }: {
+  company: string;
+  revenue: string;
+  valuation: string;
+  multiple: string;
+  note: string;
+}) {
+  return (
+    <div className="bg-slate-800/50 border border-slate-700 rounded-lg p-4">
+      <h5 className="font-bold text-white mb-3">{company}</h5>
+      <div className="space-y-2 text-sm">
+        <div className="flex justify-between">
+          <span className="text-slate-400">Annual Revenue:</span>
+          <span className="text-white font-medium">{revenue}</span>
+        </div>
+        <div className="flex justify-between">
+          <span className="text-slate-400">Valuation:</span>
+          <span className="text-cyan-400 font-bold">{valuation}</span>
+        </div>
+        <div className="flex justify-between border-t border-slate-700 pt-2">
+          <span className="text-slate-400">Multiple:</span>
+          <span className="text-green-400 font-bold">{multiple}</span>
+        </div>
+        <div className="pt-2 border-t border-slate-700">
+          <p className="text-xs text-slate-400 italic">{note}</p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function BenchmarkCard({ metric, source, value, link, note }: {
+  metric: string;
+  source: string;
+  value: string;
+  link: string;
+  note: string;
+}) {
+  return (
+    <div className="bg-slate-800/50 border border-slate-700 rounded-lg p-4">
+      <div className="flex items-start justify-between mb-3">
+        <div>
+          <h5 className="font-bold text-white mb-1">{metric}</h5>
+          <p className="text-xs text-slate-400">{source}</p>
+        </div>
+        <a
+          href={link}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-cyan-400 hover:text-cyan-300 transition-colors"
+        >
+          <ExternalLink className="w-4 h-4" />
+        </a>
+      </div>
+      <div className="text-2xl font-bold text-cyan-400 mb-3">{value}</div>
+      <p className="text-xs text-slate-400">{note}</p>
     </div>
   );
 }
