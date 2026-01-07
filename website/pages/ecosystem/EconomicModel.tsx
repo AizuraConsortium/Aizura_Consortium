@@ -96,6 +96,27 @@ export default function EconomicModel() {
                     faster than they find customers.
                   </p>
                 </div>
+                <div className="text-xs text-slate-400 mt-4 pt-4 border-t border-red-500/20">
+                  <strong className="text-slate-300">Salary Sources:</strong>{' '}
+                  <a href="https://www.glassdoor.com/Salaries/senior-software-engineer-salary-SRCH_KO0,25.htm"
+                     target="_blank"
+                     rel="noopener noreferrer"
+                     className="text-cyan-400 hover:text-cyan-300 underline">
+                    Glassdoor 2024
+                  </a>,{' '}
+                  <a href="https://www.levels.fyi/t/software-engineer"
+                     target="_blank"
+                     rel="noopener noreferrer"
+                     className="text-cyan-400 hover:text-cyan-300 underline">
+                    Levels.fyi
+                  </a>,{' '}
+                  <a href="https://www.bls.gov/oes/current/oes151252.htm"
+                     target="_blank"
+                     rel="noopener noreferrer"
+                     className="text-cyan-400 hover:text-cyan-300 underline">
+                    U.S. Bureau of Labor Statistics
+                  </a>
+                </div>
               </div>
             </div>
 
@@ -125,6 +146,15 @@ export default function EconomicModel() {
                     you can test 10x more business ideas with the same capital. Runway extends from
                     months to years.
                   </p>
+                </div>
+                <div className="text-xs text-slate-400 mt-4 pt-4 border-t border-green-500/20">
+                  <strong className="text-slate-300">AI Cost Sources:</strong>{' '}
+                  <a href="https://openai.com/pricing" target="_blank" rel="noopener noreferrer" className="text-cyan-400 hover:text-cyan-300 underline">OpenAI</a>,{' '}
+                  <a href="https://www.anthropic.com/pricing" target="_blank" rel="noopener noreferrer" className="text-cyan-400 hover:text-cyan-300 underline">Anthropic</a>,{' '}
+                  <a href="https://cloud.google.com/vertex-ai/pricing" target="_blank" rel="noopener noreferrer" className="text-cyan-400 hover:text-cyan-300 underline">Google AI</a>
+                  <br />
+                  <strong className="text-slate-300">Infrastructure:</strong>{' '}
+                  <a href="https://calculator.aws" target="_blank" rel="noopener noreferrer" className="text-cyan-400 hover:text-cyan-300 underline">AWS Pricing Calculator</a>
                 </div>
               </div>
             </div>
@@ -366,11 +396,26 @@ export default function EconomicModel() {
               <AlertTriangle className="w-6 h-6 text-yellow-400 flex-shrink-0 mt-1" />
               <div>
                 <h4 className="font-bold text-yellow-400 mb-2">Conservative Estimates</h4>
-                <p className="text-sm text-slate-300">
+                <p className="text-sm text-slate-300 mb-3">
                   These projections assume moderate success. With AI cost advantages, actual growth could significantly
                   exceed these targets. However, <strong className="text-white">past performance does not guarantee future results</strong>,
                   and all crypto investments carry substantial risk.
                 </p>
+                <div className="text-xs text-slate-400 pt-3 border-t border-yellow-500/20">
+                  <strong className="text-slate-300">Industry Benchmarks:</strong>{' '}
+                  <a href="https://www.sba.gov/business-guide/plan-your-business/calculate-your-startup-costs"
+                     target="_blank"
+                     rel="noopener noreferrer"
+                     className="text-cyan-400 hover:text-cyan-300 underline">
+                    U.S. Small Business Administration
+                  </a>,{' '}
+                  <a href="https://www.cbinsights.com/research/startup-failure-reasons-top/"
+                     target="_blank"
+                     rel="noopener noreferrer"
+                     className="text-cyan-400 hover:text-cyan-300 underline">
+                    CB Insights Startup Failure Analysis
+                  </a>
+                </div>
               </div>
             </div>
           </div>

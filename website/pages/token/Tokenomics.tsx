@@ -105,6 +105,27 @@ export default function Tokenomics() {
                   Token rewards require either dilution or unsustainable spending
                 </p>
               </div>
+              <div className="text-xs text-slate-400 mt-3 pt-3 border-t border-slate-600">
+                <strong className="text-slate-300">Sources:</strong>{' '}
+                <a href="https://www.glassdoor.com/Salaries/senior-software-engineer-salary-SRCH_KO0,25.htm"
+                   target="_blank"
+                   rel="noopener noreferrer"
+                   className="text-cyan-400 hover:text-cyan-300 underline">
+                  Glassdoor 2024
+                </a>,{' '}
+                <a href="https://www.levels.fyi/t/software-engineer"
+                   target="_blank"
+                   rel="noopener noreferrer"
+                   className="text-cyan-400 hover:text-cyan-300 underline">
+                  Levels.fyi
+                </a>,{' '}
+                <a href="https://www.bls.gov/oes/current/oes151252.htm"
+                   target="_blank"
+                   rel="noopener noreferrer"
+                   className="text-cyan-400 hover:text-cyan-300 underline">
+                  BLS
+                </a>
+              </div>
             </div>
 
             <div className="bg-slate-800/50 border border-slate-700 rounded-xl p-6">
@@ -121,6 +142,13 @@ export default function Tokenomics() {
                 <p className="text-xs text-slate-300">
                   Real profit margins fund sustainable rewards without dilution
                 </p>
+              </div>
+              <div className="text-xs text-slate-400 mt-3 pt-3 border-t border-slate-600">
+                <strong className="text-slate-300">Sources:</strong>{' '}
+                <a href="https://openai.com/pricing" target="_blank" rel="noopener noreferrer" className="text-cyan-400 hover:text-cyan-300 underline">OpenAI</a>,{' '}
+                <a href="https://www.anthropic.com/pricing" target="_blank" rel="noopener noreferrer" className="text-cyan-400 hover:text-cyan-300 underline">Anthropic</a>,{' '}
+                <a href="https://cloud.google.com/vertex-ai/pricing" target="_blank" rel="noopener noreferrer" className="text-cyan-400 hover:text-cyan-300 underline">Google AI</a>,{' '}
+                <a href="https://calculator.aws" target="_blank" rel="noopener noreferrer" className="text-cyan-400 hover:text-cyan-300 underline">AWS</a>
               </div>
             </div>
           </div>
