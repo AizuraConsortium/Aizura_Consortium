@@ -1,4 +1,17 @@
-const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:3001';
+function resolveApiBase(): string {
+  const configuredUrl = import.meta.env.VITE_API_URL?.trim();
+
+  if (!configuredUrl) {
+    return 'http://localhost:3001';
+  }
+
+  const normalizedUrl = configuredUrl.replace(/\/+$/, '');
+  return normalizedUrl.endsWith('/api')
+    ? normalizedUrl.slice(0, -4)
+    : normalizedUrl;
+}
+
+const API_BASE = resolveApiBase();
 
 export const WEBSITE_API = {
   topics: {

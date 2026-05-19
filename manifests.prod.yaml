@@ -95,6 +95,11 @@ spec:
             secretKeyRef:
               name: aizura-secrets
               key: qwen-api-key
+        - name: WEBHOOK_PROPOSAL_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: aizura-secrets
+              key: webhook-proposal-secret
         - name: ALLOWED_ORIGINS
           valueFrom:
             configMapKeyRef:

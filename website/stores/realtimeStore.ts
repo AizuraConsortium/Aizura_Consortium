@@ -20,7 +20,20 @@ interface RealtimeState {
   handleReconnect: () => void;
 }
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001';
+function resolveApiBase(): string {
+  const configuredUrl = import.meta.env.VITE_API_URL?.trim();
+
+  if (!configuredUrl) {
+    return 'http://localhost:3001';
+  }
+
+  const normalizedUrl = configuredUrl.replace(/\/+$/, '');
+  return normalizedUrl.endsWith('/api')
+    ? normalizedUrl.slice(0, -4)
+    : normalizedUrl;
+}
+
+const API_URL = resolveApiBase();
 
 export const useRealtimeStore = create<RealtimeState>((set, get) => ({
   status: 'disconnected',

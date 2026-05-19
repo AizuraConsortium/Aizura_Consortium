@@ -21,7 +21,8 @@ export const REQUIRED_ENV_VARS = [
  * Optional environment variables
  */
 export const OPTIONAL_ENV_VARS = [
-  'ADMIN_WHITELISTED_IPS'
+  'ADMIN_WHITELISTED_IPS',
+  'WEBHOOK_PROPOSAL_SECRET'
 ] as const;
 
 /**

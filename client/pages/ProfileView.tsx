@@ -52,7 +52,7 @@ export function ProfileView() {
             Please sign in to view your profile.
           </p>
           <a
-            href="/login"
+            href="/client/auth/sign-in"
             className="inline-flex items-center justify-center px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors"
           >
             Sign In

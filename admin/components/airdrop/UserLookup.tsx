@@ -60,7 +60,7 @@ export function UserLookup() {
     setUserProfile(null);
 
     try {
-      const response = await api.get(`/api/admin/airdrop/users/search?q=${encodeURIComponent(searchQuery)}`);
+      const response = await api.get(`/admin/airdrop/users/search?q=${encodeURIComponent(searchQuery)}`);
       if (response.ok) {
         const data = await response.json();
         setUserProfile(data);
@@ -90,7 +90,7 @@ export function UserLookup() {
     setProcessing(true);
 
     try {
-      const response = await api.post(`/api/admin/airdrop/users/${userProfile.id}/adjust-points`, {
+      const response = await api.post(`/admin/airdrop/users/${userProfile.id}/adjust-points`, {
         points: type === 'subtract' ? -points : points,
         reason: adjustmentReason,
       });
@@ -120,7 +120,7 @@ export function UserLookup() {
     setProcessing(true);
 
     try {
-      const response = await api.post(`/api/admin/airdrop/users/${userProfile.id}/flag`, {
+      const response = await api.post(`/admin/airdrop/users/${userProfile.id}/flag`, {
         reason,
       });
 
@@ -147,7 +147,7 @@ export function UserLookup() {
     setProcessing(true);
 
     try {
-      const response = await api.post(`/api/admin/airdrop/users/${userProfile.id}/ban`, {
+      const response = await api.post(`/admin/airdrop/users/${userProfile.id}/ban`, {
         reason,
       });
 

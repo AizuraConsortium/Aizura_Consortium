@@ -28,7 +28,7 @@ export function FlaggedUsers() {
 
   async function loadFlaggedUsers() {
     try {
-      const response = await api.get('/api/admin/airdrop/flagged-users');
+      const response = await api.get('/admin/airdrop/flagged-users');
       if (response.ok) {
         const data = await response.json();
         setFlaggedUsers(data.users || []);
@@ -51,7 +51,7 @@ export function FlaggedUsers() {
     setProcessing(true);
 
     try {
-      const response = await api.post(`/api/admin/airdrop/flags/${flagId}/clear`, {});
+      const response = await api.post(`/admin/airdrop/flags/${flagId}/clear`, {});
       if (response.ok) {
         loadFlaggedUsers();
       } else {
@@ -75,7 +75,7 @@ export function FlaggedUsers() {
     setProcessing(true);
 
     try {
-      const response = await api.post(`/api/admin/airdrop/users/${user.userId}/ban`, {
+      const response = await api.post(`/admin/airdrop/users/${user.userId}/ban`, {
         reason,
       });
 

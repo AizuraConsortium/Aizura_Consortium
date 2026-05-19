@@ -28,9 +28,9 @@ npm run dev:all
 
 Individual apps:
 ```bash
-npm run dev:website   # Port 5173
+npm run dev:client    # Port 5173
 npm run dev:admin     # Port 5174
-npm run dev:client    # Port 5175
+npm run dev:website   # Port 5175
 npm run dev:dao       # Port 5177
 npm run dev:backend   # Port 3001
 ```
@@ -54,19 +54,29 @@ dist/
 
 ## Docker Compose (Local Testing)
 
-1. Create `.env` file with required variables:
+1. Create a root `.env` file with required variables:
 ```bash
 SUPABASE_URL=your_supabase_url
 SUPABASE_SERVICE_ROLE_KEY=your_service_role_key
 SUPABASE_ANON_KEY=your_anon_key
 ANTHROPIC_API_KEY=your_anthropic_key
 OPENAI_API_KEY=your_openai_key
+GROK_API_KEY=your_grok_key
+GEMINI_API_KEY=your_gemini_key
+DEEPSEEK_API_KEY=your_deepseek_key
+QWEN_API_KEY=your_qwen_key
+VITE_SUPABASE_URL=your_supabase_url
+VITE_SUPABASE_ANON_KEY=your_anon_key
+VITE_API_URL=/api
 # ... other API keys
 ```
 
+The Docker setup reads everything from this single root `.env` file.
+`backend/.env` is not required for `docker compose`.
+
 2. Build and run:
 ```bash
-docker-compose up --build
+docker compose up --build
 ```
 
 3. Access applications:
@@ -77,7 +87,7 @@ docker-compose up --build
 
 4. Stop:
 ```bash
-docker-compose down
+docker compose down
 ```
 
 ## Docker Manual Build
@@ -98,14 +108,20 @@ docker run -d \
   --name aizura-backend \
   -p 3001:3001 \
   -e SUPABASE_URL=$SUPABASE_URL \
+  -e SUPABASE_ANON_KEY=$SUPABASE_ANON_KEY \
   -e SUPABASE_SERVICE_ROLE_KEY=$SUPABASE_SERVICE_ROLE_KEY \
+  -e ANTHROPIC_API_KEY=$ANTHROPIC_API_KEY \
+  -e OPENAI_API_KEY=$OPENAI_API_KEY \
+  -e GROK_API_KEY=$GROK_API_KEY \
+  -e GEMINI_API_KEY=$GEMINI_API_KEY \
+  -e DEEPSEEK_API_KEY=$DEEPSEEK_API_KEY \
+  -e QWEN_API_KEY=$QWEN_API_KEY \
   aizura-backend:latest
 
 # Frontend
 docker run -d \
   --name aizura-frontend \
   -p 80:80 \
-  --link aizura-backend:backend \
   aizura-frontend:latest
 ```
 
@@ -134,7 +150,8 @@ kubectl create secret generic aizura-secrets \
   --from-literal=grok-api-key=$GROK_API_KEY \
   --from-literal=gemini-api-key=$GEMINI_API_KEY \
   --from-literal=deepseek-api-key=$DEEPSEEK_API_KEY \
-  --from-literal=qwen-api-key=$QWEN_API_KEY
+  --from-literal=qwen-api-key=$QWEN_API_KEY \
+  --from-literal=webhook-proposal-secret=$WEBHOOK_PROPOSAL_SECRET
 ```
 
 2. Update manifests:
@@ -231,7 +248,7 @@ npm run build
 ```bash
 # Clean Docker cache
 docker builder prune -a
-docker-compose build --no-cache
+docker compose build --no-cache
 ```
 
 ### Kubernetes pods not starting

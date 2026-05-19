@@ -1,6 +1,5 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import { createFilteredStore } from '@shared/store/createFilteredStore';
 import { createPaginatedStore } from '@shared/store/createPaginatedStore';
 import type { FilteredStoreState } from '@shared/store/createFilteredStore';
 import type { PaginatedStoreState } from '@shared/store/createPaginatedStore';
@@ -55,11 +54,6 @@ type WebsiteStore = TopicState &
 export const useWebsiteStore = create<WebsiteStore>()(
   persist(
     (set, get, store) => {
-      const filteredStore = createFilteredStore<MessageFilter>({
-        defaultFilters: {},
-        resetPagination: true,
-      })(set, get, store);
-
       return {
         ...createPaginatedStore({
           initialPage: 1,

@@ -4,13 +4,14 @@ import tailwindcss from '@tailwindcss/vite';
 import path from 'path';
 
 export interface AppConfig {
-  appName: 'admin' | 'client' | 'website';
+  appName: 'admin' | 'client' | 'website' | 'dao';
   port: number;
 }
 
 export const createViteConfig = (config: AppConfig): UserConfig => {
   const __dirname = path.dirname(new URL(import.meta.url).pathname);
   const appDir = path.resolve(__dirname, config.appName);
+  const basePath = config.appName === 'website' ? '/' : `/${config.appName}/`;
 
   return defineConfig({
     plugins: [
@@ -18,6 +19,7 @@ export const createViteConfig = (config: AppConfig): UserConfig => {
       react()
     ],
     root: appDir,
+    base: basePath,
     build: {
       outDir: path.resolve(__dirname, `dist/${config.appName}`),
       emptyOutDir: true

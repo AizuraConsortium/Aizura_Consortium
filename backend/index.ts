@@ -79,6 +79,11 @@ const app = express();
 const PORT = getServerPort();
 const allowedOrigins = getAllowedOrigins();
 
+// Backend runs behind nginx (see nginx.conf). Trust exactly one hop so
+// req.ip resolves to the real client IP instead of the nginx container.
+// Without this, the per-IP rate limiter buckets all traffic together.
+app.set('trust proxy', 1);
+
 /**
  * Initialize the Dependency Injection Container
  * Must be done before route registration

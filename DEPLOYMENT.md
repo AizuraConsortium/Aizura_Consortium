@@ -114,7 +114,8 @@ kubectl create secret generic aizura-secrets \
   --from-literal=grok-api-key=${GROK_API_KEY} \
   --from-literal=gemini-api-key=${GEMINI_API_KEY} \
   --from-literal=deepseek-api-key=${DEEPSEEK_API_KEY} \
-  --from-literal=qwen-api-key=${QWEN_API_KEY}
+  --from-literal=qwen-api-key=${QWEN_API_KEY} \
+  --from-literal=webhook-proposal-secret=${WEBHOOK_PROPOSAL_SECRET}
 ```
 
 ### Update Image Registry

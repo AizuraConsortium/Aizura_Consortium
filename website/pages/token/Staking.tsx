@@ -2,7 +2,7 @@ import { PageLayout } from '../../components/layout/PageLayout';
 import { Link } from 'react-router-dom';
 import {
   Lock, TrendingUp, Award, Shield, Clock, Info, ArrowRight, Zap, Target,
-  AlertTriangle, Coins, BarChart3, DollarSign, CheckCircle2, Calculator
+  AlertTriangle, Coins, BarChart3, DollarSign, CheckCircle2
 } from 'lucide-react';
 import { StakingMultiplierWarning } from '../../components/warnings/StakingMultiplierWarning';
 

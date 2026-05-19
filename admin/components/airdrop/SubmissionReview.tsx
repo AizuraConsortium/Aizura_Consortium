@@ -43,7 +43,7 @@ export function SubmissionReview({ submission, onClose, onSuccess }: SubmissionR
 
   async function loadUserInfo() {
     try {
-      const response = await api.get(`/api/admin/airdrop/users/${submission.userId}/summary`);
+      const response = await api.get(`/admin/airdrop/users/${submission.userId}/summary`);
       if (response.ok) {
         const data = await response.json();
         setUserInfo(data);
@@ -66,7 +66,7 @@ export function SubmissionReview({ submission, onClose, onSuccess }: SubmissionR
     setProcessing(true);
 
     try {
-      const response = await api.post(`/api/admin/airdrop/submissions/${submission.id}/${action}`, {
+      const response = await api.post(`/admin/airdrop/submissions/${submission.id}/${action}`, {
         points: pointsAdjustment,
         reason: reason.trim() || undefined,
       });

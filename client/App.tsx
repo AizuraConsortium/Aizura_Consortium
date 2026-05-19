@@ -15,17 +15,20 @@ import { AirdropView } from './pages/AirdropView';
 import { ProfileView } from './pages/ProfileView';
 
 export default function App() {
+  const signInPath = '/auth/sign-in';
+
   return (
     <ErrorBoundary theme="light" appName="Client Portal" enableLogging>
       <ToastProvider>
         <AuthProvider>
-          <BrowserRouter>
+          <BrowserRouter basename="/client">
             <Routes>
-              <Route path="/login" element={<Login />} />
+              <Route path={signInPath} element={<Login />} />
+              <Route path="/login" element={<Navigate to={signInPath} replace />} />
               <Route
                 path="/app"
                 element={
-                  <ProtectedRoute redirectTo="/login">
+                  <ProtectedRoute redirectTo={signInPath}>
                     <DashboardHome />
                   </ProtectedRoute>
                 }
@@ -33,7 +36,7 @@ export default function App() {
               <Route
                 path="/app/launchpad"
                 element={
-                  <ProtectedRoute redirectTo="/login">
+                  <ProtectedRoute redirectTo={signInPath}>
                     <LaunchpadView />
                   </ProtectedRoute>
                 }
@@ -41,7 +44,7 @@ export default function App() {
               <Route
                 path="/app/governance"
                 element={
-                  <ProtectedRoute redirectTo="/login">
+                  <ProtectedRoute redirectTo={signInPath}>
                     <GovernanceView />
                   </ProtectedRoute>
                 }
@@ -49,7 +52,7 @@ export default function App() {
               <Route
                 path="/app/portfolio"
                 element={
-                  <ProtectedRoute redirectTo="/login">
+                  <ProtectedRoute redirectTo={signInPath}>
                     <PortfolioView />
                   </ProtectedRoute>
                 }
@@ -57,7 +60,7 @@ export default function App() {
               <Route
                 path="/app/rewards"
                 element={
-                  <ProtectedRoute redirectTo="/login">
+                  <ProtectedRoute redirectTo={signInPath}>
                     <RewardsView />
                   </ProtectedRoute>
                 }
@@ -65,7 +68,7 @@ export default function App() {
               <Route
                 path="/app/token"
                 element={
-                  <ProtectedRoute redirectTo="/login">
+                  <ProtectedRoute redirectTo={signInPath}>
                     <TokenView />
                   </ProtectedRoute>
                 }
@@ -73,7 +76,7 @@ export default function App() {
               <Route
                 path="/app/settings"
                 element={
-                  <ProtectedRoute redirectTo="/login">
+                  <ProtectedRoute redirectTo={signInPath}>
                     <SettingsView />
                   </ProtectedRoute>
                 }
@@ -81,7 +84,7 @@ export default function App() {
               <Route
                 path="/app/airdrop"
                 element={
-                  <ProtectedRoute redirectTo="/login">
+                  <ProtectedRoute redirectTo={signInPath}>
                     <AirdropView />
                   </ProtectedRoute>
                 }
@@ -89,7 +92,7 @@ export default function App() {
               <Route
                 path="/app/profile"
                 element={
-                  <ProtectedRoute redirectTo="/login">
+                  <ProtectedRoute redirectTo={signInPath}>
                     <ProfileView />
                   </ProtectedRoute>
                 }

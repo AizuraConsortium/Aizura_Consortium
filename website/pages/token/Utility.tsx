@@ -2,7 +2,7 @@ import { PageLayout } from '../../components/layout/PageLayout';
 import { Link } from 'react-router-dom';
 import {
   Vote, Lock, DollarSign, Zap, Award, Shield,
-  TrendingUp, Users, Flame, Gift, Coins, ArrowRight,
+  Users, Flame, Coins, ArrowRight,
   CheckCircle2, Star, Target
 } from 'lucide-react';
 

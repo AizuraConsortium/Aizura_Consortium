@@ -31,7 +31,7 @@ export function SubmissionQueue() {
 
   async function loadSubmissions() {
     try {
-      const response = await api.get('/api/admin/airdrop/submissions?status=pending');
+      const response = await api.get('/admin/airdrop/submissions?status=pending');
       if (response.ok) {
         const data = await response.json();
         setSubmissions(data.submissions || []);
@@ -52,7 +52,7 @@ export function SubmissionQueue() {
     if (!confirmed) return;
 
     try {
-      const response = await api.post(`/api/admin/airdrop/submissions/bulk-${action}`, {
+      const response = await api.post(`/admin/airdrop/submissions/bulk-${action}`, {
         submissionIds: Array.from(selectedIds),
       });
 

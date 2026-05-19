@@ -33,7 +33,7 @@ export function PointsBreakdown({ userId }: PointsBreakdownProps) {
 
   async function loadBreakdown() {
     try {
-      const response = await api.get(`/api/client/airdrop/points/breakdown`);
+      const response = await api.get(`/client/airdrop/points/breakdown`);
       if (response.ok) {
         const data = await response.json();
         const categories: PointCategory[] = Object.entries(data.breakdown || {}).map(

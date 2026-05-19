@@ -32,7 +32,7 @@ export function LeaderboardTable({ currentUserId }: LeaderboardTableProps) {
   async function loadLeaderboard(showRefreshing = false) {
     if (showRefreshing) setRefreshing(true);
     try {
-      const response = await api.get(`/api/client/airdrop/leaderboard?page=${page}&limit=100`);
+      const response = await api.get(`/client/airdrop/leaderboard?page=${page}&limit=100`);
       if (response.ok) {
         const data = await response.json();
         setEntries(data.entries || []);

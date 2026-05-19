@@ -13,6 +13,7 @@ export default function Login() {
         subtitle="Sign in to your account"
         variant="client"
         user={user}
+        redirectPath="/app"
         emailPlaceholder="Email address"
         passwordPlaceholder="Password"
         submitText="Sign in"

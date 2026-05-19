@@ -1,19 +1,21 @@
 import { Request, Response, NextFunction } from 'express';
 
 function getClientIp(req: Request): string {
-  const forwardedFor = req.headers['x-forwarded-for'];
+  // Rely on Express's trust-proxy resolution (see app.set('trust proxy', 1)
+  // in backend/index.ts). With one trusted hop, req.ip is the rightmost
+  // entry in X-Forwarded-For — the IP nginx itself observed and appended —
+  // not a value the client can forge by sending its own XFF header.
+  if (req.ip) return req.ip;
 
-  if (forwardedFor) {
-    const ips = Array.isArray(forwardedFor) ? forwardedFor[0] : forwardedFor;
-    return ips.split(',')[0].trim();
-  }
-
+  // Fallback: X-Real-IP is set by nginx from $remote_addr and cannot be
+  // forged by the client (nginx overwrites, not appends).
   const realIp = req.headers['x-real-ip'];
   if (realIp) {
-    return Array.isArray(realIp) ? realIp[0] : realIp;
+    const ip = Array.isArray(realIp) ? realIp[0] : realIp;
+    if (ip) return ip;
   }
 
-  return req.ip || req.socket.remoteAddress || 'unknown';
+  return req.socket.remoteAddress || 'unknown';
 }
 
 function getWhitelistedIPs(): string[] {

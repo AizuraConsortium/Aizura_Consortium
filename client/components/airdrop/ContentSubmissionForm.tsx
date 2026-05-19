@@ -54,7 +54,7 @@ export function ContentSubmissionForm({ userId, onClose, onSuccess }: ContentSub
         formData.append('screenshot', screenshot);
       }
 
-      const response = await api.post('/api/client/airdrop/content/submit', formData, {
+      const response = await api.post('/client/airdrop/content/submit', formData, {
         headers: {},
       });
 

@@ -2,7 +2,7 @@ import { createContext, useContext, useState, useCallback, ReactNode } from 'rea
 import { ToastComponent, Toast, ToastType } from './Toast';
 
 interface ToastContextType {
-  showToast: (type: ToastType, title: string, message?: string, duration?: number) => void;
+  showToast: (typeOrTitle: ToastType | string, titleOrType?: string, message?: string, duration?: number) => void;
   showSuccess: (title: string, message?: string) => void;
   showError: (title: string, message?: string) => void;
   showWarning: (title: string, message?: string) => void;
@@ -27,13 +27,19 @@ interface ToastProviderProps {
 
 export function ToastProvider({ children, maxToasts = 5 }: ToastProviderProps) {
   const [toasts, setToasts] = useState<Toast[]>([]);
+  const toastTypes: ToastType[] = ['success', 'error', 'warning', 'info'];
 
   const removeToast = useCallback((id: string) => {
     setToasts((prev) => prev.filter((toast) => toast.id !== id));
   }, []);
 
   const showToast = useCallback(
-    (type: ToastType, title: string, message?: string, duration?: number) => {
+    (typeOrTitle: ToastType | string, titleOrType?: string, message?: string, duration?: number) => {
+      const firstArgIsType = toastTypes.includes(typeOrTitle as ToastType);
+      const type = firstArgIsType
+        ? (typeOrTitle as ToastType)
+        : (toastTypes.includes(titleOrType as ToastType) ? (titleOrType as ToastType) : 'info');
+      const title = firstArgIsType ? (titleOrType || '') : typeOrTitle;
       const id = `toast-${Date.now()}-${Math.random()}`;
       const newToast: Toast = {
         id,

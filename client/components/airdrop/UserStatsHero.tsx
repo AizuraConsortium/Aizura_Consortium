@@ -27,7 +27,7 @@ export function UserStatsHero({ userId }: UserStatsHeroProps) {
 
   async function loadStats() {
     try {
-      const response = await api.get(`/api/client/airdrop/stats`);
+      const response = await api.get(`/client/airdrop/stats`);
       if (response.ok) {
         const data = await response.json();
         setStats(data);

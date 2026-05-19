@@ -58,7 +58,7 @@ export function ToastComponent({ toast, onClose }: ToastComponentProps) {
     },
   };
 
-  const { icon: Icon, bgColor, borderColor, iconColor, textColor } = config[toast.type];
+  const { icon: Icon, bgColor, borderColor, iconColor, textColor } = config[toast.type] ?? config.info;
 
   return (
     <div

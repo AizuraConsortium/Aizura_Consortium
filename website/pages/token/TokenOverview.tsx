@@ -1,9 +1,9 @@
 import { PageLayout } from '../../components/layout/PageLayout';
 import { Link } from 'react-router-dom';
 import {
-  Vote, Shield, TrendingUp, Users, Zap, DollarSign, Target,
+  Vote, Shield, TrendingUp, Users, Zap, Target,
   ArrowRight, CheckCircle2, Lock, Award, Activity, BarChart3,
-  Flame, RefreshCw, Info, Eye, AlertTriangle, Coins
+  Flame, RefreshCw, Info, Eye, Coins
 } from 'lucide-react';
 
 export default function TokenOverview() {

@@ -329,7 +329,7 @@ describe('U2EService', () => {
     });
 
     it('should filter by business name', async () => {
-      let captured Filter: string | undefined;
+      let capturedFilter: string | undefined;
       mockSupabase.from = vi.fn().mockReturnValue({
         select: vi.fn().mockReturnValue({
           eq: vi.fn((field: string, value: any) => {

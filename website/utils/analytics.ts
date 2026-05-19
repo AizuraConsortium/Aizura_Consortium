@@ -218,7 +218,7 @@ export async function getAverageUptime(): Promise<MetricData> {
     .select('uptime_percentage')
     .gte('created_at', new Date(Date.now() - 90 * 24 * 60 * 60 * 1000).toISOString());
 
-  const avgUptime = data?.reduce((sum, row) => sum + row.uptime_percentage, 0) / (data?.length || 1);
+  const avgUptime = (data?.reduce((sum, row) => sum + row.uptime_percentage, 0) ?? 0) / (data?.length || 1);
 
   return {
     value: `${avgUptime.toFixed(2)}%`,
@@ -267,9 +267,9 @@ export async function getBusinessSuccessRate(): Promise<MetricData> {
   }
 
   // POST-LAUNCH: Calculate actual success rate
-  const { data: totalBusinesses, count: total } = await supabase
+  const { count: total } = await supabase
     .from('businesses')
-    .select('*', { count: 'exact' })
+    .select('*', { count: 'exact', head: true })
     .gte('created_at', new Date(Date.now() - 365 * 24 * 60 * 60 * 1000).toISOString());
 
   const { count: successful } = await supabase

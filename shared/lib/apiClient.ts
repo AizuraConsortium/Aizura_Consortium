@@ -1,4 +1,22 @@
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001/api';
+function resolveApiUrl(): string {
+  const configuredUrl = import.meta.env.VITE_API_URL?.trim();
+
+  if (!configuredUrl) {
+    return 'http://localhost:3001/api';
+  }
+
+  const normalizedUrl = configuredUrl.replace(/\/+$/, '');
+  return normalizedUrl.endsWith('/api') ? normalizedUrl : `${normalizedUrl}/api`;
+}
+
+const API_URL = resolveApiUrl();
+
+function resolveEndpoint(endpoint: string): string {
+  const normalizedEndpoint = endpoint.startsWith('/') ? endpoint : `/${endpoint}`;
+  return normalizedEndpoint.startsWith('/api/')
+    ? normalizedEndpoint.slice(4)
+    : normalizedEndpoint;
+}
 
 if (!import.meta.env.VITE_API_URL) {
   console.warn(
@@ -98,7 +116,7 @@ export const apiClient = {
   },
 
   async get<T>(endpoint: string, token?: string, validator?: (val: unknown) => val is T): Promise<T> {
-    const data = await fetchWithRetry(`${API_URL}${endpoint}`, {
+    const data = await fetchWithRetry(`${API_URL}${resolveEndpoint(endpoint)}`, {
       method: 'GET',
       headers: createHeaders(token)
     });
@@ -106,7 +124,7 @@ export const apiClient = {
   },
 
   async post<T>(endpoint: string, body?: unknown, token?: string, validator?: (val: unknown) => val is T): Promise<T> {
-    const data = await fetchWithRetry(`${API_URL}${endpoint}`, {
+    const data = await fetchWithRetry(`${API_URL}${resolveEndpoint(endpoint)}`, {
       method: 'POST',
       headers: createHeaders(token),
       body: body ? JSON.stringify(body) : undefined
@@ -115,7 +133,7 @@ export const apiClient = {
   },
 
   async delete<T>(endpoint: string, token?: string, validator?: (val: unknown) => val is T): Promise<T> {
-    const data = await fetchWithRetry(`${API_URL}${endpoint}`, {
+    const data = await fetchWithRetry(`${API_URL}${resolveEndpoint(endpoint)}`, {
       method: 'DELETE',
       headers: createHeaders(token)
     });

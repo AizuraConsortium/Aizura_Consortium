@@ -49,7 +49,7 @@ export function AnalyticsDashboard() {
   async function loadAnalytics() {
     setLoading(true);
     try {
-      const response = await api.get(`/api/admin/airdrop/analytics?range=${timeRange}`);
+      const response = await api.get(`/admin/airdrop/analytics?range=${timeRange}`);
       if (response.ok) {
         const data = await response.json();
         setAnalytics(data);

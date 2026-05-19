@@ -45,7 +45,7 @@ export function ReferralCard({ userId }: ReferralCardProps) {
 
   async function loadReferralStats() {
     try {
-      const response = await api.get(`/api/client/airdrop/referrals/stats`);
+      const response = await api.get(`/client/airdrop/referrals/stats`);
       if (response.ok) {
         const data = await response.json();
         setStats(data);

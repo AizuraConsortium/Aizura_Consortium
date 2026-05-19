@@ -14,7 +14,6 @@ import {
 } from 'lucide-react';
 import { PhaseTimeline } from '../../components/u2e/PhaseTimeline';
 import { ComparisonTable } from '../../components/u2e/ComparisonTable';
-import { RealExamplesCarousel } from '../../components/u2e/RealExamplesCarousel';
 import { SustainabilityDiagram } from '../../components/u2e/SustainabilityDiagram';
 import { U2EPointsCalculator } from '../../components/calculators/U2EPointsCalculator';
 import { U2EPointsWarning } from '../../components/warnings/U2EPointsWarning';

@@ -68,7 +68,7 @@ export function SocialConnections({ userId }: SocialConnectionsProps) {
 
   async function loadConnections() {
     try {
-      const response = await api.get(`/api/client/airdrop/social/connections`);
+      const response = await api.get(`/client/airdrop/social/connections`);
       if (response.ok) {
         const data = await response.json();
         setConnections(data.connections || []);
@@ -83,7 +83,7 @@ export function SocialConnections({ userId }: SocialConnectionsProps) {
   async function handleConnect(platform: string) {
     setConnecting(platform);
     try {
-      const response = await api.post(`/api/client/airdrop/connect/${platform}/initiate`, {});
+      const response = await api.post(`/client/airdrop/connect/${platform}/initiate`, {});
       if (response.ok) {
         const data = await response.json();
         window.location.href = data.authUrl;
@@ -101,7 +101,7 @@ export function SocialConnections({ userId }: SocialConnectionsProps) {
   async function handleVerify(platform: string) {
     setVerifying(platform);
     try {
-      const response = await api.post(`/api/client/airdrop/verify/${platform}`, {});
+      const response = await api.post(`/client/airdrop/verify/${platform}`, {});
       if (response.ok) {
         const data = await response.json();
         if (data.verified) {
@@ -127,7 +127,7 @@ export function SocialConnections({ userId }: SocialConnectionsProps) {
     }
 
     try {
-      const response = await api.post(`/api/client/airdrop/disconnect/${platform}`, {});
+      const response = await api.post(`/client/airdrop/disconnect/${platform}`, {});
       if (response.ok) {
         showToast(`${PLATFORM_CONFIG[platform as keyof typeof PLATFORM_CONFIG].name} disconnected`, 'success');
         loadConnections();

@@ -21,7 +21,7 @@ export function ReferralLeaderboard({ userId }: { userId: string }) {
 
   async function loadLeaderboard() {
     try {
-      const response = await api.get('/api/client/airdrop/referrals/leaderboard');
+      const response = await api.get('/client/airdrop/referrals/leaderboard');
       if (response.ok) {
         const data = await response.json();
         setLeaders(data);

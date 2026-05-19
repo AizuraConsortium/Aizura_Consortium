@@ -28,7 +28,7 @@ export function AirdropEstimate({ userId }: AirdropEstimateProps) {
 
   async function loadEstimate() {
     try {
-      const response = await api.get(`/api/client/airdrop/estimate`);
+      const response = await api.get(`/client/airdrop/estimate`);
       if (response.ok) {
         const estimateData = await response.json();
         setData(estimateData);

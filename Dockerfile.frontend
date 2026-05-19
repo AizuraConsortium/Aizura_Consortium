@@ -1,46 +1,45 @@
-# Multi-stage build for frontend
-FROM node:20-alpine AS builder
+FROM node:20-alpine AS build
 
 WORKDIR /app
 
-# Copy package files
-COPY package*.json ./
+ARG VITE_API_URL=/api
+ARG VITE_SUPABASE_URL
+ARG VITE_SUPABASE_ANON_KEY
 
-# Install dependencies
+ENV VITE_API_URL=${VITE_API_URL}
+ENV VITE_SUPABASE_URL=${VITE_SUPABASE_URL}
+ENV VITE_SUPABASE_ANON_KEY=${VITE_SUPABASE_ANON_KEY}
+
+COPY package.json package-lock.json ./
 RUN npm ci
 
-# Copy source code and configs
-COPY tsconfig*.json vite.config*.ts postcss.config.cjs ./
+COPY tsconfig*.json ./
+COPY vite.config*.ts ./
+COPY postcss.config.cjs ./
+COPY vite-env.d.ts ./
 COPY shared/ ./shared/
 COPY admin/ ./admin/
 COPY client/ ./client/
 COPY website/ ./website/
 COPY dao/ ./dao/
 
-# Build all frontend apps
-RUN npm run build:admin
-RUN npm run build:client
-RUN npm run build:website
-RUN npm run build:dao
+RUN npm run build:admin \
+  && npm run build:client \
+  && npm run build:website \
+  && npm run build:dao
 
-# Production stage with nginx
-FROM nginx:alpine
+FROM nginx:1.27-alpine AS runtime
 
-# Copy built apps from builder
-COPY --from=builder /app/dist/admin /usr/share/nginx/html/admin
-COPY --from=builder /app/dist/client /usr/share/nginx/html/client
-COPY --from=builder /app/dist/website /usr/share/nginx/html/website
-COPY --from=builder /app/dist/dao /usr/share/nginx/html/dao
-
-# Copy nginx configuration
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
-# Expose port 80
+COPY --from=build /app/dist/website/ /usr/share/nginx/html/
+COPY --from=build /app/dist/admin/ /usr/share/nginx/html/admin/
+COPY --from=build /app/dist/client/ /usr/share/nginx/html/client/
+COPY --from=build /app/dist/dao/ /usr/share/nginx/html/dao/
+
 EXPOSE 80
 
-# Health check
-HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
-  CMD wget --quiet --tries=1 --spider http://localhost/ || exit 1
+HEALTHCHECK --interval=30s --timeout=5s --start-period=10s --retries=3 \
+  CMD wget --quiet --tries=1 --spider http://localhost/health || exit 1
 
-# Start nginx
 CMD ["nginx", "-g", "daemon off;"]

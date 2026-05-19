@@ -55,7 +55,7 @@ export default function DashboardHome() {
 
   const fetchAirdropStats = async () => {
     try {
-      const response = await api.get('/api/client/airdrop/stats');
+      const response = await api.get('/client/airdrop/stats');
       if (response.ok) {
         const data = await response.json();
         setAirdropStats({

@@ -37,7 +37,7 @@ export function DailyTasks({ userId }: DailyTasksProps) {
 
   async function loadTasks() {
     try {
-      const response = await api.get(`/api/client/airdrop/daily-tasks`);
+      const response = await api.get(`/client/airdrop/daily-tasks`);
       if (response.ok) {
         const taskData = await response.json();
         setData(taskData);
@@ -52,7 +52,7 @@ export function DailyTasks({ userId }: DailyTasksProps) {
   async function claimTask(taskId: string) {
     setClaiming(taskId);
     try {
-      const response = await api.post(`/api/client/airdrop/daily-tasks/${taskId}/claim`, {});
+      const response = await api.post(`/client/airdrop/daily-tasks/${taskId}/claim`, {});
       if (response.ok) {
         const result = await response.json();
         showToast(`Task completed! +${result.pointsAwarded} points`, 'success');

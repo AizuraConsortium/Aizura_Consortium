@@ -172,6 +172,7 @@ jobs:
             --from-literal=gemini-api-key="${{ secrets.GEMINI_API_KEY }}" \
             --from-literal=deepseek-api-key="${{ secrets.DEEPSEEK_API_KEY }}" \
             --from-literal=qwen-api-key="${{ secrets.QWEN_API_KEY }}" \
+            --from-literal=webhook-proposal-secret="${{ secrets.WEBHOOK_PROPOSAL_SECRET }}" \
             --namespace=aizura-consortium \
             --dry-run=client -o yaml | kubectl apply -f -
 
