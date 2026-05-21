@@ -1,14 +1,15 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { api } from '../api';
-import { apiClient } from '@shared/lib';
+import { apiClient } from '@shared/lib/apiClient';
 
-vi.mock('@shared/lib', () => ({
+vi.mock('@shared/lib/apiClient', () => ({
   apiClient: {
     get: vi.fn(),
     post: vi.fn(),
     put: vi.fn(),
     delete: vi.fn(),
   },
+  APIError: class APIError extends Error {},
 }));
 
 describe('Website API', () => {
@@ -35,26 +36,14 @@ describe('Website API', () => {
     });
   });
 
-  describe('getProposalById', () => {
-    it('should call apiClient.get with proposal ID', async () => {
-      const mockData = { proposal: { id: '123', title: 'Test' } };
-      vi.mocked(apiClient.get).mockResolvedValue(mockData);
-
-      const result = await api.getProposalById('123');
-
-      expect(apiClient.get).toHaveBeenCalledWith('/website/proposals/123');
-      expect(result).toEqual(mockData);
-    });
-  });
-
-  describe('getTopic', () => {
+  describe('getPlan', () => {
     it('should call apiClient.get with topic ID', async () => {
-      const mockData = { topic: { id: '456' } };
+      const mockData = { plan: { id: '123' } };
       vi.mocked(apiClient.get).mockResolvedValue(mockData);
 
-      const result = await api.getTopic('456');
+      const result = await api.getPlan('123');
 
-      expect(apiClient.get).toHaveBeenCalledWith('/website/topics/456');
+      expect(apiClient.get).toHaveBeenCalledWith('/website/topics/123');
       expect(result).toEqual(mockData);
     });
   });
@@ -66,7 +55,7 @@ describe('Website API', () => {
 
       const result = await api.getMessages('789');
 
-      expect(apiClient.get).toHaveBeenCalledWith('/website/topics/789/messages');
+      expect(apiClient.get).toHaveBeenCalledWith('/website/messages/topic/789?limit=50&offset=0');
       expect(result).toEqual(mockData);
     });
   });

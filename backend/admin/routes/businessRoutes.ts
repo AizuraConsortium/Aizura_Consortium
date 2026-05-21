@@ -6,7 +6,7 @@
  */
 
 import { Router } from 'express';
-import { businessController, BusinessController } from '../controllers/businessController.js';
+import { businessController } from '../controllers/businessController.js';
 import { requireAuth } from '../../shared/middleware/auth.js';
 import { requireRole } from '../../shared/middleware/rbac.js';
 import { createRateLimit } from '../../shared/middleware/validation.js';

@@ -1,5 +1,5 @@
 import { TOKENOMICS } from '../../../shared/constants/tokenomics';
-import { supabase } from './supabase/client';
+
 
 interface GuardrailStatus {
   name: string;
@@ -126,7 +126,7 @@ export class TreasuryGuardrailService {
     };
   }
 
-  private async mockGetWeeklySpend(since: Date): Promise<number> {
+  private async mockGetWeeklySpend(_since: Date): Promise<number> {
     return 45_000;
   }
 
@@ -138,7 +138,7 @@ export class TreasuryGuardrailService {
     return TOKENOMICS.ALLOCATION.LIQUIDITY.amount;
   }
 
-  private async mockGetLPWithdrawn(since: Date): Promise<number> {
+  private async mockGetLPWithdrawn(_since: Date): Promise<number> {
     return 200_000;
   }
 

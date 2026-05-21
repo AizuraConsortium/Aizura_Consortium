@@ -4,8 +4,8 @@
  * Manages topic lifecycle with phase transitions, validation, and state management.
  */
 
-import { BaseRepository, type OperationContext } from './BaseRepository.js';
-import { NotFoundError } from './errors/RepositoryError.js';
+import { BaseRepository, type OperationContext } from '../../shared/services/supabase/repositories/BaseRepository.js';
+import { NotFoundError } from '../../shared/services/supabase/repositories/errors/RepositoryError.js';
 import {
   validateTopicData,
   validateTopicId,
@@ -14,8 +14,8 @@ import {
   validateCanEndTopic,
   isValidPhase,
 } from './guards/topicGuards.js';
-import type { Topic, Phase } from '../../../../../shared/types/models.js';
-import type { Database } from '../../../../../shared/types/database.types.js';
+import type { Topic } from '../../../shared/types/models.js';
+import type { Database } from '../../../shared/types/database.types.js';
 
 type TopicInsert = Database['public']['Tables']['topics']['Insert'];
 type TopicPhase = Database['public']['Tables']['topics']['Row']['state'];

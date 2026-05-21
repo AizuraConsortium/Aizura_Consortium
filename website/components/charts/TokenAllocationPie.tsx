@@ -12,8 +12,6 @@ interface AllocationSegment {
 export function TokenAllocationPie() {
   const [hoveredSegment, setHoveredSegment] = useState<number | null>(null);
 
-  const totalSupply = 100_000_000;
-
   const allocations: AllocationSegment[] = [
     {
       label: 'Use-to-Earn',

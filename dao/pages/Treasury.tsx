@@ -15,7 +15,7 @@ export default function Treasury() {
   }
 
   if (error) {
-    return <ErrorAlert title="Failed to load treasury data" message={error} />;
+    return <ErrorAlert message="Failed to load treasury data" details={error} />;
   }
 
   return (

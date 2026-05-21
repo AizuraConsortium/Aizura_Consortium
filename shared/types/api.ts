@@ -238,7 +238,7 @@ export interface PlanStep {
 }
 
 export interface PlanData {
-  plan: Plan | null;
+  plan: (Plan & { content_md: string | null }) | null;
   topic: {
     id: string;
     title: string;

@@ -5,24 +5,21 @@
  * status transitions, voting, and queue management.
  */
 
-import { BaseRepository, type OperationContext } from './BaseRepository.js';
-import { isDuplicateKeyError } from '../errorHandlers.js';
-import { NotFoundError } from './errors/RepositoryError.js';
+import { BaseRepository, type OperationContext } from '../../shared/services/supabase/repositories/BaseRepository.js';
+import { isDuplicateKeyError } from '../../shared/services/supabase/errorHandlers.js';
+import { NotFoundError } from '../../shared/services/supabase/repositories/errors/RepositoryError.js';
 import {
   validateProposalData,
-  validateProposalTitle,
-  validateProposalSummary,
   validateProposalId,
   validateUserId,
   validateStatusTransition,
   isValidProposalStatus,
   isValidVoteType,
-} from './guards/proposalGuards.js';
-import type { Proposal, ProposalQueue, QueueOperationResult } from '../../../../../shared/types/models.js';
-import type { Database } from '../../../../../shared/types/database.types.js';
+} from '../../shared/services/supabase/repositories/guards/proposalGuards.js';
+import type { Proposal, ProposalQueue, QueueOperationResult } from '../../../shared/types/models.js';
+import type { Database } from '../../../shared/types/database.types.js';
 
 type ProposalInsert = Database['public']['Tables']['proposals']['Insert'];
-type ProposalUpdate = Database['public']['Tables']['proposals']['Update'];
 type ProposalVote = Database['public']['Tables']['proposal_votes']['Row'];
 type ProposalVoteInsert = Database['public']['Tables']['proposal_votes']['Insert'];
 type ProposalStatus = Database['public']['Tables']['proposals']['Row']['status'];

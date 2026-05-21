@@ -22,10 +22,10 @@ import { UserController } from '../../admin/controllers/userController.js';
 import { ErrorController as AdminErrorController } from '../../admin/controllers/errorController.js';
 import { OrchestratorController } from '../../admin/controllers/orchestratorController.js';
 import { AuditController } from '../../admin/controllers/auditController.js';
-import { TopicController } from '../../website/controllers/topicController.js';
-import { MessageController } from '../../website/controllers/messageController.js';
-import { ProposalController as WebsiteProposalController } from '../../website/controllers/proposalController.js';
-import { RealtimeController } from '../../website/controllers/realtimeController.js';
+import { TopicController } from '../../consortium/controllers/topicController.js';
+import { MessageController } from '../../consortium/controllers/messageController.js';
+import { ProposalController as WebsiteProposalController } from '../../consortium/controllers/proposalController.js';
+import { RealtimeController } from '../../consortium/controllers/realtimeController.js';
 import { ProposalController as ClientProposalController } from '../../client/controllers/proposalController.js';
 
 import { SystemService } from '../../admin/services/systemService.js';
@@ -33,7 +33,7 @@ import { UserService } from '../../admin/services/userService.js';
 import { ErrorService } from '../../admin/services/errorService.js';
 import { OrchestratorService } from '../../admin/services/orchestratorService.js';
 import { AuditService } from '../../admin/services/auditService.js';
-import { RealtimeService } from '../../website/services/realtimeService.js';
+import { RealtimeService } from '../../consortium/services/realtimeService.js';
 import { ProposalService as ClientProposalService } from '../../client/services/proposalService.js';
 
 type ServiceMap = {

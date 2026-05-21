@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { useState, useRef, useEffect } from 'react';
 
 export function TopBar() {
-  const { user, logout } = useAuth();
+  const { user, signOut } = useAuth();
   const navigate = useNavigate();
   const [showUserMenu, setShowUserMenu] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
@@ -35,7 +35,7 @@ export function TopBar() {
 
   const handleLogout = () => {
     setShowUserMenu(false);
-    logout();
+    signOut();
   };
 
   return (

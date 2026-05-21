@@ -6,7 +6,7 @@
  */
 
 import { Response } from 'express';
-import { HttpError, isHttpError, isOperationalError } from '../errors/HttpErrors.js';
+import { isHttpError, isOperationalError } from '../errors/HttpErrors.js';
 import { ErrorLogger } from '../services/errorLogger.js';
 
 const errorLogger = ErrorLogger.getInstance();

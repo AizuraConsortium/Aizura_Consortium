@@ -1,7 +1,5 @@
 import { useState } from 'react';
 import { ChevronDown, ChevronUp, Users, Cpu, DollarSign, Scale, FileText, Vote, Edit3, Zap, Shield, Code, Twitter } from 'lucide-react';
-import { Navigation } from '../components/layout/Navigation';
-import { WebsiteHealthBadge } from '../components/WebsiteHealthBadge';
 import { PageLayout } from '../components/layout/PageLayout';
 
 const agents = [

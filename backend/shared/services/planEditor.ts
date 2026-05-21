@@ -225,7 +225,6 @@ export class PlanEditor {
   }
 
   private findSectionEnd(lines: string[], startIndex: number, level: number): number {
-    const headingPrefix = '#'.repeat(level);
 
     for (let i = startIndex + 1; i < lines.length; i++) {
       const line = lines[i].trim();

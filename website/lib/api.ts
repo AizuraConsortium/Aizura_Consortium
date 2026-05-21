@@ -1,7 +1,7 @@
 import { apiClient } from '@shared/lib/apiClient';
 import { APIError } from '@shared/lib/apiClient';
 import { logError } from '@shared/lib/logError';
-import type { TopicWithDetails, PaginatedMessages, ProposalsResponse, HomeData, PlanData } from '@shared/types/api';
+import type { PaginatedMessages, ProposalsResponse, HomeData, PlanData } from '@shared/types/api';
 
 export const api = {
   ...apiClient,

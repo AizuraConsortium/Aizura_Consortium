@@ -21,11 +21,8 @@ export function ReferralLeaderboard({ userId }: { userId: string }) {
 
   async function loadLeaderboard() {
     try {
-      const response = await api.get('/client/airdrop/referrals/leaderboard');
-      if (response.ok) {
-        const data = await response.json();
-        setLeaders(data);
-      }
+      const data = await api.get<LeaderEntry[]>('/client/airdrop/referrals/leaderboard');
+      setLeaders(data);
     } catch (error) {
       console.error('Failed to load referral leaderboard:', error);
     } finally {

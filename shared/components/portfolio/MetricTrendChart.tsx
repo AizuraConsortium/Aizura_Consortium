@@ -283,7 +283,7 @@ export function MetricTrendChart({
               {data.trend.direction === 'down' && '↓'}
               {data.trend.direction === 'stable' && '→'}
               {' '}
-              {data.trend.change_percent}%
+              {data.trend.change_percentage}%
             </span>
           </div>
         )}

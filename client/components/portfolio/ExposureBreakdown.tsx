@@ -7,7 +7,7 @@
 
 import { Target, Vote, Zap, FileText, TrendingUp } from 'lucide-react';
 import { StatusBadge } from '@shared/components/portfolio/StatusBadge';
-import type { UserExposure, PortfolioOverview } from '@shared/types/portfolio';
+import type { UserExposure, PortfolioOverview, ExposureType } from '@shared/types/portfolio';
 
 interface ExposureBreakdownProps {
   portfolio?: PortfolioOverview | null;
@@ -25,7 +25,8 @@ function calculateExposureBreakdown(portfolio: PortfolioOverview) {
 
   portfolio.businesses.forEach((business) => {
     if (business.exposure) {
-      breakdown[business.exposure.exposure_type] += business.exposure.exposure_score;
+      const expType = (business.exposure.exposure_type ?? 'voting') as keyof typeof breakdown;
+      breakdown[expType] += business.exposure.exposure_score;
     }
   });
 
@@ -60,7 +61,7 @@ export function ExposureBreakdown({ portfolio, loading = false, className = '' }
     );
   }
 
-  if (!portfolio || portfolio.total_exposure_score === 0) {
+  if (!portfolio || (portfolio.total_exposure_score ?? 0) === 0) {
     return (
       <div className={`bg-slate-800/50 border border-slate-700 rounded-xl p-6 ${className}`}>
         <h3 className="text-lg font-bold text-white mb-4">Exposure Breakdown</h3>
@@ -76,7 +77,7 @@ export function ExposureBreakdown({ portfolio, loading = false, className = '' }
   }
 
   const breakdown = calculateExposureBreakdown(portfolio);
-  const total = portfolio.total_exposure_score;
+  const total = portfolio.total_exposure_score ?? 0;
 
   const exposureTypes = [
     {
@@ -174,7 +175,7 @@ export function ExposureBreakdown({ portfolio, loading = false, className = '' }
                 <div className="flex items-center gap-3">
                   <div className="text-sm font-medium text-slate-300">{business.display_name}</div>
                   {business.exposure && (
-                    <StatusBadge exposureType={business.exposure.exposure_type} size="sm" showIcon={false} />
+                    <StatusBadge exposureType={business.exposure.exposure_type as ExposureType | undefined} size="sm" showIcon={false} />
                   )}
                 </div>
                 <div className="text-sm font-bold text-cyan-400">
@@ -232,7 +233,7 @@ export function BusinessExposureDetail({ exposure, businessName, className = '' 
         </div>
         <div className="flex items-center justify-between p-3 bg-slate-900/50 rounded-lg">
           <span className="text-sm text-slate-400">Usage Rewards Earned</span>
-          <span className="font-semibold text-white">{exposure.usage_rewards_earned.toFixed(2)} AIZ</span>
+          <span className="font-semibold text-white">{exposure.total_rewards_earned.toFixed(2)} AIZ</span>
         </div>
         {exposure.last_activity_at && (
           <div className="flex items-center justify-between p-3 bg-slate-900/50 rounded-lg">

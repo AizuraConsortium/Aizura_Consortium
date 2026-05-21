@@ -1,11 +1,11 @@
 import { getSupabaseClient } from './client.js';
-import * as TopicRepo from './repositories/topics.js';
-import * as MessageRepo from './repositories/messages.js';
-import * as PlanRepo from './repositories/plans.js';
-import * as ProposalRepo from './repositories/proposals.js';
-import * as VoteRepo from './repositories/votes.js';
+import * as TopicRepo from '../../../consortium/repositories/topics.js';
+import * as MessageRepo from '../../../consortium/repositories/messages.js';
+import * as PlanRepo from '../../../consortium/repositories/plans.js';
+import * as ProposalRepo from '../../../consortium/repositories/proposals.js';
+import * as VoteRepo from '../../../consortium/repositories/votes.js';
 import * as OrchestratorRepo from './repositories/orchestrator.js';
-import * as ArbitrationRepo from './repositories/arbitration.js';
+import * as ArbitrationRepo from '../../../consortium/repositories/arbitration.js';
 
 export class SupabaseService {
   private static instance: SupabaseService | null = null;
@@ -54,7 +54,7 @@ export class SupabaseService {
 
   async healthCheck(): Promise<{ healthy: boolean; error?: string }> {
     try {
-      const { data, error } = await getSupabaseClient()
+      const { error } = await getSupabaseClient()
         .from('proposals')
         .select('id')
         .limit(1);

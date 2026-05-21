@@ -10,7 +10,6 @@ import { newsRepository } from '../../shared/services/supabase/repositories/news
 import { validateNewsFilters } from '../../../shared/utils/validation/news-validators.js';
 import type {
   NewsArticle,
-  NewsArticleCompact,
   NewsFilters,
   NewsListResponse,
   NewsCompactListResponse,

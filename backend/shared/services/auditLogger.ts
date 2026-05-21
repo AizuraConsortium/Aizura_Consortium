@@ -4,7 +4,6 @@
  * Records business events and user actions for audit trail.
  */
 
-import { SupabaseService } from './supabase/SupabaseService.js';
 
 /**
  * Audit event types
@@ -48,10 +47,8 @@ export interface AuditLogEntry {
  */
 export class AuditLogger {
   private static instance: AuditLogger | null = null;
-  private supabase: SupabaseService;
 
   private constructor() {
-    this.supabase = SupabaseService.getInstance();
   }
 
   /**

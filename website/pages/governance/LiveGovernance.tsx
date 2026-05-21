@@ -1,9 +1,9 @@
 import { PageLayout } from '../../components/layout/PageLayout';
 import { Link } from 'react-router-dom';
 import {
-  Activity, TrendingUp, XCircle, CheckCircle2, Clock, Users,
-  Vote, Eye, Shield, BarChart3, FileText, AlertCircle, Info,
-  ArrowRight, Filter, ChevronDown, Zap, Target
+  Activity, XCircle, CheckCircle2, Clock, Users,
+  Vote, Shield, BarChart3, AlertCircle, Info,
+  ArrowRight, ChevronDown, Target
 } from 'lucide-react';
 import { useState } from 'react';
 
@@ -379,7 +379,7 @@ function FilterButton({ label, count, active, onClick }: {
 }
 
 function GovernanceProposalCard({
-  id, title, category, status, votesFor, votesAgainst, quorum, timeRemaining,
+  id: _id, title, category, status, votesFor, votesAgainst, quorum, timeRemaining,
   isExpanded, onToggle, description, rationale, parameters, risks
 }: {
   id: number;

@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import { treasuryGuardrails } from '../services/treasuryGuardrails';
 
 export class TreasuryController {
-  async getGuardrailsStatus(req: Request, res: Response): Promise<void> {
+  async getGuardrailsStatus(_req: Request, res: Response): Promise<void> {
     try {
       const health = await treasuryGuardrails.getTreasuryHealth();
       res.json(health);
@@ -11,7 +11,7 @@ export class TreasuryController {
     }
   }
 
-  async getWeeklySpend(req: Request, res: Response): Promise<void> {
+  async getWeeklySpend(_req: Request, res: Response): Promise<void> {
     try {
       const status = await treasuryGuardrails.checkWeeklySpendCap();
       res.json(status);
@@ -20,7 +20,7 @@ export class TreasuryController {
     }
   }
 
-  async getBuybackFrequency(req: Request, res: Response): Promise<void> {
+  async getBuybackFrequency(_req: Request, res: Response): Promise<void> {
     try {
       const status = await treasuryGuardrails.checkBuybackFrequency();
       res.json(status);
@@ -29,7 +29,7 @@ export class TreasuryController {
     }
   }
 
-  async getLPWithdrawal(req: Request, res: Response): Promise<void> {
+  async getLPWithdrawal(_req: Request, res: Response): Promise<void> {
     try {
       const status = await treasuryGuardrails.checkLPWithdrawalLimit();
       res.json(status);

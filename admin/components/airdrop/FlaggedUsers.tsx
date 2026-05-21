@@ -18,7 +18,6 @@ interface FlaggedUser {
 export function FlaggedUsers() {
   const [flaggedUsers, setFlaggedUsers] = useState<FlaggedUser[]>([]);
   const [loading, setLoading] = useState(true);
-  const [selectedUser, setSelectedUser] = useState<FlaggedUser | null>(null);
   const [processing, setProcessing] = useState(false);
   const [filterType, setFilterType] = useState<'all' | 'auto' | 'manual'>('all');
 
@@ -28,11 +27,8 @@ export function FlaggedUsers() {
 
   async function loadFlaggedUsers() {
     try {
-      const response = await api.get('/admin/airdrop/flagged-users');
-      if (response.ok) {
-        const data = await response.json();
-        setFlaggedUsers(data.users || []);
-      }
+      const data = await api.get<{ users: FlaggedUser[] }>('/admin/airdrop/flagged-users');
+      setFlaggedUsers(data.users || []);
     } catch (error) {
       console.error('Failed to load flagged users:', error);
     } finally {
@@ -51,12 +47,8 @@ export function FlaggedUsers() {
     setProcessing(true);
 
     try {
-      const response = await api.post(`/admin/airdrop/flags/${flagId}/clear`, {});
-      if (response.ok) {
-        loadFlaggedUsers();
-      } else {
-        alert('Failed to clear flag');
-      }
+      await api.post(`/admin/airdrop/flags/${flagId}/clear`, {});
+      loadFlaggedUsers();
     } catch (error) {
       console.error('Failed to clear flag:', error);
       alert('Failed to clear flag');
@@ -75,15 +67,10 @@ export function FlaggedUsers() {
     setProcessing(true);
 
     try {
-      const response = await api.post(`/admin/airdrop/users/${user.userId}/ban`, {
+      await api.post(`/admin/airdrop/users/${user.userId}/ban`, {
         reason,
       });
-
-      if (response.ok) {
-        loadFlaggedUsers();
-      } else {
-        alert('Failed to ban user');
-      }
+      loadFlaggedUsers();
     } catch (error) {
       console.error('Failed to ban user:', error);
       alert('Failed to ban user');

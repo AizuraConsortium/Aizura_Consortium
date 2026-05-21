@@ -287,7 +287,7 @@ export class TelegramBotClient {
       throw new Error('Telegram Bot is not enabled');
     }
 
-    const botUsername = this.config.botUsername;
+    // botUsername available: this.config.botUsername
     const params = new URLSearchParams({
       bot_id: this.config.botToken.split(':')[0],
       origin: returnUrl,

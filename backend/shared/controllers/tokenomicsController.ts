@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import { TOKENOMICS } from '../../../shared/constants/tokenomics';
 
 export class TokenomicsController {
-  async getSupply(req: Request, res: Response): Promise<void> {
+  async getSupply(_req: Request, res: Response): Promise<void> {
     try {
       res.json({
         maxSupply: TOKENOMICS.MAX_SUPPLY,
@@ -16,7 +16,7 @@ export class TokenomicsController {
     }
   }
 
-  async getAllocation(req: Request, res: Response): Promise<void> {
+  async getAllocation(_req: Request, res: Response): Promise<void> {
     try {
       const allocation = Object.entries(TOKENOMICS.ALLOCATION).map(([key, value]) => ({
         category: key.toLowerCase().replace(/_/g, ' '),
@@ -32,7 +32,7 @@ export class TokenomicsController {
     }
   }
 
-  async getRevenueDistribution(req: Request, res: Response): Promise<void> {
+  async getRevenueDistribution(_req: Request, res: Response): Promise<void> {
     try {
       const distribution = Object.entries(TOKENOMICS.REVENUE_DISTRIBUTION).map(([key, value]) => ({
         bucket: key.toLowerCase().replace(/_/g, ' '),
@@ -45,7 +45,7 @@ export class TokenomicsController {
     }
   }
 
-  async getBurnTarget(req: Request, res: Response): Promise<void> {
+  async getBurnTarget(_req: Request, res: Response): Promise<void> {
     try {
       res.json(TOKENOMICS.BURN);
     } catch (error) {
@@ -53,7 +53,7 @@ export class TokenomicsController {
     }
   }
 
-  async getGovernanceParams(req: Request, res: Response): Promise<void> {
+  async getGovernanceParams(_req: Request, res: Response): Promise<void> {
     try {
       res.json(TOKENOMICS.GOVERNANCE);
     } catch (error) {

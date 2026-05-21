@@ -54,17 +54,9 @@ export function ContentSubmissionForm({ userId, onClose, onSuccess }: ContentSub
         formData.append('screenshot', screenshot);
       }
 
-      const response = await api.post('/client/airdrop/content/submit', formData, {
-        headers: {},
-      });
-
-      if (response.ok) {
-        showToast('Content submitted successfully! Pending review.', 'success');
-        onSuccess();
-      } else {
-        const error = await response.json();
-        showToast(error.message || 'Failed to submit content', 'error');
-      }
+      await api.post('/client/airdrop/content/submit', formData);
+      showToast('Content submitted successfully! Pending review.', 'success');
+      onSuccess();
     } catch (error) {
       console.error('Failed to submit content:', error);
       showToast('Failed to submit content', 'error');

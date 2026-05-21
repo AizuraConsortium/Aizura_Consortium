@@ -27,11 +27,8 @@ export function UserStatsHero({ userId }: UserStatsHeroProps) {
 
   async function loadStats() {
     try {
-      const response = await api.get(`/client/airdrop/stats`);
-      if (response.ok) {
-        const data = await response.json();
-        setStats(data);
-      }
+      const data = await api.get<UserStats>(`/client/airdrop/stats`);
+      setStats(data);
     } catch (error) {
       console.error('Failed to load user stats:', error);
     } finally {

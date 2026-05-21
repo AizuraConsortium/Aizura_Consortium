@@ -3,10 +3,10 @@ import { Link, useParams } from 'react-router-dom';
 import { useState } from 'react';
 import {
   ArrowLeft, Clock, CheckCircle2, XCircle, TrendingUp, Target,
-  Users, Vote, Shield, AlertTriangle, TrendingDown, Zap, Info,
-  Copy, ExternalLink, ThumbsUp, ThumbsDown, Calendar, Award,
-  BarChart3, Activity, Briefcase, Code, DollarSign, LineChart,
-  Lock, Unlock
+  Users, Vote, Shield, AlertTriangle, Zap, Info,
+  Copy, ExternalLink, ThumbsUp, ThumbsDown, Award,
+  Activity, Briefcase, Code, DollarSign,
+  Lock
 } from 'lucide-react';
 
 type ProposalStatus = 'proposed' | 'approved' | 'in_development' | 'launched' | 'profitable' | 'rejected' | 'cancelled';
@@ -121,10 +121,9 @@ const MOCK_PROPOSAL: ProposalData = {
 };
 
 export default function ProposalDetail() {
-  const { proposalId } = useParams<{ proposalId: string }>();
+  useParams<{ proposalId: string }>();
   const [activeTab, setActiveTab] = useState<'concept' | 'execution' | 'risks'>('concept');
   const [userVote, setUserVote] = useState<'for' | 'against' | null>(null);
-  const [showSignal, setShowSignal] = useState(false);
   const [isLoggedIn] = useState(false);
   const [votingPower] = useState(0);
 
@@ -132,7 +131,6 @@ export default function ProposalDetail() {
   const totalVotes = proposal.votesFor + proposal.votesAgainst;
   const approvalRate = Math.round((proposal.votesFor / totalVotes) * 100);
   const quorumMet = proposal.quorum >= 20;
-  const approvalMet = approvalRate >= 60;
   const canVote = isLoggedIn && votingPower >= 1 && !userVote && proposal.status === 'proposed';
 
   const timeRemaining = getTimeRemaining(proposal.votingEnds);

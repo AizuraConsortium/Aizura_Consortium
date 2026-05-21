@@ -2,6 +2,7 @@ import type { ProposalStatus } from '@shared/types/models';
 
 interface ProposalStatusBadgeProps {
   status: ProposalStatus;
+  variant?: 'light' | 'dark';
 }
 
 export function ProposalStatusBadge({ status }: ProposalStatusBadgeProps) {

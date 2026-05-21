@@ -68,11 +68,8 @@ export function SocialConnections({ userId }: SocialConnectionsProps) {
 
   async function loadConnections() {
     try {
-      const response = await api.get(`/client/airdrop/social/connections`);
-      if (response.ok) {
-        const data = await response.json();
-        setConnections(data.connections || []);
-      }
+      const data = await api.get<{ connections: SocialConnection[] }>(`/client/airdrop/social/connections`);
+      setConnections(data.connections || []);
     } catch (error) {
       console.error('Failed to load social connections:', error);
     } finally {
@@ -83,13 +80,8 @@ export function SocialConnections({ userId }: SocialConnectionsProps) {
   async function handleConnect(platform: string) {
     setConnecting(platform);
     try {
-      const response = await api.post(`/client/airdrop/connect/${platform}/initiate`, {});
-      if (response.ok) {
-        const data = await response.json();
-        window.location.href = data.authUrl;
-      } else {
-        showToast('Failed to initiate connection', 'error');
-      }
+      const data = await api.post<{ authUrl: string }>(`/client/airdrop/connect/${platform}/initiate`, {});
+      window.location.href = data.authUrl;
     } catch (error) {
       console.error('Failed to connect:', error);
       showToast('Failed to connect to ' + platform, 'error');
@@ -101,17 +93,12 @@ export function SocialConnections({ userId }: SocialConnectionsProps) {
   async function handleVerify(platform: string) {
     setVerifying(platform);
     try {
-      const response = await api.post(`/client/airdrop/verify/${platform}`, {});
-      if (response.ok) {
-        const data = await response.json();
-        if (data.verified) {
-          showToast(`${PLATFORM_CONFIG[platform as keyof typeof PLATFORM_CONFIG].name} verification complete! +${data.pointsAwarded} points`, 'success');
-          loadConnections();
-        } else {
-          showToast('Verification incomplete. Please complete the required actions.', 'warning');
-        }
+      const data = await api.post<{ verified: boolean; pointsAwarded: number }>(`/client/airdrop/verify/${platform}`, {});
+      if (data.verified) {
+        showToast(`${PLATFORM_CONFIG[platform as keyof typeof PLATFORM_CONFIG].name} verification complete! +${data.pointsAwarded} points`, 'success');
+        loadConnections();
       } else {
-        showToast('Verification failed', 'error');
+        showToast('Verification incomplete. Please complete the required actions.', 'warning');
       }
     } catch (error) {
       console.error('Failed to verify:', error);
@@ -127,13 +114,9 @@ export function SocialConnections({ userId }: SocialConnectionsProps) {
     }
 
     try {
-      const response = await api.post(`/client/airdrop/disconnect/${platform}`, {});
-      if (response.ok) {
-        showToast(`${PLATFORM_CONFIG[platform as keyof typeof PLATFORM_CONFIG].name} disconnected`, 'success');
-        loadConnections();
-      } else {
-        showToast('Failed to disconnect', 'error');
-      }
+      await api.post(`/client/airdrop/disconnect/${platform}`, {});
+      showToast(`${PLATFORM_CONFIG[platform as keyof typeof PLATFORM_CONFIG].name} disconnected`, 'success');
+      loadConnections();
     } catch (error) {
       console.error('Failed to disconnect:', error);
       showToast('Failed to disconnect', 'error');

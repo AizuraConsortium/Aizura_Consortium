@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
-import { createProposalsRepository } from '../../shared/services/supabase/repositories/proposals.js';
-import { getWebsiteSupabaseClient } from '../config/supabaseWebsiteClient.js';
+import { createProposalsRepository } from '../repositories/proposals.js';
+import { getWebsiteSupabaseClient } from '../../website/config/supabaseWebsiteClient.js';
 
 export class ProposalController {
   private proposalsRepo = createProposalsRepository(getWebsiteSupabaseClient());

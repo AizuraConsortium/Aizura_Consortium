@@ -33,23 +33,20 @@ export function PointsBreakdown({ userId }: PointsBreakdownProps) {
 
   async function loadBreakdown() {
     try {
-      const response = await api.get(`/client/airdrop/points/breakdown`);
-      if (response.ok) {
-        const data = await response.json();
-        const categories: PointCategory[] = Object.entries(data.breakdown || {}).map(
-          ([key, value]: [string, any]) => {
-            const config = CATEGORY_CONFIG[key as keyof typeof CATEGORY_CONFIG] || CATEGORY_CONFIG.other;
-            return {
-              category: config.label,
-              points: value.points,
-              percentage: value.percentage,
-              color: config.color,
-              icon: config.icon,
-            };
-          }
-        );
-        setBreakdown(categories);
-      }
+      const data = await api.get<{ breakdown: Record<string, { points: number; percentage: number }> }>(`/client/airdrop/points/breakdown`);
+      const categories: PointCategory[] = Object.entries(data.breakdown || {}).map(
+        ([key, value]: [string, any]) => {
+          const config = CATEGORY_CONFIG[key as keyof typeof CATEGORY_CONFIG] || CATEGORY_CONFIG.other;
+          return {
+            category: config.label,
+            points: value.points,
+            percentage: value.percentage,
+            color: config.color,
+            icon: config.icon,
+          };
+        }
+      );
+      setBreakdown(categories);
     } catch (error) {
       console.error('Failed to load points breakdown:', error);
     } finally {

@@ -13,7 +13,6 @@ type GovernanceFilter = 'all' | 'foundation' | 'dao';
 
 export default function PortfolioView() {
   const [filters, setFilters] = useState<BusinessFilters>({
-    sort: 'created_at',
     order: 'desc',
   });
   const [governanceFilter, setGovernanceFilter] = useState<GovernanceFilter>('all');

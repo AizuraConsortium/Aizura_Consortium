@@ -153,7 +153,7 @@ export async function logFailure(
  */
 export async function withAdminAction(
   req: Request,
-  res: Response,
+  _res: Response,
   actionType: ActionType,
   resourceType: ResourceType,
   action: () => Promise<{
@@ -203,7 +203,7 @@ export async function withAdminAction(
  *   'user_delete',
  *   'user',
  *   (req) => req.params.id
- * )(async (req, res) => {
+ * )(async (req, _res) => {
  *   await userService.deleteUser(req.params.id);
  *   res.json({ success: true });
  * });
@@ -223,7 +223,7 @@ export function adminAction(
 
       try {
         // Execute the handler
-        await handler(req, res);
+        await handler(req, _res);
 
         // Log success
         await logSuccess(req, actionType, resourceType, details, resourceId);

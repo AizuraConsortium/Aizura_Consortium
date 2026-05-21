@@ -88,7 +88,7 @@ export class AntiSybilDetector {
 
     if (!user?.wallet_address) return result;
 
-    const { data: duplicates, count } = await this.supabase
+    const { count } = await this.supabase
       .from('users')
       .select('id', { count: 'exact' })
       .eq('wallet_address', user.wallet_address)

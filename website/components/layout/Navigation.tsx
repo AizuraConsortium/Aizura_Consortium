@@ -6,6 +6,7 @@ import type { DropdownSection } from './DropdownMenu';
 
 interface NavigationProps {
   onConnectWallet?: () => void;
+  variant?: string;
 }
 
 export function Navigation({ onConnectWallet }: NavigationProps) {

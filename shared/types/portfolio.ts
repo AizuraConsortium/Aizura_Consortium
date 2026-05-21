@@ -124,6 +124,12 @@ export interface UserExposure {
 
   // Calculated metrics
   exposure_score: number; // 0-100
+
+  // Computed/extended fields
+  votes_cast?: number;          // votes_for + votes_against
+  exposure_type?: string;       // ExposureType value
+  last_activity_at?: string | null;
+  activity_level?: ActivityLevel;
 }
 
 /**
@@ -132,6 +138,12 @@ export interface UserExposure {
 export interface BusinessWithMetrics extends Business {
   performance: BusinessPerformance | null;
   exposure: UserExposure | null;
+  current_metrics?: {
+    revenue: number;
+    users: number;
+    transactions?: number;
+    api_calls?: number;
+  } | null;
 }
 
 /**
@@ -157,6 +169,10 @@ export interface PortfolioOverview {
 
   // Business list
   businesses: BusinessWithMetrics[];
+
+  // Computed totals
+  total_exposure_score?: number;
+  total_users?: number;
 }
 
 /**

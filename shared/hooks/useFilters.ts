@@ -64,7 +64,7 @@ export function useFilters<T extends Record<string, any>>({
     if (!syncWithUrl) return initialFilters;
 
     const params = new URLSearchParams(location.search);
-    const urlFilters = { ...initialFilters };
+    const urlFilters = { ...initialFilters } as Record<string, any>;
 
     Object.keys(initialFilters).forEach((key) => {
       const value = params.get(key);
@@ -72,16 +72,16 @@ export function useFilters<T extends Record<string, any>>({
         const initialValue = initialFilters[key];
 
         if (typeof initialValue === 'number') {
-          urlFilters[key] = Number(value) as T[Extract<keyof T, string>];
+          urlFilters[key] = Number(value);
         } else if (typeof initialValue === 'boolean') {
-          urlFilters[key] = (value === 'true') as T[Extract<keyof T, string>];
+          urlFilters[key] = value === 'true';
         } else {
-          urlFilters[key] = value as T[Extract<keyof T, string>];
+          urlFilters[key] = value;
         }
       }
     });
 
-    return urlFilters;
+    return urlFilters as T;
   }, [initialFilters, location.search, syncWithUrl]);
 
   const [filters, setFiltersState] = useState<T>(getFiltersFromUrl);

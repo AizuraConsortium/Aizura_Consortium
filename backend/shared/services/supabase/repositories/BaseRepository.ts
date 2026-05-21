@@ -13,10 +13,8 @@ import { getSupabaseClient } from '../client.js';
 import { isPostgresError, isUniqueViolation, isForeignKeyViolation, isNotNullViolation } from '../errorHandlers.js';
 import {
   RepositoryError,
-  NotFoundError,
   ValidationError,
   ConstraintViolationError,
-  QueryTimeoutError,
   type ErrorContext,
 } from './errors/RepositoryError.js';
 import { queryMonitor } from '../monitoring/QueryMonitor.js';

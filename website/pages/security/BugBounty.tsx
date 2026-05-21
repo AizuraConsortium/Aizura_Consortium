@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { PageLayout } from '../../components/layout/PageLayout';
 import {
   Shield, DollarSign, Award, CheckCircle2, XCircle,
-  AlertTriangle, FileText, ArrowRight, Star, Trophy, Lock
+  AlertTriangle, ArrowRight, Star, Trophy, Lock
 } from 'lucide-react';
 
 export default function BugBounty() {
@@ -95,7 +95,7 @@ export default function BugBounty() {
     'CSRF on forms with no security impact',
   ];
 
-  const hallOfFame = [
+  const hallOfFame: Array<{ name: string; severity: string; reward: string; date: string }> = [
     // Placeholder - will be populated with real submissions
   ];
 

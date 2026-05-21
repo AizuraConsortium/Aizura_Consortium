@@ -10,7 +10,6 @@ import { handleControllerError } from '../utils/errorHandler.js';
 import {
   ApiResponse,
   PaginatedResponse,
-  SuccessResponse,
 } from '../types/controllers.js';
 import { PaginatedRequest, getPaginationMeta } from '../middleware/pagination.js';
 

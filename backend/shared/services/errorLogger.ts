@@ -44,7 +44,7 @@ export class ErrorLogger {
 
     // Email addresses (partial redaction)
     { pattern: /([a-zA-Z0-9._%+-]+)@([a-zA-Z0-9.-]+\.[a-zA-Z]{2,})/g,
-      replacement: (match: string, local: string, domain: string) => {
+      replacement: (_match: string, local: string, domain: string) => {
         const redactedLocal = local.substring(0, 2) + '***';
         return `${redactedLocal}@${domain}`;
       }

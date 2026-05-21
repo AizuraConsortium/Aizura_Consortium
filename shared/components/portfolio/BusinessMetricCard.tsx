@@ -75,7 +75,7 @@ function TrendIndicator({ trend }: { trend: MetricTrend }) {
   return (
     <div className={cn('flex items-center gap-1 px-2 py-1 rounded-md text-sm font-medium', colorClasses)}>
       <Icon className="w-4 h-4" />
-      <span>{trend.change_percent}%</span>
+      <span>{trend.change_percentage}%</span>
     </div>
   );
 }

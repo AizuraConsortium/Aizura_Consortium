@@ -17,7 +17,6 @@ import type {
 } from '../../../../../shared/types/portfolio.js';
 import type { Database } from '../../../../../shared/types/database.types.js';
 
-type BusinessRow = Database['public']['Tables']['u2e_businesses']['Row'];
 type BusinessUpdate = Database['public']['Tables']['u2e_businesses']['Update'];
 
 /**

@@ -1,6 +1,6 @@
-import { createQueryBuilder, type WriteQueryBuilder } from '../queryBuilderFactory.js';
-import { getSupabaseClient } from '../client.js';
-import type { Plan, PlanRevision, AgentId, PlanOperation } from '../../../../../shared/types/models.js';
+import { createQueryBuilder, type WriteQueryBuilder } from '../../shared/services/supabase/queryBuilderFactory.js';
+import { getSupabaseClient } from '../../shared/services/supabase/client.js';
+import type { Plan, PlanRevision, AgentId, PlanOperation } from '../../../shared/types/models.js';
 import type { SupabaseClient } from '@supabase/supabase-js';
 
 function createPlansRepository(client?: SupabaseClient) {

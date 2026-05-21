@@ -1,7 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
-import { Orchestrator } from './shared/orchestrator/Orchestrator.js';
+import { Orchestrator } from './consortium/orchestrator/Orchestrator.js';
 import { ErrorLogger } from './shared/services/errorLogger.js';
 import { Container } from './shared/infrastructure/Container.js';
 import {
@@ -23,10 +23,10 @@ import adminSystemRoutes from './admin/routes/systemRoutes.js';
 import adminUserRoutes from './admin/routes/userRoutes.js';
 import createOrchestratorRoutes from './admin/routes/orchestratorRoutes.js';
 import createAuditRoutes from './admin/routes/auditRoutes.js';
-import websiteTopicRoutes from './website/routes/topicRoutes.js';
-import websiteMessageRoutes from './website/routes/messageRoutes.js';
-import websiteProposalRoutes from './website/routes/proposalRoutes.js';
-import createRealtimeRoutes from './website/routes/realtimeRoutes.js';
+import websiteTopicRoutes from './consortium/routes/topicRoutes.js';
+import websiteMessageRoutes from './consortium/routes/messageRoutes.js';
+import websiteProposalRoutes from './consortium/routes/proposalRoutes.js';
+import createRealtimeRoutes from './consortium/routes/realtimeRoutes.js';
 import clientProposalRoutes from './client/routes/proposalRoutes.js';
 import clientNotificationRoutes from './client/routes/notificationRoutes.js';
 import clientU2ERoutes from './client/routes/u2eRoutes.js';
@@ -94,7 +94,7 @@ await container.initialize();
 /**
  * Middleware to log requests without Origin header in production
  */
-app.use((req, res, next) => {
+app.use((req, _res, next) => {
   const origin = req.headers.origin;
 
   if (!origin && process.env.NODE_ENV === 'production') {
@@ -150,7 +150,7 @@ app.use(cors({
 /**
  * Security headers middleware
  */
-app.use((req, res, next) => {
+app.use((_req, res, next) => {
   if (process.env.NODE_ENV === 'production') {
     res.setHeader('Strict-Transport-Security', buildHSTSHeader());
   }
@@ -230,7 +230,7 @@ app.use('/api/tokenomics', tokenomicsRoutes);
  * Global error handling middleware
  * This must be registered AFTER all routes
  */
-app.use((err: any, req: express.Request, res: express.Response, next: express.NextFunction) => {
+app.use((err: any, _req: express.Request, res: express.Response, _next: express.NextFunction) => {
   const errorMessage = err.message || 'An error occurred';
   const stackTrace = err.stack || '';
   const statusCode = err.statusCode || err.status || 500;

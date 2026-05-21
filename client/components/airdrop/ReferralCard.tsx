@@ -45,11 +45,8 @@ export function ReferralCard({ userId }: ReferralCardProps) {
 
   async function loadReferralStats() {
     try {
-      const response = await api.get(`/client/airdrop/referrals/stats`);
-      if (response.ok) {
-        const data = await response.json();
-        setStats(data);
-      }
+      const data = await api.get<ReferralStats>(`/client/airdrop/referrals/stats`);
+      setStats(data);
     } catch (error) {
       console.error('Failed to load referral stats:', error);
     } finally {
@@ -287,7 +284,7 @@ export function ReferralCard({ userId }: ReferralCardProps) {
 
       {selectedReferral && (
         <ReferralDetailsModal
-          referral={selectedReferral}
+          referral={selectedReferral as any}
           onClose={() => setSelectedReferral(null)}
         />
       )}

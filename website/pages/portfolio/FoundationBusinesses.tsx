@@ -2,9 +2,9 @@ import { PageLayout } from '../../components/layout/PageLayout';
 import { Link } from 'react-router-dom';
 import { MethodologyLink } from '../../components/shared/MethodologyLink';
 import {
-  Shield, CheckCircle2, TrendingUp, Users, DollarSign, Activity,
+  Shield, CheckCircle2, TrendingUp, TrendingDown, Users, DollarSign, Activity,
   ArrowRight, Clock, Target, Zap, BarChart3, AlertCircle, Brain,
-  Code, Briefcase, Globe, Info, X, FileText
+  Code, Briefcase, Globe, Info, X
 } from 'lucide-react';
 
 export default function FoundationBusinesses() {

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { CheckCircle, XCircle, Activity } from 'lucide-react';
+import { XCircle, Activity } from 'lucide-react';
 import { api } from '../../lib/api';
 import { Button } from '../../../shared/components/ui/Button';
 

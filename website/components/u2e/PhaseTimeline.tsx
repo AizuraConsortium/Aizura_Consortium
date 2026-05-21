@@ -80,7 +80,7 @@ export function PhaseTimeline() {
         <div className="absolute top-12 left-0 right-0 h-1 bg-gradient-to-r from-blue-500 via-cyan-500 via-green-500 to-emerald-500 opacity-30 hidden md:block" />
 
         <div className="grid md:grid-cols-3 gap-6">
-          {phases.map((phase, index) => (
+          {phases.map((phase) => (
             <div
               key={phase.id}
               className={`relative bg-slate-800/50 border rounded-xl p-6 transition-all duration-300 ${

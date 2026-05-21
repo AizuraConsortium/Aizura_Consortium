@@ -37,11 +37,8 @@ export function DailyTasks({ userId }: DailyTasksProps) {
 
   async function loadTasks() {
     try {
-      const response = await api.get(`/client/airdrop/daily-tasks`);
-      if (response.ok) {
-        const taskData = await response.json();
-        setData(taskData);
-      }
+      const taskData = await api.get<TasksData>(`/client/airdrop/daily-tasks`);
+      setData(taskData);
     } catch (error) {
       console.error('Failed to load daily tasks:', error);
     } finally {
@@ -52,15 +49,9 @@ export function DailyTasks({ userId }: DailyTasksProps) {
   async function claimTask(taskId: string) {
     setClaiming(taskId);
     try {
-      const response = await api.post(`/client/airdrop/daily-tasks/${taskId}/claim`, {});
-      if (response.ok) {
-        const result = await response.json();
-        showToast(`Task completed! +${result.pointsAwarded} points`, 'success');
-        loadTasks();
-      } else {
-        const error = await response.json();
-        showToast(error.message || 'Failed to claim task', 'error');
-      }
+      const result = await api.post<{ pointsAwarded: number }>(`/client/airdrop/daily-tasks/${taskId}/claim`, {});
+      showToast(`Task completed! +${result.pointsAwarded} points`, 'success');
+      loadTasks();
     } catch (error) {
       console.error('Failed to claim task:', error);
       showToast('Failed to claim task', 'error');

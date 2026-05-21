@@ -1,8 +1,8 @@
 import { PageLayout } from '../../components/layout/PageLayout';
 import { Link } from 'react-router-dom';
 import {
-  Factory, ExternalLink, ArrowRight, CheckCircle2, Clock,
-  Shield, Lightbulb, Zap, Users, Target, Sparkles, Eye, TrendingUp,
+  Factory, ArrowRight, CheckCircle2, Clock,
+  Shield, Lightbulb, Users, Sparkles, Eye, TrendingUp,
   Brain, Cpu, Network, Briefcase
 } from 'lucide-react';
 

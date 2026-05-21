@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import { pointsEngine } from '../services/pointsCalculationEngine';
 
 export class U2EPointsController {
-  async getPointValues(req: Request, res: Response): Promise<void> {
+  async getPointValues(_req: Request, res: Response): Promise<void> {
     try {
       await pointsEngine.refreshPointValues();
       const values = Array.from((pointsEngine as any).pointValuesCache.values());
@@ -13,7 +13,7 @@ export class U2EPointsController {
     }
   }
 
-  async trackAction(req: Request, res: Response): Promise<void> {
+  async trackAction(_req: Request, res: Response): Promise<void> {
     try {
       const { userId, actionType, metadata } = req.body;
 
@@ -35,7 +35,7 @@ export class U2EPointsController {
     }
   }
 
-  async getUserPoints(req: Request, res: Response): Promise<void> {
+  async getUserPoints(_req: Request, res: Response): Promise<void> {
     try {
       const { userId } = req.params;
       const { month, year } = req.query;
@@ -57,7 +57,7 @@ export class U2EPointsController {
     }
   }
 
-  async calculateDistribution(req: Request, res: Response): Promise<void> {
+  async calculateDistribution(_req: Request, res: Response): Promise<void> {
     try {
       const { month, year } = req.query;
 

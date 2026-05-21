@@ -19,8 +19,8 @@ export default function Dashboard() {
   if (statsError || treasuryError) {
     return (
       <ErrorAlert
-        title="Failed to load dashboard data"
-        message={statsError || treasuryError || 'Unknown error'}
+        message="Failed to load dashboard data"
+        details={statsError || treasuryError || 'Unknown error'}
       />
     );
   }

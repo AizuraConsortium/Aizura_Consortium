@@ -51,7 +51,7 @@ export default function Litepaper() {
 
           <div className="bg-slate-800/30 backdrop-blur border border-slate-700 rounded-xl p-4">
             <div className="flex flex-wrap items-center justify-center gap-4 text-sm text-slate-300">
-              {sections.map((section, index) => (
+              {sections.map((section) => (
                 <a
                   key={section.id}
                   href={`#${section.id}`}

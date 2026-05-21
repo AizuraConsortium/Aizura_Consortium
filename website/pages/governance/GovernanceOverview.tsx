@@ -2,8 +2,8 @@ import { PageLayout } from '../../components/layout/PageLayout';
 import { Link } from 'react-router-dom';
 import {
   Shield, Users, Cpu, Vote, CheckCircle2, XCircle, Clock,
-  ArrowRight, AlertTriangle, Eye, Lock, Unlock, TrendingUp,
-  FileText, BarChart3, Target, Zap, Info, BookOpen, Activity
+  ArrowRight, AlertTriangle, Eye, Lock, TrendingUp,
+  FileText, BarChart3, Target, Zap, Info, Activity
 } from 'lucide-react';
 import { TOKENOMICS } from '../../../shared/constants/tokenomics';
 

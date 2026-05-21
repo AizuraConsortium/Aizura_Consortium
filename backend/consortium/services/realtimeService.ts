@@ -6,7 +6,7 @@
  */
 
 import { Response } from 'express';
-import { getWebsiteSupabaseClient } from '../config/supabaseWebsiteClient.js';
+import { getWebsiteSupabaseClient } from '../../website/config/supabaseWebsiteClient.js';
 import type { Message } from '../../../shared/types/models.js';
 import type { RealtimeChannel } from '@supabase/supabase-js';
 

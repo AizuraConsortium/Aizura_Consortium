@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import { crossChainTracking } from '../services/crossChainTracking';
 
 export class BlockchainController {
-  async getChainBalances(req: Request, res: Response): Promise<void> {
+  async getChainBalances(_req: Request, res: Response): Promise<void> {
     try {
       const balances = await crossChainTracking.getChainBalances();
       res.json({ chains: balances });
@@ -11,7 +11,7 @@ export class BlockchainController {
     }
   }
 
-  async getCrossChainStats(req: Request, res: Response): Promise<void> {
+  async getCrossChainStats(_req: Request, res: Response): Promise<void> {
     try {
       const stats = await crossChainTracking.getCrossChainStats();
       res.json(stats);
@@ -20,7 +20,7 @@ export class BlockchainController {
     }
   }
 
-  async verifySupply(req: Request, res: Response): Promise<void> {
+  async verifySupply(_req: Request, res: Response): Promise<void> {
     try {
       const verification = await crossChainTracking.verifySupplyIntegrity();
       res.json(verification);
@@ -29,7 +29,7 @@ export class BlockchainController {
     }
   }
 
-  async getChainInfo(req: Request, res: Response): Promise<void> {
+  async getChainInfo(_req: Request, res: Response): Promise<void> {
     try {
       const { chainName } = req.params;
 

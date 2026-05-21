@@ -1,6 +1,6 @@
 import type { Request, Response, NextFunction } from 'express';
 import { RateLimiterService } from '../services/rateLimiter.js';
-import { getRateLimitForEndpoint, normalizeEndpoint } from '../config/rateLimits.js';
+import { getRateLimitForEndpoint } from '../config/rateLimits.js';
 import { sanitizeText } from '../utils/sanitization.js';
 
 const rateLimiter = RateLimiterService.getInstance();

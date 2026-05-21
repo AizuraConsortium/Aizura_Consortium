@@ -1,7 +1,7 @@
 import { PageLayout } from '../../components/layout/PageLayout';
 import { Link } from 'react-router-dom';
 import {
-  AlertTriangle, Shield, TrendingDown, Scale, Cpu, Users,
+  AlertTriangle, Shield, TrendingDown, TrendingUp, Scale, Cpu, Users,
   Globe, DollarSign, Activity, XCircle, Info, ArrowRight,
   FileWarning, Lock, Eye, Zap, Vote
 } from 'lucide-react';

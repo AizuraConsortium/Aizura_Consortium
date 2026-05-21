@@ -55,15 +55,12 @@ export default function DashboardHome() {
 
   const fetchAirdropStats = async () => {
     try {
-      const response = await api.get('/client/airdrop/stats');
-      if (response.ok) {
-        const data = await response.json();
-        setAirdropStats({
-          totalPoints: data.totalPoints || 0,
-          rank: data.rank || 0,
-          totalUsers: data.totalUsers || 0,
-        });
-      }
+      const data = await api.get<{ totalPoints: number; rank: number; totalUsers: number }>('/client/airdrop/stats');
+      setAirdropStats({
+        totalPoints: data.totalPoints || 0,
+        rank: data.rank || 0,
+        totalUsers: data.totalUsers || 0,
+      });
     } catch (error) {
       console.error('Failed to fetch airdrop stats:', error);
     }

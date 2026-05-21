@@ -31,7 +31,7 @@ export interface UserContextRequest extends Request {
  * );
  */
 export function requireUserId() {
-  return (req: Request, res: Response, next: NextFunction): void => {
+  return (req: Request, _res: Response, next: NextFunction): void => {
     // Check if user exists and has an ID
     if (!req.user || !req.user.id) {
       res.status(401).json({
@@ -61,7 +61,7 @@ export function requireUserId() {
  * );
  */
 export function optionalUserId() {
-  return (req: Request, res: Response, next: NextFunction): void => {
+  return (req: Request, _res: Response, next: NextFunction): void => {
     // Set userId if available
     if (req.user && req.user.id) {
       (req as UserContextRequest).userId = req.user.id;
@@ -90,7 +90,7 @@ export function optionalUserId() {
 export function requireUserOrAdmin(
   getResourceUserId: (req: Request) => string
 ) {
-  return (req: Request, res: Response, next: NextFunction): void => {
+  return (req: Request, _res: Response, next: NextFunction): void => {
     if (!req.user || !req.user.id) {
       res.status(401).json({
         error: 'Authentication required',

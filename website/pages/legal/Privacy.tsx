@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { PageLayout } from '../../components/layout/PageLayout';
-import { Shield, Eye, Lock, AlertTriangle, Database, UserCheck, Globe, Mail } from 'lucide-react';
+import { Shield, Eye, Lock, AlertTriangle, Mail } from 'lucide-react';
 
 export default function PrivacyPolicy() {
   return (

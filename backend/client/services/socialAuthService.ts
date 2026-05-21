@@ -1,7 +1,7 @@
 import type { SupabaseClient } from '@supabase/supabase-js';
 import { DatabaseService } from '../../shared/services/DatabaseService.js';
 import { PointCalculator } from '../../shared/utils/pointCalculator.js';
-import { twitterClient, discordClient, githubClient, telegramClient } from '../../shared/lib/oauthClients.js';
+import { twitterClient, discordClient } from '../../shared/lib/oauthClients.js';
 
 export type SocialPlatform = 'twitter' | 'discord' | 'telegram' | 'github';
 

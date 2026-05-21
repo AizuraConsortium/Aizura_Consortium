@@ -7,17 +7,12 @@
  */
 
 import { BaseRepository, type OperationContext } from './BaseRepository.js';
-import { NotFoundError } from './errors/RepositoryError.js';
 import type {
   NewsArticle,
-  NewsArticleCompact,
   NewsFilters,
 } from '../../../../../shared/types/news.js';
 import type { Database } from '../../../../../shared/types/database.types.js';
 
-type NewsArticleRow = Database['public']['Tables']['news_articles']['Row'];
-type NewsArticleInsert = Database['public']['Tables']['news_articles']['Insert'];
-type NewsArticleUpdate = Database['public']['Tables']['news_articles']['Update'];
 
 /**
  * News Repository Class

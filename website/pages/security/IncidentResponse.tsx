@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { PageLayout } from '../../components/layout/PageLayout';
 import {
   Shield, AlertTriangle, Clock, CheckCircle2, XCircle,
-  Lock, Mail, FileText, ArrowRight, Key
+  Mail, FileText, ArrowRight, Key
 } from 'lucide-react';
 
 export default function IncidentResponse() {

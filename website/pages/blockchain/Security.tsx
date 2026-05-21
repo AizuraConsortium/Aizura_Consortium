@@ -2,7 +2,7 @@ import { PageLayout } from '../../components/layout/PageLayout';
 import { Link } from 'react-router-dom';
 import {
   Shield, Bot, CheckCircle2, AlertTriangle, Award,
-  Bell, FileText, TrendingUp, Lock, Eye, Zap, Brain,
+  Bell, FileText, TrendingUp, Eye, Zap, Brain,
   Target, BarChart3, ExternalLink
 } from 'lucide-react';
 

@@ -8,7 +8,6 @@
 import { portfolioRepository } from '../../shared/services/supabase/repositories/portfolio.js';
 import { businessMetricsRepository } from '../../shared/services/supabase/repositories/businessMetrics.js';
 import type {
-  Business,
   BusinessWithMetrics,
   BusinessPerformance,
   UserExposure,

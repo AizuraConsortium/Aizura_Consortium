@@ -154,7 +154,7 @@ export class ReferralService extends DatabaseService {
       };
     }
 
-    const { data: referrals, count: totalReferrals } = await this.supabase
+    const { count: totalReferrals } = await this.supabase
       .from('users')
       .select('id', { count: 'exact' })
       .eq('referred_by', user.referral_code);

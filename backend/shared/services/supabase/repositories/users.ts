@@ -1,9 +1,8 @@
-import { create, getMany, getOne, updateWhere, deleteById, query } from '../queryBuilder.js';
+import { create, getOne, updateWhere, deleteById, query } from '../queryBuilder.js';
 import type { Database } from '../../../../../shared/types/database.types.js';
 
 type User = Database['public']['Tables']['users']['Row'];
 type UserInsert = Database['public']['Tables']['users']['Insert'];
-type UserUpdate = Database['public']['Tables']['users']['Update'];
 
 export interface UserFilters {
   role?: 'admin' | 'client';

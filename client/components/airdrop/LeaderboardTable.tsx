@@ -32,12 +32,9 @@ export function LeaderboardTable({ currentUserId }: LeaderboardTableProps) {
   async function loadLeaderboard(showRefreshing = false) {
     if (showRefreshing) setRefreshing(true);
     try {
-      const response = await api.get(`/client/airdrop/leaderboard?page=${page}&limit=100`);
-      if (response.ok) {
-        const data = await response.json();
-        setEntries(data.entries || []);
-        setTotalPages(data.totalPages || 1);
-      }
+      const data = await api.get<{ entries: LeaderboardEntry[]; totalPages: number }>(`/client/airdrop/leaderboard?page=${page}&limit=100`);
+      setEntries(data.entries || []);
+      setTotalPages(data.totalPages || 1);
     } catch (error) {
       console.error('Failed to load leaderboard:', error);
     } finally {

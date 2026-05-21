@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import { X, Bug, AlertTriangle, AlertCircle, Info, RefreshCw } from 'lucide-react';
-import { api } from '../lib/api';
 import type { ErrorLog } from '@shared/types/models';
 
 interface DebugWindowProps {
@@ -170,13 +169,13 @@ export default function DebugWindow({ isOpen, onClose }: DebugWindowProps) {
 
                 <p className="text-sm font-medium mb-2">{error.message}</p>
 
-                {Object.keys(error.details).length > 0 && (
+                {error.details_metadata_json != null && Object.keys(error.details_metadata_json).length > 0 && (
                   <details className="mt-2">
                     <summary className="text-xs text-slate-400 cursor-pointer hover:text-slate-300">
                       View details
                     </summary>
                     <pre className="mt-2 p-2 bg-slate-900/50 rounded text-xs overflow-auto">
-                      {JSON.stringify(error.details, null, 2)}
+                      {JSON.stringify(error.details_metadata_json, null, 2)}
                     </pre>
                   </details>
                 )}

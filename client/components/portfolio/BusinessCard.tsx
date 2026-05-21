@@ -9,7 +9,7 @@ import { Link } from 'react-router-dom';
 import { Briefcase, ExternalLink, Github, Globe, Vote } from 'lucide-react';
 import { StatusBadge, ProgressBadge, StatusBadgeGroup } from '@shared/components/portfolio/StatusBadge';
 import { FoundationBadge } from '@shared/components/portfolio/FoundationBadge';
-import type { BusinessWithMetrics } from '@shared/types/portfolio';
+import type { BusinessWithMetrics, ExposureType } from '@shared/types/portfolio';
 
 interface BusinessCardProps {
   business: BusinessWithMetrics;
@@ -84,7 +84,7 @@ export function BusinessCard({ business, showExposure = true, className = '' }: 
               </span>
             )}
             {showExposure && business.exposure && (
-              <StatusBadge exposureType={business.exposure.exposure_type} showIcon size="sm" />
+              <StatusBadge exposureType={business.exposure.exposure_type as ExposureType | undefined} showIcon size="sm" />
             )}
           </StatusBadgeGroup>
         </div>
@@ -121,7 +121,7 @@ export function BusinessCard({ business, showExposure = true, className = '' }: 
             <div className="bg-slate-900/50 rounded-lg p-3">
               <div className="text-xs text-slate-400 mb-1">Current Revenue</div>
               <div className="text-lg font-bold text-green-400">
-                {formatRevenue(business.current_metrics.revenue)}
+                {formatRevenue(business.current_metrics?.revenue ?? 0)}
               </div>
             </div>
           )}
@@ -129,7 +129,7 @@ export function BusinessCard({ business, showExposure = true, className = '' }: 
             <div className="bg-slate-900/50 rounded-lg p-3">
               <div className="text-xs text-slate-400 mb-1">Active Users</div>
               <div className="text-lg font-bold text-blue-400">
-                {formatNumber(business.current_metrics.users)}
+                {formatNumber(business.current_metrics?.users ?? 0)}
               </div>
             </div>
           )}
@@ -142,7 +142,7 @@ export function BusinessCard({ business, showExposure = true, className = '' }: 
             <span className="text-slate-300">Your Exposure Score</span>
             <span className="font-bold text-cyan-400">{business.exposure.exposure_score.toFixed(1)}</span>
           </div>
-          {business.exposure.votes_cast > 0 && (
+          {(business.exposure.votes_cast ?? 0) > 0 && (
             <div className="text-xs text-slate-400 mt-1">
               {business.exposure.votes_cast} vote{business.exposure.votes_cast !== 1 ? 's' : ''} cast
             </div>

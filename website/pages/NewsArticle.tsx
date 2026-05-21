@@ -2,10 +2,9 @@ import { useState, useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { PageLayout } from '../components/layout/PageLayout';
 import {
-  Calendar, Clock, User, ArrowLeft, ArrowRight, Share2,
+  Calendar, Clock, User, ArrowLeft, ArrowRight,
   Twitter, Linkedin, Facebook, Link as LinkIcon, Check
 } from 'lucide-react';
-import ReactMarkdown from 'react-markdown';
 
 interface NewsArticle {
   id: string;

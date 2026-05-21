@@ -29,7 +29,7 @@ function getClientIp(req: Request): string {
   return req.ip || req.socket.remoteAddress || 'unknown';
 }
 
-export function adminActionLogger(req: Request, res: Response, next: NextFunction): void {
+export function adminActionLogger(req: Request, _res: Response, next: NextFunction): void {
   const adminUserId = req.user?.id;
   const ipAddress = getClientIp(req);
   const userAgent = req.headers['user-agent'];

@@ -132,6 +132,15 @@ export const apiClient = {
     return validateResponse(data, validator);
   },
 
+  async put<T>(endpoint: string, body?: unknown, token?: string, validator?: (val: unknown) => val is T): Promise<T> {
+    const data = await fetchWithRetry(`${API_URL}${resolveEndpoint(endpoint)}`, {
+      method: 'PUT',
+      headers: createHeaders(token),
+      body: body ? JSON.stringify(body) : undefined
+    });
+    return validateResponse(data, validator);
+  },
+
   async delete<T>(endpoint: string, token?: string, validator?: (val: unknown) => val is T): Promise<T> {
     const data = await fetchWithRetry(`${API_URL}${resolveEndpoint(endpoint)}`, {
       method: 'DELETE',

@@ -28,12 +28,9 @@ export function AirdropEstimate({ userId }: AirdropEstimateProps) {
 
   async function loadEstimate() {
     try {
-      const response = await api.get(`/client/airdrop/estimate`);
-      if (response.ok) {
-        const estimateData = await response.json();
-        setData(estimateData);
-        setCustomPool(estimateData.airdropPool.toString());
-      }
+      const estimateData = await api.get<AirdropData>(`/client/airdrop/estimate`);
+      setData(estimateData);
+      setCustomPool(estimateData.airdropPool.toString());
     } catch (error) {
       console.error('Failed to load airdrop estimate:', error);
     } finally {

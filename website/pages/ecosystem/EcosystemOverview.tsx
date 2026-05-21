@@ -1,8 +1,8 @@
 import { PageLayout } from '../../components/layout/PageLayout';
 import {
   Target, Zap, TrendingUp, AlertTriangle, Users, Brain,
-  Blocks, Ban, CheckCircle2, ArrowRight, Eye, Lock, Rocket,
-  Shield, Clock, Activity, XCircle, Info
+  Blocks, Ban, CheckCircle2, ArrowRight, Eye, Rocket,
+  Shield, Activity, XCircle, Info
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 

@@ -1,16 +1,12 @@
 import { PageLayout } from '../../components/layout/PageLayout';
 import { Link } from 'react-router-dom';
 import {
-  Lightbulb, Users, Cpu, Rocket, DollarSign, TrendingUp, Clock,
-  CheckCircle2, AlertTriangle, Shield, Vote, Award, Eye, Filter,
-  ArrowRight, Sparkles, BarChart3, Target, Zap
+  Lightbulb, Users, Cpu, Rocket, DollarSign, Zap,
+  CheckCircle2, Shield, Vote, Award, Eye,
+  ArrowRight, Sparkles, BarChart3, Target
 } from 'lucide-react';
-import { useState } from 'react';
 
 export default function LaunchpadOverview() {
-  const [statusFilter, setStatusFilter] = useState<string>('all');
-  const [sortBy, setSortBy] = useState<string>('most_votes');
-
   return (
     <PageLayout>
       <div className="space-y-20">
@@ -419,89 +415,6 @@ function LifecycleStep({ number, icon, title, description, color }: {
       </div>
       <h3 className="font-bold text-white mb-2 text-sm">{title}</h3>
       <p className="text-xs text-slate-400 leading-relaxed">{description}</p>
-    </div>
-  );
-}
-
-function FilterButton({ label, active, onClick }: { label: string; active: boolean; onClick: () => void }) {
-  return (
-    <button
-      onClick={onClick}
-      className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
-        active
-          ? 'bg-cyan-600 text-white'
-          : 'bg-slate-700 text-slate-300 hover:bg-slate-600'
-      }`}
-    >
-      {label}
-    </button>
-  );
-}
-
-function ProposalCard({ title, description, status, votes, timeRemaining, minTokens, category }: {
-  title: string;
-  description: string;
-  status: 'proposed' | 'in_development' | 'launched' | 'profitable';
-  votes: { for: number; against: number };
-  timeRemaining: string;
-  minTokens: number;
-  category: string;
-}) {
-  const statusConfig = {
-    proposed: { icon: <Vote className="w-4 h-4" />, label: 'Voting Open', color: 'text-blue-400', bg: 'bg-blue-500/20' },
-    in_development: { icon: <Cpu className="w-4 h-4" />, label: 'In Development', color: 'text-yellow-400', bg: 'bg-yellow-500/20' },
-    launched: { icon: <Rocket className="w-4 h-4" />, label: 'Launched', color: 'text-green-400', bg: 'bg-green-500/20' },
-    profitable: { icon: <DollarSign className="w-4 h-4" />, label: 'Profitable', color: 'text-cyan-400', bg: 'bg-cyan-500/20' },
-  };
-
-  const config = statusConfig[status];
-  const total = votes.for + votes.against;
-  const percentage = Math.round((votes.for / total) * 100);
-
-  return (
-    <div className="bg-slate-800/50 backdrop-blur border border-slate-700 rounded-xl p-6 hover:border-cyan-500/50 transition-colors">
-      <div className="flex items-start justify-between mb-4">
-        <div className="flex-1">
-          <div className="flex items-center gap-2 mb-3">
-            <span className="text-xs px-2 py-1 bg-slate-700 text-slate-300 rounded">
-              {category}
-            </span>
-            <span className="text-xs px-2 py-1 bg-slate-700 text-slate-300 rounded">
-              Min: {minTokens} tokens
-            </span>
-          </div>
-          <h3 className="text-lg font-bold text-white mb-2">{title}</h3>
-          <p className="text-sm text-slate-400 mb-3">{description}</p>
-          <div className={`inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs ${config.bg} ${config.color}`}>
-            {config.icon}
-            <span>{config.label}</span>
-          </div>
-        </div>
-      </div>
-
-      <div className="mb-4">
-        <div className="flex justify-between text-sm mb-2">
-          <span className="text-green-400 font-medium">For: {votes.for.toLocaleString()}</span>
-          <span className="text-red-400 font-medium">Against: {votes.against.toLocaleString()}</span>
-        </div>
-        <div className="w-full bg-slate-700 rounded-full h-2.5">
-          <div
-            className="bg-gradient-to-r from-green-500 to-cyan-500 h-2.5 rounded-full transition-all"
-            style={{ width: `${percentage}%` }}
-          />
-        </div>
-        <div className="text-xs text-slate-500 mt-1">{percentage}% approval</div>
-      </div>
-
-      <div className="flex items-center justify-between pt-4 border-t border-slate-700">
-        <div className="flex items-center gap-2 text-sm text-slate-400">
-          <Clock className="w-4 h-4" />
-          <span>{timeRemaining}</span>
-        </div>
-        <button className="px-4 py-2 bg-cyan-600 hover:bg-cyan-700 text-white text-sm font-medium rounded-lg transition-colors">
-          View Details
-        </button>
-      </div>
     </div>
   );
 }

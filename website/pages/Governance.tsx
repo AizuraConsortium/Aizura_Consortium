@@ -6,7 +6,7 @@ import { Navigation } from '../components/layout/Navigation';
 
 export default function Governance() {
   const { proposals, loading, error } = useProposals({
-    apiClient: api,
+    apiClient: api as unknown as Parameters<typeof useProposals>[0]['apiClient'],
     onError: (err) => {
       console.error('Failed to load proposals:', err);
     },

@@ -4,10 +4,10 @@
  * Runtime validation for message-related data including agent mappings
  */
 
-import { ValidationError } from '../errors/RepositoryError.js';
-import type { Database } from '../../../../../../shared/types/database.types.js';
-import type { AgentId, AgentRole } from '../../../../../../shared/types/models.js';
-import { AGENT_ROLE_MAPPING } from '../../../../../../shared/types/models.js';
+import { ValidationError } from '../../../shared/services/supabase/repositories/errors/RepositoryError.js';
+import type { Database } from '../../../../shared/types/database.types.js';
+import type { AgentId, AgentRole } from '../../../../shared/types/models.js';
+import { AGENT_ROLE_MAPPING } from '../../../../shared/types/models.js';
 
 type MessageType = Database['public']['Tables']['messages']['Row']['message_type'];
 

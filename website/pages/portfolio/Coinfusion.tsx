@@ -2,8 +2,8 @@ import { PageLayout } from '../../components/layout/PageLayout';
 import { Link } from 'react-router-dom';
 import {
   TrendingUp, ExternalLink, ArrowRight, CheckCircle2, Clock,
-  Shield, Zap, Users, Target, Sparkles, Eye, BarChart3,
-  Search, Database, Bell, Activity, Lock, Globe
+  Shield, Users, Target, Sparkles, Eye, BarChart3,
+  Search, Database, Bell, Activity, Globe
 } from 'lucide-react';
 
 export default function Coinfusion() {

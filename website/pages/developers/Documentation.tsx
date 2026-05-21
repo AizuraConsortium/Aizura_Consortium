@@ -2,7 +2,7 @@ import { PageLayout } from '../../components/layout/PageLayout';
 import { Link } from 'react-router-dom';
 import {
   Code, BookOpen, Wallet, Vote, Lock, Coins,
-  Package, Terminal, Globe, Shield, Zap, Database,
+  Terminal, Globe, Shield, Zap, Database,
   GitBranch, CheckCircle2, AlertTriangle, ExternalLink
 } from 'lucide-react';
 import { useState } from 'react';

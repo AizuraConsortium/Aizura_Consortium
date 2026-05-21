@@ -2,16 +2,18 @@ import { AlertCircle, XCircle } from 'lucide-react';
 
 interface ErrorAlertProps {
   message: string;
+  details?: string;
   variant?: 'inline' | 'card' | 'full';
   theme?: 'light' | 'dark';
   showIcon?: boolean;
-  onRetry?: () => void;
+  onRetry?: () => void | Promise<void>;
   onDismiss?: () => void;
   className?: string;
 }
 
 export function ErrorAlert({
   message,
+  details,
   variant = 'inline',
   theme = 'light',
   showIcon = true,
@@ -95,7 +97,12 @@ export function ErrorAlert({
       {showIcon && (
         <AlertCircle className={`h-5 w-5 ${iconColorClass} mr-2 shrink-0 mt-0.5`} aria-hidden="true" />
       )}
-      <p className={`text-sm ${isDark ? 'text-red-300' : 'text-red-800'} flex-1`}>{message}</p>
+      <div className="flex-1">
+        <p className={`text-sm ${isDark ? 'text-red-300' : 'text-red-800'}`}>{message}</p>
+        {details && (
+          <p className={`text-xs mt-1 ${isDark ? 'text-red-400' : 'text-red-600'}`}>{details}</p>
+        )}
+      </div>
       {onDismiss && (
         <button
           onClick={onDismiss}

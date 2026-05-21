@@ -1,4 +1,4 @@
-import { create, getMany, deleteById, query } from '../queryBuilder.js';
+import { create, deleteById, query } from '../queryBuilder.js';
 import type { Database } from '../../../../../shared/types/database.types.js';
 
 type ErrorLog = Database['public']['Tables']['error_logs']['Row'];

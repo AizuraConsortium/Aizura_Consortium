@@ -31,11 +31,8 @@ export function SubmissionQueue() {
 
   async function loadSubmissions() {
     try {
-      const response = await api.get('/admin/airdrop/submissions?status=pending');
-      if (response.ok) {
-        const data = await response.json();
-        setSubmissions(data.submissions || []);
-      }
+      const data = await api.get<{ submissions: Submission[] }>('/admin/airdrop/submissions?status=pending');
+      setSubmissions(data.submissions || []);
     } catch (error) {
       console.error('Failed to load submissions:', error);
     } finally {
@@ -52,14 +49,11 @@ export function SubmissionQueue() {
     if (!confirmed) return;
 
     try {
-      const response = await api.post(`/admin/airdrop/submissions/bulk-${action}`, {
+      await api.post(`/admin/airdrop/submissions/bulk-${action}`, {
         submissionIds: Array.from(selectedIds),
       });
-
-      if (response.ok) {
-        setSelectedIds(new Set());
-        loadSubmissions();
-      }
+      setSelectedIds(new Set());
+      loadSubmissions();
     } catch (error) {
       console.error(`Failed to ${action} submissions:`, error);
     }

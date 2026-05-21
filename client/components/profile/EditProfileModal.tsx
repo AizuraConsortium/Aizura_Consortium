@@ -157,9 +157,9 @@ export function EditProfileModal({
 
     try {
       const updateData: UpdateProfileData = {
-        display_name: displayName.trim() || null,
-        bio: bio.trim() || null,
-        avatar_url: avatarUrl.trim() || null,
+        display_name: displayName.trim() || undefined,
+        bio: bio.trim() || undefined,
+        avatar_url: avatarUrl.trim() || undefined,
       };
 
       const updatedProfile = await updateProfile(updateData);

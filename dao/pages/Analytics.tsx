@@ -15,7 +15,7 @@ export default function Analytics() {
   }
 
   if (error) {
-    return <ErrorAlert title="Failed to load analytics data" message={error} />;
+    return <ErrorAlert message="Failed to load analytics data" details={error} />;
   }
 
   return (

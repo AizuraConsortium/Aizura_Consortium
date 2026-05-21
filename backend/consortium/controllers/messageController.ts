@@ -6,8 +6,8 @@
  */
 
 import { Request, Response } from 'express';
-import { createMessagesRepository } from '../../shared/services/supabase/repositories/messages.js';
-import { getWebsiteSupabaseClient } from '../config/supabaseWebsiteClient.js';
+import { createMessagesRepository } from '../repositories/messages.js';
+import { getWebsiteSupabaseClient } from '../../website/config/supabaseWebsiteClient.js';
 import { handleControllerError } from '../../shared/utils/errorHandler.js';
 import { NotFoundError } from '../../shared/errors/HttpErrors.js';
 import { PaginatedRequest } from '../../shared/middleware/pagination.js';

@@ -1,11 +1,11 @@
 import { PageLayout } from '../../components/layout/PageLayout';
 import { Link } from 'react-router-dom';
 import {
-  Calculator, TrendingUp, DollarSign, Clock, Zap, Users, Brain,
-  Server, Database, Cloud, Smartphone, Code, BarChart3, Target,
-  CheckCircle2, AlertTriangle, ExternalLink, FileText, Shield,
-  Activity, Cpu, Globe, BookOpen, Award, Info, TrendingDown,
-  ArrowRight, ArrowDown, Percent, Hash, PieChart, LineChart, X, Building
+  Calculator, TrendingUp, DollarSign, Clock, Brain,
+  Server, BarChart3, Target,
+  CheckCircle2, AlertTriangle, ExternalLink, FileText,
+  Globe, BookOpen, Info, TrendingDown,
+  ArrowRight, PieChart, X, Building
 } from 'lucide-react';
 import { useState } from 'react';
 
@@ -2460,111 +2460,6 @@ function ErrorRateCard({ model, errorRate, description, source, highlight }: {
       </div>
       <div className="text-sm text-slate-300 mb-3">{description}</div>
       <div className="text-xs text-slate-500">{source}</div>
-    </div>
-  );
-}
-
-function YearProjection({ year, phase, agents, businesses, revenueRange, assumptions, keyDrivers }: {
-  year: string;
-  phase: string;
-  agents: string;
-  businesses: string;
-  revenueRange: string;
-  assumptions: string[];
-  keyDrivers: string[];
-}) {
-  return (
-    <div className="bg-slate-900/50 border border-slate-700 rounded-xl p-8">
-      <div className="flex items-start justify-between mb-6">
-        <div>
-          <h4 className="text-2xl font-bold text-white mb-1">{year}</h4>
-          <p className="text-cyan-400 font-medium">{phase}</p>
-        </div>
-        <div className="text-right">
-          <div className="text-3xl font-bold text-green-400 mb-1">{revenueRange}</div>
-          <div className="text-sm text-slate-400">Projected Annual Revenue</div>
-        </div>
-      </div>
-
-      <div className="grid md:grid-cols-2 gap-4 mb-6">
-        <div className="bg-slate-800/50 rounded-lg p-4">
-          <div className="text-sm text-slate-400 mb-1">AI Agents</div>
-          <div className="text-xl font-bold text-white">{agents}</div>
-        </div>
-        <div className="bg-slate-800/50 rounded-lg p-4">
-          <div className="text-sm text-slate-400 mb-1">Active Businesses</div>
-          <div className="text-xl font-bold text-white">{businesses}</div>
-        </div>
-      </div>
-
-      <div className="mb-6">
-        <h5 className="font-bold text-white mb-3">Key Assumptions:</h5>
-        <ul className="space-y-2">
-          {assumptions.map((assumption, idx) => (
-            <li key={idx} className="flex items-start gap-2 text-sm text-slate-300">
-              <span className="text-cyan-400 flex-shrink-0">•</span>
-              <span>{assumption}</span>
-            </li>
-          ))}
-        </ul>
-      </div>
-
-      <div>
-        <h5 className="font-bold text-white mb-3">Revenue Drivers:</h5>
-        <ul className="space-y-2">
-          {keyDrivers.map((driver, idx) => (
-            <li key={idx} className="flex items-start gap-2 text-sm text-slate-300">
-              <TrendingUp className="w-4 h-4 text-green-400 flex-shrink-0 mt-0.5" />
-              <span>{driver}</span>
-            </li>
-          ))}
-        </ul>
-      </div>
-    </div>
-  );
-}
-
-function MarketSize({ market, tam, target, potential, source }: {
-  market: string;
-  tam: string;
-  target: string;
-  potential: string;
-  source: string;
-}) {
-  return (
-    <div className="bg-slate-800/50 rounded-lg p-6">
-      <h5 className="font-bold text-white mb-3">{market}</h5>
-      <div className="space-y-2 text-sm">
-        <div className="flex justify-between">
-          <span className="text-slate-400">Total Market (TAM):</span>
-          <span className="text-cyan-400 font-bold">{tam}</span>
-        </div>
-        <div className="flex justify-between">
-          <span className="text-slate-400">Target Share:</span>
-          <span className="text-white font-medium">{target}</span>
-        </div>
-        <div className="flex justify-between border-t border-slate-700 pt-2 mt-2">
-          <span className="text-white font-bold">Revenue Potential:</span>
-          <span className="text-green-400 font-bold">{potential}</span>
-        </div>
-        <div className="text-xs text-slate-500 mt-2">Source: {source}</div>
-      </div>
-    </div>
-  );
-}
-
-function UnitEconomic({ metric, value, note, source }: {
-  metric: string;
-  value: string;
-  note: string;
-  source: string;
-}) {
-  return (
-    <div className="bg-slate-800/50 rounded-lg p-6">
-      <h5 className="font-bold text-white mb-2">{metric}</h5>
-      <div className="text-3xl font-bold text-cyan-400 mb-3">{value}</div>
-      <p className="text-sm text-slate-300 mb-3">{note}</p>
-      <div className="text-xs text-slate-500">Source: {source}</div>
     </div>
   );
 }

@@ -102,7 +102,6 @@ export default function LiveMetrics() {
   ];
 
   const formatTime = (timestamp: number) => {
-    const date = new Date(timestamp);
     const now = Date.now();
     const diff = now - timestamp;
 

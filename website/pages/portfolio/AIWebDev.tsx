@@ -2,8 +2,8 @@ import { PageLayout } from '../../components/layout/PageLayout';
 import { Link } from 'react-router-dom';
 import {
   Code, ExternalLink, ArrowRight, CheckCircle2, Clock,
-  Shield, Zap, Users, Target, Sparkles, Eye, TrendingUp,
-  Layers, Rocket, Cog, MonitorSmartphone
+  Shield, Users, Sparkles, Eye, TrendingUp,
+  Layers, Rocket, MonitorSmartphone
 } from 'lucide-react';
 
 export default function AIWebDevelopmentPlatform() {

@@ -9,7 +9,7 @@ import { useToast } from '@shared/components/ToastProvider';
 import { api } from '../lib/api';
 
 export default function SettingsView() {
-  const { user, logout, session } = useAuth();
+  const { user, signOut, session } = useAuth();
   const { showToast } = useToast();
   const [preferences, setPreferences] = useState({
     language: 'en',
@@ -71,9 +71,9 @@ export default function SettingsView() {
   const handleSaveProfile = async () => {
     try {
       await updateProfile({
-        display_name: profileData.display_name || null,
-        bio: profileData.bio || null,
-        avatar_url: profileData.avatar_url || null
+        display_name: profileData.display_name || undefined,
+        bio: profileData.bio || undefined,
+        avatar_url: profileData.avatar_url || undefined
       });
     } catch (error) {
       console.error('Failed to save profile:', error);
@@ -202,7 +202,7 @@ export default function SettingsView() {
                 Reconnect Wallet
               </button>
               <button
-                onClick={logout}
+                onClick={signOut}
                 className="px-4 py-2 bg-red-600 hover:bg-red-700 text-white text-sm font-medium rounded-lg transition-colors inline-flex items-center gap-2"
               >
                 <LogOut className="w-4 h-4" />

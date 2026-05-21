@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import { stakingCalculation } from '../services/stakingCalculation';
 
 export class StakingController {
-  async calculateAPY(req: Request, res: Response): Promise<void> {
+  async calculateAPY(_req: Request, res: Response): Promise<void> {
     try {
       const { totalStaked, year, lockPeriodDays } = req.query;
 
@@ -30,7 +30,7 @@ export class StakingController {
     }
   }
 
-  async getAllAPYs(req: Request, res: Response): Promise<void> {
+  async getAllAPYs(_req: Request, res: Response): Promise<void> {
     try {
       const { totalStaked, year } = req.query;
 
@@ -54,7 +54,7 @@ export class StakingController {
     }
   }
 
-  async getEmissionSchedule(req: Request, res: Response): Promise<void> {
+  async getEmissionSchedule(_req: Request, res: Response): Promise<void> {
     try {
       const schedule = stakingCalculation.getEmissionSchedule();
       res.json({ schedule });
@@ -63,7 +63,7 @@ export class StakingController {
     }
   }
 
-  async calculatePostYear4(req: Request, res: Response): Promise<void> {
+  async calculatePostYear4(_req: Request, res: Response): Promise<void> {
     try {
       const { monthlyProfit, aaicPrice } = req.query;
 
@@ -83,7 +83,7 @@ export class StakingController {
     }
   }
 
-  async calculateRequiredProfit(req: Request, res: Response): Promise<void> {
+  async calculateRequiredProfit(_req: Request, res: Response): Promise<void> {
     try {
       const { desiredAAIC, aaicPrice } = req.query;
 

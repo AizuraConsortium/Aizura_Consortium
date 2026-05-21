@@ -4,8 +4,8 @@
  * Runtime validation for topic-related data and phase transitions
  */
 
-import { ValidationError, StateTransitionError, OperationNotAllowedError } from '../errors/RepositoryError.js';
-import type { Database } from '../../../../../../shared/types/database.types.js';
+import { ValidationError, StateTransitionError, OperationNotAllowedError } from '../../../shared/services/supabase/repositories/errors/RepositoryError.js';
+import type { Database } from '../../../../shared/types/database.types.js';
 
 type TopicPhase = Database['public']['Tables']['topics']['Row']['state'];
 

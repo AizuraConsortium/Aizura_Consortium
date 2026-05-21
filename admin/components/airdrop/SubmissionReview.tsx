@@ -43,11 +43,8 @@ export function SubmissionReview({ submission, onClose, onSuccess }: SubmissionR
 
   async function loadUserInfo() {
     try {
-      const response = await api.get(`/admin/airdrop/users/${submission.userId}/summary`);
-      if (response.ok) {
-        const data = await response.json();
-        setUserInfo(data);
-      }
+      const data = await api.get<UserInfo>(`/admin/airdrop/users/${submission.userId}/summary`);
+      setUserInfo(data);
     } catch (error) {
       console.error('Failed to load user info:', error);
     } finally {
@@ -66,20 +63,15 @@ export function SubmissionReview({ submission, onClose, onSuccess }: SubmissionR
     setProcessing(true);
 
     try {
-      const response = await api.post(`/admin/airdrop/submissions/${submission.id}/${action}`, {
+      await api.post(`/admin/airdrop/submissions/${submission.id}/${action}`, {
         points: pointsAdjustment,
         reason: reason.trim() || undefined,
       });
-
-      if (response.ok) {
-        onSuccess();
-      } else {
-        const error = await response.json();
-        alert(error.message || `Failed to ${action} submission`);
-      }
+      onSuccess();
     } catch (error) {
       console.error(`Failed to ${action} submission:`, error);
-      alert(`Failed to ${action} submission`);
+      const message = error instanceof Error ? error.message : `Failed to ${action} submission`;
+      alert(message);
     } finally {
       setProcessing(false);
     }

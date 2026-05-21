@@ -38,7 +38,7 @@ export function SystemHealthBadge({
 
   const fetchHealth = async () => {
     try {
-      const data = await apiClient.get(endpoint);
+      const data = await apiClient.get<SystemHealth>(endpoint);
       setHealth(data);
       setError('');
     } catch (err: any) {

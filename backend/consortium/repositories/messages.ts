@@ -1,8 +1,8 @@
-import { createQueryBuilder, type WriteQueryBuilder } from '../queryBuilderFactory.js';
-import { getSupabaseClient } from '../client.js';
-import type { Message, MessageToolCall, AgentId, AgentRole, Phase, AgentMessage, AgentVoteMessage, ToolCall, PlanOperation, VoteChoice } from '../../../../../shared/types/models.js';
-import type { PaginatedMessages } from '../../../../../shared/types/api.js';
-import type { Database } from '../../../../../shared/types/database.types.js';
+import { createQueryBuilder, type WriteQueryBuilder } from '../../shared/services/supabase/queryBuilderFactory.js';
+import { getSupabaseClient } from '../../shared/services/supabase/client.js';
+import type { Message, MessageToolCall, AgentId, AgentRole, Phase, AgentMessage, AgentVoteMessage, ToolCall, PlanOperation, VoteChoice } from '../../../shared/types/models.js';
+import type { PaginatedMessages } from '../../../shared/types/api.js';
+import type { Database } from '../../../shared/types/database.types.js';
 import type { SupabaseClient } from '@supabase/supabase-js';
 
 type Json = Database['public']['Tables']['message_proposed_actions']['Row']['data'];

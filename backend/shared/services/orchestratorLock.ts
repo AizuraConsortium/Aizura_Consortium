@@ -6,7 +6,7 @@ export class OrchestratorLockService extends EventEmitter {
   private heartbeatTimer: NodeJS.Timeout | null = null;
   private readonly HEARTBEAT_INTERVAL = 30000; // 30 seconds
   private readonly LOCK_TTL = 120; // 2 minutes
-  private readonly RETRY_INTERVAL = 60000; // 1 minute
+  private readonly _RETRY_INTERVAL = 60000; // 1 minute
   private isShuttingDown: boolean = false;
 
   constructor(private supabase: SupabaseService) {

@@ -76,6 +76,7 @@ export default function Room() {
         setTopicId(data.id);
         setTopicInfo({
           ...data,
+          id: data.id ?? undefined,
           status: 'active',
         });
       } else {

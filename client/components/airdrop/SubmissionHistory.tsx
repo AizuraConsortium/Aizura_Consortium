@@ -29,11 +29,8 @@ export function SubmissionHistory({ userId }: SubmissionHistoryProps) {
 
   async function loadSubmissions() {
     try {
-      const response = await api.get(`/client/airdrop/content/submissions`);
-      if (response.ok) {
-        const data = await response.json();
-        setSubmissions(data.submissions || []);
-      }
+      const data = await api.get<{ submissions: Submission[] }>(`/client/airdrop/content/submissions`);
+      setSubmissions(data.submissions || []);
     } catch (error) {
       console.error('Failed to load submissions:', error);
     } finally {

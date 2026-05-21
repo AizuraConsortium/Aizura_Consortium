@@ -90,7 +90,7 @@ export function MetricsGrid({ portfolio, loading = false, className = '' }: Metr
           <Users className="w-5 h-5 text-blue-400" />
         </div>
         <div className="text-3xl font-bold text-blue-400">
-          {formatNumber(portfolio.total_users)}
+          {formatNumber(portfolio.total_users ?? 0)}
         </div>
         <div className="text-xs text-slate-500 mt-2">Active users</div>
       </div>
@@ -101,7 +101,7 @@ export function MetricsGrid({ portfolio, loading = false, className = '' }: Metr
           <Target className="w-5 h-5 text-cyan-400" />
         </div>
         <div className="text-3xl font-bold text-cyan-400">
-          {portfolio.total_exposure_score.toFixed(1)}
+          {(portfolio.total_exposure_score ?? 0).toFixed(1)}
         </div>
         <div className="text-xs text-slate-500 mt-2">Your participation level</div>
       </div>

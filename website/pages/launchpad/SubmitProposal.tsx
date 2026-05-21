@@ -2,7 +2,7 @@ import { PageLayout } from '../../components/layout/PageLayout';
 import { Link } from 'react-router-dom';
 import {
   AlertTriangle, CheckCircle2, Wallet, Coins, FileText, Target,
-  Cpu, TrendingUp, AlertCircle, Shield, ArrowRight, Info, Lightbulb,
+  Cpu, TrendingUp, AlertCircle, Shield, Info, Lightbulb,
   Users, BarChart3, Clock, Sparkles
 } from 'lucide-react';
 import { useState } from 'react';

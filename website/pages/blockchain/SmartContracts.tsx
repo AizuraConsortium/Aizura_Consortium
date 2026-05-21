@@ -323,7 +323,7 @@ export default function SmartContracts() {
         </section>
 
         <section className="space-y-8">
-          {contracts.map((contract, index) => (
+          {contracts.map((contract) => (
             <div
               key={contract.name}
               className="bg-slate-800/30 backdrop-blur border border-slate-700 rounded-2xl p-8 lg:p-10 hover:border-slate-600 transition-colors"

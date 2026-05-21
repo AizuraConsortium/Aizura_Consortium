@@ -12,7 +12,7 @@ import {
   createProposal as repoCreateProposal,
   voteOnProposal as repoVoteOnProposal,
   getUserVote as repoGetUserVote,
-} from '../../shared/services/supabase/repositories/proposals.js';
+} from '../../consortium/repositories/proposals.js';
 import {
   PROPOSAL_VALIDATION_RULES,
   assertValidProposalId,

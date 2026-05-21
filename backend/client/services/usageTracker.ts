@@ -9,8 +9,6 @@ import { createHash } from 'crypto';
 import { getSupabaseClient } from '../../shared/services/supabase/client';
 import { ErrorLogger } from '../../shared/services/errorLogger';
 import {
-  U2EUsageEvent,
-  TrackUsageRequest,
   ActionType,
   U2EBusiness,
 } from '../../../shared/types/u2e';

@@ -25,6 +25,7 @@ interface MessageState {
   totalMessages: number;
   hasMore: boolean;
   setMessages: (messages: Message[]) => void;
+  setTotalMessages: (total: number) => void;
   addMessage: (message: Message) => void;
   prependMessages: (messages: Message[]) => void;
   setHasMore: (hasMore: boolean) => void;
@@ -92,6 +93,8 @@ export const useWebsiteStore = create<WebsiteStore>()(
           })),
 
         setMessages: (messages) => set({ messages }),
+
+        setTotalMessages: (total) => set({ totalMessages: total }),
 
         addMessage: (message) =>
           set((state) => ({

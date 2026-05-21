@@ -9,19 +9,18 @@
  * - Dependency chain management
  */
 
-import { BaseRepository, type OperationContext } from './BaseRepository.js';
+import { BaseRepository, type OperationContext } from '../../shared/services/supabase/repositories/BaseRepository.js';
 import {
   NotFoundError,
   ValidationError,
   CircularDependencyError,
   DependencyBlockedError,
   StateTransitionError,
-} from './errors/RepositoryError.js';
-import type { Database } from '../../../../../shared/types/database.types.js';
+} from '../../shared/services/supabase/repositories/errors/RepositoryError.js';
+import type { Database } from '../../../shared/types/database.types.js';
 
 type Step = Database['public']['Tables']['steps']['Row'];
 type StepInsert = Database['public']['Tables']['steps']['Insert'];
-type StepUpdate = Database['public']['Tables']['steps']['Update'];
 type StepStatus = Step['status'];
 
 const VALID_STEP_STATUSES: readonly StepStatus[] = ['todo', 'in_progress', 'blocked', 'done'] as const;
@@ -239,7 +238,7 @@ class StepsRepository extends BaseRepository {
       this.validateRequired(stepId, 'stepId');
       this.validateStepId(stepId);
 
-      const step = await this.getStepById(stepId);
+      await this.getStepById(stepId);
 
       const dependentSteps = await this.getStepsDependingOn(stepId);
       if (dependentSteps.length > 0) {

@@ -1,5 +1,5 @@
-import { create } from '../queryBuilder.js';
-import type { ArbitrationEntry } from '../../../../../shared/types/models.js';
+import { create } from '../../shared/services/supabase/queryBuilder.js';
+import type { ArbitrationEntry } from '../../../shared/types/models.js';
 
 export interface ArbitrationDecision {
   winnerImportance: number;

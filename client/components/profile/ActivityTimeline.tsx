@@ -178,27 +178,22 @@ export function ActivityTimeline({ userId }: ActivityTimelineProps) {
         setLoadingMore(true);
       }
 
-      const response = await api.get(
+      const data = await api.get<{ transactions: PointTransaction[] }>(
         `/api/client/airdrop/point-history?limit=${limit}&offset=${currentOffset}`
       );
 
-      if (response.ok) {
-        const data = await response.json();
-        const newTransactions = data.transactions || [];
+      const newTransactions = data.transactions || [];
 
-        if (reset) {
-          setTransactions(newTransactions);
-          setOffset(limit);
-        } else {
-          setTransactions([...transactions, ...newTransactions]);
-          setOffset(currentOffset + limit);
-        }
-
-        setHasMore(newTransactions.length === limit);
-        setError(null);
+      if (reset) {
+        setTransactions(newTransactions);
+        setOffset(limit);
       } else {
-        throw new Error('Failed to load activities');
+        setTransactions([...transactions, ...newTransactions]);
+        setOffset(currentOffset + limit);
       }
+
+      setHasMore(newTransactions.length === limit);
+      setError(null);
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : 'Failed to load activities';
       setError(errorMessage);

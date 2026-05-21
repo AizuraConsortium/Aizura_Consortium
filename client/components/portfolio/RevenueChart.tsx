@@ -105,8 +105,8 @@ export function RevenueChart({
                       : 'text-slate-400'
                   }`}
                 >
-                  {trend.change_percent > 0 ? '+' : ''}
-                  {trend.change_percent}%
+                  {trend.change_percentage > 0 ? '+' : ''}
+                  {trend.change_percentage}%
                 </span>
                 <span className="text-slate-500">vs previous period</span>
               </div>
@@ -165,7 +165,7 @@ interface RevenueComparisonProps {
   businesses: Array<{
     name: string;
     revenue: number;
-    trend?: { direction: 'up' | 'down' | 'stable'; change_percent: number };
+    trend?: { direction: 'up' | 'down' | 'stable'; change_percentage: number };
   }>;
   className?: string;
 }
@@ -204,8 +204,8 @@ export function RevenueComparison({ businesses, className = '' }: RevenueCompari
                           : 'text-slate-400'
                       }`}
                     >
-                      {business.trend.change_percent > 0 ? '+' : ''}
-                      {business.trend.change_percent}%
+                      {business.trend.change_percentage > 0 ? '+' : ''}
+                      {business.trend.change_percentage}%
                     </span>
                   )}
                 </div>

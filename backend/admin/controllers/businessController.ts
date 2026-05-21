@@ -16,7 +16,7 @@ export class BusinessController {
    * Get all businesses with performance data
    * Admin only
    */
-  async getAllBusinesses(req: Request, res: Response): Promise<void> {
+  async getAllBusinesses(_req: Request, res: Response): Promise<void> {
     try {
       const filters = {
         status: req.query.status as any,
@@ -53,7 +53,7 @@ export class BusinessController {
    * Get business by ID with full details
    * Admin only
    */
-  async getBusinessById(req: Request, res: Response): Promise<void> {
+  async getBusinessById(_req: Request, res: Response): Promise<void> {
     try {
       const { id } = req.params;
 
@@ -86,7 +86,7 @@ export class BusinessController {
    * Update business information
    * Admin only
    */
-  async updateBusiness(req: Request, res: Response): Promise<void> {
+  async updateBusiness(_req: Request, res: Response): Promise<void> {
     try {
       const { id } = req.params;
       const updates: UpdateBusinessPayload = req.body;
@@ -116,7 +116,7 @@ export class BusinessController {
    * Create a new metric for a business
    * Admin only
    */
-  async createMetric(req: Request, res: Response): Promise<void> {
+  async createMetric(_req: Request, res: Response): Promise<void> {
     try {
       const { id } = req.params;
       const payload: CreateBusinessMetricPayload = {
@@ -144,7 +144,7 @@ export class BusinessController {
    * Create multiple metrics in bulk
    * Admin only
    */
-  async createMetricsBulk(req: Request, res: Response): Promise<void> {
+  async createMetricsBulk(_req: Request, res: Response): Promise<void> {
     try {
       const { id } = req.params;
       const { metrics } = req.body;
@@ -180,7 +180,7 @@ export class BusinessController {
    * Get all metrics for a business
    * Admin only
    */
-  async getBusinessMetrics(req: Request, res: Response): Promise<void> {
+  async getBusinessMetrics(_req: Request, res: Response): Promise<void> {
     try {
       const { id } = req.params;
 
@@ -214,7 +214,7 @@ export class BusinessController {
    * Delete a specific metric
    * Admin only
    */
-  async deleteMetric(req: Request, res: Response): Promise<void> {
+  async deleteMetric(_req: Request, res: Response): Promise<void> {
     try {
       const { metricId } = req.params;
 
@@ -237,7 +237,7 @@ export class BusinessController {
    * Manually refresh portfolio materialized views
    * Admin only
    */
-  async refreshPortfolioViews(req: Request, res: Response): Promise<void> {
+  async refreshPortfolioViews(_req: Request, res: Response): Promise<void> {
     try {
       await portfolioRepository.refreshPortfolioViews();
 
@@ -259,7 +259,7 @@ export class BusinessController {
    * Get aggregated performance stats for all businesses
    * Admin only
    */
-  async getAllBusinessPerformance(req: Request, res: Response): Promise<void> {
+  async getAllBusinessPerformance(_req: Request, res: Response): Promise<void> {
     try {
       const filters = {
         status: req.query.status as any,

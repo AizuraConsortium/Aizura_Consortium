@@ -67,7 +67,7 @@ export const proposalSummaryRule: BusinessRule<{ summary: string }> = {
  */
 export async function validateVoteEligibility(
   userId: string,
-  proposalId: string,
+  _proposalId: string,
   existingVotes: Array<{ user_id: string }>,
   proposalStatus: string
 ): Promise<{ valid: boolean; reason?: string }> {

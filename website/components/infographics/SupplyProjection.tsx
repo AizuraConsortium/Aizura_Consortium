@@ -79,7 +79,7 @@ export function SupplyProjection() {
           </p>
 
           <div className="space-y-3">
-            {postYear4Milestones.map((milestone, idx) => (
+            {postYear4Milestones.map((milestone) => (
               <div
                 key={milestone.supply}
                 className="flex items-center gap-4 bg-slate-800/50 rounded-lg p-4"

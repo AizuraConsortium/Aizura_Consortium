@@ -11,7 +11,7 @@ import { websiteSupabase as supabase } from '../config/supabaseWebsiteClient';
  * Get U2E statistics for display on website
  * GET /api/website/u2e/stats
  */
-export async function getU2EStats(req: Request, res: Response) {
+export async function getU2EStats(_req: Request, res: Response) {
   try {
     // Get total rewards distributed
     const { data: rewardsData, error: rewardsError } = await supabase
@@ -90,7 +90,7 @@ export async function getU2EStats(req: Request, res: Response) {
  * Get current reward rates for all active businesses
  * GET /api/website/u2e/rates
  */
-export async function getRewardRates(req: Request, res: Response) {
+export async function getRewardRates(_req: Request, res: Response) {
   try {
     const { data: rates, error } = await supabase
       .from('u2e_reward_rates')
@@ -144,7 +144,7 @@ export async function getRewardRates(req: Request, res: Response) {
  * Get historical rate changes for transparency
  * GET /api/website/u2e/history?business_id=uuid (optional)
  */
-export async function getRateHistory(req: Request, res: Response) {
+export async function getRateHistory(_req: Request, res: Response) {
   try {
     const { business_id } = req.query;
 
@@ -202,7 +202,7 @@ export async function getRateHistory(req: Request, res: Response) {
  * Get anonymized real user earning examples
  * GET /api/website/u2e/examples
  */
-export async function getEarningExamples(req: Request, res: Response) {
+export async function getEarningExamples(_req: Request, res: Response) {
   try {
     // Get aggregated earning examples from last 30 days
     const thirtyDaysAgo = new Date();
@@ -256,8 +256,8 @@ export async function getEarningExamples(req: Request, res: Response) {
     const anonymizedExamples = [];
     let userIndex = 1;
 
-    for (const [userId, businessMap] of userBusinessMap) {
-      for (const [businessId, data] of businessMap) {
+    for (const [_userId, businessMap] of userBusinessMap) {
+      for (const [_businessId, data] of businessMap) {
         if (data.count >= 5) { // Only show examples with 5+ transactions
           anonymizedExamples.push({
             user_label: `User #${String(userIndex).padStart(4, '0')}`,

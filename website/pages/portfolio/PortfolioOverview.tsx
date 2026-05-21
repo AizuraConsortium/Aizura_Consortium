@@ -3,7 +3,7 @@ import { PageLayout } from '../../components/layout/PageLayout';
 import { Link } from 'react-router-dom';
 import {
   TrendingUp, Users, DollarSign, Zap, Building2, Rocket, Code,
-  Filter, ArrowRight, CircleDot, Sparkles, BarChart3, TrendingDown,
+  Filter, ArrowRight, CircleDot, BarChart3,
   Shield, Info, ExternalLink, Vote
 } from 'lucide-react';
 

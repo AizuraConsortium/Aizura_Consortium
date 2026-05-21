@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { OrchestratorService } from '../services/orchestratorService.js';
-import type { Orchestrator } from '../../shared/orchestrator/Orchestrator.js';
+import type { Orchestrator } from '../../consortium/orchestrator/Orchestrator.js';
 
 export class OrchestratorController {
   private orchestratorService: OrchestratorService;
@@ -13,7 +13,7 @@ export class OrchestratorController {
     this.orchestratorService.setOrchestrator(orchestrator);
   }
 
-  async getStatus(req: Request, res: Response) {
+  async getStatus(_req: Request, res: Response) {
     try {
       const result = await this.orchestratorService.getStatus();
 
@@ -28,7 +28,7 @@ export class OrchestratorController {
     }
   }
 
-  async stop(req: Request, res: Response) {
+  async stop(_req: Request, res: Response) {
     try {
       const result = await this.orchestratorService.stop();
 
@@ -61,7 +61,7 @@ export class OrchestratorController {
     }
   }
 
-  async start(req: Request, res: Response) {
+  async start(_req: Request, res: Response) {
     try {
       const result = await this.orchestratorService.start();
 
@@ -94,7 +94,7 @@ export class OrchestratorController {
     }
   }
 
-  async forceReleaseLock(req: Request, res: Response) {
+  async forceReleaseLock(_req: Request, res: Response) {
     try {
       const result = await this.orchestratorService.forceReleaseLock();
 

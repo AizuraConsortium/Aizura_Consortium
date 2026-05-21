@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { MethodologyLink } from '../../components/shared/MethodologyLink';
 import { useState, useEffect } from 'react';
 import {
-  Brain, TrendingUp, TrendingDown, DollarSign, Clock, Shield, Zap,
+  Brain, TrendingUp, TrendingDown, Clock, Shield, Zap,
   Target, CheckCircle2, X, BarChart3, Users, Award,
   GitBranch, Lightbulb, MessageSquare, Star, Quote, Info, Plus,
   ChevronLeft, ChevronRight, BadgeCheck, Code, Briefcase, FileText,

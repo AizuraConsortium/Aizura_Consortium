@@ -1,4 +1,3 @@
-import { Request, Response } from 'express';
 import { BaseController } from '../../shared/controllers/BaseController';
 import { NotificationService } from '../../shared/services/notificationService';
 import type { AuthenticatedRequest } from '../../shared/types/middleware';

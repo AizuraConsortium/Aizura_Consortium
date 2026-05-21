@@ -1,8 +1,8 @@
 import OpenAI from 'openai';
 import Anthropic from '@anthropic-ai/sdk';
 import { GoogleGenerativeAI } from '@google/generative-ai';
-import type { AgentId, AgentMessage, AgentVoteMessage } from '../../../shared/types/models.js';
-import { ErrorLogger } from '../services/errorLogger.js';
+import type { AgentId } from '../../../shared/types/models.js';
+import { ErrorLogger } from '../../shared/services/errorLogger.js';
 
 export interface LLMProvider {
   generateResponse(systemPrompt: string, userPrompt: string): Promise<string>;

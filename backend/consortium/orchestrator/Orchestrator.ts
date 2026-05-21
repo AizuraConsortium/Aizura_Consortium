@@ -1,10 +1,10 @@
-import type { AgentId, AgentMessage, AgentVoteMessage, Phase, Topic, AgentVote, PlanEditorArgs } from '../../../shared/types/models.js';
+import type { AgentId, AgentMessage, AgentVoteMessage, Phase, Topic, AgentVote, PlanEditorArgs, Message } from '../../../shared/types/models.js';
 import { AGENT_ROLE_MAPPING } from '../../../shared/types/models.js';
 import { AgentRunner, type AgentContext } from '../agents/runner.js';
-import { SupabaseService } from '../services/supabase/SupabaseService.js';
-import { PlanEditor } from '../services/planEditor.js';
-import { PhaseValidator } from './phaseValidator.js';
-import { OrchestratorLockService } from '../services/orchestratorLock.js';
+import { SupabaseService } from '../../shared/services/supabase/SupabaseService.js';
+import { PlanEditor } from '../../shared/services/planEditor.js';
+import { PhaseValidator } from '../../shared/orchestrator/phaseValidator.js';
+import { OrchestratorLockService } from '../../shared/services/orchestratorLock.js';
 
 // Internal type for tracking refusal notices (different from the RefusalNotice message type)
 interface RefusalNoticeEntry {
@@ -336,7 +336,7 @@ export class Orchestrator {
       phase: this.currentTopic.state,
       proposalTitle: proposal.title,
       proposalSummary: proposal.summary || '',
-      recentMessages: recentMessages.reverse().map(msg => ({
+      recentMessages: recentMessages.reverse().map((msg: Message) => ({
         agent_id: msg.agent_id,
         agent_role: msg.agent_role,
         message: msg.message_type === 'message' ? (msg.message_title || '') : (msg.vote_choice || ''),
@@ -381,7 +381,7 @@ export class Orchestrator {
       Array.from(this.pendingMessages.keys())
     );
 
-    const winnerDbMessage = messages.find(m => m.agent_id === winnerAgentId);
+    const winnerDbMessage = messages.find((m: Message) => m.agent_id === winnerAgentId);
 
     if (winnerDbMessage) {
       await this.supabase.markMessageAsSelected(winnerDbMessage.id);

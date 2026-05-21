@@ -8,7 +8,6 @@ import { Request, Response } from 'express';
 import { BaseController } from '../../shared/controllers/BaseController';
 import { u2eService } from '../../client/services/u2eService';
 import {
-  UpdateSystemConfigRequest,
   UpdateRewardRateRequest,
   ToggleBusinessRequest,
 } from '../../../shared/types/u2e';

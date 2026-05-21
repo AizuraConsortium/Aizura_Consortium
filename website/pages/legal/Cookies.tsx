@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { PageLayout } from '../../components/layout/PageLayout';
-import { Cookie, Settings, Eye, Shield, Info, CheckCircle2, XCircle } from 'lucide-react';
+import { Cookie, Settings, Eye, Shield, Info, CheckCircle2 } from 'lucide-react';
 
 export default function CookiePolicy() {
   return (

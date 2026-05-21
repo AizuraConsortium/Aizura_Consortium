@@ -35,7 +35,7 @@ export function ReferralDetailsModal({ referral, onClose }: ReferralDetailsModal
   };
 
   return (
-    <Modal onClose={onClose} maxWidth="2xl">
+    <Modal isOpen={true} onClose={onClose} size="xl">
       <div className="space-y-6">
         <div className="flex items-start justify-between">
           <div>

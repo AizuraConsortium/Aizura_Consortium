@@ -42,7 +42,7 @@ export class HealthProbeController extends BaseController {
    *   }
    * }
    */
-  async getHealth(req: Request, res: Response): Promise<void> {
+  async getHealth(_req: Request, res: Response): Promise<void> {
     try {
       const health = await this.healthCheckService.checkHealth();
 
@@ -69,7 +69,7 @@ export class HealthProbeController extends BaseController {
    * Response 200: { "ready": true }
    * Response 503: { "ready": false, "reason": "Database not connected" }
    */
-  async getReadiness(req: Request, res: Response): Promise<void> {
+  async getReadiness(_req: Request, res: Response): Promise<void> {
     try {
       const readiness = await this.healthCheckService.checkReadiness();
 
@@ -103,7 +103,7 @@ export class HealthProbeController extends BaseController {
    * @example
    * Response 200: { "alive": true }
    */
-  async getLiveness(req: Request, res: Response): Promise<void> {
+  async getLiveness(_req: Request, res: Response): Promise<void> {
     try {
       const alive = await this.healthCheckService.checkLiveness();
 
@@ -129,7 +129,7 @@ export class HealthProbeController extends BaseController {
    * Simple endpoint that always returns 200.
    * Use for basic connectivity tests.
    */
-  async ping(req: Request, res: Response): Promise<void> {
+  async ping(_req: Request, res: Response): Promise<void> {
     res.status(200).json({
       pong: true,
       timestamp: new Date().toISOString(),

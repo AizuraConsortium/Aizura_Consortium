@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Search, Users, Twitter, MessageCircle, Github, Send, Loader2, Plus, Minus, Flag, Ban } from 'lucide-react';
+import { Search, Twitter, MessageCircle, Github, Send, Loader2, Plus, Minus, Flag, Ban } from 'lucide-react';
 import { api } from '../../lib/api';
 
 interface UserProfile {
@@ -60,16 +60,11 @@ export function UserLookup() {
     setUserProfile(null);
 
     try {
-      const response = await api.get(`/admin/airdrop/users/search?q=${encodeURIComponent(searchQuery)}`);
-      if (response.ok) {
-        const data = await response.json();
-        setUserProfile(data);
-      } else {
-        alert('User not found');
-      }
+      const data = await api.get<UserProfile>(`/admin/airdrop/users/search?q=${encodeURIComponent(searchQuery)}`);
+      setUserProfile(data);
     } catch (error) {
       console.error('Failed to search user:', error);
-      alert('Failed to search user');
+      alert('User not found');
     } finally {
       setSearching(false);
     }
@@ -90,22 +85,17 @@ export function UserLookup() {
     setProcessing(true);
 
     try {
-      const response = await api.post(`/admin/airdrop/users/${userProfile.id}/adjust-points`, {
+      await api.post(`/admin/airdrop/users/${userProfile.id}/adjust-points`, {
         points: type === 'subtract' ? -points : points,
         reason: adjustmentReason,
       });
-
-      if (response.ok) {
-        setAdjustmentPoints('');
-        setAdjustmentReason('');
-        handleSearch();
-      } else {
-        const error = await response.json();
-        alert(error.message || 'Failed to adjust points');
-      }
+      setAdjustmentPoints('');
+      setAdjustmentReason('');
+      handleSearch();
     } catch (error) {
       console.error('Failed to adjust points:', error);
-      alert('Failed to adjust points');
+      const message = error instanceof Error ? error.message : 'Failed to adjust points';
+      alert(message);
     } finally {
       setProcessing(false);
     }
@@ -120,13 +110,10 @@ export function UserLookup() {
     setProcessing(true);
 
     try {
-      const response = await api.post(`/admin/airdrop/users/${userProfile.id}/flag`, {
+      await api.post(`/admin/airdrop/users/${userProfile.id}/flag`, {
         reason,
       });
-
-      if (response.ok) {
-        handleSearch();
-      }
+      handleSearch();
     } catch (error) {
       console.error('Failed to flag user:', error);
       alert('Failed to flag user');
@@ -147,13 +134,10 @@ export function UserLookup() {
     setProcessing(true);
 
     try {
-      const response = await api.post(`/admin/airdrop/users/${userProfile.id}/ban`, {
+      await api.post(`/admin/airdrop/users/${userProfile.id}/ban`, {
         reason,
       });
-
-      if (response.ok) {
-        handleSearch();
-      }
+      handleSearch();
     } catch (error) {
       console.error('Failed to ban user:', error);
       alert('Failed to ban user');

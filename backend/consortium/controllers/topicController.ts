@@ -1,9 +1,9 @@
 import { Request, Response } from 'express';
-import { createTopicsRepository } from '../../shared/services/supabase/repositories/topics.js';
-import { createProposalsRepository } from '../../shared/services/supabase/repositories/proposals.js';
-import { createPlansRepository } from '../../shared/services/supabase/repositories/plans.js';
-import { getWebsiteSupabaseClient } from '../config/supabaseWebsiteClient.js';
-import type { Topic, Proposal, Plan } from '../../../shared/types/models.js';
+import { createTopicsRepository } from '../repositories/topics.js';
+import { createProposalsRepository } from '../repositories/proposals.js';
+import { createPlansRepository } from '../repositories/plans.js';
+import { getWebsiteSupabaseClient } from '../../website/config/supabaseWebsiteClient.js';
+import type { Topic } from '../../../shared/types/models.js';
 import type { TopicWithDetails } from '../../../shared/types/api.js';
 
 export class TopicController {
@@ -11,7 +11,7 @@ export class TopicController {
   private proposalsRepo = createProposalsRepository(getWebsiteSupabaseClient());
   private plansRepo = createPlansRepository(getWebsiteSupabaseClient());
 
-  async getCurrentTopic(req: Request, res: Response) {
+  async getCurrentTopic(_req: Request, res: Response) {
     try {
       const topic = await this.topicsRepo.getCurrentTopic();
       if (!topic) {
@@ -25,7 +25,7 @@ export class TopicController {
     }
   }
 
-  async getTopicById(req: Request, res: Response) {
+  async getTopicById(_req: Request, res: Response) {
     try {
       const { topicId } = req.params;
 

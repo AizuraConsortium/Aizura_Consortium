@@ -8,7 +8,7 @@ export class UserController {
     this.userService = new UserService();
   }
 
-  async getUsers(req: Request, res: Response) {
+  async getUsers(_req: Request, res: Response) {
     try {
       const filters = {
         role: req.query.role as 'admin' | 'client' | undefined,
@@ -25,7 +25,7 @@ export class UserController {
     }
   }
 
-  async getUserStats(req: Request, res: Response) {
+  async getUserStats(_req: Request, res: Response) {
     try {
       const stats = await this.userService.getUserStats();
       res.json(stats);
@@ -35,7 +35,7 @@ export class UserController {
     }
   }
 
-  async createUser(req: Request, res: Response) {
+  async createUser(_req: Request, res: Response) {
     try {
       const { auth_user_id, email, role } = req.body;
 
@@ -88,7 +88,7 @@ export class UserController {
     }
   }
 
-  async updateUserRole(req: Request, res: Response) {
+  async updateUserRole(_req: Request, res: Response) {
     try {
       const { userId } = req.params;
       const { role } = req.body;
@@ -140,7 +140,7 @@ export class UserController {
     }
   }
 
-  async deleteUser(req: Request, res: Response) {
+  async deleteUser(_req: Request, res: Response) {
     try {
       const { userId } = req.params;
 
